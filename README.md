@@ -1,68 +1,27 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Một vài lưu ý khi code:
 
-## Available Scripts
+1. Sau khi clone prj về, chạy lệnh: _yarn_ để cài đặt package
+2. Khi muốn cài thư viện mới, dùng lệnh: _yarn add_ để thêm package, tránh dùng _npm install_
 
-In the project directory, you can run:
+# Cấu trúc của prj:
 
-### `yarn start`
+_Mọi code mới đều sẽ được thêm vào folder `src`_: mọi file js đều chứa trong 1 folder cùng tên để quản lý source cùng với các file css (nếu có)
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- folder `Component`: chứa các component nhỏ sẽ được sử dụng trong prj: _datepicker, header, footer, input, ..._,
+- folder `layouts`: 1 trang web thường có nhiều trang web giống nhau ở nhiều thành phần như header, footer, sidebar, ... Các thành phần đó sẽ được code chung thành 1 layout thay vì mỗi trang web lại phải copy lại đoạn code đó. Hiện tại đang có 3 layout:
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+1. ClientLayout: Layout cho phía client site
+2. AdminLayout: Layout cho phía admin site
+3. EmptyLayout: 1 vài trang web sẽ có cấu trúc riêng như trang đăng nhập, trang 404, ...
 
-### `yarn test`
+- folder `pages`: chứa các component của từng trang trong hệ thống, folder được chia thành 2 phần **admin** và **client**, trong mỗi phần thì từng trang web sẽ có 1 folder riêng, đặt tên như sau: _Admin/Client + tên trang_, trong folder sẽ chứa code js, css cho trang đó
+- folder `routes`: chứa file `routes.js`, nơi khai báo các url của web và các component của pages tương ứng với url đó
+- folder `services`: chứa các đoạn code axios, tương tác với api
+- folder `state`: chứa code quản lý state, có 2 folder con: reducers (chứa các reducer) và sagas (chứa các saga)
+- folder `utils`: chứa các function được sử dụng nhiều lần trong prj, và có thể được sử dụng ở nhiều component
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Quy trình thêm 1 trang mới:
 
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+1. Tạo 1 folder con ở `pages`, đặt vào đúng sub folder (admin | client), đặt tên như quy tắc ở trên
+2. Cài đặt code cho component
+3. Để có thể truy cập vào url mong muốn, vào file `routes.js`, thêm 1 <Route /> vào layout mong muốn, sau đó thêm path vào list path ở component <Route> cha để có thể truy cập vào path đó
