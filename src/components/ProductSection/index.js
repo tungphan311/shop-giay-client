@@ -9,13 +9,14 @@ const ProductSection = ({
   setSelectedCategory,
   selectedCategory = 0,
   isLoading,
+  className,
 }) => {
   const Content = () =>
     categories[selectedCategory].products.map((item) => (
       <ItemCard key={item.name} {...item}></ItemCard>
     ));
   return (
-    <section className="homeSection">
+    <section className={`homeSection ${className && className}`}>
       <div
         className={`homeSection__header ${
           categories.length === 1 && "homeSection__header_only"

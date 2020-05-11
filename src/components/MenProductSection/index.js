@@ -1,41 +1,37 @@
 import React, { useState, useEffect } from "react";
 import ProductSection from "components/ProductSection";
-import { EXAMPLE_PRODUCTS } from "../../constants";
-import "./NewArrivalSection.scss";
+import { EXAMPLE_MEN_PRODUCTS } from "../../constants";
+import "./MenProductSection.scss";
 
 const intialCategories = [
   {
     label: "NAM",
     products: [],
   },
-  {
-    label: "NỮ",
-    products: [],
-  },
 ];
 
-const NewArrivalSection = () => {
+const WomenProductSection = () => {
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [categories, setCategories] = useState(intialCategories);
 
   useEffect(() => {
-    //TODO: FETCH NEW ARRIVALS PRODUCT HERE
+    //TODO: FETCH TRENDING MEN PRODUCT HERE
     setTimeout(() => {
-      setCategories(EXAMPLE_PRODUCTS, setIsLoading(false));
+      setCategories(EXAMPLE_MEN_PRODUCTS, setIsLoading(false));
     }, 500);
   }, []);
 
   return (
     <ProductSection
-      label="HÀNG MỚI VỀ"
+      label="GIÀY NAM"
       isLoading={isLoading}
       categories={categories}
       selectedCategory={selectedCategory}
       setSelectedCategory={setSelectedCategory}
-      className="newArrivalSection"
+      className="menProductSection"
     />
   );
 };
 
-export default NewArrivalSection;
+export default WomenProductSection;
