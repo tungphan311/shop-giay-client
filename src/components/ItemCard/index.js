@@ -3,7 +3,15 @@ import React, { useState } from "react";
 import { stringTruncate } from "utils";
 import { vietNamCurrency } from "../../utils";
 
-const ItemCard = ({ name, type, price, description, image, salePrice }) => {
+const ItemCard = ({
+  name,
+  type,
+  price,
+  description,
+  image,
+  salePrice,
+  href,
+}) => {
   const [isHover, setHover] = useState(false);
 
   const handleMouseEnter = () => setHover(true);
@@ -23,8 +31,8 @@ const ItemCard = ({ name, type, price, description, image, salePrice }) => {
       ></div>
       <div className="item-card__content">
         <div className="item-card__image">
-          <a href="/#">
-            <img src={image} alt="???"></img>
+          <a href={href}>
+            <img src={image} alt={`${name} image`}></img>
           </a>
         </div>
         <div className="item-card__info">

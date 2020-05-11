@@ -1,3 +1,4 @@
+$primary: #f3ac00;
 .item-card {
   &__container {
     display: inline-block;
@@ -109,7 +110,7 @@
         transition: color 0.25s ease-out;
       }
       .hover {
-        color: #f3ac00 !important;
+        color: $primary !important;
       }
     }
     &_price {
