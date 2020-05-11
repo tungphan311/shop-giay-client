@@ -6,15 +6,14 @@ import "./ProductSection.scss";
 const ProductSection = ({
   label,
   categories,
-  setSelectedCatogory,
-  selectedCatogory = 0,
+  setSelectedCategory,
+  selectedCategory = 0,
   isLoading,
 }) => {
   const Content = () =>
-    categories[selectedCatogory].products.map((item) => (
+    categories[selectedCategory].products.map((item) => (
       <ItemCard key={item.name} {...item}></ItemCard>
     ));
-
   return (
     <section className="homeSection">
       <div
@@ -30,9 +29,9 @@ const ProductSection = ({
                 <li
                   key={cat.label}
                   onClick={() =>
-                    setSelectedCatogory && setSelectedCatogory(catIndex)
+                    setSelectedCategory && setSelectedCategory(catIndex)
                   }
-                  className={`${selectedCatogory === catIndex ? "active" : ""}`}
+                  className={`${selectedCategory === catIndex ? "active" : ""}`}
                 >
                   {cat.label}
                 </li>
@@ -43,7 +42,7 @@ const ProductSection = ({
       </div>
       <div className="content">
         <div className="item-wrapper">
-          {isLoading ? <Content /> : <LoadingIndicator />}
+          {!isLoading ? <Content /> : <LoadingIndicator />}
         </div>
       </div>
     </section>
