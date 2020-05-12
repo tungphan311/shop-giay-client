@@ -1,3 +1,6 @@
+import SearchHoverContainer from "components/NavBar/SearchHoverContainer";
+import HoverContainer from "components/NavBar/HoverContainer";
+
 export const BANNERS = [
   {
     url:
@@ -303,3 +306,60 @@ export const EXAMPLE_WOMEN_PRODUCTS = [
 ];
 
 export const SHOP_NAME = "SHOPNAME";
+
+export const NAVBAR_ITEM_LIST = [
+  {
+    label: "NAM",
+    href: "#",
+  },
+  {
+    label: "NỮ",
+    href: "#",
+  },
+  {
+    label: "HÀNG MỚI VỀ",
+    href: "#",
+  },
+];
+
+export const NAVBAR_BUTTON_LIST = [
+  {
+    icon: "search",
+    hoverComponent: SearchHoverContainer,
+  },
+  {
+    icon: "user",
+    hoverComponent: HoverContainer,
+  },
+  // {
+  //   icon: "info",
+  //   hoverComponent: HoverContainer,
+  // },
+  {
+    icon: "inventory",
+    hoverComponent: HoverContainer,
+  },
+];
+
+export const USER_HOVER_CONTENT = [
+  {
+    label: "Thông tin cá nhân",
+    href: "#",
+  },
+  {
+    label: "Thông tin đăng nhập",
+    href: "#",
+  },
+  {
+    label: "Theo dõi đơn hàng",
+    href: "#",
+  },
+  {
+    label: "Đánh giá",
+    href: "#",
+  },
+  {
+    label: "Điểm tích lũy",
+    href: "#",
+  },
+];

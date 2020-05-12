@@ -1,0 +1,21 @@
+$white: #fff;
+.inputwithbutton {
+  &__container {
+    background-color: $white;
+    border-radius: 5px;
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+  }
+
+  &__textinput {
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    font-size: 20px;
+    &:focus {
+      outline: none;
+    }
+  }
+}

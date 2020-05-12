@@ -1,0 +1,41 @@
+$black: #000;
+$red: #ff0000;
+$white: #fff;
+
+.da_icon {
+  font-family: "snicon-icon";
+
+  &__search {
+    &::before {
+      content: "\e604";
+    }
+  }
+
+  &__user {
+    &::before {
+      content: "\e606";
+    }
+  }
+
+  &__info {
+    &::before {
+      content: "\e605";
+    }
+  }
+
+  &__inventory {
+    &::before {
+      content: "\e601";
+    }
+  }
+}
+
+.c-red {
+  color: $red;
+}
+.c-black {
+  color: $black;
+}
+.c-white {
+  color: $white;
+}
