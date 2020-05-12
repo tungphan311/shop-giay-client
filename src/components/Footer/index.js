@@ -111,7 +111,7 @@ const Footer = () => {
             </Col>
             <Col md="6" className="logo-footer">
               <a href="#">
-                <img src="/svg/Logo_Ananas_Footer.svg" />
+                <img src="/images/logo-placeholder.png" />
               </a>
             </Col>
           </Row>
