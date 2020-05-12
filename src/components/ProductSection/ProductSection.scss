@@ -1,6 +1,9 @@
 //TODO: change to global value
 $primary: #f3ac00;
 .homeSection {
+  * {
+    box-sizing: content-box;
+  }
   background: url("/images/bg-noise.jpg") repeat #080808;
   min-height: 600px;
   position: relative;

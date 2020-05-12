@@ -301,3 +301,5 @@ export const EXAMPLE_WOMEN_PRODUCTS = [
     ],
   },
 ];
+
+export const SHOP_NAME = "SHOPNAME";

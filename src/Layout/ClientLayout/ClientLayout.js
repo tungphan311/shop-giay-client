@@ -1,7 +1,13 @@
 import React from "react";
+import Footer from "components/Footer";
 
 function ClientLayout({ children }) {
-  return <div>{children}</div>;
+  return (
+    <>
+      {children}
+      <Footer />
+    </>
+  );
 }
 
 export default ClientLayout;
