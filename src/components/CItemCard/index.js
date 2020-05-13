@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { stringTruncate } from "utils";
 import { vietNamCurrency } from "../../utils";
 
-const ItemCard = ({
+const CItemCard = ({
   name,
   type,
   price,
@@ -63,4 +63,4 @@ const ItemCard = ({
   );
 };
 
-export default ItemCard;
+export default CItemCard;

@@ -2,7 +2,7 @@ import "./Button.scss";
 import React from "react";
 import history from "../../state/history";
 
-const Button = ({ label, onClick, href }) => (
+const CButton = ({ label, onClick, href }) => (
   <button
     onClick={(e) => {
       if (href) history.push(href);
@@ -14,4 +14,4 @@ const Button = ({ label, onClick, href }) => (
   </button>
 );
 
-export default Button;
+export default CButton;

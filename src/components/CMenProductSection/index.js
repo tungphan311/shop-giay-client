@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import ProductSection from "components/ProductSection";
-import { EXAMPLE_MEN_PRODUCTS } from "../../constants";
+import CProductSection from "components/CProductSection";
 import "./MenProductSection.scss";
 import { getMenProducts } from "../../services/productService";
 
@@ -11,7 +10,7 @@ const intialCategories = [
   },
 ];
 
-const WomenProductSection = () => {
+const CMenProductSection = () => {
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [categories, setCategories] = useState(intialCategories);
@@ -28,6 +27,7 @@ const WomenProductSection = () => {
             price: shoes.price,
             salePrice: shoes.salePrice,
             image: shoes.imagePath,
+            description: shoes.description,
           });
           let newState = [...prev];
           newState[0].products = data.map(mapData);
@@ -38,7 +38,7 @@ const WomenProductSection = () => {
   }, []);
 
   return (
-    <ProductSection
+    <CProductSection
       label="GIÀY NAM"
       isLoading={isLoading}
       categories={categories}
@@ -49,4 +49,4 @@ const WomenProductSection = () => {
   );
 };
 
-export default WomenProductSection;
+export default CMenProductSection;

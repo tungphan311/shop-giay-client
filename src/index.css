@@ -1,70 +1,10 @@
-@font-face {
-  font-family: "snicon-icon";
-  src: url("/fonts/snicon.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: Oswald;
-  src: url("/fonts/oswald-regular");
-  src: url("/fonts/oswald-regular.eot") format("embedded-opentype"),
-    url("/fonts/oswald-regular.woff") format("woff"),
-    url("/fonts/oswald-regular.woff2") format("woff"),
-    url("/fonts/oswald-regular.ttf") format("truetype"),
-    url("/fonts/oswald-regular.svg") format("svg");
-  font-weight: 400;
-  font-style: 400;
-}
-
-@font-face {
-  font-family: Oswald;
-  src: url("/fonts/oswald-light");
-  src: url("/fonts/oswald-light.eot") format("embedded-opentype"),
-    url("/fonts/oswald-light.woff") format("woff"),
-    url("/fonts/oswald-light.woff2") format("woff"),
-    url("/fonts/oswald-light.ttf") format("truetype"),
-    url("/fonts/oswald-light.svg") format("svg");
-  font-style: normal;
-  font-weight: 300;
-}
-
-@font-face {
-  font-family: Oswald;
-  src: url("/fonts/oswald-bold");
-  src: url("/fonts/oswald-bold.eot") format("embedded-opentype"),
-    url("/fonts/oswald-bold.woff") format("woff"),
-    url("/fonts/oswald-bold.woff2") format("woff"),
-    url("/fonts/oswald-bold.ttf") format("truetype"),
-    url("/fonts/oswald-bold.svg") format("svg");
-  font-style: normal;
-  font-weight: 700;
-}
-
-@font-face {
-  font-family: "Roboto Condensed";
-  src: url("/fonts/roboto-condensed-regular");
-  src: url("/fonts/roboto-condensed-regular.eot") format("embedded-opentype"),
-    url("/fonts/roboto-condensed-regular.woff") format("woff"),
-    url("/fonts/roboto-condensed-regular.woff2") format("woff"),
-    url("/fonts/roboto-condensed-regular.ttf") format("truetype"),
-    url("/fonts/roboto-condensed-regular.svg") format("svg");
-  font-weight: 400;
-  font-style: normal;
-}
-
 body {
-  /* margin: 0;
+  margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale; */
-  line-height: 1.4;
-  font-family: "Roboto Condensed", Arial, Helvetica, sans-serif;
-  font-weight: 400;
-  font-size: 14px;
-  color: #d0d0d0;
-  margin: 0;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 code {

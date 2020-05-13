@@ -1,5 +1,5 @@
-import SearchHoverContainer from "components/NavBar/SearchHoverContainer";
-import HoverContainer from "components/NavBar/HoverContainer";
+import CSearchHoverContainer from "components/CNavBar/CSearchHoverContainer";
+import CHoverContainer from "components/CNavBar/CHoverContainer";
 
 export const BANNERS = [
   {
@@ -325,19 +325,19 @@ export const NAVBAR_ITEM_LIST = [
 export const NAVBAR_BUTTON_LIST = [
   {
     icon: "search",
-    hoverComponent: SearchHoverContainer,
+    hoverComponent: CSearchHoverContainer,
   },
   {
     icon: "user",
-    hoverComponent: HoverContainer,
+    hoverComponent: CHoverContainer,
   },
   // {
   //   icon: "info",
-  //   hoverComponent: HoverContainer,
+  //   hoverComponent: CHoverContainer,
   // },
   {
     icon: "inventory",
-    hoverComponent: HoverContainer,
+    hoverComponent: CHoverContainer,
   },
 ];
 

@@ -1,14 +1,14 @@
 import "./InputWithButton.scss";
 import React, { Component } from "react";
 
-class InputWithButton extends Component {
+class CInputWithButton extends Component {
   constructor(props) {
     super(props);
 
     this.state = { value: "" };
   }
 
-  handleKeyPress = e => {
+  handleKeyPress = (e) => {
     if (e.key === "Enter") {
       this.props.handleSearch(e.target.value);
     }
@@ -23,7 +23,7 @@ class InputWithButton extends Component {
         <input
           placeholder={placeholder}
           value={value}
-          onChange={e => this.setState({ value: e.target.value })}
+          onChange={(e) => this.setState({ value: e.target.value })}
           onKeyPress={this.handleKeyPress}
           className="inputwithbutton__textinput"
         ></input>
@@ -33,4 +33,4 @@ class InputWithButton extends Component {
   }
 }
 
-export default InputWithButton;
+export default CInputWithButton;

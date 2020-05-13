@@ -2,7 +2,7 @@ import React from "react";
 import "./Footer.scss";
 import { Container, Row, Col } from "react-bootstrap";
 import { SHOP_NAME } from "../../constants";
-const Footer = () => {
+const CFooter = () => {
   return (
     <Container fluid className="footer">
       <Row>
@@ -98,13 +98,13 @@ const Footer = () => {
             </Col>
             <Col md="3">
               <h4>ĐĂNG KÝ NHẬN MAIL</h4>
-              <div class="form-group subscribe-group">
+              <div className="form-group subscribe-group">
                 <input
                   type="email"
-                  class="form-control inputReceiveMail"
+                  className="form-control inputReceiveMail"
                   id="inputRecieveMail"
                 />
-                <a class="subscribe">
+                <a className="subscribe">
                   <img src="/images/arrow_right.jpg" />
                 </a>
               </div>
@@ -132,4 +132,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default CFooter;

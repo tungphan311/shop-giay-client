@@ -1,7 +1,7 @@
 import React from "react";
 import "./UserHoverContent.scss";
 import { USER_HOVER_CONTENT } from "../../../constants";
-import Button from "../../Button";
+import CButton from "components/CButton";
 const LoggedInUserHoverContent = ({ identity, handleLogout }) => {
   const { name } = identity;
   return (
@@ -19,7 +19,7 @@ const LoggedInUserHoverContent = ({ identity, handleLogout }) => {
         </div>
       ))}
       <div className="userhovercontent__row">
-        <Button label="ĐĂNG XUẤT" onClick={handleLogout} />
+        <CButton label="ĐĂNG XUẤT" onClick={handleLogout} />
       </div>
     </>
   );
@@ -29,13 +29,13 @@ const NotLoggedInUserHoverContent = () => (
     <div className="userhovercontent__row">
       {" "}
       <div className="userhovercontent__title">ĐÃ CÓ TÀI KHOẢN?</div>
-      <Button href="/login" label="ĐĂNG NHẬP NGAY" />
+      <CButton href="/login" label="ĐĂNG NHẬP NGAY" />
     </div>
     <div className="userhovercontent__divider" />
     <div className="userhovercontent__row">
       {" "}
       <div className="userhovercontent__subtitle">BẠN CHƯA CÓ TÀI KHOẢN?</div>
-      <Button href="/signup" label="TẠO TÀI KHOẢN MỚI" />
+      <CButton href="/signup" label="TẠO TÀI KHOẢN MỚI" />
     </div>
   </>
 );

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./BannerSlider.scss";
 import { useInterval } from "utils";
-import LoadingIndicator from "../LoadingIndicator";
+import CLoadingIndicator from "components/CLoadingIndicator";
 import { BANNERS } from "../../constants";
 
-const BannerSlider = () => {
+const CBannerSlider = () => {
   const [buttonShow, setButtonShow] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [banners, setBanners] = useState([]);
@@ -46,7 +46,7 @@ const BannerSlider = () => {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        {banners.length === 0 && <LoadingIndicator />}
+        {banners.length === 0 && <CLoadingIndicator />}
         {banners.map((banner, index) => (
           <li
             key={index}
@@ -97,4 +97,4 @@ const BannerSlider = () => {
   );
 };
 
-export default BannerSlider;
+export default CBannerSlider;

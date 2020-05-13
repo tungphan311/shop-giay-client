@@ -1,12 +1,12 @@
 import React from "react";
 import "./NavBar.scss";
 import { NAVBAR_BUTTON_LIST, NAVBAR_ITEM_LIST } from "../../constants";
-import Icon from "../Icon";
-import NavBarItem from "./NavBarItem";
-import NavBarButton from "./NavBarButton";
-import UserHoverContent from "./UserHoverContent";
-const NavBar = () => {
-  const userHoverContent = UserHoverContent({ identity: { name: ">.>" } });
+import CIcon from "components/CIcon";
+import CNavBarItem from "./CNavBarItem";
+import CNavBarButton from "./CNavBarButton";
+import CUserHoverContent from "./CUserHoverContent";
+const CNavBar = () => {
+  const userHoverContent = CUserHoverContent({ identity: { name: ">.>" } });
   const infoHoverContent = <div>info</div>;
   const inventoryHoverContent = <div>inventory</div>;
 
@@ -18,51 +18,51 @@ const NavBar = () => {
       <div className="navbar__container">
         <a className="navbar__logo" href="/" />
         {NAVBAR_ITEM_LIST.map((item) => (
-          <NavBarItem key={item.label} label={item.label} href={item.href}>
+          <CNavBarItem key={item.label} label={item.label} href={item.href}>
             HOVER CONTENT HERE
-          </NavBarItem>
+          </CNavBarItem>
         ))}
         <div className="navbar__button_container">
           {NAVBAR_BUTTON_LIST.map((button) => {
             switch (button.icon) {
               case "user":
                 return (
-                  <NavBarButton
+                  <CNavBarButton
                     key={button.icon}
                     component={button.hoverComponent}
                     hoverContent={userHoverContent}
                   >
-                    <Icon color="white" type={button.icon} />
-                  </NavBarButton>
+                    <CIcon color="white" type={button.icon} />
+                  </CNavBarButton>
                 );
               case "info":
                 return (
-                  <NavBarButton
+                  <CNavBarButton
                     key={button.icon}
                     component={button.hoverComponent}
                     hoverContent={infoHoverContent}
                   >
-                    <Icon color="white" type={button.icon} />
-                  </NavBarButton>
+                    <CIcon color="white" type={button.icon} />
+                  </CNavBarButton>
                 );
               case "inventory":
                 return (
-                  <NavBarButton
+                  <CNavBarButton
                     key={button.icon}
                     component={button.hoverComponent}
                     hoverContent={inventoryHoverContent}
                   >
-                    <Icon color="white" type={button.icon} />
-                  </NavBarButton>
+                    <CIcon color="white" type={button.icon} />
+                  </CNavBarButton>
                 );
               default:
                 return (
-                  <NavBarButton
+                  <CNavBarButton
                     component={button.hoverComponent}
                     key={button.icon}
                   >
-                    <Icon color="white" type={button.icon} />
-                  </NavBarButton>
+                    <CIcon color="white" type={button.icon} />
+                  </CNavBarButton>
                 );
             }
           })}
@@ -72,4 +72,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default CNavBar;

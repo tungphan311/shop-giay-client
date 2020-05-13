@@ -1,9 +1,9 @@
 import React from "react";
-import LoadingIndicator from "components/LoadingIndicator";
-import ItemCard from "components/ItemCard";
+import CLoadingIndicator from "components/CLoadingIndicator";
+import CItemCard from "components/CItemCard";
 import "./ProductSection.scss";
 
-const ProductSection = ({
+const CProductSection = ({
   label,
   categories,
   setSelectedCategory,
@@ -13,7 +13,7 @@ const ProductSection = ({
 }) => {
   const Content = () =>
     categories[selectedCategory].products.map((item, index) => (
-      <ItemCard key={index} {...item}></ItemCard>
+      <CItemCard key={index} {...item}></CItemCard>
     ));
 
   return (
@@ -44,11 +44,11 @@ const ProductSection = ({
       </div>
       <div className="content">
         <div className="item-wrapper">
-          {!isLoading ? <Content /> : <LoadingIndicator />}
+          {!isLoading ? <Content /> : <CLoadingIndicator />}
         </div>
       </div>
     </section>
   );
 };
 
-export default ProductSection;
+export default CProductSection;

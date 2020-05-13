@@ -1,17 +1,17 @@
 import React from "react";
-import BannerSlider from "components/BannerSlider";
-import NewArrivalSection from "components/NewArrivalSection";
-import MenProductSection from "components/MenProductSection";
-import WomenProductSection from "components/WomenProductSection";
+import CBannerSlider from "components/CBannerSlider";
+import CNewArrivalSection from "components/CNewArrivalSection";
+import CMenProductSection from "components/CMenProductSection";
+import CWomenProductSection from "components/CWomenProductSection";
 import "./ClientHome.scss";
 
 function ClientHome() {
   return (
     <>
-      <BannerSlider />
-      <NewArrivalSection />
-      <MenProductSection />
-      <WomenProductSection />
+      <CBannerSlider />
+      <CNewArrivalSection />
+      <CMenProductSection />
+      <CWomenProductSection />
     </>
   );
 }

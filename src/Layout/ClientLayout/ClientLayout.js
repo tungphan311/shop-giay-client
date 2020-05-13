@@ -1,13 +1,14 @@
 import React from "react";
-import Footer from "components/Footer";
-import NavBar from "components/NavBar";
+import CFooter from "components/CFooter";
+import CNavBar from "components/CNavBar";
+import "./ClientLayout.scss";
 
 function ClientLayout({ children }) {
   return (
     <>
-      <NavBar />
+      <CNavBar />
       {children}
-      <Footer />
+      <CFooter />
     </>
   );
 }

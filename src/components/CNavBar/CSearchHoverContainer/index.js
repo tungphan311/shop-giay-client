@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./SearchHoverContainer.scss";
-import Icon from "../../Icon";
-import InputWithButton from "../../InputWithButton";
+import CIcon from "components/CIcon";
+import CInputWithButton from "components/CInputWithButton";
 
 export default class SearchHoverContainer extends Component {
   handleSearch = (text) => {
@@ -12,11 +12,11 @@ export default class SearchHoverContainer extends Component {
     const { className } = this.props;
     return (
       <div className={`search-hover-container ${className}`}>
-        <InputWithButton
+        <CInputWithButton
           placeholder="Tên sản phẩm,..."
           handleSearch={this.handleSearch}
           icon={{
-            icon: Icon,
+            icon: CIcon,
             props: {
               type: "search",
               className: "button-hover",
