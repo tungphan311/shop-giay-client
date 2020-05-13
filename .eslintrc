@@ -1,0 +1,23 @@
+{
+  "extends": ["react-app"],
+  "rules": {
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index"
+        ]
+      }
+    ],
+    "no-console": "warn",
+    "no-var": "warn",
+    "arrow-body-style": ["error", "as-needed"],
+    "quotes": "warn",
+    "jsx-a11y/anchor-is-valid": 0
+  }
+}

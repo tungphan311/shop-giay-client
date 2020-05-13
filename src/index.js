@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
+import { Switch, Route, Router } from "react-router-dom";
+import Routes from "../src/routes/routes";
 import store from "./state/store";
 import "./index.css";
 import App from "./App";
-import { Switch, Route, Router } from "react-router-dom";
 import * as serviceWorker from "./serviceWorker";
-import Routes from "../src/routes/routes";
 import history from "./state/history";
 import "bootstrap/dist/css/bootstrap.min.css";
 
