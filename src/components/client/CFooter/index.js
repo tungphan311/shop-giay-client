@@ -1,7 +1,7 @@
 import React from "react";
 import "./Footer.scss";
 import { Container, Row, Col } from "react-bootstrap";
-import { SHOP_NAME } from "../../constants";
+import { SHOP_NAME } from "constants/index.js";
 const CFooter = () => {
   return (
     <Container fluid className="footer">

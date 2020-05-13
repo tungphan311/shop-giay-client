@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./SearchHoverContainer.scss";
-import CIcon from "components/CIcon";
-import CInputWithButton from "components/CInputWithButton";
+import CIcon from "components/client/CIcon";
+import CInputWithButton from "components/client/CInputWithButton";
 
 export default class SearchHoverContainer extends Component {
   handleSearch = (text) => {

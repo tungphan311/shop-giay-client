@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from "react";
-import CProductSection from "components/CProductSection";
-import "./WomenProductSection.scss";
-import { getWomenProducts } from "services/productService";
+import CProductSection from "components/client/CProductSection";
+import "./MenProductSection.scss";
+import { getMenProducts } from "../../../services/productService";
 
 const intialCategories = [
   {
-    label: "NỮ",
+    label: "NAM",
     products: [],
   },
 ];
 
-const CWomenProductSection = () => {
+const CMenProductSection = () => {
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [categories, setCategories] = useState(intialCategories);
 
   useEffect(() => {
-    getWomenProducts()
+    getMenProducts()
       .then((res) => {
         const data = JSON.parse(res.data.data);
         console.log(data);
@@ -28,6 +28,7 @@ const CWomenProductSection = () => {
             salePrice: shoes.salePrice,
             image: shoes.imagePath,
             description: shoes.description,
+            isNew: shoes.isNew,
           });
           let newState = [...prev];
           newState[0].products = data.map(mapData);
@@ -39,14 +40,14 @@ const CWomenProductSection = () => {
 
   return (
     <CProductSection
-      label="GIÀY NỮ"
+      label="GIÀY NAM"
       isLoading={isLoading}
       categories={categories}
       selectedCategory={selectedCategory}
       setSelectedCategory={setSelectedCategory}
-      className="womenProductSection"
+      className="menProductSection"
     />
   );
 };
 
-export default CWomenProductSection;
+export default CMenProductSection;

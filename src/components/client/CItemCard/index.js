@@ -1,7 +1,6 @@
 import "./ItemCard.scss";
 import React, { useState } from "react";
-import { stringTruncate } from "utils";
-import { vietNamCurrency } from "../../utils";
+import { stringTruncate, vietNamCurrency } from "utils";
 
 const CItemCard = ({
   name,
@@ -10,6 +9,7 @@ const CItemCard = ({
   description,
   image,
   salePrice,
+  isNew,
   href,
 }) => {
   const [isHover, setHover] = useState(false);
@@ -56,6 +56,7 @@ const CItemCard = ({
           </div>
           <div className="shipping">
             <div className="icon">FREE SHIPPING</div>
+            {isNew ? <div className="icon new">HÀNG MỚI</div> : ""}
           </div>
         </div>
       </div>

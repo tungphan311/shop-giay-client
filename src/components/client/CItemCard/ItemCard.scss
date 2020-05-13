@@ -85,6 +85,12 @@ $primary: #f3ac00;
           margin: 0 3px 0 0;
           font-weight: 400;
         }
+
+        &.new {
+          &:before {
+            content: "\e616";
+          }
+        }
       }
     }
   }

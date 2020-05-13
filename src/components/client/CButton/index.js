@@ -1,6 +1,6 @@
 import "./Button.scss";
 import React from "react";
-import history from "../../state/history";
+import history from "state/history";
 
 const CButton = ({ label, onClick, href }) => (
   <button

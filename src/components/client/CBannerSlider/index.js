@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./BannerSlider.scss";
 import { useInterval } from "utils";
-import CLoadingIndicator from "components/CLoadingIndicator";
-import { BANNERS } from "../../constants";
+import CLoadingIndicator from "components/client/CLoadingIndicator";
+import { BANNERS } from "constants/index.js";
 
 const CBannerSlider = () => {
   const [buttonShow, setButtonShow] = useState(false);

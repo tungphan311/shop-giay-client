@@ -1,6 +1,6 @@
 import React from "react";
-import CLoadingIndicator from "components/CLoadingIndicator";
-import CItemCard from "components/CItemCard";
+import CLoadingIndicator from "components/client/CLoadingIndicator";
+import CItemCard from "components/client/CItemCard";
 import "./ProductSection.scss";
 
 const CProductSection = ({

@@ -1,7 +1,7 @@
 import React from "react";
 import "./UserHoverContent.scss";
-import { USER_HOVER_CONTENT } from "../../../constants";
-import CButton from "components/CButton";
+import { USER_HOVER_CONTENT } from "constants/index.js";
+import CButton from "components/client/CButton";
 const LoggedInUserHoverContent = ({ identity, handleLogout }) => {
   const { name } = identity;
   return (

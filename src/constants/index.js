@@ -1,5 +1,5 @@
-import CSearchHoverContainer from "components/CNavBar/CSearchHoverContainer";
-import CHoverContainer from "components/CNavBar/CHoverContainer";
+import CSearchHoverContainer from "components/client/CNavBar/CSearchHoverContainer";
+import CHoverContainer from "components/client/CNavBar/CHoverContainer";
 
 export const BANNERS = [
   {
