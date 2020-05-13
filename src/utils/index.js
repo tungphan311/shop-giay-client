@@ -30,6 +30,7 @@ export const vietNamCurrency = (value) => {
   const character = ".";
   let count = 0;
   let j = 0;
+  value = value + "";
   let insert_string = value;
   for (let i = value.length - space_every_nr; i > 0; i -= space_every_nr) {
     insert_string =

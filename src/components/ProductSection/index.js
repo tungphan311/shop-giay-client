@@ -12,9 +12,10 @@ const ProductSection = ({
   className,
 }) => {
   const Content = () =>
-    categories[selectedCategory].products.map((item) => (
-      <ItemCard key={item.name} {...item}></ItemCard>
+    categories[selectedCategory].products.map((item, index) => (
+      <ItemCard key={index} {...item}></ItemCard>
     ));
+
   return (
     <section className={`homeSection ${className && className}`}>
       <div

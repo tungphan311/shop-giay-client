@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import ProductSection from "components/ProductSection";
 import { EXAMPLE_MEN_PRODUCTS } from "../../constants";
 import "./MenProductSection.scss";
+import { getMenProducts } from "../../services/productService";
 
 const intialCategories = [
   {
@@ -16,10 +17,24 @@ const WomenProductSection = () => {
   const [categories, setCategories] = useState(intialCategories);
 
   useEffect(() => {
-    //TODO: FETCH TRENDING MEN PRODUCT HERE
-    setTimeout(() => {
-      setCategories(EXAMPLE_MEN_PRODUCTS, setIsLoading(false));
-    }, 500);
+    getMenProducts()
+      .then((res) => {
+        const data = JSON.parse(res.data.data);
+        console.log(data);
+        setCategories((prev) => {
+          const mapData = (shoes) => ({
+            name: shoes.name,
+            type: shoes.styleName,
+            price: shoes.price,
+            salePrice: shoes.salePrice,
+            image: shoes.imagePath,
+          });
+          let newState = [...prev];
+          newState[0].products = data.map(mapData);
+          return newState;
+        }, setIsLoading(false));
+      })
+      .catch((error) => console.log(error));
   }, []);
 
   return (

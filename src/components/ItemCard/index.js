@@ -38,7 +38,7 @@ const ItemCard = ({
         <div className="item-card__info">
           <div className="item-card__info_name">
             <a className={`${isHover ? "hover" : ""}`} href="/#">
-              {name}
+              {stringTruncate(name, 30, "...")}
               <br />
               {type}
             </a>
@@ -52,7 +52,7 @@ const ItemCard = ({
         </div>
         <div className={`item-card__add-info ${isHover ? "hover" : ""}`}>
           <div className="description">
-            {stringTruncate(description, 69, "...")}
+            {description && stringTruncate(description, 69, "...")}
           </div>
           <div className="shipping">
             <div className="icon">FREE SHIPPING</div>
