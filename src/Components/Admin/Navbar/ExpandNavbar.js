@@ -1,7 +1,8 @@
 import React from "react";
-// import UserDropdown from "Components/Navbar/UserDropdown/UserDropdown";
+import AUserDropdown from "../UserDropdown/UserDropdown";
 // import SearchForm from "Components/Navbar/SearchForm/SearchForm";
 import ANotification from "../Notification/Notification";
+import AShortcuts from "../Shortcuts/Shortcuts";
 // import Shortcuts from "Components/Navbar/Shortcuts/Shortcuts";
 
 function AExpandNavBar() {
@@ -25,8 +26,8 @@ function AExpandNavBar() {
             </a>
           </li>
           <ANotification />
-          {/* <Shortcuts /> */}
-          {/* <UserDropdown /> */}
+          <AShortcuts />
+          <AUserDropdown />
         </ul>
       </div>
     </nav>
