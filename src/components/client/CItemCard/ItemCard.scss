@@ -4,10 +4,6 @@ $primary: #f3ac00;
     display: inline-block;
     background: url("/images/bg-cat-product.png") no-repeat;
     transition: all 0.3s ease-in-out !important;
-    -webkit-transition: all 0.3s ease-in-out !important;
-    -moz-transition: all 0.3s ease-in-out !important;
-    -o-transition: all 0.3s ease-in-out !important;
-    -ms-transition: all 0.3s ease-in-out !important;
     position: relative;
     vertical-align: top;
     margin: 7px;
@@ -16,8 +12,6 @@ $primary: #f3ac00;
 
     &:hover {
       box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.6);
-      -webkit-box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.6);
-      -moz-box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.6);
     }
   }
 
@@ -28,10 +22,6 @@ $primary: #f3ac00;
     background: url("/images/bg-cat-product-hover.jpg") no-repeat;
     opacity: 0;
     transition: all 0.3s ease-in-out !important;
-    -webkit-transition: all 0.3s ease-in-out !important;
-    -moz-transition: all 0.3s ease-in-out !important;
-    -o-transition: all 0.3s ease-in-out !important;
-    -ms-transition: all 0.3s ease-in-out !important;
     &_hover {
       opacity: 1;
     }
@@ -51,10 +41,6 @@ $primary: #f3ac00;
     margin: 0;
     opacity: 0;
     transition: all 0.3s ease-in-out !important;
-    -webkit-transition: all 0.3s ease-in-out !important;
-    -moz-transition: all 0.3s ease-in-out !important;
-    -o-transition: all 0.3s ease-in-out !important;
-    -ms-transition: all 0.3s ease-in-out !important;
     &.hover {
       opacity: 1;
     }
@@ -106,10 +92,6 @@ $primary: #f3ac00;
       margin: 0;
       padding: 0;
       transition: all 0.3s ease-in-out !important;
-      -webkit-transition: all 0.3s ease-in-out !important;
-      -moz-transition: all 0.3s ease-in-out !important;
-      -o-transition: all 0.3s ease-in-out !important;
-      -ms-transition: all 0.3s ease-in-out !important;
       a {
         color: #e5e5e5;
         text-decoration: none !important;
