@@ -1,0 +1,59 @@
+$white: #fff;
+$red: #ff0000;
+$primary: #f3a000;
+
+.navbaritem {
+  &__container {
+    font-size: 20px;
+    padding: 10px;
+    color: $white;
+    text-decoration: none !important;
+    &_hover {
+      animation-name: delay;
+      animation-duration: 0.7s;
+      animation-fill-mode: forwards;
+    }
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    &:hover {
+      color: $white;
+    }
+  }
+
+  &__wrapper {
+    display: flex;
+  }
+
+  &__content {
+    width: 100vw;
+    height: 40vh;
+    min-height: 400px;
+    background: $red;
+    position: absolute;
+    top: 100%;
+    left: 0%;
+    background: url("/images/bg-noise-detail.jpg") repeat;
+    transition: opacity ease-in 0.25s;
+    &_display {
+      opacity: 1;
+    }
+    &_hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+}
+
+@keyframes delay {
+  0% {
+    background-color: transparent;
+    color: $white;
+  }
+  99% {
+    background-color: transparent;
+  }
+  100% {
+    background: url("/images/bg-noise-detail.jpg") repeat;
+    color: $primary;
+  }
+}

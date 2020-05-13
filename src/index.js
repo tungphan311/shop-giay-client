@@ -8,6 +8,7 @@ import { Switch, Route, Router } from "react-router-dom";
 import * as serviceWorker from "./serviceWorker";
 import Routes from "../src/routes/routes";
 import history from "./state/history";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 ReactDOM.render(
   <React.StrictMode>

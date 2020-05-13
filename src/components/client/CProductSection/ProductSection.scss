@@ -1,0 +1,76 @@
+//TODO: change to global value
+$primary: #f3ac00;
+.homeSection {
+  * {
+    box-sizing: content-box;
+  }
+  background: url("/images/bg-noise.jpg") repeat #080808;
+  min-height: 600px;
+  position: relative;
+  -webkit-box-shadow: 0px 8px 17px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 8px 17px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 8px 17px 0px rgba(0, 0, 0, 0.75);
+  &__header {
+    padding-top: 65px;
+    background: url("/images/bg-section-dark.jpg") no-repeat;
+    background-position: top center;
+    text-align: center;
+    color: #fff;
+    text-transform: uppercase;
+    font-family: /*Oswald,*/ Arial, Helvetica, sans-serif;
+
+    &_only {
+      height: 120px;
+    }
+
+    &_title {
+      font-size: 38px;
+      padding: 0;
+      margin: 0 0 5px 0;
+      text-shadow: 1px 2px 5px rgba(0, 0, 0, 0.8);
+      font-weight: 700;
+    }
+    &_category {
+      border-top: 1px solid #3d3d3d;
+      border-bottom: 1px solid #3d3d3d;
+      padding: 10px;
+      margin: 0 auto;
+      font-size: 16px;
+      text-transform: uppercase;
+      width: 380px;
+
+      div {
+        margin: 0 10px;
+      }
+      ul {
+        list-style: none;
+        list-style-image: none;
+        margin: 0;
+        padding: 0;
+      }
+      .active {
+        color: $primary;
+      }
+      li {
+        font-size: 18px;
+        padding: 0 10px;
+        cursor: pointer;
+        display: inline-block;
+        transition: color 0.2s ease-out;
+        &:hover {
+          color: $primary;
+        }
+      }
+    }
+  }
+  .content {
+    padding: 25px 0 0;
+    .item-wrapper {
+      margin: 0 auto;
+      padding-bottom: 30px;
+      max-width: 85%;
+      text-align: center;
+      transition: max-height ease-out 1s;
+    }
+  }
+}
