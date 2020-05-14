@@ -1,0 +1,15 @@
+.navbarbutton{
+    &__container{
+        padding: 10px;
+    }
+}
+.hovercontainer{
+    transition: ease-in 0.25s;
+    &__hidden{
+        opacity: 0;
+        visibility: hidden;
+    }
+    &__display{
+        opacity: 1;
+    }
+}

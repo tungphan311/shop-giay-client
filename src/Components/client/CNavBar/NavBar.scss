@@ -1,0 +1,38 @@
+.navbar {
+  &__dummy {
+    position: relative !important;
+    z-index: -9999;
+  }
+  &__container {
+    min-width: 830px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #000;
+    position: fixed;
+    padding-left: 20px;
+    flex-direction: row;
+    display: flex;
+    align-items: flex-end;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 999;
+  }
+
+  &__logo {
+    margin-bottom: 10px;
+    background: url("/images/white-logo.png") no-repeat 0 bottom;
+    width: 313px;
+    height: 82px;
+    display: block;
+    margin-right: 20px;
+  }
+
+  &__button_container {
+    margin-left: auto;
+    flex-direction: row;
+    display: flex;
+    padding-right: 20px;
+  }
+}
