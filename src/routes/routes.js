@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import ClientHome from "../pages/Client/Home/ClientHome";
 import AdminHome from "../pages/Admin/Home/AdminHome";
 import ClientProductList from "../pages/Client/ProductList/ClientProductList";
+import ClientProductDetail from "pages/Client/ProductDetail";
 import AdminLogin from "../pages/Admin/Login/AdminLogin";
 import EmptyLayout from "../Layout/EmptyLayout/EmptyLayout";
 import ClientLayout from "../Layout/ClientLayout/ClientLayout";
@@ -33,10 +34,11 @@ function Routes() {
 
   return (
     <Switch>
-      <Route exact path={["/", "/products"]}>
+      <Route exact path={["/", "/products", "/products/:id"]}>
         <ClientLayout>
           <Route exact path="/" component={ClientHome} />
           <Route exact path="/products" component={ClientProductList} />
+          <Route exact path="/products/:id" component={ClientProductDetail} />
         </ClientLayout>
       </Route>
       <Route exact path={["/admin"]}>

@@ -1,0 +1,29 @@
+.detail-display-bg {
+  background: url("/images/bg-noise-detail.jpg") repeat rgba(255, 255, 255, 0.1);
+  padding: 85px 0 50px;
+  text-align: center;
+  min-height: 690px;
+  width: 100%;
+  min-width: 1024px;
+}
+
+.detail-display-wrapper {
+  min-width: 950px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.detail-gallery-wrapper {
+  float: left;
+  width: 650px;
+  height: 850px;
+  .image-container {
+    height: 650px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .detail-display-wrapper {
+    width: 1170px;
+  }
+}

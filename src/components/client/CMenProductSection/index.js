@@ -29,6 +29,8 @@ const CMenProductSection = () => {
             image: shoes.imagePath,
             description: shoes.description,
             isNew: shoes.isNew,
+            isOnSale: shoes.isOnSale,
+            href: "/products/" + shoes.id,
           });
           let newState = [...prev];
           newState[0].products = data.map(mapData);

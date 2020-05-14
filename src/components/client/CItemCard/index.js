@@ -1,6 +1,7 @@
 import "./ItemCard.scss";
 import React, { useState } from "react";
 import { stringTruncate, vietNamCurrency } from "utils";
+import history from "state/history";
 
 const CItemCard = ({
   name,
@@ -10,6 +11,7 @@ const CItemCard = ({
   image,
   salePrice,
   isNew,
+  isOnSale,
   href,
 }) => {
   const [isHover, setHover] = useState(false);
@@ -31,21 +33,24 @@ const CItemCard = ({
       ></div>
       <div className="item-card__content">
         <div className="item-card__image">
-          <a href={href}>
-            <img src={image} alt={`${name} image`}></img>
-          </a>
+          <div onClick={() => history.push(href)}>
+            <img src={image} alt={`${name}`}></img>
+          </div>
         </div>
         <div className="item-card__info">
           <div className="item-card__info_name">
-            <a className={`${isHover ? "hover" : ""}`} href="/#">
+            <div
+              className={`${isHover ? "hover" : ""}`}
+              onClick={() => history.push(href)}
+            >
               {stringTruncate(name, 30, "...")}
               <br />
               {type}
-            </a>
+            </div>
           </div>
           <div className="item-card__info_price">
-            {salePrice && <span>{vietNamCurrency(salePrice)}</span>}
-            <span className={`${salePrice && "strokeText"}`}>
+            {isOnSale ? <span>{vietNamCurrency(salePrice)}</span> : ""}
+            <span className={`${isOnSale && "strokeText"}`}>
               {vietNamCurrency(price)}
             </span>
           </div>
