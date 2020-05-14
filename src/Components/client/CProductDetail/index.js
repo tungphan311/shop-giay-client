@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./ProductDetail.scss";
-import CImageSelector from "components/client/CImageSelector";
+import CImageSelector from "Components/client/CImageSelector";
 import { vietNamCurrency, stringTruncate } from "utils";
-import CButton from "components/client/CButton";
+import CButton from "Components/client/CButton";
 import { getProductDetail } from "services/productService";
 import { useDispatch } from "react-redux";
 import { ADD_PRODUCT_TO_CART } from "state/sagas/cartSaga";

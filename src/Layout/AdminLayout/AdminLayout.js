@@ -1,6 +1,6 @@
 import React from "react";
-import ASidebar from "components/Admin/Sidebar/Sidebar";
-import ANavbar from "components/Admin/Navbar/Navbar";
+import ASidebar from "Components/Admin/Sidebar/Sidebar";
+import ANavbar from "Components/Admin/Navbar/Navbar";
 
 function AdminLayout({ children }) {
   return (

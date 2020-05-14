@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./BannerSlider.scss";
 import { useInterval } from "utils";
-import CLoadingIndicator from "components/client/CLoadingIndicator";
+import CLoadingIndicator from "Components/client/CLoadingIndicator";
 import { BANNERS } from "constants/index.js";
 
 const CBannerSlider = () => {

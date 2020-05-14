@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import CLoadingIndicator from "components/client/CLoadingIndicator";
+import CLoadingIndicator from "Components/client/CLoadingIndicator";
 import "./ImageSelector.scss";
 
 const CImageSelector = ({ imgs, className, imageContainerClassName }) => {

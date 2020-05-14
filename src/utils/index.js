@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { toast as toaster } from "react-toastify";
-import CToaster from "components/client/CToaster";
+import CToaster from "Components/client/CToaster";
 
 export function useInterval(callback, delay) {
   const savedCallback = useRef();

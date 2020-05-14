@@ -1,5 +1,5 @@
-import CSearchHoverContainer from "components/client/CNavBar/CSearchHoverContainer";
-import CHoverContainer from "components/client/CNavBar/CHoverContainer";
+import CSearchHoverContainer from "Components/client/CNavBar/CSearchHoverContainer";
+import CHoverContainer from "Components/client/CNavBar/CHoverContainer";
 
 export const NAVBAR_ITEM_LIST = [
   {

@@ -1,8 +1,8 @@
 import React from "react";
-import CBannerSlider from "components/client/CBannerSlider";
-import CNewArrivalSection from "components/client/CNewArrivalSection";
-import CMenProductSection from "components/client/CMenProductSection";
-import CWomenProductSection from "components/client/CWomenProductSection";
+import CBannerSlider from "Components/client/CBannerSlider";
+import CNewArrivalSection from "Components/client/CNewArrivalSection";
+import CMenProductSection from "Components/client/CMenProductSection";
+import CWomenProductSection from "Components/client/CWomenProductSection";
 import "./ClientHome.scss";
 
 function ClientHome() {

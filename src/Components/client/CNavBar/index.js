@@ -1,7 +1,7 @@
 import React from "react";
 import "./NavBar.scss";
 import { NAVBAR_BUTTON_LIST, NAVBAR_ITEM_LIST } from "constants/index.js";
-import CIcon from "components/client/CIcon";
+import CIcon from "Components/client/CIcon";
 import CNavBarItem from "./CNavBarItem";
 import CNavBarButton from "./CNavBarButton";
 import CUserHoverContent from "./CUserHoverContent";

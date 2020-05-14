@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import CProductSection from "components/client/CProductSection";
+import CProductSection from "Components/client/CProductSection";
 import "./WomenProductSection.scss";
 import { getWomenProducts } from "services/productService";
 

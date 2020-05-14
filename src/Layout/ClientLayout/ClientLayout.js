@@ -1,6 +1,6 @@
 import React from "react";
-import CFooter from "components/client/CFooter";
-import CNavBar from "components/client/CNavBar";
+import CFooter from "Components/client/CFooter";
+import CNavBar from "Components/client/CNavBar";
 import "./ClientLayout.scss";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

@@ -1,5 +1,5 @@
 import React from "react";
-import CProductDetail from "components/client/CProductDetail";
+import CProductDetail from "Components/client/CProductDetail";
 
 function ProductDetail({
   match: {
