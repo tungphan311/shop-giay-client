@@ -1,30 +1,62 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./ProductDetail.scss";
 import CImageSelector from "components/client/CImageSelector";
 import { vietNamCurrency, stringTruncate } from "utils";
 import CButton from "components/client/CButton";
-
-const imgs = [
-  "https://a248.e.akamai.net/f/248/9086/10h/origin-d5.scene7.com/is/image/sneakerhead/snusa-detail_20?$sn20-650$&$img=sneakerhead/nike-air-barrage-mid-ct8453-300-4",
-  "https://a248.e.akamai.net/f/248/9086/10h/origin-d5.scene7.com/is/image/sneakerhead/snusa-detail_20?$sn20-650$&$img=sneakerhead/nike-air-huarache-run-dna-ch-1-ar3864-101-1",
-  "https://a248.e.akamai.net/f/248/9086/10h/origin-d5.scene7.com/is/image/sneakerhead/snusa-detail_20?$sn20-650$&$img=sneakerhead/nike-air-barrage-mid-ct8453-300-4",
-  "https://a248.e.akamai.net/f/248/9086/10h/origin-d5.scene7.com/is/image/sneakerhead/snusa-detail_20?$sn20-650$&$img=sneakerhead/nike-air-barrage-mid-ct8453-300-4",
-  "https://a248.e.akamai.net/f/248/9086/10h/origin-d5.scene7.com/is/image/sneakerhead/snusa-detail_20?$sn20-650$&$img=sneakerhead/nike-air-barrage-mid-ct8453-300-4",
-];
+import { getProductDetail } from "services/productService";
 
 const MAX_STAR_WIDTH = 105;
-const EXAMPLE_SIZE = ["10", "11", "12", "13", "14", "15", "16"];
-const EXAMPLE_DESC =
-  "Originally released in 2009, the Nike LeBron VII was instantly known for its large full-length Air unit, which contained 80% more that previous units. They also have woven panels on the upper, leather wraparound mudguard, mid-cut design, and a rubber outsole.";
-const MAX_CHAR = 100;
-const CProductDetail = () => {
+const MAX_CHAR = 120;
+const IntialState = {
+  id: 0,
+  code: "",
+  name: "",
+  description: "",
+  rating: 0.0,
+  styleName: "",
+  brandName: "",
+  genderName: "",
+  price: 0,
+  salePrice: 0,
+  isOnSale: 0,
+  images: [],
+  sizes: [],
+  reviewCount: 0,
+};
+const MAX_RATING = 5.0;
+const CProductDetail = ({ id }) => {
   const [desExpanded, setDesExpanded] = useState(false);
   const [selectedSize, setSelectedSize] = useState(0);
+  const [product, setProduct] = useState(IntialState);
+  const {
+    code,
+    name,
+    description,
+    rating,
+    styleName,
+    brandName,
+    genderName,
+    price,
+    salePrice,
+    isOnSale,
+    images,
+    sizes,
+    reviewCount,
+  } = product;
+
+  useEffect(() => {
+    getProductDetail(id).then((res) => {
+      const data = JSON.parse(res.data.data);
+      console.log(data);
+      setProduct(data);
+    });
+  }, []);
+
   return (
     <div className="detail-display-bg">
       <div className="detail-display-wrapper clearfix responsive-mid">
         <CImageSelector
-          imgs={imgs}
+          imgs={images}
           className="detail-gallery-wrapper"
           imageContainerClassName="image-container"
         ></CImageSelector>
@@ -32,36 +64,58 @@ const CProductDetail = () => {
           <div className="detail-display-info-section default">
             <div className="detail-review-rating">
               <div className="detail-rating-star">
-                <span style={{ width: "105px" }}></span>
-                <div className="detail-rating-review-count">(no reviews)</div>
+                <span
+                  style={{
+                    width: `${(rating / MAX_RATING) * MAX_STAR_WIDTH}px`,
+                  }}
+                ></span>
+                <div className="detail-rating-review-count">
+                  {reviewCount > 0
+                    ? `(${reviewCount} review${reviewCount > 1 ? "s" : ""})`
+                    : "(no reviews)"}
+                </div>
               </div>
             </div>
-            <h2 className="detail-title">
-              Nike Air Barrage Mid (Super Bowl LIV)
-            </h2>
-            <p className="detail-price">
-              <span className="price">{vietNamCurrency(99999)}</span>
-              <span className="strokeText">{vietNamCurrency(199999)}</span>
-            </p>
-            <ul className="detail-additional-info">
-              <li>Sì tai: style</li>
-              <li>Code: !!@#@!</li>
-              <p class="detail-description excerpt">
-                {!desExpanded
-                  ? stringTruncate(EXAMPLE_DESC, MAX_CHAR, "...")
-                  : EXAMPLE_DESC}
-
-                {EXAMPLE_DESC.length > MAX_CHAR - 3 ? (
-                  <span
-                    onClick={() => setDesExpanded((prev) => !prev)}
-                    class="detail-description-readmore read"
-                  >
-                    {desExpanded ? "Thu nhỏ" : "Đọc thêm"}
-                  </span>
+            <h2 className="detail-title">{name}</h2>
+            {price ? (
+              <p className="detail-price">
+                {isOnSale ? (
+                  <span className="price">{vietNamCurrency(salePrice)}</span>
                 ) : (
                   ""
                 )}
+                <span className={`${isOnSale ? "strokeText" : "price"}`}>
+                  {vietNamCurrency(price)}
+                </span>
               </p>
+            ) : (
+              ""
+            )}
+            <ul className="detail-additional-info">
+              <li>Hãng: {brandName}</li>
+              <li>Giới tính: {genderName}</li>
+              <li>Sì tai: {styleName}</li>
+              <li>Code: {code}</li>
+              {description ? (
+                <p class="detail-description excerpt">
+                  {!desExpanded
+                    ? stringTruncate(description, MAX_CHAR, "...")
+                    : description}
+
+                  {description.length > MAX_CHAR - 3 ? (
+                    <span
+                      onClick={() => setDesExpanded((prev) => !prev)}
+                      class="detail-description-readmore read"
+                    >
+                      {desExpanded ? "Thu nhỏ" : "Đọc thêm"}
+                    </span>
+                  ) : (
+                    ""
+                  )}
+                </p>
+              ) : (
+                ""
+              )}
             </ul>
           </div>
           <div>
@@ -72,8 +126,8 @@ const CProductDetail = () => {
                   <a href="/#">Size Chart</a>
                 </p>
                 <ul className="detail-all-size clearfix">
-                  {EXAMPLE_SIZE
-                    ? EXAMPLE_SIZE.map((size, index) => (
+                  {sizes && sizes.length > 0
+                    ? sizes.map((size, index) => (
                         <li>
                           <div
                             onClick={() => setSelectedSize(index)}

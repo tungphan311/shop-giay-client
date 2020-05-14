@@ -23,3 +23,8 @@ export async function getWomenProducts() {
   const params = { gender: "nữ" };
   return await API.get(path, { params });
 }
+
+export async function getProductDetail(id) {
+  const path = `/shoes/${id}`;
+  return await API.get(path);
+}

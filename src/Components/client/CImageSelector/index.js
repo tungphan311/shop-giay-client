@@ -8,7 +8,7 @@ const CImageSelector = ({ imgs, className, imageContainerClassName }) => {
   const handleMouseEnter = (imageIndex) => {
     setSelectedIndex(imageIndex);
   };
-
+  const url = window.location.href;
   return (
     <div className={`image-selector-wrapper ${className}`}>
       <div
@@ -16,7 +16,7 @@ const CImageSelector = ({ imgs, className, imageContainerClassName }) => {
           imageContainerClassName ? imageContainerClassName : ""
         }`}
       >
-        {imgs ? (
+        {imgs && imgs.length > 0 ? (
           <img
             className="primary-img"
             alt="name"
@@ -28,7 +28,7 @@ const CImageSelector = ({ imgs, className, imageContainerClassName }) => {
       </div>
       <div className="selector-container">
         <ul>
-          {imgs ? (
+          {imgs && imgs.length > 0 ? (
             imgs.map((img, index) => (
               <li
                 className={`visible ${
@@ -43,6 +43,29 @@ const CImageSelector = ({ imgs, className, imageContainerClassName }) => {
             <li className="visible"></li>
           )}
         </ul>
+      </div>
+      <div className="detail-final">
+        <div className="facebook-social">
+          <a
+            // eslint-disable-next-line react/jsx-no-target-blank
+            target="_blank"
+            href={"https://www.facebook.com/sharer/sharer.php?u=" + url}
+          >
+            <img alt="fb icon" src="/images/social-facebook-detail.png"></img>
+          </a>
+        </div>
+        <div className="twitter-social">
+          <a
+            // eslint-disable-next-line react/jsx-no-target-blank
+            target="_blank"
+            href={"https://twitter.com/intent/tweet?text=" + url}
+          >
+            <img
+              alt="twitter icon"
+              src="/images/social-twitter-detail.png"
+            ></img>
+          </a>
+        </div>
       </div>
     </div>
   );

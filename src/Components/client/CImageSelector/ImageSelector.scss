@@ -67,4 +67,25 @@ $primary: #f3ac00;
       background: rgba(255, 255, 255, 0.35);
     }
   }
+
+  .detail-final {
+    display: table;
+    line-height: 10px;
+    margin: 0 auto;
+
+    .facebook-social {
+      background-color: #3c5a96;
+      width: 86px;
+      border-radius: 3px;
+      margin: 0 12px 0 0;
+    }
+
+    .twitter-social {
+      display: table-cell;
+      background-color: #59adeb;
+      width: 86px;
+      border-radius: 3px;
+      margin: 0 12px 0 0;
+    }
+  }
 }

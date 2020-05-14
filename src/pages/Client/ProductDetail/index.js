@@ -6,11 +6,7 @@ function ProductDetail({
     params: { id },
   },
 }) {
-  return (
-    <>
-      <CProductDetail />
-    </>
-  );
+  return <CProductDetail id={id} />;
 }
 
 export default ProductDetail;
