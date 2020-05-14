@@ -4,6 +4,8 @@ import CImageSelector from "components/client/CImageSelector";
 import { vietNamCurrency, stringTruncate } from "utils";
 import CButton from "components/client/CButton";
 import { getProductDetail } from "services/productService";
+import { useDispatch } from "react-redux";
+import { ADD_PRODUCT_TO_CART } from "state/sagas/cartSaga";
 
 const MAX_STAR_WIDTH = 105;
 const MAX_CHAR = 120;
@@ -51,6 +53,11 @@ const CProductDetail = ({ id }) => {
       setProduct(data);
     });
   }, []);
+
+  const dispatch = useDispatch();
+
+  const addProductToCard = (id, size) =>
+    dispatch({ type: ADD_PRODUCT_TO_CART, payload: { id, size } });
 
   return (
     <div className="detail-display-bg">
@@ -145,7 +152,11 @@ const CProductDetail = ({ id }) => {
             </div>
           </div>
           <div className="detail-display-info-section detail-display-bag default">
-            <CButton className="button" label="THÊM VÀO GIỎ" />
+            <CButton
+              onClick={() => addProductToCard(id, sizes[selectedSize])}
+              className="button"
+              label="THÊM VÀO GIỎ"
+            />
           </div>
         </div>
       </div>

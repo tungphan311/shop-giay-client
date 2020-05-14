@@ -1,4 +1,6 @@
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
+import { toast as toaster } from "react-toastify";
+import CToaster from "components/client/CToaster";
 
 export function useInterval(callback, delay) {
   const savedCallback = useRef();
@@ -41,3 +43,11 @@ export const vietNamCurrency = (value) => {
   }
   return insert_string + "₫";
 };
+
+export function toast({ type = "success", message = "" }) {
+  return toaster(<CToaster type={type} message={message} />);
+}
+
+export function toastErr(error = "Có lỗi xảy ra") {
+  toast({ type: "error", message: error });
+}

@@ -51,3 +51,20 @@
   font-weight: 400;
   font-style: normal;
 }
+
+.Toastify__toast {
+  padding: 0 !important;
+
+  &--default {
+    background-color: transparent !important;
+  }
+
+  &-body {
+    margin: 0 !important;
+    border-radius: 5px;
+  }
+}
+
+.Toastify__toast-container {
+  width: 360px;
+}
