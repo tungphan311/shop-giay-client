@@ -34,6 +34,7 @@ $primary: #f3a000;
     left: 0%;
     background: url("/images/bg-noise-detail.jpg") repeat;
     transition: opacity ease-in 0.25s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     &_display {
       opacity: 1;
     }

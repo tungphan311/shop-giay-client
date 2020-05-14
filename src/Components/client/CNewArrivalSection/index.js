@@ -1,25 +1,35 @@
 import React, { useState, useEffect } from "react";
 import CProductSection from "components/client/CProductSection";
-import "./MenProductSection.scss";
-import { getMenProducts } from "../../../services/productService";
+import "./NewArrivalSection.scss";
+import {
+  getMenNewArrivals,
+  getWomenNewArrivals,
+} from "services/productService";
 
 const intialCategories = [
   {
     label: "NAM",
     products: [],
   },
+  {
+    label: "NỮ",
+    products: [],
+  },
 ];
 
-const CMenProductSection = () => {
+const CNewArrivalSection = () => {
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [categories, setCategories] = useState(intialCategories);
 
   useEffect(() => {
-    getMenProducts()
-      .then((res) => {
-        const data = JSON.parse(res.data.data);
-        console.log(data);
+    const men = getMenNewArrivals().then((res) => JSON.parse(res.data.data));
+    const women = getWomenNewArrivals().then((res) =>
+      JSON.parse(res.data.data)
+    );
+
+    Promise.all([men, women])
+      .then(([menProducts, womenProducts]) => {
         setCategories((prev) => {
           const mapData = (shoes) => ({
             name: shoes.name,
@@ -29,9 +39,12 @@ const CMenProductSection = () => {
             image: shoes.imagePath,
             description: shoes.description,
             isNew: shoes.isNew,
+            isOnSale: shoes.isOnSale,
+            href: "/products/" + shoes.id,
           });
           let newState = [...prev];
-          newState[0].products = data.map(mapData);
+          newState[0].products = menProducts.map(mapData);
+          newState[1].products = womenProducts.map(mapData);
           return newState;
         }, setIsLoading(false));
       })
@@ -40,14 +53,14 @@ const CMenProductSection = () => {
 
   return (
     <CProductSection
-      label="GIÀY NAM"
+      label="HÀNG MỚI VỀ"
       isLoading={isLoading}
       categories={categories}
       selectedCategory={selectedCategory}
       setSelectedCategory={setSelectedCategory}
-      className="menProductSection"
+      className="newArrivalSection"
     />
   );
 };
 
-export default CMenProductSection;
+export default CNewArrivalSection;
