@@ -9,6 +9,7 @@ import EmptyLayout from "../Layout/EmptyLayout/EmptyLayout";
 import ClientLayout from "../Layout/ClientLayout/ClientLayout";
 import AdminLayout from "../Layout/AdminLayout/AdminLayout";
 import AAddShoes from "pages/Admin/AddShoes/AddShoes";
+import Cart from "../pages/Client/Cart";
 
 // component for admin site to determine user is logined or not
 export const AuthorizedRoute = ({ component: Component, isUser, ...rest }) => (
@@ -28,18 +29,47 @@ export const AuthorizedRoute = ({ component: Component, isUser, ...rest }) => (
   />
 );
 
+export const CAuthorizedRoute = ({
+  component: Component,
+  isCustomer,
+  ...rest
+}) => (
+  <Route
+    {...rest}
+    render={(props) =>
+      isCustomer ? (
+        <Component {...props} {...rest} />
+      ) : (
+        <Redirect
+          to={{
+            pathname: "/login",
+          }}
+        />
+      )
+    }
+  />
+);
+
 function Routes() {
   // temp variable
   // TODO: define a method to determine user identity
   const isUser = true;
 
+  const isCustomer = true;
+
   return (
     <Switch>
-      <Route exact path={["/", "/products", "/products/:id"]}>
+      <Route exact path={["/", "/products", "/products/:id", "/cart"]}>
         <ClientLayout>
           <Route exact path="/" component={ClientHome} />
           <Route exact path="/products" component={ClientProductList} />
           <Route exact path="/products/:id" component={ClientProductDetail} />
+          <CAuthorizedRoute
+            exact
+            path="/cart"
+            component={Cart}
+            isCustomer={isCustomer}
+          />
         </ClientLayout>
       </Route>
       <Route exact path={["/admin", "/admin/shoes/add"]}>

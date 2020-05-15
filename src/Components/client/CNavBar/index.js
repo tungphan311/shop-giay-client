@@ -30,6 +30,7 @@ const CNavBar = () => {
                 return (
                   <CNavBarButton
                     key={button.icon}
+                    href={button.href}
                     component={button.hoverComponent}
                     hoverContent={userHoverContent}
                   >
@@ -40,6 +41,7 @@ const CNavBar = () => {
                 return (
                   <CNavBarButton
                     key={button.icon}
+                    href={button.href}
                     component={button.hoverComponent}
                     hoverContent={infoHoverContent}
                   >
@@ -49,6 +51,7 @@ const CNavBar = () => {
               case "inventory":
                 return (
                   <CNavBarButton
+                    href={button.href}
                     key={button.icon}
                     component={button.hoverComponent}
                     hoverContent={inventoryHoverContent}
@@ -59,6 +62,7 @@ const CNavBar = () => {
               default:
                 return (
                   <CNavBarButton
+                    href={button.href}
                     component={button.hoverComponent}
                     key={button.icon}
                   >

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import history from "state/history";
 import "./NavBarButton.scss";
 
 export default class NavBarButton extends Component {
@@ -6,7 +7,7 @@ export default class NavBarButton extends Component {
     super(props);
 
     this.state = {
-      isHover: false
+      isHover: false,
     };
   }
 
@@ -19,11 +20,12 @@ export default class NavBarButton extends Component {
   };
 
   render() {
-    const { component: Component, children, hoverContent } = this.props;
+    const { component: Component, children, hoverContent, href } = this.props;
 
     const { isHover } = this.state;
     return (
       <div
+        onClick={() => history.push(href)}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
         className="navbarbutton__container"
@@ -34,7 +36,7 @@ export default class NavBarButton extends Component {
             {...{
               className: `hovercontainer ${
                 isHover ? "hovercontainer__display" : "hovercontainer__hidden"
-              }`
+              }`,
             }}
           >
             {hoverContent ? hoverContent : null}

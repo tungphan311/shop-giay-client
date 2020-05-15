@@ -40,6 +40,7 @@ const CRelatedProductSection = ({ id }) => {
 
   return (
     <CProductSection
+      label="Sản phẩm tương tự"
       isLoading={isLoading}
       categories={categories}
       selectedCategory={selectedCategory}
