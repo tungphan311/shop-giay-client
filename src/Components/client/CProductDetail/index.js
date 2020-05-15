@@ -49,10 +49,9 @@ const CProductDetail = ({ id }) => {
   useEffect(() => {
     getProductDetail(id).then((res) => {
       const data = JSON.parse(res.data.data);
-      console.log(data);
       setProduct(data);
     });
-  }, []);
+  }, [id]);
 
   const dispatch = useDispatch();
 
@@ -104,7 +103,7 @@ const CProductDetail = ({ id }) => {
               <li>Sì tai: {styleName}</li>
               <li>Code: {code}</li>
               {description ? (
-                <p class="detail-description excerpt">
+                <p className="detail-description excerpt">
                   {!desExpanded
                     ? stringTruncate(description, MAX_CHAR, "...")
                     : description}
@@ -112,7 +111,7 @@ const CProductDetail = ({ id }) => {
                   {description.length > MAX_CHAR - 3 ? (
                     <span
                       onClick={() => setDesExpanded((prev) => !prev)}
-                      class="detail-description-readmore read"
+                      className="detail-description-readmore read"
                     >
                       {desExpanded ? "Thu nhỏ" : "Đọc thêm"}
                     </span>
@@ -135,7 +134,7 @@ const CProductDetail = ({ id }) => {
                 <ul className="detail-all-size clearfix">
                   {sizes && sizes.length > 0
                     ? sizes.map((size, index) => (
-                        <li>
+                        <li key={index}>
                           <div
                             onClick={() => setSelectedSize(index)}
                             className={`label actived ${

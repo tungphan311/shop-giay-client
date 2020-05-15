@@ -5,6 +5,7 @@ import CIcon from "Components/client/CIcon";
 import CNavBarItem from "./CNavBarItem";
 import CNavBarButton from "./CNavBarButton";
 import CUserHoverContent from "./CUserHoverContent";
+import { require } from "utils/index";
 const CNavBar = () => {
   const userHoverContent = CUserHoverContent({ identity: { name: ">.>" } });
   const infoHoverContent = <div>info</div>;
@@ -13,7 +14,7 @@ const CNavBar = () => {
   return (
     <>
       <div className="navbar__container navbar__dummy">
-        <a className="navbar__logo" />
+        <a className="navbar__logo" href="/" />
       </div>
       <div className="navbar__container">
         <a className="navbar__logo" href="/" />

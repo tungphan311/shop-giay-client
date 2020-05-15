@@ -31,7 +31,6 @@ export const vietNamCurrency = (value) => {
   const space_every_nr = 3;
   const character = ".";
   let count = 0;
-  let j = 0;
   value = value + "";
   let insert_string = value;
   for (let i = value.length - space_every_nr; i > 0; i -= space_every_nr) {
@@ -51,3 +50,5 @@ export function toast({ type = "success", message = "" }) {
 export function toastErr(error = "Có lỗi xảy ra") {
   toast({ type: "error", message: error });
 }
+
+export * from "./Validation";

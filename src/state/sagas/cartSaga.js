@@ -1,6 +1,4 @@
 import { takeEvery } from "redux-saga/effects";
-import history from "state/history";
-import { toastErr } from "utils";
 export const ADD_PRODUCT_TO_CART = "CART/ADD_PRODUCT";
 
 function* addProductToCart(action) {

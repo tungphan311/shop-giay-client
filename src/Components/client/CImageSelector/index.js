@@ -31,6 +31,7 @@ const CImageSelector = ({ imgs, className, imageContainerClassName }) => {
           {imgs && imgs.length > 0 ? (
             imgs.map((img, index) => (
               <li
+                key={index}
                 className={`visible ${
                   selectedIndex === index ? "selected" : ""
                 }`}

@@ -19,7 +19,6 @@ const CMenProductSection = () => {
     getMenProducts()
       .then((res) => {
         const data = JSON.parse(res.data.data);
-        console.log(data);
         setCategories((prev) => {
           const mapData = (shoes) => ({
             name: shoes.name,
