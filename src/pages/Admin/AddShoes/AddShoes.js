@@ -48,6 +48,17 @@ function AAddShoes() {
     </button>
   );
 
+  const handleAdd = (shoes) => {
+    const newData = [...data, shoes];
+    setData(newData);
+  };
+
+  const handleAddAndClose = (shoes) => {
+    const newData = [...data, shoes];
+    setData(newData);
+    setShowModal(false);
+  };
+
   return (
     <div>
       <ABreadcrumb title="Nhập hàng mới" list={BREADCRUMB} />
@@ -73,7 +84,12 @@ function AAddShoes() {
           </div>
         </div>
       </div>
-      <AddShoesModal show={showModal} handleClose={handleClose} />
+      <AddShoesModal
+        show={showModal}
+        handleClose={handleClose}
+        handleAdd={handleAdd}
+        handleAddAndClose={handleAddAndClose}
+      />
     </div>
   );
 }
@@ -87,6 +103,8 @@ const BREADCRUMB = [
 
 const DATA = [];
 
+// this is just an example of columns.
+// TODO: change columns to shoes props in db
 const columns = [
   {
     name: "Title",
