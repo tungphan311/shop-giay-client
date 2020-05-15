@@ -4,6 +4,7 @@ import CButton from "Components/client/CButton";
 import CInput from "../CInput";
 import CTextarea from "../CTextarea";
 import CStarSelector from "Components/client/CStarSelector";
+import { require } from "utils/index";
 
 export const RATING_FORM_KEY = "FORM/RATING";
 

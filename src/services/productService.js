@@ -28,3 +28,8 @@ export async function getProductDetail(id) {
   const path = `/shoes/${id}`;
   return await API.get(path);
 }
+
+export async function getRelatedProducts(id) {
+  const path = "/shoes";
+  return await API.get(path);
+}
