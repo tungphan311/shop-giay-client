@@ -8,6 +8,7 @@ import AdminLogin from "../pages/Admin/Login/AdminLogin";
 import EmptyLayout from "../Layout/EmptyLayout/EmptyLayout";
 import ClientLayout from "../Layout/ClientLayout/ClientLayout";
 import AdminLayout from "../Layout/AdminLayout/AdminLayout";
+import AAddShoes from "pages/Admin/AddShoes/AddShoes";
 
 // component for admin site to determine user is logined or not
 export const AuthorizedRoute = ({ component: Component, isUser, ...rest }) => (
@@ -41,12 +42,18 @@ function Routes() {
           <Route exact path="/products/:id" component={ClientProductDetail} />
         </ClientLayout>
       </Route>
-      <Route exact path={["/admin"]}>
+      <Route exact path={["/admin", "/admin/shoes/add"]}>
         <AdminLayout>
           <AuthorizedRoute
             exact
             path="/admin"
             component={AdminHome}
+            isUser={isUser}
+          />
+          <AuthorizedRoute
+            exact
+            path="/admin/shoes/add"
+            component={AAddShoes}
             isUser={isUser}
           />
         </AdminLayout>
