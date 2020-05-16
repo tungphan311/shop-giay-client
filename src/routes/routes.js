@@ -9,6 +9,7 @@ import EmptyLayout from "../Layout/EmptyLayout/EmptyLayout";
 import ClientLayout from "../Layout/ClientLayout/ClientLayout";
 import AdminLayout from "../Layout/AdminLayout/AdminLayout";
 import AAddShoes from "pages/Admin/AddShoes/AddShoes";
+import { getItemFromStorage } from "utils/storage";
 
 // component for admin site to determine user is logined or not
 export const AuthorizedRoute = ({ component: Component, isUser, ...rest }) => (
@@ -29,9 +30,7 @@ export const AuthorizedRoute = ({ component: Component, isUser, ...rest }) => (
 );
 
 function Routes() {
-  // temp variable
-  // TODO: define a method to determine user identity
-  const isUser = true;
+  const isUser = getItemFromStorage("identity");
 
   return (
     <Switch>

@@ -1,7 +1,7 @@
 import React from "react";
 import "./Toaster.scss";
 
-const CToaster = ({ type, message }) => (
+const Toaster = ({ type, message }) => (
   <div className={`md__toast md__toast--${type}`}>
     <div className={`icon icon--${type}`} />
     <div className="md__toast--message">
@@ -10,4 +10,4 @@ const CToaster = ({ type, message }) => (
   </div>
 );
 
-export default CToaster;
+export default Toaster;

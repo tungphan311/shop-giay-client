@@ -1,0 +1,47 @@
+@import url(/public/assets/fonts/lineicon/lineicons.min.css);
+
+.login-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(to left, #636fbf, #263277);
+  z-index: 10;
+  overflow-y: auto;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  overflow-x: hidden;
+
+  .background-shape {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    opacity: 0.1;
+    z-index: -1;
+    top: -100px;
+    right: -60px;
+  }
+}
+
+.register-form {
+  position: relative;
+  z-index: 1;
+
+  .form-group {
+    position: relative;
+    z-index: 1;
+    padding: 0;
+  }
+}
+
+.login-meta-data a {
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.login-meta-data a:hover,
+.login-meta-data a:focus {
+  color: #ffaf00;
+  text-decoration: none;
+}

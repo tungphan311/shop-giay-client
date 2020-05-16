@@ -1,8 +1,9 @@
 import { all, call } from "redux-saga/effects";
 import cartSaga from "./cartSaga";
+import aAuthSaga from "./AAuthSaga";
 
 export default function* rootSaga() {
-  yield all([cartSaga()]);
+  yield all([cartSaga(), aAuthSaga()]);
 }
 
 export function* callAndCache(...args) {
