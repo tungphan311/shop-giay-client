@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import CProductSection from "Components/client/CProductSection";
 import "./NewArrivalSection.scss";
 import {
-  getMenNewArrivals,
-  getWomenNewArrivals,
-} from "services/productService";
+  cGetMenNewArrivals,
+  cGetWomenNewArrivals,
+} from "services/cProductService";
 
 const intialCategories = [
   {
@@ -23,8 +23,8 @@ const CNewArrivalSection = () => {
   const [categories, setCategories] = useState(intialCategories);
 
   useEffect(() => {
-    const men = getMenNewArrivals().then((res) => JSON.parse(res.data.data));
-    const women = getWomenNewArrivals().then((res) =>
+    const men = cGetMenNewArrivals().then((res) => JSON.parse(res.data.data));
+    const women = cGetWomenNewArrivals().then((res) =>
       JSON.parse(res.data.data)
     );
 

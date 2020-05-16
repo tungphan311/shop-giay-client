@@ -3,7 +3,7 @@ import "./ProductDetail.scss";
 import CImageSelector from "Components/client/CImageSelector";
 import { vietNamCurrency, stringTruncate } from "utils";
 import CButton from "Components/client/CButton";
-import { getProductDetail } from "services/productService";
+import { cGetProductDetail } from "services/cProductService";
 import { useDispatch } from "react-redux";
 import { ACTION_ADD_PRODUCT_TO_CART } from "state/reducers/cCartReducer";
 
@@ -47,7 +47,7 @@ const CProductDetail = ({ id }) => {
   } = product;
 
   useEffect(() => {
-    getProductDetail(id).then((res) => {
+    cGetProductDetail(id).then((res) => {
       const data = JSON.parse(res.data.data);
       setProduct(data);
     });

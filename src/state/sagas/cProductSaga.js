@@ -16,6 +16,6 @@ function* productRating(action) {
   //do api call here
 }
 
-export default function* cartSaga() {
+export default function* cProductSaga() {
   yield takeEvery(PRODUCT_RATING, productRating);
 }

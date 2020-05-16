@@ -1,35 +1,35 @@
 import API from "utils/Axios";
 
-export async function getMenNewArrivals() {
+export async function cGetMenNewArrivals() {
   const path = "/shoes";
   const params = { new: 1, gender: "nam" };
   return await API.get(path, { params });
 }
 
-export async function getWomenNewArrivals() {
+export async function cGetWomenNewArrivals() {
   const path = "/shoes";
   const params = { new: 1, gender: "nữ" };
   return await API.get(path, { params });
 }
 
-export async function getMenProducts() {
+export async function cGetMenProducts() {
   const path = "/shoes";
   const params = { gender: "nam" };
   return await API.get(path, { params });
 }
 
-export async function getWomenProducts() {
+export async function cGetWomenProducts() {
   const path = "/shoes";
   const params = { gender: "nữ" };
   return await API.get(path, { params });
 }
 
-export async function getProductDetail(id) {
+export async function cGetProductDetail(id) {
   const path = `/shoes/${id}`;
   return await API.get(path);
 }
 
-export async function getRelatedProducts(id) {
+export async function cGetRelatedProducts(id) {
   const path = "/shoes";
   return await API.get(path);
 }

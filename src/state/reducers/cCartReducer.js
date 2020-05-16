@@ -10,8 +10,8 @@ export const cCartReducer = (state = initState, action = {}) => {
   const newState = { ...state };
   switch (action.type) {
     case ACTION_GET_CART_ITEMS_SUCCESS:
-      const { cartItems } = action.payload;
-      newState.cartItems = [...cartItems];
+      const { data } = action.payload;
+      newState.cartItems = [...data];
       return newState;
     case ACTION_GET_CART_ITEMS_FAIL:
       newState.cartItems = [];

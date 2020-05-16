@@ -37,10 +37,13 @@ const EXAMPLE_CART_PRODUCT = [
 ];
 const CCart = () => {
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch({ type: ACTION_GET_CART_ITEMS });
   }, [dispatch]);
-  const cartItems = useSelector((state) => state.cart);
+
+  const cartItems = useSelector((state) => state.ccart.cartItems);
+
   return (
     <div className="cart-wrapper">
       <div className="cart-container">
@@ -49,7 +52,7 @@ const CCart = () => {
         <table className="cart-table">
           <thead>
             <tr>
-              <td colspan="2" className="product-name">
+              <td colSpan="2" className="product-name">
                 Giày
               </td>
               <td className="product-remove"></td>
@@ -59,28 +62,29 @@ const CCart = () => {
             </tr>
           </thead>
           <tbody>
-            {EXAMPLE_CART_PRODUCT.map(
-              ({ id, image, productName, size, price, qty }, index) => (
+            {cartItems.map(
+              ({ stockId, image, name, sizeName, price, quantity }, index) => (
                 <tr
+                  key={index}
                   className={`cart-table-row-${
                     index % 2 === 1 ? "even" : "odd"
                   }`}
                 >
                   <td className="product-image">
                     <img
-                      onClick={() => history.push("/products/" + id)}
+                      onClick={() => history.push("/products/" + stockId)}
                       src={image}
                       alt="WTF"
                     />
                   </td>
                   <td className="product-name">
                     <div
-                      onClick={() => history.push("/products/" + id)}
+                      onClick={() => history.push("/products/" + stockId)}
                       className="name"
                     >
-                      {productName}
+                      {name}
                     </div>
-                    <div className="size">Size: {size}</div>
+                    <div className="size">Size: {sizeName}</div>
                   </td>
                   <td className="product-remove">
                     <div className="remove"></div>
@@ -88,10 +92,10 @@ const CCart = () => {
                   </td>
                   <td className="product-price">{vietNamCurrency(price)}</td>
                   <td className="product-qty">
-                    <input value={qty} />
+                    <input value={quantity} />
                   </td>
                   <td className="product-subtotal">
-                    {vietNamCurrency(qty * price)}
+                    {vietNamCurrency(quantity * price)}
                   </td>
                 </tr>
               )
@@ -115,8 +119,8 @@ const CCart = () => {
                   <td className="align-right">
                     <strong>
                       {vietNamCurrency(
-                        EXAMPLE_CART_PRODUCT.reduce(
-                          (total, item) => total + item.price * item.qty,
+                        cartItems.reduce(
+                          (total, item) => total + item.price * item.quantity,
                           0
                         )
                       )}

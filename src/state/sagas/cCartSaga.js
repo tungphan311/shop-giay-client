@@ -1,9 +1,14 @@
-import { takeEvery, call } from "redux-saga/effects";
+import { takeEvery, call, put } from "redux-saga/effects";
 import {
   ACTION_ADD_PRODUCT_TO_CART,
   ACTION_GET_CART_ITEMS,
+  ACTION_GET_CART_ITEMS_FAIL,
+  ACTION_GET_CART_ITEMS_SUCCESS,
 } from "state/reducers/cCartReducer";
 import { cGetCartItems } from "services/cCartService";
+import history from "state/history";
+import { toastErr } from "utils";
+import { ACTION_FORCE_LOGOUT } from "../reducers/cAuthReducer";
 function* addProductToCart(action) {
   const { id, size } = action.payload;
   yield console.log(id + " " + size);
@@ -22,11 +27,26 @@ function* addProductToCart(action) {
 }
 
 function* getCartItems(action) {
-  const result = yield call(cGetCartItems);
-  console.log(result);
+  const {
+    data: { code, data, msg },
+  } = yield call(cGetCartItems);
+
+  switch (code) {
+    case "OK":
+      yield put({
+        type: ACTION_GET_CART_ITEMS_SUCCESS,
+        payload: { data: JSON.parse(data) },
+      });
+      break;
+    default:
+      yield put({ type: ACTION_GET_CART_ITEMS_FAIL });
+      yield put({ type: ACTION_FORCE_LOGOUT });
+      history.push("/login");
+      toastErr("Vui lòng đăng nhập lại");
+  }
 }
 
-export default function* cartSaga() {
+export default function* cCartSaga() {
   yield takeEvery(ACTION_ADD_PRODUCT_TO_CART, addProductToCart);
   yield takeEvery(ACTION_GET_CART_ITEMS, getCartItems);
 }

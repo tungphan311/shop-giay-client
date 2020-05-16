@@ -6,8 +6,15 @@ import CNavBarItem from "./CNavBarItem";
 import CNavBarButton from "./CNavBarButton";
 import CUserHoverContent from "./CUserHoverContent";
 import { require } from "utils/index";
+import { useDispatch, useSelector } from "react-redux";
+import { ACTION_LOGOUT } from "state/reducers/cAuthReducer";
 const CNavBar = () => {
-  const userHoverContent = CUserHoverContent({ identity: { name: ">.>" } });
+  const dispatch = useDispatch();
+  const username = useSelector((state) => state.cauth.username);
+  const userHoverContent = CUserHoverContent({
+    handleLogout: () => dispatch({ type: ACTION_LOGOUT }),
+    identity: username ? { name: username } : null,
+  });
   const infoHoverContent = <div>info</div>;
   const inventoryHoverContent = <div>inventory</div>;
 

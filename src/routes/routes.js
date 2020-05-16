@@ -12,7 +12,6 @@ import AAddShoes from "pages/Admin/AddShoes/AddShoes";
 import ClientCart from "../pages/Client/Cart";
 import ClientLogin from "../pages/Client/Login";
 import { useSelector } from "react-redux";
-
 // component for admin site to determine user is logined or not
 export const AuthorizedRoute = ({ component: Component, isUser, ...rest }) => (
   <Route

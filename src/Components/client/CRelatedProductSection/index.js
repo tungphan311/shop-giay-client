@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CProductSection from "Components/client/CProductSection";
-import { getRelatedProducts } from "../../../services/productService";
+import { cGetRelatedProducts } from "services/cProductService";
 
 const intialCategories = [
   {
@@ -15,7 +15,7 @@ const CRelatedProductSection = ({ id }) => {
   const [categories, setCategories] = useState(intialCategories);
 
   useEffect(() => {
-    getRelatedProducts(id)
+    cGetRelatedProducts(id)
       .then((res) => {
         const data = JSON.parse(res.data.data).slice(0, 6);
         setCategories((prev) => {
