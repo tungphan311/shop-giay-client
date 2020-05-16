@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Cart.scss";
 import { vietNamCurrency } from "utils";
 import CButton from "Components/client/CButton";
 import history from "state/history";
+import { useDispatch, useSelector } from "react-redux";
+import { ACTION_GET_CART_ITEMS } from "state/reducers/cCartReducer";
 const EXAMPLE_CART_PRODUCT = [
   {
     id: 1,
@@ -34,6 +36,11 @@ const EXAMPLE_CART_PRODUCT = [
   },
 ];
 const CCart = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({ type: ACTION_GET_CART_ITEMS });
+  }, [dispatch]);
+  const cartItems = useSelector((state) => state.cart);
   return (
     <div className="cart-wrapper">
       <div className="cart-container">
@@ -102,10 +109,10 @@ const CCart = () => {
             <table className="total-table">
               <tbody>
                 <tr>
-                  <td class="align-right">
+                  <td className="align-right">
                     <strong>Tổng thành tiền</strong>
                   </td>
-                  <td class="align-right">
+                  <td className="align-right">
                     <strong>
                       {vietNamCurrency(
                         EXAMPLE_CART_PRODUCT.reduce(

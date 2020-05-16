@@ -5,7 +5,7 @@ import { vietNamCurrency, stringTruncate } from "utils";
 import CButton from "Components/client/CButton";
 import { getProductDetail } from "services/productService";
 import { useDispatch } from "react-redux";
-import { ADD_PRODUCT_TO_CART } from "state/sagas/cartSaga";
+import { ACTION_ADD_PRODUCT_TO_CART } from "state/reducers/cCartReducer";
 
 const MAX_STAR_WIDTH = 105;
 const MAX_CHAR = 120;
@@ -56,7 +56,7 @@ const CProductDetail = ({ id }) => {
   const dispatch = useDispatch();
 
   const addProductToCard = (id, size) =>
-    dispatch({ type: ADD_PRODUCT_TO_CART, payload: { id, size } });
+    dispatch({ type: ACTION_ADD_PRODUCT_TO_CART, payload: { id, size } });
 
   return (
     <div className="detail-display-bg">

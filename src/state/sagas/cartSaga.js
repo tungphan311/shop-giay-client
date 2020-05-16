@@ -1,6 +1,9 @@
-import { takeEvery } from "redux-saga/effects";
-export const ADD_PRODUCT_TO_CART = "CART/ADD_PRODUCT";
-
+import { takeEvery, call } from "redux-saga/effects";
+import {
+  ACTION_ADD_PRODUCT_TO_CART,
+  ACTION_GET_CART_ITEMS,
+} from "state/reducers/cCartReducer";
+import { cGetCartItems } from "services/cCartService";
 function* addProductToCart(action) {
   const { id, size } = action.payload;
   yield console.log(id + " " + size);
@@ -18,6 +21,12 @@ function* addProductToCart(action) {
   //history.push("/cart");
 }
 
+function* getCartItems(action) {
+  const result = yield call(cGetCartItems);
+  console.log(result);
+}
+
 export default function* cartSaga() {
-  yield takeEvery(ADD_PRODUCT_TO_CART, addProductToCart);
+  yield takeEvery(ACTION_ADD_PRODUCT_TO_CART, addProductToCart);
+  yield takeEvery(ACTION_GET_CART_ITEMS, getCartItems);
 }
