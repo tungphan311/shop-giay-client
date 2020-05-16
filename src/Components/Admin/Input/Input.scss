@@ -1,0 +1,52 @@
+.register-form span {
+  color: #ffffff;
+  font-size: 14px;
+  display: block;
+}
+
+.register-form form > .form-group > label {
+  position: absolute;
+  text-align: center;
+  z-index: 100;
+  border-radius: 50%;
+  left: 0;
+  font-size: 16px !important;
+  margin-bottom: 0;
+  color: #ffffff !important;
+  top: 26px;
+}
+
+.register-form {
+  .form-control {
+    border-radius: 0;
+    border: 0;
+    color: #ffffff;
+    font-size: 14px;
+    background-color: transparent !important;
+    height: 40px;
+    padding: 8px 8px 8px 24px;
+    border-radius: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .form-control:focus {
+    color: #fff;
+  }
+
+  .form-control::placeholder {
+    color: #ffffff;
+    opacity: 0.4;
+  }
+
+  .btn-success {
+    background-color: #00b894 !important;
+    border-color: #00b894 !important;
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 0.75rem 1rem;
+  }
+
+  .btn-success:hover {
+    opacity: 0.7;
+  }
+}

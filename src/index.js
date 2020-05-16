@@ -9,6 +9,7 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import history from "./state/history";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "react-toastify/dist/ReactToastify.css";
 require("dotenv").config();
 
 ReactDOM.render(

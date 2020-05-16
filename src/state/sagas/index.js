@@ -3,9 +3,16 @@ import cCartSaga from "./cCartSaga";
 import cProductSaga from "./cProductSaga";
 import cAuthSaga from "./cAuthSaga";
 import cInitSaga from "./cInitSaga";
+import aAuthSaga from "./AAuthSaga";
 
 export default function* rootSaga() {
-  yield all([cCartSaga(), cProductSaga(), cAuthSaga(), cInitSaga()]);
+  yield all([
+    cCartSaga(),
+    cProductSaga(),
+    cAuthSaga(),
+    cInitSaga(),
+    aAuthSaga(),
+  ]);
 }
 
 export function* callAndCache(...args) {

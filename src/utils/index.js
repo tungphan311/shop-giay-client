@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { toast as toaster } from "react-toastify";
-import CToaster from "Components/client/CToaster";
+import Toaster from "Components/client/CToaster/Toaster";
 
 export const stringTruncate = (str, length = 50, ending = "") =>
   length >= str.length
@@ -24,7 +24,7 @@ export const vietNamCurrency = (value) => {
 };
 
 export function toast({ type = "success", message = "" }) {
-  return toaster(<CToaster type={type} message={message} />);
+  return toaster(<Toaster type={type} message={message} />);
 }
 
 export function toastErr(error = "Có lỗi xảy ra") {

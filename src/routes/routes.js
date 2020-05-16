@@ -12,6 +12,8 @@ import AAddShoes from "pages/Admin/AddShoes/AddShoes";
 import ClientCart from "../pages/Client/Cart";
 import ClientLogin from "../pages/Client/Login";
 import { useSelector } from "react-redux";
+import { getItemFromStorage } from "utils/storage";
+
 // component for admin site to determine user is logined or not
 export const AuthorizedRoute = ({ component: Component, isUser, ...rest }) => (
   <Route
@@ -52,9 +54,7 @@ export const CAuthorizedRoute = ({
 );
 
 function Routes() {
-  // temp variable
-  // TODO: define a method to determine user identity
-  const isUser = true;
+  const isUser = getItemFromStorage("identity");
 
   const isCustomer = useSelector((state) => state.cauth.username);
 
