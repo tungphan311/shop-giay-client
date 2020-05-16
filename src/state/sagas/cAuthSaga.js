@@ -43,7 +43,6 @@ function* Login(action) {
 }
 
 function* Logout(action) {
-  console.log("Test");
   yield put({ type: ACTION_LOGOUT_SUCCESS });
   yield call(history.push, "/");
   yield call(toast, { message: "Đã đăng xuất" });

@@ -1,48 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Cart.scss";
 import { vietNamCurrency } from "utils";
 import CButton from "Components/client/CButton";
 import history from "state/history";
 import { useDispatch, useSelector } from "react-redux";
 import { ACTION_GET_CART_ITEMS } from "state/reducers/cCartReducer";
-const EXAMPLE_CART_PRODUCT = [
-  {
-    id: 1,
-    image:
-      "https://a248.e.akamai.net/f/248/9086/10h/origin-d5.scene7.com/is/image/sneakerhead/snusa-detail_20?$sn20-650$&$img=sneakerhead/adidas-yeezy-boost-350-v2-fx9033-1",
-    productName: "NIKE AIR FORCE 1 REACT",
-    size: "M",
-    price: 100000,
-    qty: 12,
-    subtotal: 100000,
-  },
-  {
-    id: 1,
-    image:
-      "https://a248.e.akamai.net/f/248/9086/10h/origin-d5.scene7.com/is/image/sneakerhead/snusa-detail_20?$sn20-650$&$img=sneakerhead/adidas-yeezy-boost-350-v2-fx9033-1",
-    productName: "NIKE AIR FORCE 1 REACT",
-    size: "M",
-    price: 100000,
-    qty: 1223,
-  },
-  {
-    id: 1,
-    image:
-      "https://a248.e.akamai.net/f/248/9086/10h/origin-d5.scene7.com/is/image/sneakerhead/snusa-detail_20?$sn20-650$&$img=sneakerhead/adidas-yeezy-boost-350-v2-fx9033-1",
-    productName: "NIKE AIR FORCE 1 REACT",
-    size: "M",
-    price: 100000,
-    qty: 1,
-  },
-];
+import { ACTION_UPDATE_CART } from "../../../state/reducers/cCartReducer";
+
 const CCart = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch({ type: ACTION_GET_CART_ITEMS });
-  }, [dispatch]);
+  }, []);
 
   const cartItems = useSelector((state) => state.ccart.cartItems);
+  const [quantityList, setQuantityList] = useState({});
 
   return (
     <div className="cart-wrapper">
@@ -92,10 +65,26 @@ const CCart = () => {
                   </td>
                   <td className="product-price">{vietNamCurrency(price)}</td>
                   <td className="product-qty">
-                    <input value={quantity} />
+                    <input
+                      style={{ appearance: "none" }}
+                      type="number"
+                      value={
+                        quantityList[stockId] ? quantityList[stockId] : quantity
+                      }
+                      onChange={({ target: { value } }) => {
+                        setQuantityList((state) => ({
+                          ...state,
+                          [stockId]: value > 99 ? 99 : value,
+                        }));
+                      }}
+                    />
                   </td>
                   <td className="product-subtotal">
-                    {vietNamCurrency(quantity * price)}
+                    {vietNamCurrency(
+                      (quantityList[stockId]
+                        ? quantityList[stockId]
+                        : quantity) * price
+                    )}
                   </td>
                 </tr>
               )
@@ -105,7 +94,15 @@ const CCart = () => {
         <div>
           <div className="update-buttons">
             <CButton className="continue-shopping" label="Tiếp tục mua sắm" />
-            <CButton label="Cập nhật giỏ hàng" />
+            <CButton
+              onClick={() =>
+                dispatch({
+                  type: ACTION_UPDATE_CART,
+                  payload: { data: quantityList },
+                })
+              }
+              label="Cập nhật giỏ hàng"
+            />
           </div>
         </div>
         <div>
@@ -120,7 +117,12 @@ const CCart = () => {
                     <strong>
                       {vietNamCurrency(
                         cartItems.reduce(
-                          (total, item) => total + item.price * item.quantity,
+                          (total, item) =>
+                            total +
+                            item.price *
+                              (quantityList[item.stockId]
+                                ? quantityList[item.stockId]
+                                : item.quantity),
                           0
                         )
                       )}

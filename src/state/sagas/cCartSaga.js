@@ -9,9 +9,14 @@ import { cGetCartItems, cAddProductToCart } from "services/cCartService";
 import history from "state/history";
 import { toastErr, toast } from "utils";
 import { ACTION_FORCE_LOGOUT } from "../reducers/cAuthReducer";
+import {
+  ACTION_UPDATE_CART,
+  ACTION_UPDATE_CART_FAIL,
+  ACTION_UPDATE_CART_SUCCESS,
+} from "../reducers/cCartReducer";
+import { cUpdateCart } from "../../services/cCartService";
 function* addProductToCart(action) {
   const { id, size } = action.payload;
-  yield console.log(id + " " + size);
   const {
     data: { code },
   } = yield call(cAddProductToCart, { shoesId: id, sizeName: size });
@@ -44,6 +49,32 @@ function* getCartItems(action) {
       yield put({ type: ACTION_GET_CART_ITEMS_FAIL });
       yield put({ type: ACTION_FORCE_LOGOUT });
       history.push("/login");
+      toastErr("Vui lòng đăng nhập");
+  }
+}
+
+function* updateCart(action) {
+  const { data } = action.payload;
+  let list = [];
+  for (let stockId in data) {
+    list.push({ stockId, quantity: data[stockId] });
+  }
+
+  const {
+    data: { code, data: newData },
+  } = yield call(cUpdateCart, list);
+  switch (code) {
+    case "OK":
+      yield put({
+        type: ACTION_UPDATE_CART_SUCCESS,
+        payload: { data: JSON.parse(newData) },
+      });
+      toast({ message: "Cập nhật thành công" });
+      break;
+    default:
+      yield put({ type: ACTION_UPDATE_CART_FAIL });
+      yield put({ type: ACTION_FORCE_LOGOUT });
+      yield call(history.push, "/login");
       toastErr("Vui lòng đăng nhập lại");
   }
 }
@@ -51,4 +82,5 @@ function* getCartItems(action) {
 export default function* cCartSaga() {
   yield takeEvery(ACTION_ADD_PRODUCT_TO_CART, addProductToCart);
   yield takeEvery(ACTION_GET_CART_ITEMS, getCartItems);
+  yield takeEvery(ACTION_UPDATE_CART, updateCart);
 }

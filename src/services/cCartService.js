@@ -20,3 +20,12 @@ export async function cAddProductToCart({ shoesId, sizeName }) {
     }
   );
 }
+
+export async function cUpdateCart(items) {
+  const path = "/cart/update";
+  const token = localStorage.getItem(TOKEN_KEY);
+  const AuthStr = "Bearer " + token;
+  return await API.post(path, items, {
+    headers: { Authorization: AuthStr },
+  });
+}
