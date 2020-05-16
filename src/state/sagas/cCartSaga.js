@@ -5,25 +5,27 @@ import {
   ACTION_GET_CART_ITEMS_FAIL,
   ACTION_GET_CART_ITEMS_SUCCESS,
 } from "state/reducers/cCartReducer";
-import { cGetCartItems } from "services/cCartService";
+import { cGetCartItems, cAddProductToCart } from "services/cCartService";
 import history from "state/history";
-import { toastErr } from "utils";
+import { toastErr, toast } from "utils";
 import { ACTION_FORCE_LOGOUT } from "../reducers/cAuthReducer";
 function* addProductToCart(action) {
   const { id, size } = action.payload;
   yield console.log(id + " " + size);
-  //TODO: CALL API TO ADD PRODUCT TO CART HERE
+  const {
+    data: { code },
+  } = yield call(cAddProductToCart, { shoesId: id, sizeName: size });
 
-  //redirect to login page if user is not logged in
-  //const url = history.location.pathname;
-  //history.push("/login?redirect=" + url);
-  //toastErr("Vui lòng đăng nhập");
-
-  //fail => display error
-  //toastErr("Thêm thất bại");
-
-  //success => redirect to cart
-  //history.push("/cart");
+  switch (code) {
+    case "OK":
+      yield call(history.push, "/cart");
+      toast({ message: "Thêm thành công" });
+      break;
+    default:
+      yield put({ type: ACTION_FORCE_LOGOUT });
+      yield call(history.push, "/login");
+      toastErr("Vui lòng đăng nhập lại");
+  }
 }
 
 function* getCartItems(action) {
