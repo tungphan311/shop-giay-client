@@ -1,7 +1,7 @@
 import React from "react";
 import "./Input.scss";
 
-function AInput({ label, id, inputType = "text", placeholder, icon }) {
+function ALoginInput({ label, id, inputType = "text", placeholder, icon }) {
   return (
     <div className="form-group text-left mb-4">
       <span>{label}</span>
@@ -18,4 +18,4 @@ function AInput({ label, id, inputType = "text", placeholder, icon }) {
   );
 }
 
-export default AInput;
+export default ALoginInput;

@@ -1,5 +1,5 @@
 import React from "react";
-import AInput from "Components/Admin/Input/Input";
+import ALoginInput from "Components/Admin/Input/Input";
 import "./AdminLogin.scss";
 import { connect } from "react-redux";
 import { LOGIN } from "state/reducers/AAuthReducer";
@@ -30,13 +30,13 @@ function AdminLogin({ login }) {
         />
         <div className="register-form mt-5 px-4">
           <form onSubmit={handleSubmit}>
-            <AInput
+            <ALoginInput
               label="Tên đăng nhập"
               id="username"
               placeholder="info@example.com"
               icon="icon-user"
             />
-            <AInput
+            <ALoginInput
               label="Mật khẩu"
               id="password"
               type="password"
