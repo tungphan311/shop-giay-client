@@ -12,6 +12,17 @@ export const SIDEBAR_LIST = [
     href: "/admin/invoices",
   },
   {
+    id: "shoes",
+    icon: "fas fa-capsules",
+    title: "Quản lý kho",
+    href: "/admin/shoes",
+    sub: [
+      { href: "/admin/shoes", title: "Danh sách sản phẩm" },
+      { href: "/admin/shoes/import", title: "Nhập hàng mới" },
+      { href: "/admin/shoes/add", title: "Thêm giày mới" },
+    ],
+  },
+  {
     id: "member",
     icon: "fas fa-user",
     title: "Hội viên",

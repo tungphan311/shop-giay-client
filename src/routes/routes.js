@@ -13,6 +13,7 @@ import ClientCart from "../pages/Client/Cart";
 import ClientLogin from "../pages/Client/Login";
 import { useSelector } from "react-redux";
 import { getItemFromStorage } from "utils/storage";
+import AShoesList from "pages/Admin/ShoesList/ShoesList";
 
 // component for admin site to determine user is logined or not
 export const AuthorizedRoute = ({ component: Component, isUser, ...rest }) => (
@@ -77,7 +78,7 @@ function Routes() {
           />
         </ClientLayout>
       </Route>
-      <Route exact path={["/admin", "/admin/shoes/add"]}>
+      <Route exact path={["/admin", "/admin/shoes/add", "/admin/shoes"]}>
         <AdminLayout>
           <AuthorizedRoute
             exact
@@ -89,6 +90,12 @@ function Routes() {
             exact
             path="/admin/shoes/add"
             component={AAddShoes}
+            isUser={isUser}
+          />
+          <AuthorizedRoute
+            exact
+            path="/admin/shoes"
+            component={AShoesList}
             isUser={isUser}
           />
         </AdminLayout>
