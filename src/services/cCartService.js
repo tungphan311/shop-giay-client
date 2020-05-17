@@ -29,3 +29,7 @@ export async function cUpdateCart(items) {
     headers: { Authorization: AuthStr },
   });
 }
+
+export async function cRemoveCart(stockId) {
+  return cUpdateCart([{ stockId, quantity: 0 }]);
+}

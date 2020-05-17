@@ -4,8 +4,11 @@ import { vietNamCurrency } from "utils";
 import CButton from "Components/client/CButton";
 import history from "state/history";
 import { useDispatch, useSelector } from "react-redux";
-import { ACTION_GET_CART_ITEMS } from "state/reducers/cCartReducer";
-import { ACTION_UPDATE_CART } from "../../../state/reducers/cCartReducer";
+import {
+  ACTION_GET_CART_ITEMS,
+  ACTION_UPDATE_CART,
+  ACTION_REMOVE_CART,
+} from "state/reducers/cCartReducer";
 
 const CCart = () => {
   const dispatch = useDispatch();
@@ -60,8 +63,26 @@ const CCart = () => {
                     <div className="size">Size: {sizeName}</div>
                   </td>
                   <td className="product-remove">
-                    <div className="remove"></div>
-                    <div className="remove-text">Xóa</div>
+                    <div
+                      onClick={() =>
+                        dispatch({
+                          type: ACTION_REMOVE_CART,
+                          payload: { stockId },
+                        })
+                      }
+                      className="remove"
+                    ></div>
+                    <div
+                      onClick={() =>
+                        dispatch({
+                          type: ACTION_REMOVE_CART,
+                          payload: { stockId },
+                        })
+                      }
+                      className="remove-text"
+                    >
+                      Xóa
+                    </div>
                   </td>
                   <td className="product-price">{vietNamCurrency(price)}</td>
                   <td className="product-qty">

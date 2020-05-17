@@ -10,10 +10,7 @@ const CBannerSlider = () => {
 
   useEffect(() => {
     //TODO: fetch banner data here
-
-    setTimeout(() => {
-      setBanners(BANNERS);
-    }, 5000);
+    setBanners(BANNERS);
   }, []);
 
   const handleMouseEnter = () => {

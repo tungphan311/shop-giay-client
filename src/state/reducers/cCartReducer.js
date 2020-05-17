@@ -5,6 +5,7 @@ export const ACTION_GET_CART_ITEMS_FAIL = "CART/GET_CART_ITEMS_FAIL";
 export const ACTION_UPDATE_CART = "CART/UPDATE";
 export const ACTION_UPDATE_CART_SUCCESS = "CART/UPDATE_SUCCESS";
 export const ACTION_UPDATE_CART_FAIL = "CART/UPDATE_FAILED";
+export const ACTION_REMOVE_CART = "CART/REMOVE";
 
 const initState = {
   cartItems: [],

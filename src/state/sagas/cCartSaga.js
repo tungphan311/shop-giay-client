@@ -13,8 +13,9 @@ import {
   ACTION_UPDATE_CART,
   ACTION_UPDATE_CART_FAIL,
   ACTION_UPDATE_CART_SUCCESS,
+  ACTION_REMOVE_CART,
 } from "../reducers/cCartReducer";
-import { cUpdateCart } from "../../services/cCartService";
+import { cUpdateCart, cRemoveCart } from "../../services/cCartService";
 function* addProductToCart(action) {
   const { id, size } = action.payload;
   const {
@@ -79,8 +80,31 @@ function* updateCart(action) {
   }
 }
 
+function* removeCart(action) {
+  const { stockId } = action.payload;
+
+  const {
+    data: { code, data: newData },
+  } = yield call(cRemoveCart, stockId);
+  switch (code) {
+    case "OK":
+      yield put({
+        type: ACTION_UPDATE_CART_SUCCESS,
+        payload: { data: JSON.parse(newData) },
+      });
+      toast({ message: "Xóa sản phẩm thành công" });
+      break;
+    default:
+      yield put({ type: ACTION_UPDATE_CART_FAIL });
+      yield put({ type: ACTION_FORCE_LOGOUT });
+      yield call(history.push, "/login");
+      toastErr("Vui lòng đăng nhập lại");
+  }
+}
+
 export default function* cCartSaga() {
   yield takeEvery(ACTION_ADD_PRODUCT_TO_CART, addProductToCart);
   yield takeEvery(ACTION_GET_CART_ITEMS, getCartItems);
   yield takeEvery(ACTION_UPDATE_CART, updateCart);
+  yield takeEvery(ACTION_REMOVE_CART, removeCart);
 }
