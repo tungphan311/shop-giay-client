@@ -1,14 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
-import { ACTION_VERIFY_TOKEN } from "./state/reducers/cAuthReducer";
+import { ACTION_GET_INIT_DATA } from "./state/reducers/cInitReducer";
 
 const mapDispatchToProps = (dispatch) => ({
-  cVerifyToken: () => dispatch({ type: ACTION_VERIFY_TOKEN }),
+  cInitData: () => dispatch({ type: ACTION_GET_INIT_DATA }),
 });
 
 class App extends React.Component {
   componentDidMount = () => {
-    this.props.cVerifyToken();
+    this.props.cInitData();
   };
 
   render() {

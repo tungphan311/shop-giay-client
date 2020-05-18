@@ -1,4 +1,5 @@
 import API from "utils/Axios";
+import { TOKEN_KEY } from "constants/index";
 
 export async function cGetMenNewArrivals() {
   const path = "/shoes";
@@ -32,4 +33,17 @@ export async function cGetProductDetail(id) {
 export async function cGetRelatedProducts(id) {
   const path = "/shoes";
   return await API.get(path);
+}
+
+export async function cRateProduct({ shoesId, rating }) {
+  const path = "/shoes/rating";
+  const token = localStorage.getItem(TOKEN_KEY);
+  const AuthStr = "Bearer " + token;
+  return await API.post(
+    path,
+    { shoesId, rating },
+    {
+      headers: { Authorization: AuthStr },
+    }
+  );
 }

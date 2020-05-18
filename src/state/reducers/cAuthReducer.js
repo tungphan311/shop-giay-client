@@ -26,15 +26,20 @@ export const cAuthReducer = (state = initState, action = {}) => {
     }
     case ACTION_LOGIN_FAIL:
       newState.username = null;
+      newState.userInfo = null;
       return newState;
     case ACTION_LOGOUT_SUCCESS:
       localStorage.removeItem(TOKEN_KEY);
       newState.username = null;
+      newState.userInfo = null;
       return newState;
     case ACTION_FORCE_LOGOUT:
       localStorage.removeItem(TOKEN_KEY);
       newState.username = null;
+      newState.userInfo = null;
+      return newState;
     case ACTION_VERIFY_TOKEN_SUCCESS: {
+      console.log("CALLED");
       const { token, userInfo } = action.payload;
       const { sub } = JwtDecoder(token);
       newState.username = sub;
