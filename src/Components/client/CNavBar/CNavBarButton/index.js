@@ -35,7 +35,9 @@ export default class NavBarButton extends Component {
           <Component
             {...{
               className: `hovercontainer ${
-                isHover ? "hovercontainer__display" : "hovercontainer__hidden"
+                isHover && hoverContent
+                  ? "hovercontainer__display"
+                  : "hovercontainer__hidden"
               }`,
             }}
           >

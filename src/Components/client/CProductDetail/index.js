@@ -43,7 +43,7 @@ const CProductDetail = ({ id }) => {
     isOnSale,
     images,
     sizes,
-    reviewCount,
+    ratingCount,
   } = product;
 
   useEffect(() => {
@@ -76,8 +76,8 @@ const CProductDetail = ({ id }) => {
                   }}
                 ></span>
                 <div className="detail-rating-review-count">
-                  {reviewCount > 0
-                    ? `(${reviewCount} review${reviewCount > 1 ? "s" : ""})`
+                  {ratingCount > 0
+                    ? `(${ratingCount} review${ratingCount > 1 ? "s" : ""})`
                     : "(no reviews)"}
                 </div>
               </div>
@@ -124,38 +124,46 @@ const CProductDetail = ({ id }) => {
               )}
             </ul>
           </div>
-          <div>
-            <div className="detail-display-info-section default sizes">
-              <div className="size-selection">
-                <p className="detail-section-title">&nbsp;</p>
-                <p className="detail-section-show-size">
-                  <a href="/#">Size Chart</a>
-                </p>
-                <ul className="detail-all-size clearfix">
-                  {sizes && sizes.length > 0
-                    ? sizes.map((size, index) => (
-                        <li key={index}>
-                          <div
-                            onClick={() => setSelectedSize(index)}
-                            className={`label actived ${
-                              index === selectedSize ? "selected" : ""
-                            }`}
-                          >
-                            <span>{size}</span>
-                          </div>
-                        </li>
-                      ))
-                    : ""}
-                </ul>
+          {sizes && sizes.length > 0 ? (
+            <div>
+              <div className="detail-display-info-section default sizes">
+                <div className="size-selection">
+                  <p className="detail-section-title">&nbsp;</p>
+                  <p className="detail-section-show-size">
+                    <a href="/#">Size Chart</a>
+                  </p>
+                  <ul className="detail-all-size clearfix">
+                    {sizes && sizes.length > 0
+                      ? sizes.map((size, index) => (
+                          <li key={index}>
+                            <div
+                              onClick={() => setSelectedSize(index)}
+                              className={`label actived ${
+                                index === selectedSize ? "selected" : ""
+                              }`}
+                            >
+                              <span>{size}</span>
+                            </div>
+                          </li>
+                        ))
+                      : ""}
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
+          ) : (
+            ""
+          )}
           <div className="detail-display-info-section detail-display-bag default">
-            <CButton
-              onClick={() => addProductToCard(id, sizes[selectedSize])}
-              className="button"
-              label="THÊM VÀO GIỎ"
-            />
+            {sizes && sizes.length > 0 ? (
+              <CButton
+                onClick={() => addProductToCard(id, sizes[selectedSize])}
+                className="button"
+                label="THÊM VÀO GIỎ"
+              />
+            ) : (
+              <div className="soldout">HẾT HÀNG</div>
+            )}
           </div>
         </div>
       </div>

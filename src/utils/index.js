@@ -32,3 +32,4 @@ export function toastErr(error = "Có lỗi xảy ra") {
 }
 
 export * from "./Validation";
+export * from "./JwtDecoder";

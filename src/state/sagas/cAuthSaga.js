@@ -10,7 +10,12 @@ import {
   ACTION_LOGIN_SUCCESS,
   ACTION_LOGOUT,
   ACTION_LOGOUT_SUCCESS,
+  ACTION_VERIFY_TOKEN,
+  ACTION_VERIFY_TOKEN_SUCCESS,
+  ACTION_VERIFY_TOKEN_FAIl,
 } from "../reducers/cAuthReducer";
+import { TOKEN_KEY } from "constants/index";
+import { cVerifyToken } from "../../services/cAuthService";
 function* Login(action) {
   const { username, password } = yield select((state) =>
     getFormValues(LOGIN_FORM_KEY)(state)
@@ -29,6 +34,10 @@ function* Login(action) {
           token: token,
         },
       });
+
+      // get user info on login success, another solution: login api return userinfo directly
+      yield put({ type: ACTION_VERIFY_TOKEN });
+
       yield call(history.push, "/");
       yield call(toast, { message: "Đăng nhập thành công" });
       break;
@@ -48,7 +57,30 @@ function* Logout(action) {
   yield call(toast, { message: "Đã đăng xuất" });
 }
 
+function* VerifyToken() {
+  const token = localStorage.getItem(TOKEN_KEY);
+
+  if (!token) return;
+
+  const {
+    data: { code, data },
+  } = yield call(cVerifyToken, token);
+  switch (code) {
+    case "OK":
+      yield put({
+        type: ACTION_VERIFY_TOKEN_SUCCESS,
+        payload: { token, userInfo: JSON.parse(data) },
+      });
+      break;
+    default:
+      yield put({
+        type: ACTION_VERIFY_TOKEN_FAIl,
+      });
+  }
+}
+
 export default function* cAuthSaga() {
   yield takeEvery(ACTION_LOGIN, Login);
   yield takeEvery(ACTION_LOGOUT, Logout);
+  yield takeEvery(ACTION_VERIFY_TOKEN, VerifyToken);
 }

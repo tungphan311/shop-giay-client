@@ -11,9 +11,14 @@ import { ACTION_LOGOUT } from "state/reducers/cAuthReducer";
 const CNavBar = () => {
   const dispatch = useDispatch();
   const username = useSelector((state) => state.cauth.username);
+  const userInfo = useSelector((state) => state.cauth.userInfo);
   const userHoverContent = CUserHoverContent({
     handleLogout: () => dispatch({ type: ACTION_LOGOUT }),
-    identity: username ? { name: username } : null,
+    identity: userInfo
+      ? { name: userInfo.name }
+      : username
+      ? { name: username }
+      : null,
   });
   const infoHoverContent = <div>info</div>;
   const inventoryHoverContent = <div>inventory</div>;
@@ -61,7 +66,7 @@ const CNavBar = () => {
                     href={button.href}
                     key={button.icon}
                     component={button.hoverComponent}
-                    hoverContent={inventoryHoverContent}
+                    //hoverContent={inventoryHoverContent}
                   >
                     <CIcon color="white" type={button.icon} />
                   </CNavBarButton>
