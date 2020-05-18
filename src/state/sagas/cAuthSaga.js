@@ -4,6 +4,7 @@ import { LOGIN_FORM_KEY } from "Components/client/CLogin/CLoginForm.js";
 import { cLogin } from "services/cAuthService";
 import { toastErr, toast } from "utils";
 import history from "state/history";
+import queryString from "query-string";
 import {
   ACTION_LOGIN,
   ACTION_LOGIN_FAIL,
@@ -38,7 +39,8 @@ function* Login(action) {
       // get user info on login success, another solution: login api return userinfo directly
       yield put({ type: ACTION_VERIFY_TOKEN });
 
-      yield call(history.push, "/");
+      const parsed = queryString.parse(history.location.search);
+      yield call(history.push, parsed && parsed.r ? parsed.r : "/");
       yield call(toast, { message: "Đăng nhập thành công" });
       break;
     case "403":

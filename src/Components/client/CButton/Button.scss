@@ -5,35 +5,23 @@ $yellow1: #e29200;
   outline: none !important;
   text-decoration: none;
   border: none;
-  min-width: 100px;
-  font-family: "Roboto Condensed", Arial, Helvetica, sans-serif;
-  font-size: 16px;
-  letter-spacing: 1px;
-  background: url("/images/bg-button.png") repeat-x $yellow1;
   border-radius: 3px;
+
+  background: url("/images/bg-button.png") repeat-x $yellow1;
+
   color: #fff;
   text-shadow: -1px -1px transparent;
-  text-transform: uppercase;
-  height: 35px;
   line-height: 35px;
-  padding: 0 10px;
-  margin: 0;
   text-align: center;
-  min-width: 20px;
   cursor: pointer;
-  vertical-align: baseline;
+
   font-weight: 400;
+  font-family: "Roboto Condensed", Arial, Helvetica, sans-serif;
+  font-size: 16px;
   text-indent: 0px;
 
-  text-transform: none;
+  transition: background-color 0.15s ease-in-out;
 
-  text-rendering: auto;
-  box-sizing: border-box;
-
-  align-items: flex-start;
-
-  display: inline-block;
-  text-decoration: none;
   &:hover {
     background-color: $yellow2;
   }

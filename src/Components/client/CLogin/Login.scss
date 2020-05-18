@@ -1,5 +1,54 @@
 .clientlogin-wrapper {
   background: url("/images/bg-noise.jpg") repeat #080808;
-  min-height: 500px;
-  padding: 50px;
+  width: 100%;
+  min-height: 100vh;
+  overflow-y: auto;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  overflow-x: hidden;
+
+  .username-label {
+    color: #ffffff !important;
+    font-size: 14px !important;
+    margin-bottom: 0px;
+  }
+
+  .username-input {
+    border: 0;
+    color: #ffffff;
+    font-size: 14px;
+    background-color: transparent !important;
+    height: 40px;
+    padding: 8px 8px 8px 24px;
+    border-radius: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    margin-top: 0px;
+    padding-top: 0px;
+    &:focus {
+      border-color: #80bdff;
+    }
+  }
+  .submit-button {
+    width: 100%;
+    margin-top: 40px;
+    padding: 0.2rem 0;
+    height: auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .login-meta-data a,
+  .login-meta-data {
+    font-size: 14px;
+    color: #ffffff;
+    transition: color 0.15s ease-in-out;
+  }
+
+  .login-meta-data a:hover,
+  .login-meta-data a:focus {
+    color: #ffaf00;
+    text-decoration: none;
+  }
 }

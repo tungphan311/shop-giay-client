@@ -63,15 +63,11 @@ function Routes() {
 
   return (
     <Switch>
-      <Route
-        exact
-        path={["/", "/products", "/products/:id", "/cart", "/login"]}
-      >
+      <Route exact path={["/", "/products", "/products/:id", "/cart"]}>
         <ClientLayout>
           <Route exact path="/" component={ClientHome} />
           <Route exact path="/products" component={ClientProductList} />
           <Route exact path="/products/:id" component={ClientProductDetail} />
-          <Route exact path="/login" component={ClientLogin} />
           <CAuthorizedRoute
             exact
             path="/cart"
@@ -79,6 +75,11 @@ function Routes() {
             isCustomer={isCustomer}
           />
         </ClientLayout>
+      </Route>
+      <Route exact path={["/login"]}>
+        <EmptyLayout>
+          <Route exact path="/login" component={ClientLogin} />
+        </EmptyLayout>
       </Route>
       <Route
         exact

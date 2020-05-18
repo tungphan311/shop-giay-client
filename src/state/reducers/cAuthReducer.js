@@ -39,7 +39,6 @@ export const cAuthReducer = (state = initState, action = {}) => {
       newState.userInfo = null;
       return newState;
     case ACTION_VERIFY_TOKEN_SUCCESS: {
-      console.log("CALLED");
       const { token, userInfo } = action.payload;
       const { sub } = JwtDecoder(token);
       newState.username = sub;
