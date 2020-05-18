@@ -19,7 +19,7 @@ const LoggedInUserHoverContent = ({ identity, handleLogout }) => {
         </div>
       ))}
       <div className="userhovercontent__row">
-        <CButton label="ĐĂNG XUẤT" onClick={handleLogout} />
+        <CButton label="ĐĂNG XUẤT" onClick={() => handleLogout()} />
       </div>
     </>
   );

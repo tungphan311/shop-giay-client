@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CProductSection from "Components/client/CProductSection";
 import "./WomenProductSection.scss";
-import { getWomenProducts } from "services/productService";
+import { cGetWomenProducts } from "services/cProductService";
 
 const intialCategories = [
   {
@@ -16,10 +16,9 @@ const CWomenProductSection = () => {
   const [categories, setCategories] = useState(intialCategories);
 
   useEffect(() => {
-    getWomenProducts()
+    cGetWomenProducts()
       .then((res) => {
         const data = JSON.parse(res.data.data);
-        console.log(data);
         setCategories((prev) => {
           const mapData = (shoes) => ({
             name: shoes.name,

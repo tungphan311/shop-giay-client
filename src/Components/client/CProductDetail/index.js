@@ -3,33 +3,19 @@ import "./ProductDetail.scss";
 import CImageSelector from "Components/client/CImageSelector";
 import { vietNamCurrency, stringTruncate } from "utils";
 import CButton from "Components/client/CButton";
-import { getProductDetail } from "services/productService";
-import { useDispatch } from "react-redux";
-import { ADD_PRODUCT_TO_CART } from "state/sagas/cartSaga";
-
+import { cGetProductDetail } from "services/cProductService";
+import { useDispatch, useSelector } from "react-redux";
+import { ACTION_ADD_PRODUCT_TO_CART } from "state/reducers/cCartReducer";
+import history from "state/history";
+import { toastErr } from "utils";
+import { ACTION_GET_PRODUCT_DETAIL } from "../../../state/reducers/cProductReducer";
 const MAX_STAR_WIDTH = 105;
 const MAX_CHAR = 120;
-const IntialState = {
-  id: 0,
-  code: "",
-  name: "",
-  description: "",
-  rating: 0.0,
-  styleName: "",
-  brandName: "",
-  genderName: "",
-  price: 0,
-  salePrice: 0,
-  isOnSale: 0,
-  images: [],
-  sizes: [],
-  reviewCount: 0,
-};
 const MAX_RATING = 5.0;
 const CProductDetail = ({ id }) => {
   const [desExpanded, setDesExpanded] = useState(false);
   const [selectedSize, setSelectedSize] = useState(0);
-  const [product, setProduct] = useState(IntialState);
+  const product = useSelector((state) => state.cproduct);
   const {
     code,
     name,
@@ -43,21 +29,23 @@ const CProductDetail = ({ id }) => {
     isOnSale,
     images,
     sizes,
-    reviewCount,
+    ratingCount,
   } = product;
-
-  useEffect(() => {
-    getProductDetail(id).then((res) => {
-      const data = JSON.parse(res.data.data);
-      console.log(data);
-      setProduct(data);
-    });
-  }, []);
 
   const dispatch = useDispatch();
 
-  const addProductToCard = (id, size) =>
-    dispatch({ type: ADD_PRODUCT_TO_CART, payload: { id, size } });
+  useEffect(() => {
+    dispatch({ type: ACTION_GET_PRODUCT_DETAIL, payload: { id } });
+  }, [id]);
+
+  const isLoggedIn = useSelector((state) => state.cauth.username);
+  const addProductToCart = isLoggedIn
+    ? (id, size) =>
+        dispatch({ type: ACTION_ADD_PRODUCT_TO_CART, payload: { id, size } })
+    : () => {
+        history.push("/login?r=" + history.location.pathname);
+        toastErr("Bạn phải đăng nhập để sử dụng giỏ hàng");
+      };
 
   return (
     <div className="detail-display-bg">
@@ -77,8 +65,8 @@ const CProductDetail = ({ id }) => {
                   }}
                 ></span>
                 <div className="detail-rating-review-count">
-                  {reviewCount > 0
-                    ? `(${reviewCount} review${reviewCount > 1 ? "s" : ""})`
+                  {ratingCount > 0
+                    ? `(${ratingCount} review${ratingCount > 1 ? "s" : ""})`
                     : "(no reviews)"}
                 </div>
               </div>
@@ -104,7 +92,7 @@ const CProductDetail = ({ id }) => {
               <li>Sì tai: {styleName}</li>
               <li>Code: {code}</li>
               {description ? (
-                <p class="detail-description excerpt">
+                <p className="detail-description excerpt">
                   {!desExpanded
                     ? stringTruncate(description, MAX_CHAR, "...")
                     : description}
@@ -112,7 +100,7 @@ const CProductDetail = ({ id }) => {
                   {description.length > MAX_CHAR - 3 ? (
                     <span
                       onClick={() => setDesExpanded((prev) => !prev)}
-                      class="detail-description-readmore read"
+                      className="detail-description-readmore read"
                     >
                       {desExpanded ? "Thu nhỏ" : "Đọc thêm"}
                     </span>
@@ -125,38 +113,46 @@ const CProductDetail = ({ id }) => {
               )}
             </ul>
           </div>
-          <div>
-            <div className="detail-display-info-section default sizes">
-              <div className="size-selection">
-                <p className="detail-section-title">&nbsp;</p>
-                <p className="detail-section-show-size">
-                  <a href="/#">Size Chart</a>
-                </p>
-                <ul className="detail-all-size clearfix">
-                  {sizes && sizes.length > 0
-                    ? sizes.map((size, index) => (
-                        <li>
-                          <div
-                            onClick={() => setSelectedSize(index)}
-                            className={`label actived ${
-                              index === selectedSize ? "selected" : ""
-                            }`}
-                          >
-                            <span>{size}</span>
-                          </div>
-                        </li>
-                      ))
-                    : ""}
-                </ul>
+          {sizes && sizes.length > 0 ? (
+            <div>
+              <div className="detail-display-info-section default sizes">
+                <div className="size-selection">
+                  <p className="detail-section-title">&nbsp;</p>
+                  <p className="detail-section-show-size">
+                    <a href="/#">Size Chart</a>
+                  </p>
+                  <ul className="detail-all-size clearfix">
+                    {sizes && sizes.length > 0
+                      ? sizes.map((size, index) => (
+                          <li key={index}>
+                            <div
+                              onClick={() => setSelectedSize(index)}
+                              className={`label actived ${
+                                index === selectedSize ? "selected" : ""
+                              }`}
+                            >
+                              <span>{size}</span>
+                            </div>
+                          </li>
+                        ))
+                      : ""}
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
+          ) : (
+            ""
+          )}
           <div className="detail-display-info-section detail-display-bag default">
-            <CButton
-              onClick={() => addProductToCard(id, sizes[selectedSize])}
-              className="button"
-              label="THÊM VÀO GIỎ"
-            />
+            {sizes && sizes.length > 0 ? (
+              <CButton
+                onClick={() => addProductToCart(id, sizes[selectedSize])}
+                className="button"
+                label="THÊM VÀO GIỎ"
+              />
+            ) : (
+              <div className="soldout">HẾT HÀNG</div>
+            )}
           </div>
         </div>
       </div>

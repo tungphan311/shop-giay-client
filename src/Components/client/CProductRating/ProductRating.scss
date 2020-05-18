@@ -1,0 +1,125 @@
+.product-rating-wrapper {
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    color: #fff;
+  }
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 1) inset;
+  padding: 90px 0 10px;
+  width: 100%;
+  min-width: 1024px;
+  background: url("/images/bg-noise.jpg") repeat #080808;
+
+  .required-star:before {
+    color: #f3ac00;
+    content: "*";
+    font-family: Roboto Condensed;
+    font-size: 65%;
+    font-weight: 400 !important;
+    margin: 0 2px 0 0;
+    position: relative;
+  }
+
+  .product-rating {
+    width: 90%;
+    min-width: 800px;
+    margin: 0px auto 20px;
+    border-bottom: 1px solid rgba(75, 75, 75, 1);
+    .title {
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: 700;
+      color: #fff;
+      font-size: 28px;
+      line-height: 25px;
+    }
+    .require-info {
+      font-family: "Roboto Condensed", Arial, Helvetica, sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      text-transform: capitalize;
+      color: #f3ac00;
+      &.required-star:before {
+        top: -5px;
+      }
+    }
+
+    .rating-container {
+      padding: 20px 0 40px;
+
+      .rating-title {
+        display: inline-block;
+        color: #d0d0d0;
+        font-size: 22px;
+        font-weight: 300;
+        text-transform: uppercase;
+        font-family: Oswald, Arial, Helvetica, sans-serif;
+        padding-right: 40px;
+        &.required-star:before {
+          top: -8px;
+        }
+      }
+    }
+
+    .review-input-row {
+      margin: 40px 0;
+      .review-input-label {
+        vertical-align: top;
+        color: #d0d0d0;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 20px;
+        font-weight: 300;
+        text-transform: uppercase;
+        display: inline-block;
+        &.required-star::before {
+          top: -8px;
+        }
+        width: 150px;
+      }
+      .review-input {
+        background: #fff;
+        line-height: 21px;
+        border-radius: 3px;
+        &.textarea {
+          height: 100px;
+        }
+      }
+      .input__container {
+        display: inline-block;
+        width: 80%;
+        left: 50px;
+        position: relative;
+        margin: 0;
+      }
+      .input__field {
+        margin-top: 0;
+      }
+    }
+
+    .review-button-container {
+      margin: auto;
+      display: inline-block;
+      width: 80%;
+      left: 50px;
+      position: relative;
+      margin: 0;
+      text-align: center;
+    }
+
+    .review-button {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 18px;
+      letter-spacing: 1px;
+      width: 200px;
+      box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.25);
+    }
+  }
+
+  @media screen and (min-width: 1280px) {
+    .product-rating {
+      width: 950px;
+    }
+  }
+}

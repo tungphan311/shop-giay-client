@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CProductSection from "Components/client/CProductSection";
-import "./MenProductSection.scss";
-import { cGetMenProducts } from "services/cProductService";
+import { cGetRelatedProducts } from "services/cProductService";
 
 const intialCategories = [
   {
@@ -10,15 +9,15 @@ const intialCategories = [
   },
 ];
 
-const CMenProductSection = () => {
+const CRelatedProductSection = ({ id }) => {
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [categories, setCategories] = useState(intialCategories);
 
   useEffect(() => {
-    cGetMenProducts()
+    cGetRelatedProducts(id)
       .then((res) => {
-        const data = JSON.parse(res.data.data);
+        const data = JSON.parse(res.data.data).slice(0, 6);
         setCategories((prev) => {
           const mapData = (shoes) => ({
             name: shoes.name,
@@ -41,14 +40,13 @@ const CMenProductSection = () => {
 
   return (
     <CProductSection
-      label="GIÀY NAM"
+      label="Sản phẩm tương tự"
       isLoading={isLoading}
       categories={categories}
       selectedCategory={selectedCategory}
       setSelectedCategory={setSelectedCategory}
-      className="menProductSection"
     />
   );
 };
 
-export default CMenProductSection;
+export default CRelatedProductSection;

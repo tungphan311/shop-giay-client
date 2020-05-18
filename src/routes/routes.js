@@ -9,7 +9,9 @@ import EmptyLayout from "../Layout/EmptyLayout/EmptyLayout";
 import ClientLayout from "../Layout/ClientLayout/ClientLayout";
 import AdminLayout from "../Layout/AdminLayout/AdminLayout";
 import AAddShoes from "pages/Admin/AddShoes/AddShoes";
-
+import ClientCart from "../pages/Client/Cart";
+import ClientLogin from "../pages/Client/Login";
+import { useSelector } from "react-redux";
 // component for admin site to determine user is logined or not
 export const AuthorizedRoute = ({ component: Component, isUser, ...rest }) => (
   <Route
@@ -28,18 +30,51 @@ export const AuthorizedRoute = ({ component: Component, isUser, ...rest }) => (
   />
 );
 
+export const CAuthorizedRoute = ({
+  component: Component,
+  isCustomer,
+  ...rest
+}) => (
+  <Route
+    {...rest}
+    render={(props) =>
+      isCustomer ? (
+        <Component {...props} {...rest} />
+      ) : (
+        <Redirect
+          to={{
+            pathname: "/login",
+          }}
+        />
+      )
+    }
+  />
+);
+
 function Routes() {
   // temp variable
   // TODO: define a method to determine user identity
   const isUser = true;
 
+  const isCustomer = useSelector((state) => state.cauth.username);
+
   return (
     <Switch>
-      <Route exact path={["/", "/products", "/products/:id"]}>
+      <Route
+        exact
+        path={["/", "/products", "/products/:id", "/cart", "/login"]}
+      >
         <ClientLayout>
           <Route exact path="/" component={ClientHome} />
           <Route exact path="/products" component={ClientProductList} />
           <Route exact path="/products/:id" component={ClientProductDetail} />
+          <Route exact path="/login" component={ClientLogin} />
+          <CAuthorizedRoute
+            exact
+            path="/cart"
+            component={ClientCart}
+            isCustomer={isCustomer}
+          />
         </ClientLayout>
       </Route>
       <Route exact path={["/admin", "/admin/shoes/add"]}>

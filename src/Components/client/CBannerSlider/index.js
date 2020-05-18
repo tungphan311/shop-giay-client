@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./BannerSlider.scss";
-import { useInterval } from "utils";
 import CLoadingIndicator from "Components/client/CLoadingIndicator";
 import { BANNERS } from "constants/index.js";
 
@@ -11,17 +10,8 @@ const CBannerSlider = () => {
 
   useEffect(() => {
     //TODO: fetch banner data here
-
-    setTimeout(() => {
-      setBanners(BANNERS);
-    }, 5000);
+    setBanners(BANNERS);
   }, []);
-
-  const handleTimeOut = () => {
-    setSelectedIndex((selectedIndex + 1) % BANNERS.length);
-  };
-
-  useInterval(handleTimeOut, 10000);
 
   const handleMouseEnter = () => {
     setButtonShow(true);

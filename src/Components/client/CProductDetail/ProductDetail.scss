@@ -19,6 +19,7 @@
   min-height: 690px;
   width: 100%;
   min-width: 1024px;
+  box-shadow: 0px 8px 17px 0px rgba(0, 0, 0, 0.75);
 
   .detail-display-wrapper {
     min-width: 950px;
@@ -243,6 +244,15 @@
         padding: 3px 0 0;
         margin: 10px 0 0 0;
         width: 60%;
+      }
+
+      .soldout {
+        color: #fff;
+        font-family: "Roboto Condensed", Arial, Helvetica, sans-serif;
+        font-size: 24px;
+        font-weight: 400;
+
+        margin-top: 30px;
       }
     }
   }

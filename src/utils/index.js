@@ -2,26 +2,6 @@ import React, { useEffect, useRef } from "react";
 import { toast as toaster } from "react-toastify";
 import CToaster from "Components/client/CToaster";
 
-export function useInterval(callback, delay) {
-  const savedCallback = useRef();
-
-  // Remember the latest function.
-  useEffect(() => {
-    savedCallback.current = callback;
-  }, [callback]);
-
-  // Set up the interval.
-  useEffect(() => {
-    function tick() {
-      savedCallback.current();
-    }
-    if (delay !== null) {
-      let id = setInterval(tick, delay);
-      return () => clearInterval(id);
-    }
-  }, [delay]);
-}
-
 export const stringTruncate = (str, length = 50, ending = "") =>
   length >= str.length
     ? str
@@ -31,7 +11,6 @@ export const vietNamCurrency = (value) => {
   const space_every_nr = 3;
   const character = ".";
   let count = 0;
-  let j = 0;
   value = value + "";
   let insert_string = value;
   for (let i = value.length - space_every_nr; i > 0; i -= space_every_nr) {
@@ -51,3 +30,6 @@ export function toast({ type = "success", message = "" }) {
 export function toastErr(error = "Có lỗi xảy ra") {
   toast({ type: "error", message: error });
 }
+
+export * from "./Validation";
+export * from "./JwtDecoder";
