@@ -17,9 +17,9 @@ class NavBarItem extends Component {
   render() {
     const { label, href = "#", children } = this.props;
     const { isHover } = this.state;
-    const contentClassName = `navbaritem__content ${
-      isHover ? "navbaritem__content_display" : "navbaritem__content_hidden"
-    }`;
+    const contentClassName = "navbaritem__content navbaritem__content_hidden"; //`navbaritem__content ${
+    // isHover ? "navbaritem__content_display" : "navbaritem__content_hidden"
+    //}`;
     const containerClassName = `navbaritem__container ${
       isHover ? "navbaritem__container_hover" : ""
     }`;

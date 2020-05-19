@@ -1,0 +1,1 @@
+export const ACTION_PLACE_ORDER = "ORDER/PLACE";

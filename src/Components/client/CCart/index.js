@@ -156,7 +156,10 @@ const CCart = () => {
         </div>{" "}
         <div>
           <div className="checkout">
-            <CButton label="Tiến hành đặt hàng" />
+            <CButton
+              onClick={() => history.push("/checkout/shipping")}
+              label="Tiến hành đặt hàng"
+            />
           </div>
         </div>
       </div>

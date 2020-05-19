@@ -11,6 +11,8 @@ import AdminLayout from "../Layout/AdminLayout/AdminLayout";
 import AAddShoes from "pages/Admin/AddShoes/AddShoes";
 import ClientCart from "../pages/Client/Cart";
 import ClientLogin from "../pages/Client/Login";
+import ClientShipping from "../pages/Client/Shipping";
+import ClientPayment from "pages/Client/Payment/index";
 import { useSelector } from "react-redux";
 import { getItemFromStorage } from "utils/storage";
 import AShoesList from "pages/Admin/ShoesList/ShoesList";
@@ -63,7 +65,17 @@ function Routes() {
 
   return (
     <Switch>
-      <Route exact path={["/", "/products", "/products/:id", "/cart"]}>
+      <Route
+        exact
+        path={[
+          "/",
+          "/products",
+          "/products/:id",
+          "/cart",
+          "/checkout/shipping",
+          "/checkout/payment",
+        ]}
+      >
         <ClientLayout>
           <Route exact path="/" component={ClientHome} />
           <Route exact path="/products" component={ClientProductList} />
@@ -73,6 +85,18 @@ function Routes() {
             path="/cart"
             component={ClientCart}
             isCustomer={isCustomer}
+          />
+          <CAuthorizedRoute
+            exact
+            path="/checkout/shipping"
+            component={ClientShipping}
+            isCustomer={true}
+          />
+          <CAuthorizedRoute
+            exact
+            path="/checkout/payment"
+            component={ClientPayment}
+            isCustomer={true}
           />
         </ClientLayout>
       </Route>

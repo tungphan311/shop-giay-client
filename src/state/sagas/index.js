@@ -6,6 +6,7 @@ import cInitSaga from "./cInitSaga";
 import aAuthSaga from "./AAuthSaga";
 import aShoesSaga from "state/sagas/AShoesSaga";
 import aImportSaga from "state/sagas/aImportSaga";
+import cOrderSaga from "./cOrderSaga";
 
 export default function* rootSaga() {
   yield all([
@@ -16,6 +17,7 @@ export default function* rootSaga() {
     aAuthSaga(),
     aShoesSaga(),
     aImportSaga(),
+    cOrderSaga(),
   ]);
 }
 

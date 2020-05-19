@@ -19,7 +19,7 @@ const CInput = ({
   return (
     <div className="input__container">
       <label className={`${!label ? "d-none" : labelClassName}`}>{label}</label>
-      <div style={{ position: "relative" }}>
+      <div className="input__wrapper" style={{ position: "relative" }}>
         {icon && (
           <label className="input__icon" htmlFor={input.name}>
             <i className={`icon-${icon}`}></i>

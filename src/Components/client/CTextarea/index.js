@@ -6,6 +6,8 @@ const CTextarea = ({
   className = "",
   label = "",
   type = "text",
+  labelClassName = "",
+  icon,
   meta = {}, // redux form
   input, // redux form
 }) => {
@@ -16,9 +18,15 @@ const CTextarea = ({
 
   return (
     <div className="input__container">
-      <label className={`${!label ? "d-none" : "input__label"}`}>{label}</label>
-      <div>
+      <label className={`${!label ? "d-none" : labelClassName}`}>{label}</label>
+      <div className="input__wrapper" style={{ position: "relative" }}>
+        {icon && (
+          <label className="input__icon" htmlFor={input.name}>
+            <i className={`icon-${icon}`}></i>
+          </label>
+        )}
         <textarea
+          id={input.name}
           {...input}
           placeholder={placeholder}
           className={`input__field ${className}`}
