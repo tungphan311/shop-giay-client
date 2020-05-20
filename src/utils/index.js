@@ -23,9 +23,10 @@ export function useInterval(callback, delay) {
 }
 
 export const stringTruncate = (str, length = 50, ending = "") =>
-  length >= str.length
+  str &&
+  (length >= str.length
     ? str
-    : str.substring(0, length - ending.length) + ending;
+    : str.substring(0, length - ending.length) + ending);
 
 export const vietNamCurrency = (value) => {
   const space_every_nr = 3;
