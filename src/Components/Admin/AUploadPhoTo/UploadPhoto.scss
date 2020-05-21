@@ -29,9 +29,25 @@
   vertical-align: middle;
   text-align: center;
   position: relative;
+  .hiden {
+    opacity: 0;
+  }
+  .img {
+    opacity: 1;
+  }
 }
 
-.fa-plus-circle {
+.photo-upload-wrapper:hover {
+  .hiden {
+    opacity: 1;
+  }
+  .add-photo-image-upload {
+    opacity: 0.4 !important;
+  }
+}
+
+.fa-plus-circle,
+.fa-edit {
   position: absolute;
   top: 50%;
   transform: translate(-50%, -100%);
@@ -40,7 +56,10 @@
 }
 
 .add-btn-label {
-  margin-top: 55%;
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   font-size: calc(120vw / 144);
   font-weight: 500;
   line-height: 1.83;

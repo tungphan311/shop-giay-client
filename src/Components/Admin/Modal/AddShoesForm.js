@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
 import { FORM_KEY_ADDSHOES } from "state/reducers/formReducer";
 import { connect } from "react-redux";
-import Input from "Components/Admin/AInput/input";
+import AInput from "Components/Admin/AInput/input";
 import "./AddShoesForm.scss";
-import Select from "Components/Admin/ASelect/select";
+import ASelect from "Components/Admin/ASelect/select";
 
-import TextArea from "Components/Admin/ATextArea/TextArea";
-import UploadPhoto from "Components/Admin/AUploadPhoTo/UploadPhoto";
+import ATextArea from "Components/Admin/ATextArea/TextArea";
+import AUploadPhoto from "Components/Admin/AUploadPhoTo/UploadPhoto";
 
 class AAddShoesForm extends Component {
   constructor(props) {
@@ -24,52 +24,52 @@ class AAddShoesForm extends Component {
     return (
       <form className="AddShoesForm" onSubmit={handleSubmit}>
         <div className="container">
-          <span>Photo</span>
+          <span>Hình Ảnh</span>
           <div className="displayCenter">
             <Field
               label="PhotoUpload"
               name="photoUpload"
-              component={UploadPhoto}
+              component={AUploadPhoto}
             />
             <Field
               label="PhotoUpload"
               name="photoUpload"
-              component={UploadPhoto}
+              component={AUploadPhoto}
             />
             <Field
               label="PhotoUpload"
               name="photoUpload"
-              component={UploadPhoto}
+              component={AUploadPhoto}
             />
             <Field
               label="PhotoUpload"
               name="photoUpload"
-              component={UploadPhoto}
+              component={AUploadPhoto}
             />
             <Field
               label="PhotoUpload"
               name="photoUpload"
-              component={UploadPhoto}
+              component={AUploadPhoto}
             />
           </div>
           <div className="displayRow">
-            <Field label="Name" name="name" component={Input} />
-            <Field label="Code" name="code" component={Input} />
+            <Field label="Tên" name="name" component={AInput} />
+            <Field label="Mã giày" name="code" component={AInput} />
           </div>
           <div className="displayRow">
-            <Field label="Year" name="title" component={Input} />
-            <Field label="Style" name="style" component={Select} />
-            <Field label="Brand" name="brand" component={Select} />
+            <Field label="Năm" name="title" component={AInput} />
+            <Field label="Kiểu" name="style" component={ASelect} />
+            <Field label="Thương hiệu" name="brand" component={ASelect} />
           </div>
           <div className="displayRow">
             <Field
-              label="Description"
+              label="Mô tả"
               type="textarea"
               rows="5"
               name="discription"
-              component={TextArea}
+              component={ATextArea}
             />
-            <Field label="Price" name="price" component={Input} />
+            <Field label="Giá" name="price" component={AInput} />
           </div>
         </div>
       </form>
