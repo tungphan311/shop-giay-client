@@ -5,7 +5,7 @@ import ASubItem from "./SubItem";
 function ASidebarItem({ item, roleid }) {
   const { id, icon, title, href, sub } = item;
 
-  const pathname = getPathname(window.location.pathname);
+  const pathname = window.location.pathname;
 
   return (
     <li className={`nav-item${pathname === href ? " active" : ""}`}>

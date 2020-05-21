@@ -1,0 +1,62 @@
+.zwYEZ div:first-child {
+  overflow: unset !important;
+}
+
+.hara__dropdown {
+  width: 100%;
+
+  & + div {
+    width: 100%;
+  }
+
+  .hara__select {
+    &__indicator-separator {
+      width: 0;
+    }
+
+    &__single-value {
+      font-size: 1rem;
+      color: #495057;
+    }
+
+    &__control {
+      border-radius: 4px;
+      background-color: #fff;
+      font-size: 1rem;
+      line-height: 24px;
+
+      &--is-focused {
+        border: 1px solid #0167c1;
+        box-shadow: none;
+        &:hover {
+          border-color: #0167c1 !important;
+        }
+      }
+      &--is-disabled {
+        border: 1px solid #ebeef2;
+      }
+
+      &:hover {
+        border-color: hsl(0, 0%, 80%);
+      }
+    }
+
+    &__value-container {
+      padding-left: 16.5px;
+
+      & > div {
+        margin: 0;
+      }
+    }
+
+    &__placeholder,
+    &__single-value {
+      margin: 0;
+      left: 16.5px;
+    }
+
+    &__Input {
+      margin: 0;
+    }
+  }
+}
