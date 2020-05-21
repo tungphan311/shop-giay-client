@@ -42,19 +42,7 @@ export const USER_HOVER_CONTENT = [
     href: "#",
   },
   {
-    label: "Thông tin đăng nhập",
-    href: "#",
-  },
-  {
-    label: "Theo dõi đơn hàng",
-    href: "#",
-  },
-  {
-    label: "Đánh giá",
-    href: "#",
-  },
-  {
-    label: "Điểm tích lũy",
+    label: "Thông tin đơn hàng",
     href: "#",
   },
 ];

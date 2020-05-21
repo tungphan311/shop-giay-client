@@ -13,6 +13,7 @@ import ClientCart from "../pages/Client/Cart";
 import ClientLogin from "../pages/Client/Login";
 import ClientShipping from "../pages/Client/Shipping";
 import ClientPayment from "pages/Client/Payment/index";
+import ClientOrder from "pages/Client/Order/index";
 import { useSelector } from "react-redux";
 import { getItemFromStorage } from "utils/storage";
 import AShoesList from "pages/Admin/ShoesList/ShoesList";
@@ -74,6 +75,7 @@ function Routes() {
           "/cart",
           "/checkout/shipping",
           "/checkout/payment",
+          "/order",
         ]}
       >
         <ClientLayout>
@@ -96,6 +98,12 @@ function Routes() {
             exact
             path="/checkout/payment"
             component={ClientPayment}
+            isCustomer={true}
+          />
+          <CAuthorizedRoute
+            exact
+            path="/order"
+            component={ClientOrder}
             isCustomer={true}
           />
         </ClientLayout>

@@ -1,0 +1,125 @@
+$primary: #f3ac00;
+.order-wrapper {
+  background: url("/images/bg-noise.jpg") repeat #080808;
+  min-width: 1024px;
+  .order-container {
+    padding: 55px 55px 0;
+    margin: 0 auto;
+    max-width: 1300px;
+    min-height: 500px;
+  }
+
+  .order-header {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    color: #fff;
+    padding: 0 0 40px 0;
+    font-size: 30px;
+    line-height: 1;
+    border-bottom: 1px solid #3c3c3c;
+  }
+
+  .order-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 1px;
+    margin-top: 10px;
+    position: relative;
+
+    .loader-wrapper {
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: rgba($color: #000000, $alpha: 0.5);
+      z-index: 99;
+    }
+
+    thead,
+    tbody {
+      vertical-align: middle;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.15);
+    }
+    td {
+      padding: 15px;
+      text-align: left;
+      border: 1px solid transparent;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .order-code,
+    .order-date,
+    .order-total {
+      width: 130px;
+      text-align: center;
+    }
+    .order-status {
+      width: 200px;
+      text-align: right;
+    }
+
+    .order-table-row-odd {
+      background: rgba(0, 0, 0, 0.08);
+    }
+    .order-table-row-even {
+      background: rgba(255, 255, 255, 0.05);
+    }
+  }
+
+  .pagination-container {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .pagination-bar {
+    display: inline-block;
+    padding-left: 0;
+    border-radius: 4px;
+    margin-top: 10px;
+
+    li {
+      display: inline;
+    }
+
+    & > .active > a,
+    & > .active > span,
+    & > .active > a:hover,
+    & > .active > span:hover,
+    & > .active > a:focus,
+    & > .active > span:focus {
+      z-index: 3;
+      color: #fff;
+      background-color: $primary;
+      border-color: $primary;
+      cursor: default;
+    }
+
+    & > .disabled > span,
+    & > .disabled > span:hover,
+    & > .disabled > span:focus,
+    & > .disabled > a,
+    & > .disabled > a:hover,
+    & > .disabled > a:focus {
+      color: #777777;
+      background-color: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.2);
+      cursor: not-allowed;
+    }
+
+    & > li > a,
+    & > li > span {
+      position: relative;
+      float: left;
+      padding: 6px 12px;
+      line-height: 1.42857143;
+      text-decoration: none;
+      color: $primary;
+      background-color: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      margin-left: -1px;
+    }
+  }
+}
