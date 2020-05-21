@@ -7,6 +7,7 @@ import "./select.scss";
 
 const ASelect = ({
   className = "",
+  formClassName = "",
   label = "",
   meta = {}, //redux form
   input, //redux form
@@ -20,7 +21,7 @@ const ASelect = ({
   const { errCode } = error || {};
 
   return (
-    <div className="input__container">
+    <div className={`input__container ${formClassName}`}>
       <label>{label}</label>
       <div>
         <select

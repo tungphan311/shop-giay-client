@@ -54,12 +54,27 @@ class AAddShoesForm extends Component {
           </div>
           <div className="displayRow">
             <Field label="Tên" name="name" component={AInput} />
-            <Field label="Mã giày" name="code" component={AInput} />
+            <Field
+              label="Mã giày"
+              name="code"
+              component={AInput}
+              formClassName="ml-2"
+            />
           </div>
           <div className="displayRow">
             <Field label="Năm" name="title" component={AInput} />
-            <Field label="Kiểu" name="style" component={ASelect} />
-            <Field label="Thương hiệu" name="brand" component={ASelect} />
+            <Field
+              label="Kiểu"
+              name="style"
+              component={ASelect}
+              formClassName="ml-2"
+            />
+            <Field
+              label="Thương hiệu"
+              name="brand"
+              component={ASelect}
+              formClassName="ml-2"
+            />
           </div>
           <div className="displayRow">
             <Field
@@ -69,7 +84,12 @@ class AAddShoesForm extends Component {
               name="discription"
               component={ATextArea}
             />
-            <Field label="Giá" name="price" component={AInput} />
+            <Field
+              label="Giá"
+              name="price"
+              component={AInput}
+              formClassName="ml-2"
+            />
           </div>
         </div>
       </form>
