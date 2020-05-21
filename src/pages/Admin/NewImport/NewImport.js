@@ -23,7 +23,6 @@ function ANewImport() {
   const [selectedRows, setSelectedRows] = useState([]);
   const [toggleCleared, setToggleCleared] = useState(false);
   const [options, setOptions] = useState([{ value: 0, label: "" }]);
-  const [selected, setSelected] = useState({ value: 0, label: "" });
   const [showModal, setShowModal] = useState(false);
 
   const handleClose = () => setShowModal(false);
