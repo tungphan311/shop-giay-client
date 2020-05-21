@@ -13,7 +13,7 @@ class Toastify extends Component {
           draggable
           hideProgressBar
           newestOnTop
-          autoClose={30000000}
+          autoClose={2000}
         />
       </div>
     );

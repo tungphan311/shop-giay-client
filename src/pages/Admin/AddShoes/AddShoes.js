@@ -2,8 +2,9 @@ import React, { useState, useMemo, useCallback } from "react";
 import DataTable, { defaultThemes } from "react-data-table-component";
 import ABreadcrumb from "Components/Admin/Breadcrumb/Breadcrumb";
 import differenceBy from "lodash/differenceBy";
-import { actions, OPTIONS, NO_DATA_COMPONENT } from "utils/utils";
+import { OPTIONS, NO_DATA_COMPONENT } from "utils/utils";
 import AddShoesModal from "Components/Admin/Modal/AddShoes";
+import { customStyles } from "constants/index";
 
 function AAddShoes() {
   const [selectedRows, setSelectedRows] = useState([]);
@@ -61,7 +62,7 @@ function AAddShoes() {
 
   return (
     <div>
-      <ABreadcrumb title="Nhập hàng mới" list={BREADCRUMB} />
+      <ABreadcrumb title="Thêm sản phẩm mới" list={BREADCRUMB} />
       <div className="row">
         <div className="col-md-12">
           <div className="card">
@@ -117,39 +118,3 @@ const columns = [
     sortable: true,
   },
 ];
-
-const customStyles = {
-  header: {
-    style: {
-      minHeight: "56px",
-      borderBottomStyle: "solid",
-      borderBottomWidth: "1px",
-      borderBottomColor: defaultThemes.default.divider.default,
-    },
-  },
-  headRow: {
-    style: {
-      borderTopStyle: "solid",
-      borderTopWidth: "1px",
-      borderTopColor: defaultThemes.default.divider.default,
-    },
-  },
-  headCells: {
-    style: {
-      "&:not(:last-of-type)": {
-        borderRightStyle: "solid",
-        borderRightWidth: "1px",
-        borderRightColor: defaultThemes.default.divider.default,
-      },
-    },
-  },
-  cells: {
-    style: {
-      "&:not(:last-of-type)": {
-        borderRightStyle: "solid",
-        borderRightWidth: "1px",
-        borderRightColor: defaultThemes.default.divider.default,
-      },
-    },
-  },
-};

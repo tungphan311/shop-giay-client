@@ -1,0 +1,22 @@
+.amount-input {
+  height: 100%;
+  width: 100%;
+  border: none;
+  background-color: #fafafa;
+
+  &:hover {
+    background-color: #eee;
+  }
+}
+
+.rdt_TableRow:hover {
+  .amount-input {
+    background-color: #eee;
+  }
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
