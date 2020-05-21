@@ -8,9 +8,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { GET_SHOES } from "state/reducers/AShoesReducer";
 import AProductSelect from "Components/Admin/ProductSelect/Select";
 import AddShoesModal from "Components/Admin/Modal/AddShoes";
+import swal from "sweetalert";
 
 const DEFAULT_ITEM = {
-  code: "",
+  code: 0,
+  name: "",
   amount: 0,
 };
 
@@ -50,10 +52,24 @@ function ANewImport() {
 
   const contextActions = useMemo(() => {
     const handleDelete = () => {
-      if (window.confirm(`Are you sure you want to delete?`)) {
-        setToggleCleared(!toggleCleared);
-        setData(data.filter((x) => !selectedRows.includes(x)));
-      }
+      swal({
+        title: "Bạn có chắc không?",
+        text: "Một khi xoá, bạn không thể khôi phục những dòng đã chọn!",
+        icon: "warning",
+        buttons: ["Huỷ", "Xoá"],
+        dangerMode: true,
+      }).then((willDelete) => {
+        if (willDelete) {
+          setToggleCleared(!toggleCleared);
+          setData(data.filter((x) => !selectedRows.includes(x)));
+          swal("Chúc mừng bạn đã xoá thành công", {
+            icon: "success",
+          });
+        } else {
+          setToggleCleared(!toggleCleared);
+          swal("Chúc mừng dữ liệu của bạn vẫn an toàn!");
+        }
+      });
     };
 
     return (
@@ -83,17 +99,32 @@ function ANewImport() {
     setData(newData);
   };
 
+  const selectProduct = (selected, id) => {
+    let newData = [...data];
+
+    const index = newData.findIndex((ele) => ele.id === id);
+
+    newData[index] = {
+      ...newData[index],
+      code: selected.value,
+      name: selected.label,
+    };
+
+    setData(newData);
+  };
+
   const columns = [
     {
-      name: "Mã giày (code)",
-      selector: "code",
+      name: "Tên giày (code)",
+      selector: "name",
       sortable: true,
       cell: (row) => (
         <AProductSelect
           options={options}
           className="product-select"
-          selectedOption={selected}
-          onChange={(selected) => setSelected(selected)}
+          id={row.id}
+          selectedOption={{ value: row.code, label: row.name }}
+          onChange={(selected) => selectProduct(selected, row.id)}
           placeholder="Chọn mã sản phẩm"
         />
       ),
