@@ -31,7 +31,7 @@ export const NAVBAR_BUTTON_LIST = [
   // },
   {
     icon: "inventory",
-    hoverComponent: CHoverContainer,
+    //hoverComponent: CHoverContainer,
     href: "/cart",
   },
 ];

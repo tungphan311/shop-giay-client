@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import history from "state/history";
 import "./NavBarButton.scss";
+import CIcon from "Components/client/CIcon";
 
 export default class NavBarButton extends Component {
   constructor(props) {
@@ -20,24 +21,35 @@ export default class NavBarButton extends Component {
   };
 
   render() {
-    const { component: Component, children, hoverContent, href } = this.props;
+    const {
+      component: Component,
+      floatNumber,
+      icon,
+      hoverContent,
+      href,
+    } = this.props;
 
     const { isHover } = this.state;
     return (
       <div
-        onClick={() => history.push(href)}
+        onClick={() => href && history.push(href)}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
-        className="navbarbutton__container"
+        className={`navbarbutton__container ${href ? "pointer" : ""}`}
       >
-        {children}
+        <CIcon color="white" type={icon} />
+        {floatNumber && floatNumber !== 0 ? (
+          <div className="float__number__wrapper">
+            <span className="float__number">{floatNumber}</span>
+          </div>
+        ) : (
+          ""
+        )}
         {Component ? (
           <Component
             {...{
               className: `hovercontainer ${
-                isHover && hoverContent
-                  ? "hovercontainer__display"
-                  : "hovercontainer__hidden"
+                isHover ? "hovercontainer__display" : "hovercontainer__hidden"
               }`,
             }}
           >

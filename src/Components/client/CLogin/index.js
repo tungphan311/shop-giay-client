@@ -16,7 +16,7 @@ const CLogin = () => {
           style={{ maxWidth: "30%" }}
         />
         <CLoginForm onSubmit={() => dispatch({ type: ACTION_LOGIN })} />
-        <div class="login-meta-data">
+        <div className="login-meta-data">
           <a href="/register">Đăng ký mới</a>
           {"  hoặc  "}
           <a href="/forget-password">Quên mật khẩu?</a>

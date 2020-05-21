@@ -1,15 +1,40 @@
-.navbarbutton{
-    &__container{
-        padding: 10px;
-    }
+.navbarbutton {
+  &__container {
+    padding: 10px;
+  }
 }
-.hovercontainer{
-    transition: ease-in 0.25s;
-    &__hidden{
-        opacity: 0;
-        visibility: hidden;
-    }
-    &__display{
-        opacity: 1;
-    }
+.hovercontainer {
+  transition: ease-in 0.25s;
+  &__hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
+  &__display {
+    opacity: 1;
+  }
+}
+.navbarbutton__container {
+  .pointer {
+    cursor: pointer;
+  }
+  .float__number__wrapper {
+    position: relative;
+  }
+  .float__number {
+    display: block;
+    position: absolute;
+    text-align: center;
+    line-height: 17px;
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    font-size: 11px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    color: #fff;
+    background: #f3ac00;
+    top: -32px;
+    right: -15px;
+    padding: 0 1px 0 0;
+  }
 }

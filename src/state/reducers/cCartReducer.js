@@ -6,6 +6,7 @@ export const ACTION_UPDATE_CART = "CART/UPDATE";
 export const ACTION_UPDATE_CART_SUCCESS = "CART/UPDATE_SUCCESS";
 export const ACTION_UPDATE_CART_FAIL = "CART/UPDATE_FAILED";
 export const ACTION_REMOVE_CART = "CART/REMOVE";
+export const ACTION_CLEAR_CART = "CART/CLEAR";
 
 const initState = {
   cartItems: [],
@@ -25,6 +26,9 @@ export const cCartReducer = (state = initState, action = {}) => {
       newState.cartItems = [...newData];
       return newState;
     case ACTION_UPDATE_CART_FAIL:
+      newState.cartItems = [];
+      return newState;
+    case ACTION_CLEAR_CART:
       newState.cartItems = [];
       return newState;
     default:

@@ -1,11 +1,9 @@
 import React from "react";
 import "./NavBar.scss";
 import { NAVBAR_BUTTON_LIST, NAVBAR_ITEM_LIST } from "constants/index.js";
-import CIcon from "Components/client/CIcon";
 import CNavBarItem from "./CNavBarItem";
-import CNavBarButton from "./CNavBarButton";
 import CUserHoverContent from "./CUserHoverContent";
-import { require } from "utils/index";
+import CNavBarButton from "./CNavBarButton";
 import { useDispatch, useSelector } from "react-redux";
 import { ACTION_LOGOUT } from "state/reducers/cAuthReducer";
 const CNavBar = () => {
@@ -20,20 +18,19 @@ const CNavBar = () => {
       ? { name: username }
       : null,
   });
-  const infoHoverContent = <div>info</div>;
-  const inventoryHoverContent = <div>inventory</div>;
+
+  const cartItems = useSelector((state) => state.ccart.cartItems);
 
   return (
     <>
       <div className="navbar__container navbar__dummy">
-        <a className="navbar__logo" href="/" />
+        <div className="navbar__logo" />
       </div>
       <div className="navbar__container">
+        {/* eslint-disable-next-line jsx-a11y/anchor-has-content  */}
         <a className="navbar__logo" href="/" />
         {NAVBAR_ITEM_LIST.map((item) => (
-          <CNavBarItem key={item.label} label={item.label} href={item.href}>
-            HOVER CONTENT HERE
-          </CNavBarItem>
+          <CNavBarItem key={item.label} label={item.label} href={item.href} />
         ))}
         <div className="navbar__button_container">
           {NAVBAR_BUTTON_LIST.map((button) => {
@@ -44,21 +41,9 @@ const CNavBar = () => {
                     key={button.icon}
                     href={button.href}
                     component={button.hoverComponent}
+                    icon={button.icon}
                     hoverContent={userHoverContent}
-                  >
-                    <CIcon color="white" type={button.icon} />
-                  </CNavBarButton>
-                );
-              case "info":
-                return (
-                  <CNavBarButton
-                    key={button.icon}
-                    href={button.href}
-                    component={button.hoverComponent}
-                    hoverContent={infoHoverContent}
-                  >
-                    <CIcon color="white" type={button.icon} />
-                  </CNavBarButton>
+                  />
                 );
               case "inventory":
                 return (
@@ -66,10 +51,9 @@ const CNavBar = () => {
                     href={button.href}
                     key={button.icon}
                     component={button.hoverComponent}
-                    //hoverContent={inventoryHoverContent}
-                  >
-                    <CIcon color="white" type={button.icon} />
-                  </CNavBarButton>
+                    icon={button.icon}
+                    floatNumber={cartItems ? cartItems.length : 0}
+                  />
                 );
               default:
                 return (
@@ -77,9 +61,8 @@ const CNavBar = () => {
                     href={button.href}
                     component={button.hoverComponent}
                     key={button.icon}
-                  >
-                    <CIcon color="white" type={button.icon} />
-                  </CNavBarButton>
+                    icon={button.icon}
+                  />
                 );
             }
           })}

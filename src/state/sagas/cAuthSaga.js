@@ -17,6 +17,10 @@ import {
 } from "../reducers/cAuthReducer";
 import { TOKEN_KEY } from "constants/index";
 import { cVerifyToken } from "../../services/cAuthService";
+import {
+  ACTION_CLEAR_CART,
+  ACTION_GET_CART_ITEMS,
+} from "state/reducers/cCartReducer";
 function* Login(action) {
   const { username, password } = yield select((state) =>
     getFormValues(LOGIN_FORM_KEY)(state)
@@ -38,6 +42,8 @@ function* Login(action) {
 
       // get user info on login success, another solution: login api return userinfo directly
       yield put({ type: ACTION_VERIFY_TOKEN });
+      // get cart item
+      yield put({ type: ACTION_GET_CART_ITEMS });
 
       const parsed = queryString.parse(history.location.search);
       yield call(history.push, parsed && parsed.r ? parsed.r : "/");
@@ -55,6 +61,7 @@ function* Login(action) {
 
 function* Logout(action) {
   yield put({ type: ACTION_LOGOUT_SUCCESS });
+  yield put({ type: ACTION_CLEAR_CART });
   yield call(history.push, "/");
   yield call(toast, { message: "Đã đăng xuất" });
 }
