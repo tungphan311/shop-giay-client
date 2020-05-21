@@ -29,6 +29,7 @@ const Payment = () => {
     else {
       dispatch({ type: ACTION_GET_CART_ITEMS });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const addressString = `${address}, ${ward}, ${district}, ${city}`;
@@ -86,8 +87,8 @@ const Payment = () => {
                       checked={"normal" === shippingMethod}
                       onChange={(e) => setShippingMethod(e.target.value)}
                     />
-                    <span class="radio-fake"></span>
-                    <span class="label">Giao hàng tiêu chuẩn</span>
+                    <span className="radio-fake"></span>
+                    <span className="label">Giao hàng tiêu chuẩn</span>
                   </label>
                 </div>
                 <div className="list-item">
@@ -99,8 +100,8 @@ const Payment = () => {
                       checked={"fast" === shippingMethod}
                       onChange={(e) => setShippingMethod(e.target.value)}
                     />
-                    <span class="radio-fake"></span>
-                    <span class="label">Giao hàng nhanh</span>
+                    <span className="radio-fake"></span>
+                    <span className="label">Giao hàng nhanh</span>
                   </label>
                 </div>
               </ul>
@@ -117,8 +118,10 @@ const Payment = () => {
                       checked={"cod" === paymentMethod}
                       onChange={(e) => setPaymentMethod(e.target.value)}
                     />
-                    <span class="radio-fake"></span>
-                    <span class="label">Thanh toán tiền mặt khi nhận hàng</span>
+                    <span className="radio-fake"></span>
+                    <span className="label">
+                      Thanh toán tiền mặt khi nhận hàng
+                    </span>
                   </label>
                 </div>
                 <div className="list-item">
@@ -130,8 +133,8 @@ const Payment = () => {
                       checked={"momo" === paymentMethod}
                       onChange={(e) => setPaymentMethod(e.target.value)}
                     />
-                    <span class="radio-fake"></span>
-                    <span class="label">Thanh toán bằng ví Momo</span>
+                    <span className="radio-fake"></span>
+                    <span className="label">Thanh toán bằng ví Momo</span>
                   </label>
                 </div>
               </ul>
@@ -175,17 +178,18 @@ const Payment = () => {
                 {cartItems.map(
                   ({ stockId, name, sizeName, price, quantity }) => (
                     <div key={stockId} className="order-item">
-                      <div class="info">
-                        <strong class="qty">{quantity} x</strong>
+                      <div className="info">
+                        <strong className="qty">{quantity} x</strong>
                         <a
                           href={`/products/${stockId}`}
                           target="_blank"
-                          class="product-name"
+                          rel="noopener noreferrer"
+                          className="product-name"
                         >
                           {name} size {sizeName}{" "}
                         </a>
                       </div>
-                      <div class="price">
+                      <div className="price">
                         {vietNamCurrency(price * quantity)}
                       </div>
                     </div>

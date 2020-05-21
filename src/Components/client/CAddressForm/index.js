@@ -44,7 +44,6 @@ function CAddressForm({ handleSubmit }) {
     if (selectedCity) {
       cGetDistrictList(selectedCity.value).then((res) => {
         const { data } = res;
-        console.log(data);
         setDistrictList(
           data.map((item) => ({
             value: item.ID,
@@ -56,6 +55,7 @@ function CAddressForm({ handleSubmit }) {
       setDistrictList([]);
     }
     dispatch(change(ADDRESS_FORM_KEY, "district", null));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCity]);
 
   useEffect(() => {
@@ -74,6 +74,7 @@ function CAddressForm({ handleSubmit }) {
       setWardList([]);
     }
     dispatch(change(ADDRESS_FORM_KEY, "ward", null));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDistrict]);
 
   return (

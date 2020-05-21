@@ -15,6 +15,7 @@ const CCart = () => {
 
   useEffect(() => {
     dispatch({ type: ACTION_GET_CART_ITEMS });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const cartItems = useSelector((state) => state.ccart.cartItems);

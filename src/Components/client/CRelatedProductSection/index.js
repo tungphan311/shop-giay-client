@@ -36,7 +36,7 @@ const CRelatedProductSection = ({ id }) => {
         }, setIsLoading(false));
       })
       .catch((error) => console.log(error));
-  }, []);
+  }, [id]);
 
   return (
     <CProductSection
