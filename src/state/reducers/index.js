@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
-import { reducer as formReducer } from "redux-form";
 import { cAuthReducer } from "./cAuthReducer";
 import { cCartReducer } from "./cCartReducer";
 import { cProductReducer } from "./cProductReducer";
 import { AAuthReducer } from "./AAuthReducer";
 import { AShoesReducer } from "state/reducers/AShoesReducer";
+import { formReducer } from "state/reducers/formReducer";
 
 export default combineReducers({
   form: formReducer,
