@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
+import AddShoesForm from "Components/Admin/Modal/AddShoesForm";
 
-function AddShoesModal({ show, handleClose, handleAdd, handleAddAndClose }) {
+function AAddShoesModal({ show, handleClose, handleAdd, handleAddAndClose }) {
   // an placeholder state
   // TODO: update shoes object with exact key
   const [shoes] = useState({ title: "Shoes", year: "2020" });
@@ -11,7 +12,9 @@ function AddShoesModal({ show, handleClose, handleAdd, handleAddAndClose }) {
       <Modal.Header closeButton>
         <Modal.Title>THÊM MỚI GIÀY</Modal.Title>
       </Modal.Header>
-      <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+      <Modal.Body>
+        <AddShoesForm />
+      </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
           Trở về
@@ -27,4 +30,4 @@ function AddShoesModal({ show, handleClose, handleAdd, handleAddAndClose }) {
   );
 }
 
-export default AddShoesModal;
+export default AAddShoesModal;

@@ -1,0 +1,46 @@
+.AddShoesForm {
+  .container {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    justify-content: space-between;
+    display: flex;
+    width: 80%;
+
+    background-color: white;
+
+    flex-direction: column;
+  }
+
+  // .input__fields {
+  //   padding-right: 500px !important;
+  // }
+
+  .input__container {
+    width: 100%;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .displayRow {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+  }
+  .displayCenter {
+    padding: 2% 0;
+    display: flex;
+    overflow: hidden;
+    overflow-x: scroll;
+  }
+  .groupBtn {
+    border: none;
+    font-size: 20px;
+    margin-top: 20px;
+    margin-right: 20px;
+    width: 250px;
+  }
+
+  .group {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
