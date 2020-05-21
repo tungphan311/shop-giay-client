@@ -33,25 +33,31 @@ import { Button } from "react-bootstrap";
 class AUploadPhoto extends Component {
   state = {
     image: "",
-    // cloudName: 'tungg',
     loading: false,
     unsignedUploadPreset: "testUpload",
+    hover: false,
   };
 
   addPhoto = () => {
-    if (this.state.image) return;
+    console.log("click");
+    // if (this.state.image) return;
     var imageInput = this.refs.imageInput;
     imageInput.click();
   };
 
+  toggleHover = () => {
+    this.setState({ hover: !this.state.hover });
+    console.log(this.state.hover);
+  };
+
   inputChange = (event) => {
     const reader = new FileReader();
+    // const files = event.target.files;
+    // if (!files) return;
     const files = event.target.files[0];
     reader.onloadend = () => {
-      console.log(1, reader.result);
-
       this.setState({ image: reader.result, loading: false });
-      console.log(2, this.state.image);
+      console.log(this.state);
     };
 
     reader.readAsDataURL(files);
@@ -77,8 +83,8 @@ class AUploadPhoto extends Component {
           {!image ? (
             !loading ? (
               <Fragment>
-                <image alt="add button" className="fa fa-plus-circle" />
-                <div className="add-btn-label">Add photo</div>
+                <image alt="add button" className="fa fa-plus-circle " />
+                <div className="add-btn-label">Thêm ảnh</div>
               </Fragment>
             ) : (
               <div className="loadersmall" />
@@ -91,7 +97,14 @@ class AUploadPhoto extends Component {
                 alt="image upload"
                 id="image-loaded"
                 className="add-photo-image-upload"
+                onMouseEnter={this.toggleHover}
+                onMouseLeave={this.toggleHover}
+                onClick={this.addPhoto}
               />
+              <span className="hiden">
+                <image alt="add button" className="fas fa-edit" />
+                <div className="add-btn-label">Sửa ảnh </div>
+              </span>
               <Button
                 className="close add-photo-close-button btn btn-icon btn-link"
                 onClick={this.removePhoto}

@@ -5,7 +5,6 @@ const AInput = ({
   placeholder = "",
   className = "",
   label = "",
-  hoang = "",
   type = "text",
   meta = {}, // redux form
   input, // redux form
