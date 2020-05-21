@@ -1,21 +1,17 @@
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
-import AddShoesForm from "Components/Admin/Modal/AddShoesForm";
+import MultipleForm from "Components/Admin/Form/MultipleForm/MultipleForm";
 
 function AAddShoesModal({ show, handleClose, handleAdd, handleAddAndClose }) {
-  // an placeholder state
-  // TODO: update shoes object with exact key
-  const [shoes] = useState({ title: "Shoes", year: "2020" });
-
   return (
     <Modal show={show} onHide={handleClose} size="xl">
       <Modal.Header closeButton>
         <Modal.Title>THÊM MỚI GIÀY</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <AddShoesForm />
+        <MultipleForm />
       </Modal.Body>
-      <Modal.Footer>
+      {/* <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
           Trở về
         </Button>
@@ -25,7 +21,7 @@ function AAddShoesModal({ show, handleClose, handleAdd, handleAddAndClose }) {
         <Button variant="primary" onClick={() => handleAdd(shoes)}>
           Thêm
         </Button>
-      </Modal.Footer>
+      </Modal.Footer> */}
     </Modal>
   );
 }

@@ -25,7 +25,7 @@ class AAddShoesForm extends Component {
       <form className="AddShoesForm" onSubmit={handleSubmit}>
         <div className="container">
           <span>Hình Ảnh</span>
-          <div className="displayCenter">
+          <div className="displayCenter" id="style-15">
             <Field
               label="PhotoUpload"
               name="photoUpload"
@@ -91,13 +91,21 @@ class AAddShoesForm extends Component {
               formClassName="ml-2"
             />
           </div>
+          <div style={{ marginLeft: "auto", marginRight: 0 }} className="mt-5">
+            <button className="btn btn-primary btn-border">Trở về</button>
+            <button type="submit" className="btn btn-primary ml-2">
+              Tiếp theo
+            </button>
+          </div>
         </div>
       </form>
     );
   }
 }
+
 AAddShoesForm = reduxForm({
   form: FORM_KEY_ADDSHOES, // a unique identifier for this form
+  destroyOnUnmount: false,
   touchOnBlur: false,
 })(AAddShoesForm);
 
