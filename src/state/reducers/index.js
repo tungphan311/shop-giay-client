@@ -4,6 +4,7 @@ import { cAuthReducer } from "./cAuthReducer";
 import { cCartReducer } from "./cCartReducer";
 import { cProductReducer } from "./cProductReducer";
 import { AAuthReducer } from "./AAuthReducer";
+import { AShoesReducer } from "state/reducers/AShoesReducer";
 
 export default combineReducers({
   form: formReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
   ccart: cCartReducer,
   cproduct: cProductReducer,
   aAuth: AAuthReducer,
+  aShoes: AShoesReducer,
 });
