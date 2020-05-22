@@ -3,6 +3,7 @@ import "./Order.scss";
 import { vietNamCurrency, stringTruncate } from "utils/index";
 import Pagination from "react-js-pagination";
 import CLoadingIndicator from "Components/client/CLoadingIndicator/index";
+import history from "state/history";
 
 const ORDER_EXAMPLE = [
   {
@@ -238,8 +239,13 @@ const Order = () => {
           </thead>
           <tbody>
             {orderList.map(({ id, date, products, total, status }, index) => (
-              <tr className={`order-table-row-${index % 2 ? "odd" : "even"}`}>
-                <td className="order-code">{id}</td>
+              <tr
+                key={id}
+                className={`order-table-row-${index % 2 ? "odd" : "even"}`}
+              >
+                <td className="order-code">
+                  <div onClick={() => history.push("/order/" + id)}>{id}</div>
+                </td>
                 <td className="order-date">{date}</td>
                 <td className="order-products">{getProductString(products)}</td>
                 <td className="order-total">{vietNamCurrency(total)}</td>
