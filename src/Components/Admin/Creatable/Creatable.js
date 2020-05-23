@@ -19,6 +19,7 @@ function ACreatable({
       options={options}
       value={value}
       placeholder={placeholder}
+      formatCreateLabel={(value) => `Thêm "${value}" vào cơ sở dữ liệu`}
     />
   );
 }

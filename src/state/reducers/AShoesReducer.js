@@ -7,9 +7,23 @@ export const GET_PROVIDERS_SUCCESS = "aShoes/GET_PROVIDERS_SUCCESS";
 export const ADD_PROVIDERS = "aShoes/ADD_PROVIDERS";
 export const ADD_PROVIDERS_SUCCESS = "aShoes/ADD_PROVIDERS_SUCCESS";
 
+export const GET_COLORS = "aShoes/GET_COLORS";
+export const GET_COLORS_SUCCESS = "aShoes/GET_COLORS_SUCCESS";
+
+export const ADD_COLOR = "aShoes/ADD_COLOR";
+export const ADD_COLOR_SUCCESS = "aShoes/ADD_COLOR_SUCCESS";
+
+export const GET_SIZES = "aShoes/GET_SIZES";
+export const GET_SIZES_SUCCESS = "aShoes/GET_SIZES_SUCCESS";
+
+export const ADD_SIZE = "aShoes/ADD_SIZE";
+export const ADD_SIZE_SUCCESS = "aShoes/ADD_SIZE_SUCCESS";
+
 const initState = {
   shoes: [],
   providers: [],
+  colors: [],
+  sizes: [],
 };
 
 export function AShoesReducer(state = initState, action = {}) {
@@ -26,11 +40,31 @@ export function AShoesReducer(state = initState, action = {}) {
       return newState;
     }
 
+    case GET_COLORS_SUCCESS: {
+      newState.colors = action.response;
+      return newState;
+    }
+
+    case GET_SIZES_SUCCESS: {
+      newState.sizes = action.response;
+      return newState;
+    }
+
     case ADD_PROVIDERS_SUCCESS: {
       const newProviders = action.response;
-
       newState.providers = [...newState.providers, newProviders];
+      return newState;
+    }
 
+    case ADD_COLOR_SUCCESS: {
+      const newColor = action.response;
+      newState.colors = [...newState.colors, newColor];
+      return newState;
+    }
+
+    case ADD_SIZE_SUCCESS: {
+      const newSize = action.response;
+      newState.sizes = [...newState.sizes, newSize];
       return newState;
     }
 
