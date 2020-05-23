@@ -5,10 +5,18 @@ import { customStyles } from "constants/index";
 import { OPTIONS, NO_DATA_COMPONENT } from "utils/utils";
 import "./NewImport.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { GET_SHOES, GET_SIZES, GET_COLORS } from "state/reducers/AShoesReducer";
-import AProductSelect from "Components/Admin/ProductSelect/Select";
+import {
+  GET_SHOES,
+  GET_SIZES,
+  GET_COLORS,
+  GET_PROVIDERS,
+  ADD_PROVIDERS,
+} from "state/reducers/AShoesReducer";
 import AddShoesModal from "Components/Admin/Modal/AddShoes";
 import swal from "sweetalert";
+import AProviderSelect from "Components/Admin/Creatable/ProviderSelect";
+import AProductSelect from "Components/Admin/ProductSelect/Select";
+import { ADD_IMPORT } from "state/reducers/aImportReducer";
 
 const DEFAULT_ITEM = {
   shoes: null,
@@ -16,6 +24,7 @@ const DEFAULT_ITEM = {
   stocks: [],
   stock: null,
   stockId: 0,
+  price: 0,
 };
 
 function ANewImport() {
@@ -26,6 +35,7 @@ function ANewImport() {
   const [toggleCleared, setToggleCleared] = useState(false);
   const [options, setOptions] = useState([{ value: 0, label: "" }]);
   const [showModal, setShowModal] = useState(false);
+  const [provider, setProvider] = useState(null);
 
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
@@ -98,7 +108,7 @@ function ANewImport() {
 
     newData[index] = {
       ...newData[index],
-      [name]: parseInt(value),
+      [name]: value ? parseInt(value) : 0,
     };
 
     setData(newData);
@@ -175,19 +185,47 @@ function ANewImport() {
       ),
     },
     {
+      name: "Giá nhập",
+      selector: "price",
+      maxWidth: "250px",
+      sortable: true,
+      right: true,
+      cell: (row) => (
+        <div className="input-group">
+          <input
+            type="number"
+            name="price"
+            className="amount-input"
+            id={row.id}
+            defaultValue={row.price}
+            onBlur={updateInputValue}
+          />
+          <div className="input-group-append">
+            <span class="input-group-text ml-2">VNĐ</span>
+          </div>
+        </div>
+      ),
+    },
+    {
       name: "Số lượng",
       selector: "amount",
-      maxWidth: "400px",
+      maxWidth: "250px",
       sortable: true,
+      right: true,
       cell: (row) => (
-        <input
-          type="number"
-          name="amount"
-          className="amount-input"
-          id={row.id}
-          defaultValue={row.amount}
-          onBlur={updateInputValue}
-        ></input>
+        <div className="input-group">
+          <input
+            type="number"
+            name="amount"
+            className="amount-input"
+            id={row.id}
+            defaultValue={row.amount}
+            onBlur={updateInputValue}
+          />
+          <div className="input-group-append">
+            <span class="input-group-text ml-2">đôi</span>
+          </div>
+        </div>
       ),
     },
   ];
@@ -211,14 +249,77 @@ function ANewImport() {
     </>
   );
 
+  const validateRow = (row) => {
+    if (!row.stockId || !row.price || !row.amount) return false;
+
+    return true;
+  };
+
+  const validateData = () => {
+    if (!provider) return false;
+    if (!data.length) return false;
+
+    for (let i = 0; i < data.length; i++) {
+      if (!validateRow(data[i])) return false;
+    }
+
+    return true;
+  };
+
   const updateDB = (e) => {
-    // console.log(e.target);
+    swal("Bạn đã chắc chắn muốn cập nhật chưa?", {
+      buttons: ["Trở lại", "Chắc chắn"],
+    }).then(() => {
+      if (!validateData()) {
+        swal(
+          "Dữ liệu nhập vào không hợp lệ. Vui lòng kiểm tra và thử lại sau",
+          {
+            icon: "error",
+          }
+        );
+      } else {
+        swal("Yêu cầu của bạn đã được thực hiện", {
+          icon: "success",
+        });
+
+        const details = data.map((d) => ({
+          quantity: d.amount,
+          originalPrice: d.price,
+          stockId: d.stockId,
+        }));
+
+        dispatch({
+          type: ADD_IMPORT,
+          providerId: provider.value,
+          details,
+        }).then((res) => console.log(res));
+      }
+    });
   };
 
   return (
-    <div>
+    <div className="create-import">
       <ABreadcrumb title="Nhập hàng mới" list={BREADCRUMB} />
-      <div className="row">
+      <div className="row" style={{ justifyContent: "center" }}>
+        <div className="col-md-6">
+          <div className="card">
+            <div className="form-group form-inline">
+              <label for="inlineinput" class="col-md-3 col-form-label">
+                Chọn nhà cung cấp
+              </label>
+              <div className="col-md-9 p-0">
+                <AProviderSelect
+                  selected={provider}
+                  setSelected={setProvider}
+                  getReducer={GET_PROVIDERS}
+                  addReducer={ADD_PROVIDERS}
+                  stateName="providers"
+                  placeholder="Chọn nhà cung cấp ..."
+                />
+              </div>
+            </div>
+          </div>
+        </div>
         <div className="col-md-12">
           <div className="card">
             <DataTable

@@ -3,7 +3,7 @@ import ACreatable from "Components/Admin/Creatable/Creatable";
 import { useDispatch, useSelector } from "react-redux";
 
 function AProviderSelect({
-  selected = null,
+  selected,
   setSelected,
   getReducer,
   addReducer,
@@ -12,7 +12,7 @@ function AProviderSelect({
 }) {
   // state
   const [loading, setLoading] = useState(false);
-  const [options, setOptions] = useState(selected);
+  const [options, setOptions] = useState([]);
   const [currentLength, setCurrentLength] = useState(0);
   const [isAdd, setIsAdd] = useState(false);
 
