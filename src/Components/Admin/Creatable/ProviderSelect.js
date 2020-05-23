@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from "react";
 import ACreatable from "Components/Admin/Creatable/Creatable";
 import { useDispatch, useSelector } from "react-redux";
-import { GET_PROVIDERS, ADD_PROVIDERS } from "state/reducers/AShoesReducer";
 
-function AProviderSelect({ selected = null, setSelected }) {
+function AProviderSelect({
+  selected = null,
+  setSelected,
+  getReducer,
+  addReducer,
+  stateName,
+  placeholder,
+}) {
   // state
   const [loading, setLoading] = useState(false);
   const [options, setOptions] = useState(selected);
@@ -12,10 +18,10 @@ function AProviderSelect({ selected = null, setSelected }) {
 
   // create dispatch
   const dispatch = useDispatch();
-  const providers = useSelector((state) => state.aShoes.providers);
+  const providers = useSelector((state) => state.aShoes[stateName]);
 
   useEffect(() => {
-    dispatch({ type: GET_PROVIDERS });
+    dispatch({ type: getReducer });
 
     setLoading(true);
   }, []);
@@ -43,7 +49,7 @@ function AProviderSelect({ selected = null, setSelected }) {
   const handleCreate = (value) => {
     setLoading(true);
 
-    dispatch({ type: ADD_PROVIDERS, name: value });
+    dispatch({ type: addReducer, name: value });
 
     setIsAdd(true);
   };
@@ -54,7 +60,7 @@ function AProviderSelect({ selected = null, setSelected }) {
     handleCreate,
     options,
     value: selected,
-    placeholder: "Chọn nhà cung cấp ...",
+    placeholder,
   };
 
   return <ACreatable {...props} />;
