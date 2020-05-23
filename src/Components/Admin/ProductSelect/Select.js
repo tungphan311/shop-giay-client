@@ -28,6 +28,7 @@ function AProductSelect({
         onChange={onChange}
         isDisabled={disabled}
         placeholder={placeholder}
+        menuPosition="fixed"
       />
     </div>
   );
