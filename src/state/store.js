@@ -1,11 +1,12 @@
 import { createStore, applyMiddleware, compose } from "redux";
+import { promiseMiddleware } from "@adobe/redux-saga-promise";
 import createSagaMiddleware from "redux-saga";
 
 import reducers from "./reducers";
 import sagas from "./sagas";
 
 const sagaMiddleware = createSagaMiddleware();
-const middlewares = [sagaMiddleware];
+const middlewares = [promiseMiddleware, sagaMiddleware];
 
 const composeEnhancers =
   typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__

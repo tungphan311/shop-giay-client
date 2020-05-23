@@ -1,27 +1,25 @@
 import { takeEvery, put, call, select } from "redux-saga/effects";
+import {
+  resolvePromiseAction,
+  rejectPromiseAction,
+} from "@adobe/redux-saga-promise";
 import { toast, toastErr } from "utils";
-import { ADD_IMPORT } from "state/reducers/aImportReducer";
 import { addImport } from "services/admin/importServices";
+import { addImportAction } from "state/actions/index";
 
-export function* addImportSaga({ providerId, details }) {
+export function* addImportSaga(action) {
   try {
+    const { providerId, details } = action.payload;
+
     const result = yield call(addImport, { providerId, details });
-    const responseJSON = result.data.data;
+    const response = result.data;
 
-    const response = JSON.parse(responseJSON);
-
-    console.log(response);
-
-    // yield put({ type: LOGIN_SUCCESS, response });
-
-    yield toast({ message: result.data.msg });
+    yield call(resolvePromiseAction, action, response.msg);
   } catch (err) {
-    yield toastErr(String(err));
-  } finally {
-    // yield put({ type: SET_LOADING, status: false });
+    yield call(rejectPromiseAction, action, String(err));
   }
 }
 
 export default function* aImportSaga() {
-  yield takeEvery(ADD_IMPORT, addImportSaga);
+  yield takeEvery(addImportAction, addImportSaga);
 }

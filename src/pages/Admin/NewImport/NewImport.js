@@ -16,7 +16,8 @@ import AddShoesModal from "Components/Admin/Modal/AddShoes";
 import swal from "sweetalert";
 import AProviderSelect from "Components/Admin/Creatable/ProviderSelect";
 import AProductSelect from "Components/Admin/ProductSelect/Select";
-import { ADD_IMPORT } from "state/reducers/aImportReducer";
+import { addImportAction } from "state/actions/index";
+import { toast, toastErr } from "utils/index";
 
 const DEFAULT_ITEM = {
   shoes: null,
@@ -266,9 +267,22 @@ function ANewImport() {
     return true;
   };
 
+  const resetForm = () => {
+    setData([]);
+    setProvider(null);
+  };
+
+  const handleResetForm = () => {
+    swal("Dữ liệu chưa được lưu. Bạn chắn chắn chứ?", {
+      buttons: ["Trở lại", "Chắc chắn"],
+      icon: "warning",
+    }).then(() => resetForm());
+  };
+
   const updateDB = (e) => {
     swal("Bạn đã chắc chắn muốn cập nhật chưa?", {
       buttons: ["Trở lại", "Chắc chắn"],
+      icon: "info ",
     }).then(() => {
       if (!validateData()) {
         swal(
@@ -288,11 +302,12 @@ function ANewImport() {
           stockId: d.stockId,
         }));
 
-        dispatch({
-          type: ADD_IMPORT,
-          providerId: provider.value,
-          details,
-        }).then((res) => console.log(res));
+        dispatch(addImportAction({ providerId: provider.value, details }))
+          .then((res) => {
+            toast(res);
+            resetForm();
+          })
+          .catch((err) => toastErr(err));
       }
     });
   };
@@ -342,7 +357,9 @@ function ANewImport() {
               <button className="btn btn-success" onClick={updateDB}>
                 Cập nhật
               </button>
-              <button className="btn btn-danger ml-1">Huỷ</button>
+              <button className="btn btn-danger ml-1" onClick={handleResetForm}>
+                Huỷ
+              </button>
             </div>
           </div>
         </div>
