@@ -7,8 +7,10 @@ function ASidebarItem({ item, roleid }) {
 
   const pathname = window.location.pathname;
 
+  const active = sub ? href.includes(pathname) : href === pathname;
+
   return (
-    <li className={`nav-item${pathname === href ? " active" : ""}`}>
+    <li className={`nav-item${active ? " active" : ""}`}>
       {sub ? (
         <>
           <a data-toggle="collapse" href={`#${id}`}>

@@ -5,15 +5,27 @@ import { customStyles } from "constants/index";
 import { OPTIONS, NO_DATA_COMPONENT } from "utils/utils";
 import "./NewImport.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { GET_SHOES } from "state/reducers/AShoesReducer";
-import AProductSelect from "Components/Admin/ProductSelect/Select";
+import {
+  GET_SHOES,
+  GET_SIZES,
+  GET_COLORS,
+  GET_PROVIDERS,
+  ADD_PROVIDERS,
+} from "state/reducers/AShoesReducer";
 import AddShoesModal from "Components/Admin/Modal/AddShoes";
 import swal from "sweetalert";
+import AProviderSelect from "Components/Admin/Creatable/ProviderSelect";
+import AProductSelect from "Components/Admin/ProductSelect/Select";
+import { addImportAction } from "state/actions/index";
+import { toast, toastErr } from "utils/index";
 
 const DEFAULT_ITEM = {
-  code: 0,
-  name: "",
+  shoes: null,
   amount: 0,
+  stocks: [],
+  stock: null,
+  stockId: 0,
+  price: 0,
 };
 
 function ANewImport() {
@@ -24,6 +36,7 @@ function ANewImport() {
   const [toggleCleared, setToggleCleared] = useState(false);
   const [options, setOptions] = useState([{ value: 0, label: "" }]);
   const [showModal, setShowModal] = useState(false);
+  const [provider, setProvider] = useState(null);
 
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
@@ -33,6 +46,8 @@ function ANewImport() {
 
   // create selector <=> mapStateToProps
   const shoes = useSelector((state) => state.aShoes.shoes);
+  const sizes = useSelector((state) => state.aShoes.sizes);
+  const colors = useSelector((state) => state.aShoes.colors);
 
   if (!loadData && shoes.length) {
     setLoadData(true);
@@ -43,6 +58,8 @@ function ANewImport() {
   // componentDidMount => get shoes one time when page is loaded
   useEffect(() => {
     dispatch({ type: GET_SHOES });
+    dispatch({ type: GET_SIZES });
+    dispatch({ type: GET_COLORS });
   }, []);
 
   const handleRowSelected = useCallback((state) => {
@@ -92,10 +109,17 @@ function ANewImport() {
 
     newData[index] = {
       ...newData[index],
-      [name]: parseInt(value),
+      [name]: value ? parseInt(value) : 0,
     };
 
     setData(newData);
+  };
+
+  const stockDetail = (stock) => {
+    const color = colors.find((c) => c.Id === stock.ColorId).Name;
+    const size = sizes.find((s) => s.Id === stock.SizeId).Name;
+
+    return `Màu: ${color}, Size: ${size}`;
   };
 
   const selectProduct = (selected, id) => {
@@ -103,10 +127,31 @@ function ANewImport() {
 
     const index = newData.findIndex((ele) => ele.id === id);
 
+    if (newData[index].shoes !== selected) {
+      let stocks = shoes.find((s) => s.Id === selected.value).Stocks;
+      stocks = stocks.map((s) => ({ value: s.Id, label: stockDetail(s) }));
+
+      newData[index] = {
+        ...newData[index],
+        shoes: selected,
+        stocks,
+        stock: null,
+        stockId: 0,
+      };
+
+      setData(newData);
+    }
+  };
+
+  const selectStock = (selected, id) => {
+    let newData = [...data];
+
+    const index = newData.findIndex((ele) => ele.id === id);
+
     newData[index] = {
       ...newData[index],
-      code: selected.value,
-      name: selected.label,
+      stock: selected,
+      stockId: selected.value,
     };
 
     setData(newData);
@@ -114,47 +159,77 @@ function ANewImport() {
 
   const columns = [
     {
-      name: "Tên giày (code)",
+      name: "Chi tiết giày",
       selector: "name",
       sortable: true,
       cell: (row) => (
-        <AProductSelect
-          options={options}
-          className="product-select"
-          id={row.id}
-          selectedOption={{ value: row.code, label: row.name }}
-          onChange={(selected) => selectProduct(selected, row.id)}
-          placeholder="Chọn mã sản phẩm"
-        />
+        <div style={{ display: "flex", width: "100%" }}>
+          <div style={{ flexGrow: 1 }}>
+            <AProductSelect
+              options={options}
+              className="product-select"
+              selectedOption={row.shoes}
+              onChange={(selected) => selectProduct(selected, row.id)}
+              placeholder="Chọn sản phẩm"
+            />
+          </div>
+          <div style={{ flexGrow: 1 }} className="ml-2">
+            <AProductSelect
+              options={row.stocks}
+              className="product-select"
+              selectedOption={row.stock}
+              onChange={(selected) => selectStock(selected, row.id)}
+              placeholder="Chọn phiên bản"
+            />
+          </div>
+        </div>
+      ),
+    },
+    {
+      name: "Giá nhập",
+      selector: "price",
+      maxWidth: "250px",
+      sortable: true,
+      right: true,
+      cell: (row) => (
+        <div className="input-group">
+          <input
+            type="number"
+            name="price"
+            className="amount-input"
+            id={row.id}
+            defaultValue={row.price}
+            onBlur={updateInputValue}
+          />
+          <div className="input-group-append">
+            <span class="input-group-text ml-2">VNĐ</span>
+          </div>
+        </div>
       ),
     },
     {
       name: "Số lượng",
       selector: "amount",
+      maxWidth: "250px",
       sortable: true,
+      right: true,
       cell: (row) => (
-        <input
-          type="number"
-          name="amount"
-          className="amount-input"
-          id={row.id}
-          defaultValue={row.amount}
-          onBlur={updateInputValue}
-        ></input>
+        <div className="input-group">
+          <input
+            type="number"
+            name="amount"
+            className="amount-input"
+            id={row.id}
+            defaultValue={row.amount}
+            onBlur={updateInputValue}
+          />
+          <div className="input-group-append">
+            <span class="input-group-text ml-2">đôi</span>
+          </div>
+        </div>
       ),
     },
   ];
-
-  const actions = (
-    <>
-      <button className="btn btn-info" onClick={() => setShowModal(true)}>
-        Thêm sản phẩm
-      </button>
-      <button className="btn btn-primary" onClick={() => addNewItem()}>
-        Thêm mới
-      </button>
-    </>
-  );
 
   const addNewItem = () => {
     const id = data.length ? data[0].id + 1 : 0;
@@ -164,14 +239,102 @@ function ANewImport() {
     setData(newData);
   };
 
+  const actions = (
+    <>
+      <button className="btn btn-info" onClick={handleShow}>
+        Thêm sản phẩm
+      </button>
+      <button className="btn btn-primary" onClick={addNewItem}>
+        Thêm mới
+      </button>
+    </>
+  );
+
+  const validateRow = (row) => {
+    if (!row.stockId || !row.price || !row.amount) return false;
+
+    return true;
+  };
+
+  const validateData = () => {
+    if (!provider) return false;
+    if (!data.length) return false;
+
+    for (let i = 0; i < data.length; i++) {
+      if (!validateRow(data[i])) return false;
+    }
+
+    return true;
+  };
+
+  const resetForm = () => {
+    setData([]);
+    setProvider(null);
+  };
+
+  const handleResetForm = () => {
+    swal("Dữ liệu chưa được lưu. Bạn chắn chắn chứ?", {
+      buttons: ["Trở lại", "Chắc chắn"],
+      icon: "warning",
+    }).then(() => resetForm());
+  };
+
   const updateDB = (e) => {
-    // console.log(e.target);
+    swal("Bạn đã chắc chắn muốn cập nhật chưa?", {
+      buttons: ["Trở lại", "Chắc chắn"],
+      icon: "info ",
+    }).then(() => {
+      if (!validateData()) {
+        swal(
+          "Dữ liệu nhập vào không hợp lệ. Vui lòng kiểm tra và thử lại sau",
+          {
+            icon: "error",
+          }
+        );
+      } else {
+        swal("Yêu cầu của bạn đã được thực hiện", {
+          icon: "success",
+        });
+
+        const details = data.map((d) => ({
+          quantity: d.amount,
+          originalPrice: d.price,
+          stockId: d.stockId,
+        }));
+
+        dispatch(addImportAction({ providerId: provider.value, details }))
+          .then((res) => {
+            toast(res);
+            resetForm();
+          })
+          .catch((err) => toastErr(err));
+      }
+    });
   };
 
   return (
-    <div>
+    <div className="create-import">
       <ABreadcrumb title="Nhập hàng mới" list={BREADCRUMB} />
-      <div className="row">
+      <div className="row" style={{ justifyContent: "center" }}>
+        <div className="col-md-6">
+          <div className="card">
+            <div className="form-group form-inline">
+              <label for="inlineinput" class="col-md-3 col-form-label">
+                Chọn nhà cung cấp
+              </label>
+              <div className="col-md-9 p-0">
+                <AProviderSelect
+                  selected={provider}
+                  setSelected={setProvider}
+                  getReducer={GET_PROVIDERS}
+                  addReducer={ADD_PROVIDERS}
+                  stateName="providers"
+                  placeholder="Chọn nhà cung cấp ..."
+                />
+              </div>
+            </div>
+          </div>
+        </div>
         <div className="col-md-12">
           <div className="card">
             <DataTable
@@ -194,7 +357,9 @@ function ANewImport() {
               <button className="btn btn-success" onClick={updateDB}>
                 Cập nhật
               </button>
-              <button className="btn btn-danger ml-1">Huỷ</button>
+              <button className="btn btn-danger ml-1" onClick={handleResetForm}>
+                Huỷ
+              </button>
             </div>
           </div>
         </div>

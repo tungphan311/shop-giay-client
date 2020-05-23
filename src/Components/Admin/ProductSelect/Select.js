@@ -14,7 +14,6 @@ function AProductSelect({
   defaultValue,
   placeholder,
 }) {
-  console.log(placeholder);
   return (
     <div className={`hara__dropdown ${className}`}>
       <ReactSelect
@@ -28,6 +27,7 @@ function AProductSelect({
         onChange={onChange}
         isDisabled={disabled}
         placeholder={placeholder}
+        menuPosition="fixed"
       />
     </div>
   );
