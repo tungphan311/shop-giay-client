@@ -14,7 +14,6 @@ function AProductSelect({
   defaultValue,
   placeholder,
 }) {
-  console.log(placeholder);
   return (
     <div className={`hara__dropdown ${className}`}>
       <ReactSelect

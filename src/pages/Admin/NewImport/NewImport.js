@@ -5,15 +5,17 @@ import { customStyles } from "constants/index";
 import { OPTIONS, NO_DATA_COMPONENT } from "utils/utils";
 import "./NewImport.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { GET_SHOES } from "state/reducers/AShoesReducer";
+import { GET_SHOES, GET_SIZES, GET_COLORS } from "state/reducers/AShoesReducer";
 import AProductSelect from "Components/Admin/ProductSelect/Select";
 import AddShoesModal from "Components/Admin/Modal/AddShoes";
 import swal from "sweetalert";
 
 const DEFAULT_ITEM = {
-  code: 0,
-  name: "",
+  shoes: null,
   amount: 0,
+  stocks: [],
+  stock: null,
+  stockId: 0,
 };
 
 function ANewImport() {
@@ -33,6 +35,8 @@ function ANewImport() {
 
   // create selector <=> mapStateToProps
   const shoes = useSelector((state) => state.aShoes.shoes);
+  const sizes = useSelector((state) => state.aShoes.sizes);
+  const colors = useSelector((state) => state.aShoes.colors);
 
   if (!loadData && shoes.length) {
     setLoadData(true);
@@ -43,6 +47,8 @@ function ANewImport() {
   // componentDidMount => get shoes one time when page is loaded
   useEffect(() => {
     dispatch({ type: GET_SHOES });
+    dispatch({ type: GET_SIZES });
+    dispatch({ type: GET_COLORS });
   }, []);
 
   const handleRowSelected = useCallback((state) => {
@@ -98,15 +104,43 @@ function ANewImport() {
     setData(newData);
   };
 
+  const stockDetail = (stock) => {
+    const color = colors.find((c) => c.Id === stock.ColorId).Name;
+    const size = sizes.find((s) => s.Id === stock.SizeId).Name;
+
+    return `Màu: ${color}, Size: ${size}`;
+  };
+
   const selectProduct = (selected, id) => {
+    let newData = [...data];
+
+    const index = newData.findIndex((ele) => ele.id === id);
+
+    if (newData[index].shoes !== selected) {
+      let stocks = shoes.find((s) => s.Id === selected.value).Stocks;
+      stocks = stocks.map((s) => ({ value: s.Id, label: stockDetail(s) }));
+
+      newData[index] = {
+        ...newData[index],
+        shoes: selected,
+        stocks,
+        stock: null,
+        stockId: 0,
+      };
+
+      setData(newData);
+    }
+  };
+
+  const selectStock = (selected, id) => {
     let newData = [...data];
 
     const index = newData.findIndex((ele) => ele.id === id);
 
     newData[index] = {
       ...newData[index],
-      code: selected.value,
-      name: selected.label,
+      stock: selected,
+      stockId: selected.value,
     };
 
     setData(newData);
@@ -114,23 +148,36 @@ function ANewImport() {
 
   const columns = [
     {
-      name: "Tên giày (code)",
+      name: "Chi tiết giày",
       selector: "name",
       sortable: true,
       cell: (row) => (
-        <AProductSelect
-          options={options}
-          className="product-select"
-          id={row.id}
-          selectedOption={{ value: row.code, label: row.name }}
-          onChange={(selected) => selectProduct(selected, row.id)}
-          placeholder="Chọn mã sản phẩm"
-        />
+        <div style={{ display: "flex", width: "100%" }}>
+          <div style={{ flexGrow: 1 }}>
+            <AProductSelect
+              options={options}
+              className="product-select"
+              selectedOption={row.shoes}
+              onChange={(selected) => selectProduct(selected, row.id)}
+              placeholder="Chọn sản phẩm"
+            />
+          </div>
+          <div style={{ flexGrow: 1 }} className="ml-2">
+            <AProductSelect
+              options={row.stocks}
+              className="product-select"
+              selectedOption={row.stock}
+              onChange={(selected) => selectStock(selected, row.id)}
+              placeholder="Chọn phiên bản"
+            />
+          </div>
+        </div>
       ),
     },
     {
       name: "Số lượng",
       selector: "amount",
+      maxWidth: "400px",
       sortable: true,
       cell: (row) => (
         <input
@@ -145,17 +192,6 @@ function ANewImport() {
     },
   ];
 
-  const actions = (
-    <>
-      <button className="btn btn-info" onClick={() => setShowModal(true)}>
-        Thêm sản phẩm
-      </button>
-      <button className="btn btn-primary" onClick={() => addNewItem()}>
-        Thêm mới
-      </button>
-    </>
-  );
-
   const addNewItem = () => {
     const id = data.length ? data[0].id + 1 : 0;
     const item = { ...DEFAULT_ITEM, id };
@@ -163,6 +199,17 @@ function ANewImport() {
     let newData = [item, ...data];
     setData(newData);
   };
+
+  const actions = (
+    <>
+      <button className="btn btn-info" onClick={handleShow}>
+        Thêm sản phẩm
+      </button>
+      <button className="btn btn-primary" onClick={addNewItem}>
+        Thêm mới
+      </button>
+    </>
+  );
 
   const updateDB = (e) => {
     // console.log(e.target);
