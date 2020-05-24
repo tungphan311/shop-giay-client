@@ -1,0 +1,27 @@
+.AddStockForm {
+  .stockForm {
+    margin: 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    justify-content: space-between;
+    display: flex;
+    padding-right: 10px;
+    border: solid 1px #e0e5ec;
+    background-color: white;
+
+    flex-direction: column;
+  }
+  .input__container {
+    width: 100%;
+  }
+  .displayRow {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+  }
+  .displayCenter {
+    justify-content: center;
+    padding: 2% 0;
+    display: flex;
+  }
+}
