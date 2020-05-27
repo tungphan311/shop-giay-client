@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 import { getItemFromStorage } from "utils/storage";
 import AShoesList from "pages/Admin/ShoesList/ShoesList";
 import ANewImport from "pages/Admin/NewImport/NewImport";
+import StyleGuide from "pages/Admin/StyleGuide/StyleGuide";
 
 // component for admin site to determine user is logined or not
 export const AuthorizedRoute = ({ component: Component, isUser, ...rest }) => (
@@ -115,9 +116,10 @@ function Routes() {
           />
         </AdminLayout>
       </Route>
-      <Route exact path={["/admin/login"]}>
+      <Route exact path={["/admin/login", "/admin/style-guide"]}>
         <EmptyLayout>
           <Route exact path="/admin/login" component={AdminLogin} />
+          <Route exact path="/admin/style-guide" component={StyleGuide} />
         </EmptyLayout>
       </Route>
     </Switch>
