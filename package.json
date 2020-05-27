@@ -1,5 +1,6 @@
 {
   "name": "shop-giay-client",
+  "homepage": "https://shoess.azurewebsites.net/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
