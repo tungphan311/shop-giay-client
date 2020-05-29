@@ -87,68 +87,127 @@ $primary: #f3ac00;
         }
       }
     }
-
-    .address-form-container {
-      max-width: 600px;
-      margin: 0px auto;
+    .address-form-wrapper {
       border-color: rgb(221, 221, 221);
       background-color: rgba(#fff, 0.1);
-      padding: 20px;
       border-radius: 5px;
-
-      .submit-button {
-        width: 100%;
-      }
-
-      .form-row,
-      .input__container,
-      .select__wrapper {
-        font-size: 13px;
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        margin: 0px 0px 20px;
-
-        label {
-          margin: 0;
-          padding: 0;
-          color: #fff !important;
-          font-weight: 700;
-          width: 33.3333%;
-        }
-        .input__wrapper {
-          width: 66.6666%;
-          padding: 0;
-          margin: 0;
-        }
-        textarea {
-          height: 70px;
-        }
-        input {
-          height: 34px;
-        }
-        input,
-        textarea {
+      margin-left: 20px;
+      .address-form-container {
+        max-width: 600px;
+        margin: 0px auto;
+        padding: 20px;
+        .submit-button {
           width: 100%;
-          line-height: 34px;
-          transition: border-color 0.15s ease-in-out 0s,
-            box-shadow 0.15s ease-in-out 0s;
-          border-width: 1px;
-          border-style: solid;
-          border-color: rgb(204, 204, 204);
-          border-image: initial;
-          border-radius: 4px;
-          padding: 6px 12px;
+        }
 
-          outline: none;
-          background-color: transparent;
-          color: #fff;
-          &:focus {
-            border-color: $primary;
+        .form-row,
+        .input__container,
+        .select__wrapper {
+          font-size: 13px;
+          display: flex;
+          align-items: center;
+          flex-wrap: wrap;
+          margin: 0px 0px 20px;
+
+          label {
+            margin: 0;
+            padding: 0;
+            color: #fff !important;
+            font-weight: 700;
+            width: 33.3333%;
           }
+          .input__wrapper {
+            width: 66.6666%;
+            padding: 0;
+            margin: 0;
+          }
+          textarea {
+            height: 70px;
+          }
+          input {
+            height: 34px;
+          }
+          input,
+          textarea {
+            width: 100%;
+            line-height: 34px;
+            transition: border-color 0.15s ease-in-out 0s,
+              box-shadow 0.15s ease-in-out 0s;
+            border-width: 1px;
+            border-style: solid;
+            border-color: rgb(204, 204, 204);
+            border-image: initial;
+            border-radius: 4px;
+            padding: 6px 12px;
 
-          &::placeholder {
-            color: rgb(180, 180, 180);
+            outline: none;
+            background-color: transparent;
+            color: #fff;
+            &:focus {
+              border-color: $primary;
+            }
+
+            &::placeholder {
+              color: rgb(180, 180, 180);
+            }
+          }
+        }
+      }
+    }
+
+    .address-list {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 20px 0;
+
+      .address-item {
+        background-color: rgba(#fff, 0.1);
+        position: relative;
+        box-shadow: none;
+        max-width: calc(50% - 20px);
+        flex: 1 0 40%;
+        border-radius: 3px;
+        border-width: 1px;
+        border-style: dashed;
+        border-color: $primary;
+        border-image: initial;
+        margin: 0px 0px 20px 20px;
+        padding: 10px 15px;
+        color: #fff;
+
+        p {
+          margin: 0px 0px 10px;
+          line-height: 1.15;
+        }
+
+        .name {
+          font-size: 15px;
+          font-weight: bold;
+          margin-bottom: 5px;
+        }
+
+        .address {
+          font-size: 13px;
+          margin-bottom: 3px;
+        }
+
+        .phone {
+          font-size: 13px;
+          margin-bottom: 10px;
+        }
+
+        .action {
+          margin-bottom: 0px;
+
+          .edit-address {
+            margin-left: 7px;
+            background: rgba(255, 255, 255, 0.2);
+            box-sizing: border-box;
+            min-width: 50px;
+            &:hover {
+              background: rgba(0, 0, 0, 0.25);
+              color: rgba(243, 172, 0, 1);
+            }
           }
         }
       }

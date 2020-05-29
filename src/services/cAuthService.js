@@ -7,7 +7,7 @@ export async function cLogin({ username, password }) {
 }
 
 export async function cVerifyToken(token) {
-  const path = "/authentication";
+  const path = "/customer/getInfo";
   const AuthStr = "Bearer " + token;
   return await API.get(path, {
     headers: { Authorization: AuthStr },
