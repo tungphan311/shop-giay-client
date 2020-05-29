@@ -1,6 +1,6 @@
 import React from "react";
-import { getPathname } from "../../../utils/utils";
 import ASubItem from "./SubItem";
+import history from "state/history";
 
 function ASidebarItem({ item, roleid }) {
   const { id, icon, title, href, sub } = item;
@@ -27,7 +27,13 @@ function ASidebarItem({ item, roleid }) {
           </div>
         </>
       ) : (
-        <a href={href}>
+        <a
+          href={href}
+          onClick={(e) => {
+            e.preventDefault();
+            history.push(href);
+          }}
+        >
           <i className={icon}></i>
           <p>{title}</p>
         </a>
