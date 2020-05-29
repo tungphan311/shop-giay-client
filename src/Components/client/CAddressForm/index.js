@@ -12,6 +12,7 @@ import {
 } from "services/cOrderService";
 import { useSelector, useDispatch } from "react-redux";
 import CTextarea from "../CTextarea/index";
+import { ACTION_HIDE_ADDRESS_FORM } from "state/reducers/cCustomerReducer";
 
 export const ADDRESS_FORM_KEY = "FORM/ADDRESS";
 
@@ -24,6 +25,9 @@ function CAddressForm({ handleSubmit }) {
   );
   const selectedDistrict = useSelector(
     (state) => getFormValues(ADDRESS_FORM_KEY)(state)?.district
+  );
+  const selectedWard = useSelector(
+    (state) => getFormValues(ADDRESS_FORM_KEY)(state)?.ward
   );
   const dispatch = useDispatch();
   useEffect(() => {
@@ -41,28 +45,28 @@ function CAddressForm({ handleSubmit }) {
   }, []);
 
   useEffect(() => {
-    if (selectedCity) {
+    if (selectedCity && selectedCity.value) {
       cGetDistrictList(selectedCity.value).then((res) => {
         const { data } = res;
-        setDistrictList(
-          data.map((item) => ({
+        setDistrictList(() => {
+          return data.map((item) => ({
             value: item.ID,
             label: item.Title,
-          }))
-        );
+          }));
+        });
       });
     } else {
       setDistrictList([]);
     }
-    dispatch(change(ADDRESS_FORM_KEY, "district", null));
+    if (typeof selectedDistrict === "object")
+      dispatch(change(ADDRESS_FORM_KEY, "district", null));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCity]);
 
   useEffect(() => {
-    if (selectedDistrict) {
+    if (selectedDistrict && selectedDistrict.value) {
       cGetWardList(selectedDistrict.value).then((res) => {
         const { data } = res;
-        console.log(data);
         setWardList(
           data.map((item) => ({
             value: item.ID,
@@ -73,7 +77,8 @@ function CAddressForm({ handleSubmit }) {
     } else {
       setWardList([]);
     }
-    dispatch(change(ADDRESS_FORM_KEY, "ward", null));
+    if (typeof selectedWard === "object")
+      dispatch(change(ADDRESS_FORM_KEY, "ward", null));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDistrict]);
 
@@ -126,15 +131,20 @@ function CAddressForm({ handleSubmit }) {
       <Field
         component={CTextarea}
         validate={[require]}
-        name="address"
+        name="street"
         label="Địa chỉ"
         placeholder="Nhập địa chỉ"
       />
-      <CButton
-        className="submit-button"
-        type="submit"
-        label="Giao đến địa chỉ này"
-      />
+      <div className="button-container">
+        <CButton
+          className="cancel-button"
+          onClick={() => {
+            dispatch({ type: ACTION_HIDE_ADDRESS_FORM });
+          }}
+          label="Hủy bỏ"
+        />
+        <CButton className="submit-button" type="submit" label="Cập nhật" />
+      </div>
     </form>
   );
 }

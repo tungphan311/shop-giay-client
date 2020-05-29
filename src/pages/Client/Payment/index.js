@@ -10,17 +10,13 @@ import { ACTION_GET_CART_ITEMS } from "state/reducers/cCartReducer";
 import { ACTION_PLACE_ORDER } from "state/reducers/cOrderReducer";
 const Payment = () => {
   const {
-    fullName,
-    address,
-    ward: { label: ward },
-    district: { label: district },
-    city: { label: city },
-    phoneNumber,
-  } = useSelector((state) => getFormValues(ADDRESS_FORM_KEY)(state)) || {
-    ward: {},
-    district: {},
-    city: {},
-  };
+    recipientName: fullName,
+    street,
+    ward,
+    district,
+    city,
+    recipientPhoneNumber: phoneNumber,
+  } = useSelector((state) => state.corder.address);
 
   const dispatch = useDispatch();
 
@@ -32,7 +28,7 @@ const Payment = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const addressString = `${address}, ${ward}, ${district}, ${city}`;
+  const addressString = `${street}, ${ward}, ${district}, ${city}`;
 
   const cartItems = useSelector((state) => state.ccart.cartItems);
 

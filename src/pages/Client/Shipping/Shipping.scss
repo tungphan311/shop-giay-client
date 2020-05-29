@@ -88,6 +88,12 @@ $primary: #f3ac00;
       }
     }
     .address-form-wrapper {
+      &.hide {
+        max-height: 0;
+      }
+      max-height: 515px;
+      overflow-y: hidden;
+      transition: max-height 1s ease-in-out;
       border-color: rgb(221, 221, 221);
       background-color: rgba(#fff, 0.1);
       border-radius: 5px;
@@ -96,8 +102,21 @@ $primary: #f3ac00;
         max-width: 600px;
         margin: 0px auto;
         padding: 20px;
+        .button-container {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+        }
         .submit-button {
-          width: 100%;
+          width: 48%;
+        }
+        .cancel-button {
+          width: 48%;
+          background: rgba(255, 255, 255, 0.2);
+          &:hover {
+            background: rgba(0, 0, 0, 0.25);
+            color: #f3ac00;
+          }
         }
 
         .form-row,
@@ -210,6 +229,18 @@ $primary: #f3ac00;
             }
           }
         }
+      }
+    }
+
+    .address-addnew {
+      color: #fff;
+      margin-left: 20px;
+      font-size: 13px;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      span {
+        color: $primary;
+        cursor: pointer;
       }
     }
   }

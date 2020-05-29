@@ -25,7 +25,6 @@ export const cProductReducer = (state = initState, action = {}) => {
   switch (action.type) {
     case ACTION_GET_PRODUCT_DETAIL_SUCCESS:
       const { data } = action.payload;
-      console.log(data);
       return { ...data };
     case ACTION_GET_PRODUCT_DETAIL_FAIL:
       return { ...initState };
