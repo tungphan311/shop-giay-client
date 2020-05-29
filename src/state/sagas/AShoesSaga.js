@@ -38,6 +38,11 @@ import {
 } from "services/admin/shoesServices";
 import { getFormValues as getReduxFormValues } from "redux-form";
 import { FORM_KEY_ADDSHOES } from "state/reducers/formReducer";
+import { getShoesAction } from "state/actions/index";
+import {
+  resolvePromiseAction,
+  rejectPromiseAction,
+} from "@adobe/redux-saga-promise";
 
 export const getFormValues = (state, formName) =>
   getReduxFormValues(formName)(state);
@@ -56,6 +61,23 @@ export function* getAllShoesSaga() {
     yield toast({ message: "Lấy danh sách giày thành công" });
   } catch (err) {
     yield toastErr(String(err));
+  } finally {
+    // yield put({ type: SET_LOADING, status: false });
+  }
+}
+
+export function* getShoesSaga(action) {
+  try {
+    const result = yield call(getAllShoes);
+    const responseJSON = result.data.data;
+
+    const response = JSON.parse(responseJSON);
+
+    yield put({ type: GET_SHOES_SUCCESS, response });
+
+    yield call(resolvePromiseAction, action, response);
+  } catch (err) {
+    yield call(rejectPromiseAction, action, String(err));
   } finally {
     // yield put({ type: SET_LOADING, status: false });
   }
@@ -237,4 +259,5 @@ export default function* aShoesSaga() {
   yield takeEvery(GET_SHOESTYPES, getShoesTypesSaga);
   yield takeEvery(GET_SHOESBRANDS, getShoesBrandsSaga);
   yield takeEvery(ADD_SHOES, addShoesSaga);
+  yield takeEvery(getShoesAction, getShoesSaga);
 }
