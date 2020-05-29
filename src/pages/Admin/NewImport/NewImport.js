@@ -319,7 +319,7 @@ function ANewImport() {
         <div className="col-md-6">
           <div className="card">
             <div className="form-group form-inline">
-              <label for="inlineinput" class="col-md-3 col-form-label">
+              <label htmlFor="inlineinput" className="col-md-3 col-form-label">
                 Chọn nhà cung cấp
               </label>
               <div className="col-md-9 p-0">

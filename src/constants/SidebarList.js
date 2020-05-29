@@ -26,10 +26,6 @@ export const SIDEBAR_LIST = [
     id: "member",
     icon: "fas fa-user",
     title: "Hội viên",
-    href: ["/admin/members", "/admin/members/add"],
-    sub: [
-      { href: "/admin/members/add", title: "Thêm hội viên mới" },
-      { href: "/admin/members", title: "Danh sách hội viên" },
-    ],
+    href: "/admin/members",
   },
 ];
