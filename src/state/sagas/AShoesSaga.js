@@ -104,6 +104,23 @@ export function* deleteShoesSaga(action) {
   }
 }
 
+export function* getShoesSaga(action) {
+  try {
+    const result = yield call(getAllShoes);
+    const responseJSON = result.data.data;
+
+    const response = JSON.parse(responseJSON);
+
+    yield put({ type: GET_SHOES_SUCCESS, response });
+
+    yield call(resolvePromiseAction, action, response);
+  } catch (err) {
+    yield call(rejectPromiseAction, action, String(err));
+  } finally {
+    // yield put({ type: SET_LOADING, status: false });
+  }
+}
+
 export function* getProvidersSaga() {
   try {
     const result = yield call(getProviders);

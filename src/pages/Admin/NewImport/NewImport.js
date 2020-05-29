@@ -367,8 +367,8 @@ function ANewImport() {
       <AddShoesModal
         show={showModal}
         handleClose={handleClose}
-      // handleAdd={handleAdd}
-      // handleAddAndClose={handleAddAndClose}
+        // handleAdd={handleAdd}
+        // handleAddAndClose={handleAddAndClose}
       />
     </div>
   );

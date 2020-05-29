@@ -1,10 +1,4 @@
-import React, {
-  Component,
-  useState,
-  useEffect,
-  useCallback,
-  useMemo,
-} from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import ABreadcrumb from "Components/Admin/Breadcrumb/Breadcrumb";
 import { useSelector, useDispatch } from "react-redux";
 import DataTable from "react-data-table-component";
