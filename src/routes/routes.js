@@ -84,12 +84,7 @@ function Routes() {
           <Route exact path="/" component={ClientHome} />
           <Route exact path="/products" component={ClientProductList} />
           <Route exact path="/products/:id" component={ClientProductDetail} />
-          <CAuthorizedRoute
-            exact
-            path="/cart"
-            component={ClientCart}
-            isCustomer={isCustomer}
-          />
+          <Route exact path="/cart" component={ClientCart} />
           <CAuthorizedRoute
             exact
             path="/checkout/shipping"

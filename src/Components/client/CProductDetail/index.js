@@ -36,16 +36,14 @@ const CProductDetail = ({ id }) => {
 
   useEffect(() => {
     dispatch({ type: ACTION_GET_PRODUCT_DETAIL, payload: { id } });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
-  const isLoggedIn = useSelector((state) => state.cauth.username);
-  const addProductToCart = isLoggedIn
-    ? (id, size) =>
-        dispatch({ type: ACTION_ADD_PRODUCT_TO_CART, payload: { id, size } })
-    : () => {
-        history.push("/login?r=" + history.location.pathname);
-        toastErr("Bạn phải đăng nhập để sử dụng giỏ hàng");
-      };
+  const addProductToCart = (id, size, stockId) =>
+    dispatch({
+      type: ACTION_ADD_PRODUCT_TO_CART,
+      payload: { id, size, stockId },
+    });
 
   return (
     <div className="detail-display-bg">
@@ -131,7 +129,7 @@ const CProductDetail = ({ id }) => {
                                 index === selectedSize ? "selected" : ""
                               }`}
                             >
-                              <span>{size}</span>
+                              <span>{size.sizeName}</span>
                             </div>
                           </li>
                         ))
@@ -146,7 +144,13 @@ const CProductDetail = ({ id }) => {
           <div className="detail-display-info-section detail-display-bag default">
             {sizes && sizes.length > 0 ? (
               <CButton
-                onClick={() => addProductToCart(id, sizes[selectedSize])}
+                onClick={() =>
+                  addProductToCart(
+                    id,
+                    sizes[selectedSize].sizeName,
+                    sizes[selectedSize].stockId
+                  )
+                }
                 className="button"
                 label="THÊM VÀO GIỎ"
               />

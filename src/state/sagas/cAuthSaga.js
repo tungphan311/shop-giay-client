@@ -15,11 +15,12 @@ import {
   ACTION_VERIFY_TOKEN_SUCCESS,
   ACTION_VERIFY_TOKEN_FAIl,
 } from "../reducers/cAuthReducer";
-import { TOKEN_KEY } from "constants/index";
+import { TOKEN_KEY, CART_KEY } from "constants/index";
 import { cVerifyToken } from "../../services/cAuthService";
 import {
   ACTION_CLEAR_CART,
   ACTION_GET_CART_ITEMS,
+  ACTION_SYNC_CART,
 } from "state/reducers/cCartReducer";
 function* Login(action) {
   const { username, password } = yield select((state) =>
@@ -42,8 +43,11 @@ function* Login(action) {
 
       // get user info on login success, another solution: login api return userinfo directly
       yield put({ type: ACTION_VERIFY_TOKEN });
-      // get cart item
-      yield put({ type: ACTION_GET_CART_ITEMS });
+      // sync if local cart is not null
+      const cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+      if (cart.length > 0) {
+        yield put({ type: ACTION_SYNC_CART });
+      } else yield put({ type: ACTION_GET_CART_ITEMS });
 
       const parsed = queryString.parse(history.location.search);
       yield call(history.push, parsed && parsed.r ? parsed.r : "/");

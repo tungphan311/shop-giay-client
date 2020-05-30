@@ -55,7 +55,7 @@ function OrderDetail({
                     <img
                       onClick={() => history.push("/products/" + stockId)}
                       src={image}
-                      alt="WTF"
+                      alt="shoesimage"
                     />
                   </td>
                   <td className="product-name">

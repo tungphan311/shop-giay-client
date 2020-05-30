@@ -4,8 +4,6 @@ import CButton from "Components/client/CButton";
 import history from "state/history";
 import { vietNamCurrency } from "utils";
 import { useSelector, useDispatch } from "react-redux";
-import { getFormValues } from "redux-form";
-import { ADDRESS_FORM_KEY } from "Components/client/CAddressForm/index";
 import { ACTION_GET_CART_ITEMS } from "state/reducers/cCartReducer";
 import { ACTION_PLACE_ORDER } from "state/reducers/cOrderReducer";
 const Payment = () => {
