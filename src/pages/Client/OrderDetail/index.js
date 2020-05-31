@@ -1,33 +1,52 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./OrderDetail.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { ACTION_GET_CART_ITEMS } from "state/reducers/cCartReducer";
 import history from "state/history";
 import { vietNamCurrency } from "utils";
+import { cGetOrderDetail } from "services/cOrderService";
+
+const orderIntialState = {
+  cartItemDTOList: [],
+};
 
 function OrderDetail({
   match: {
     params: { id },
   },
 }) {
-  const dispatch = useDispatch();
-  const cartItems = useSelector((state) => state.ccart.cartItems);
+  const [order, setOrder] = useState(orderIntialState);
+
   useEffect(() => {
-    dispatch({ type: ACTION_GET_CART_ITEMS });
+    cGetOrderDetail(id).then((res) => {
+      const {
+        data: { code, data },
+      } = res;
+      if (code === "OK") {
+        const parsed = JSON.parse(data);
+        setOrder(parsed);
+      } else history.push("/login");
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const {
+    recipientName: name,
+    recipientPhoneNumber: phoneNumber,
+    deliveryAddress: address,
+    orderDate,
+    cartItemDTOList,
+  } = order;
   return (
     <div className="orderdetail-wrapper">
       <div className="orderdetail-container">
         <div className="orderdetail-header">Chi tiết đơn hàng #{id}</div>
-        <div className="created-date">Ngày đặt hàng: 19:31 21/04/2020</div>
+        <div className="created-date">Ngày đặt hàng: {orderDate}</div>
         <div className="orderdetail-info">
           <div>
             <div className="title">Địa chỉ người nhận</div>
             <div className="content">
-              <p className="name">NAME HERE</p>
-              <p className="address">Địa chỉ: ADDRESS HERE</p>
-              <p className="phone">Điện thoại: PHONE NUMBER HERE</p>
+              <p className="name">{name}</p>
+              <p className="address">Địa chỉ: {address}</p>
+              <p className="phone">Điện thoại: {phoneNumber}</p>
             </div>
           </div>
         </div>
@@ -43,7 +62,7 @@ function OrderDetail({
             </tr>
           </thead>
           <tbody>
-            {cartItems.map(
+            {order.cartItemDTOList.map(
               ({ stockId, image, name, sizeName, price, quantity }, index) => (
                 <tr
                   key={index}
@@ -88,7 +107,7 @@ function OrderDetail({
                   <td className="align-right">
                     <strong>
                       {vietNamCurrency(
-                        cartItems.reduce(
+                        order.cartItemDTOList.reduce(
                           (total, item) => total + item.price * item.quantity,
                           0
                         )

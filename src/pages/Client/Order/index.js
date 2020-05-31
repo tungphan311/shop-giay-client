@@ -4,174 +4,8 @@ import { vietNamCurrency, stringTruncate } from "utils/index";
 import Pagination from "react-js-pagination";
 import CLoadingIndicator from "Components/client/CLoadingIndicator/index";
 import history from "state/history";
+import { cGetOrder } from "services/cOrderService";
 
-const ORDER_EXAMPLE = [
-  {
-    id: "1",
-    date: "16/12/2020",
-    products: [
-      "Sản phẩm 1",
-      "Sản phẩm 2",
-      "Sản phẩm 3",
-      "Sản phẩm 4",
-      "Sản phẩm 5",
-      "Sản phẩm 6",
-      "Sản phẩm 1",
-      "Sản phẩm 2",
-      "Sản phẩm 3",
-      "Sản phẩm 4",
-      "Sản phẩm 5",
-      "Sản phẩm 6",
-      "Sản phẩm 1",
-      "Sản phẩm 2",
-      "Sản phẩm 3",
-      "Sản phẩm 4",
-      "Sản phẩm 5",
-      "Sản phẩm 6",
-    ],
-    total: 2000000,
-    status: "Đang giao hàng",
-  },
-  {
-    id: "2",
-    date: "16/12/2020",
-    products: [
-      "Sản phẩm 1",
-      "Sản phẩm 2",
-      "Sản phẩm 3",
-      "Sản phẩm 4",
-      "Sản phẩm 5",
-      "Sản phẩm 6",
-    ],
-    total: 2000000,
-    status: "Đang giao hàng",
-  },
-  {
-    id: "3",
-    date: "16/12/2020",
-    products: [
-      "Sản phẩm 1",
-      "Sản phẩm 2",
-      "Sản phẩm 3",
-      "Sản phẩm 4",
-      "Sản phẩm 5",
-      "Sản phẩm 6",
-    ],
-    total: 2000000,
-    status: "Đang giao hàng",
-  },
-  {
-    id: "4",
-    date: "16/12/2020",
-    products: [
-      "Sản phẩm 1",
-      "Sản phẩm 2",
-      "Sản phẩm 3",
-      "Sản phẩm 4",
-      "Sản phẩm 5",
-      "Sản phẩm 6",
-    ],
-    total: 2000000,
-    status: "Đang giao hàng",
-  },
-  {
-    id: "1",
-    date: "16/12/2020",
-    products: [
-      "Sản phẩm 1",
-      "Sản phẩm 2",
-      "Sản phẩm 3",
-      "Sản phẩm 4",
-      "Sản phẩm 5",
-      "Sản phẩm 6",
-      "Sản phẩm 1",
-      "Sản phẩm 2",
-      "Sản phẩm 3",
-      "Sản phẩm 4",
-      "Sản phẩm 5",
-      "Sản phẩm 6",
-      "Sản phẩm 1",
-      "Sản phẩm 2",
-      "Sản phẩm 3",
-      "Sản phẩm 4",
-      "Sản phẩm 5",
-      "Sản phẩm 6",
-    ],
-    total: 2000000,
-    status: "Đang giao hàng",
-  },
-  {
-    id: "2",
-    date: "16/12/2020",
-    products: [
-      "Sản phẩm 1",
-      "Sản phẩm 2",
-      "Sản phẩm 3",
-      "Sản phẩm 4",
-      "Sản phẩm 5",
-      "Sản phẩm 6",
-    ],
-    total: 2000000,
-    status: "Đang giao hàng",
-  },
-  {
-    id: "3",
-    date: "16/12/2020",
-    products: [
-      "Sản phẩm 1",
-      "Sản phẩm 2",
-      "Sản phẩm 3",
-      "Sản phẩm 4",
-      "Sản phẩm 5",
-      "Sản phẩm 6",
-    ],
-    total: 2000000,
-    status: "Đang giao hàng",
-  },
-  {
-    id: "4",
-    date: "16/12/2020",
-    products: [
-      "Sản phẩm 1",
-      "Sản phẩm 2",
-      "Sản phẩm 3",
-      "Sản phẩm 4",
-      "Sản phẩm 5",
-      "Sản phẩm 6",
-    ],
-    total: 2000000,
-    status: "Đang giao hàng",
-  },
-  {
-    id: "4",
-    date: "16/12/2020",
-    products: [
-      "Sản phẩm 1",
-      "Sản phẩm 2",
-      "Sản phẩm 3",
-      "Sản phẩm 4",
-      "Sản phẩm 5",
-      "Sản phẩm 6",
-    ],
-    total: 200000000,
-    status: "Đang giao hàng",
-  },
-  {
-    id: "4",
-    date: "16/12/2020",
-    products: [
-      "Sản phẩm 1",
-      "Sản phẩm 2",
-      "Sản phẩm 3",
-      "Sản phẩm 4",
-      "Sản phẩm 5",
-      "Sản phẩm 6",
-    ],
-    total: 2000000,
-    status: "Đang giao hàng",
-  },
-];
-const TOTAL_RECORDS = 21;
 const DEFAULT_PAGESIZE = 10;
 
 const getProductString = (
@@ -205,17 +39,32 @@ const getProductString = (
   );
 };
 
-const getOrders = (page) => ORDER_EXAMPLE.reverse();
 const Order = () => {
   const [page, setPage] = useState(1);
   const [orderList, setOrderList] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [totalRecords, setTotalRecords] = useState(0);
   useEffect(() => {
     setLoading(true);
-    setTimeout(() => {
-      setOrderList([...getOrders(page)]);
-      setLoading(false);
-    }, 1000);
+
+    cGetOrder(page, DEFAULT_PAGESIZE).then((res) => {
+      const {
+        data: { code, data, totalRecords },
+      } = res;
+
+      if (code === "OK") {
+        const parsed = JSON.parse(data);
+        setTotalRecords(totalRecords);
+        setOrderList(parsed);
+        setLoading(false);
+      } else {
+        history.push("/login");
+      }
+    });
+    // setTimeout(() => {
+    //   setOrderList([...getOrders(page)]);
+    //   setLoading(false);
+    // }, 1000);
   }, [page]);
 
   return (
@@ -238,20 +87,26 @@ const Order = () => {
             </tr>
           </thead>
           <tbody>
-            {orderList.map(({ id, date, products, total, status }, index) => (
-              <tr
-                key={id}
-                className={`order-table-row-${index % 2 ? "odd" : "even"}`}
-              >
-                <td className="order-code">
-                  <div onClick={() => history.push("/order/" + id)}>{id}</div>
-                </td>
-                <td className="order-date">{date}</td>
-                <td className="order-products">{getProductString(products)}</td>
-                <td className="order-total">{vietNamCurrency(total)}</td>
-                <td className="order-status">{status}</td>
-              </tr>
-            ))}
+            {orderList.map(
+              ({ id, orderDate, cartItemDTOList, total, status }, index) => (
+                <tr
+                  key={id}
+                  className={`order-table-row-${index % 2 ? "odd" : "even"}`}
+                >
+                  <td className="order-code">
+                    <div onClick={() => history.push("/order/" + id)}>{id}</div>
+                  </td>
+                  <td className="order-date">{orderDate}</td>
+                  <td className="order-products">
+                    {getProductString(
+                      cartItemDTOList.map((x) => x.name + ` size ${x.sizeName}`)
+                    )}
+                  </td>
+                  <td className="order-total">{vietNamCurrency(total)}</td>
+                  <td className="order-status">{status}</td>
+                </tr>
+              )
+            )}
           </tbody>
         </table>
         <div className="pagination-container">
@@ -260,7 +115,7 @@ const Order = () => {
             pageRangeDisplayed={5}
             activePage={page}
             itemsCountPerPage={DEFAULT_PAGESIZE}
-            totalItemsCount={TOTAL_RECORDS}
+            totalItemsCount={totalRecords}
             onChange={(pageNumber) => setPage(pageNumber)}
             innerClass="pagination-bar"
             itemClass="itemClass"

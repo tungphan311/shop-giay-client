@@ -15,11 +15,11 @@ import ClientShipping from "../pages/Client/Shipping";
 import ClientPayment from "pages/Client/Payment/index";
 import ClientOrder from "pages/Client/Order/index";
 import ClientOrderDetail from "pages/Client/OrderDetail/index";
-import { useSelector } from "react-redux";
 import { getItemFromStorage } from "utils/storage";
 import AShoesList from "pages/Admin/ShoesList/ShoesList";
 import ANewImport from "pages/Admin/NewImport/NewImport";
 import StyleGuide from "pages/Admin/StyleGuide/StyleGuide";
+import { TOKEN_KEY } from "constants/index";
 
 // component for admin site to determine user is logined or not
 export const AuthorizedRoute = ({ component: Component, isUser, ...rest }) => (
@@ -63,7 +63,7 @@ export const CAuthorizedRoute = ({
 function Routes() {
   const isUser = getItemFromStorage("identity");
 
-  const isCustomer = useSelector((state) => state.cauth.username);
+  const isCustomer = getItemFromStorage(TOKEN_KEY);
 
   return (
     <Switch>
@@ -89,25 +89,25 @@ function Routes() {
             exact
             path="/checkout/shipping"
             component={ClientShipping}
-            isCustomer={true}
+            isCustomer={isCustomer}
           />
           <CAuthorizedRoute
             exact
             path="/checkout/payment"
             component={ClientPayment}
-            isCustomer={true}
+            isCustomer={isCustomer}
           />
           <CAuthorizedRoute
             exact
             path="/order"
             component={ClientOrder}
-            isCustomer={true}
+            isCustomer={isCustomer}
           />
           <CAuthorizedRoute
             exact
             path="/order/:id"
             component={ClientOrderDetail}
-            isCustomer={true}
+            isCustomer={isCustomer}
           />
         </ClientLayout>
       </Route>

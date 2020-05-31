@@ -42,7 +42,7 @@ export const USER_HOVER_CONTENT = [
     href: "#",
   },
   {
-    label: "Thông tin đơn hàng",
-    href: "#",
+    label: "Đơn hàng của bạn",
+    href: "/order",
   },
 ];

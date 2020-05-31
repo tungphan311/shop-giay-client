@@ -1,23 +1,13 @@
 export const BANNERS = [
   {
     url:
-      "https://www.sneakerhead.com/skin/frontend/default/sneakerhead2/images/outlet/sale-20190404.jpg",
-    href: "#",
+      "https://cdn.shopify.com/s/files/1/0324/6781/2487/files/home-nike-lebron-XVII-command-force-bq3177-100_2000x.jpg?v=1590186250",
+    href: "/products/1",
   },
   {
     url:
-      "https://www.sneakerhead.com/skin/frontend/default/sneakerhead2/images/home/home-mens-air-jordan-1-retro-high-og-black-satin-555088-060.jpg",
-    href: "#",
-  },
-  {
-    url:
-      "https://www.sneakerhead.com/skin/frontend/default/sneakerhead2/images/home/tmw-homepage-banner.jpg",
-    href: "#",
-  },
-  {
-    url:
-      "https://www.sneakerhead.com/skin/frontend/default/sneakerhead2/images/home/home-womens-air-jordan-5-oil-grey-cd2722-001.jpg",
-    href: "#",
+      "https://cdn.shopify.com/s/files/1/0324/6781/2487/files/home-air-jordan-IV-4-womens-retro-AQ9129-100_2000x.jpg?v=1590186330",
+    href: "/products/2",
   },
 ];
 

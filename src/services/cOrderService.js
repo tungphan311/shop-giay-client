@@ -31,3 +31,21 @@ export async function cPlaceOrder({ id }) {
     }
   );
 }
+
+export async function cGetOrder(page = 1, pageSize = 10) {
+  const path = `/order/list?page=${page}&pageSize=${pageSize}`;
+  const token = localStorage.getItem(TOKEN_KEY);
+  const AuthStr = "Bearer " + token;
+  return await API.get(path, {
+    headers: { Authorization: AuthStr },
+  });
+}
+
+export async function cGetOrderDetail(id) {
+  const path = "/order/" + id;
+  const token = localStorage.getItem(TOKEN_KEY);
+  const AuthStr = "Bearer " + token;
+  return await API.get(path, {
+    headers: { Authorization: AuthStr },
+  });
+}
