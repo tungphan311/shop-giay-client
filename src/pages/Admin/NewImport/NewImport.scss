@@ -1,5 +1,5 @@
 .amount-input {
-  flex-grow: 1;
+  width: inherit;
   border: none;
   text-align: right;
   background-color: #fafafa;
@@ -7,6 +7,10 @@
   &:hover {
     background-color: #eee;
   }
+}
+
+.input-group {
+  flex-flow: row !important;
 }
 
 .rdt_TableRow:hover {
