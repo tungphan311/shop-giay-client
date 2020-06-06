@@ -164,7 +164,7 @@ function ANewImport() {
       sortable: true,
       cell: (row) => (
         <div style={{ display: "flex", width: "100%" }}>
-          <div style={{ flexGrow: 1 }}>
+          <div style={{ flexGrow: 3 }}>
             <AProductSelect
               options={options}
               className="product-select"
@@ -173,7 +173,7 @@ function ANewImport() {
               placeholder="Chọn sản phẩm"
             />
           </div>
-          <div style={{ flexGrow: 1 }} className="ml-2">
+          <div style={{ flexGrow: 2 }} className="ml-2">
             <AProductSelect
               options={row.stocks}
               className="product-select"
@@ -188,7 +188,7 @@ function ANewImport() {
     {
       name: "Giá nhập",
       selector: "price",
-      maxWidth: "250px",
+      maxWidth: "170px",
       sortable: true,
       right: true,
       cell: (row) => (
@@ -210,7 +210,7 @@ function ANewImport() {
     {
       name: "Số lượng",
       selector: "amount",
-      maxWidth: "250px",
+      maxWidth: "130px",
       sortable: true,
       right: true,
       cell: (row) => (
@@ -320,9 +320,9 @@ function ANewImport() {
           <div className="card">
             <div className="form-group form-inline">
               <label htmlFor="inlineinput" className="col-md-3 col-form-label">
-                Chọn nhà cung cấp
+                Nhà cung cấp
               </label>
-              <div className="col-md-9 p-0">
+              <div className="col-md-8 p-0 ml-2">
                 <AProviderSelect
                   selected={provider}
                   setSelected={setProvider}
@@ -367,8 +367,8 @@ function ANewImport() {
       <AddShoesModal
         show={showModal}
         handleClose={handleClose}
-        // handleAdd={handleAdd}
-        // handleAddAndClose={handleAddAndClose}
+      // handleAdd={handleAdd}
+      // handleAddAndClose={handleAddAndClose}
       />
     </div>
   );
