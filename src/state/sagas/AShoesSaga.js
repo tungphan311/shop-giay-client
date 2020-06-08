@@ -35,32 +35,35 @@ import { SET_LOADING } from "state/reducers/aLoadingReducer";
 
 export function* getAllShoesSaga() {
   try {
-    // yield put({ type: SET_LOADING });
+    yield put({ type: SET_LOADING });
 
     const result = yield call(getAllShoes);
     const responseJSON = result.data.data;
+    const { total } = result.data;
 
     const response = JSON.parse(responseJSON);
 
-    yield put({ type: GET_SHOES_SUCCESS, response });
+    yield put({ type: GET_SHOES_SUCCESS, response, total });
 
     yield toast({ message: "Lấy danh sách giày thành công" });
   } catch (err) {
     yield toastErr(String(err));
   } finally {
-    // yield put({ type: SET_LOADING, status: false });
+    yield put({ type: SET_LOADING, status: false });
   }
 }
 
 export function* getShoesSaga(action) {
   try {
     yield put({ type: SET_LOADING });
-    const result = yield call(getAllShoes);
+    const { pageSize, page } = action.payload;
+    const result = yield call(getAllShoes, { pageSize, page });
     const responseJSON = result.data.data;
+    const { total } = result.data;
 
     const response = JSON.parse(responseJSON);
 
-    yield put({ type: GET_SHOES_SUCCESS, response });
+    yield put({ type: GET_SHOES_SUCCESS, response, total });
 
     yield call(resolvePromiseAction, action, response);
   } catch (err) {
