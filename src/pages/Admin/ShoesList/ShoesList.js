@@ -20,6 +20,7 @@ function AShoesList({ location: { search } }) {
   const [toggleCleared, setToggleCleared] = useState(false);
   const [perPage, setPerPage] = useState(10);
   const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(true);
 
   // lifecycle
 

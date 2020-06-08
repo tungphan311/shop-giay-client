@@ -106,6 +106,7 @@ export function* deleteShoesSaga(action) {
 
 export function* getShoesSaga(action) {
   try {
+    yield put({ type: SET_LOADING });
     const result = yield call(getAllShoes);
     const responseJSON = result.data.data;
 
@@ -117,7 +118,22 @@ export function* getShoesSaga(action) {
   } catch (err) {
     yield call(rejectPromiseAction, action, String(err));
   } finally {
-    // yield put({ type: SET_LOADING, status: false });
+    yield put({ type: SET_LOADING, status: false });
+  }
+}
+
+export function* deleteShoesSaga(action) {
+  try {
+    yield put({ type: SET_LOADING });
+    yield call(deleteShoes);
+
+    yield toast({ message: "Xoá thành công" });
+
+    yield call(resolvePromiseAction, action);
+  } catch (err) {
+    yield call(rejectPromiseAction, action, String(err));
+  } finally {
+    yield put({ type: SET_LOADING, status: false });
   }
 }
 
