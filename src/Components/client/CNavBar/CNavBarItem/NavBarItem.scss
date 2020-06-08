@@ -18,6 +18,9 @@ $primary: #f3a000;
     &:hover {
       color: $white;
     }
+    &:focus {
+      color: $white;
+    }
   }
 
   &__wrapper {

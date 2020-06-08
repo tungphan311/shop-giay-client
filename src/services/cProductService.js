@@ -2,25 +2,25 @@ import API from "utils/Axios";
 import { TOKEN_KEY } from "constants/index";
 
 export async function cGetMenNewArrivals() {
-  const path = "/shoes";
+  const path = "/shoes?page-size=6";
   const params = { new: 1, gender: "nam" };
   return await API.get(path, { params });
 }
 
 export async function cGetWomenNewArrivals() {
-  const path = "/shoes";
+  const path = "/shoes?page-size=6";
   const params = { new: 1, gender: "nữ" };
   return await API.get(path, { params });
 }
 
 export async function cGetMenProducts() {
-  const path = "/shoes";
+  const path = "/shoes?page-size=6";
   const params = { gender: "nam" };
   return await API.get(path, { params });
 }
 
 export async function cGetWomenProducts() {
-  const path = "/shoes";
+  const path = "/shoes?page-size=6";
   const params = { gender: "nữ" };
   return await API.get(path, { params });
 }
@@ -31,7 +31,7 @@ export async function cGetProductDetail(id) {
 }
 
 export async function cGetRelatedProducts(id) {
-  const path = "/shoes";
+  const path = "/shoes?page-size=6";
   return await API.get(path);
 }
 

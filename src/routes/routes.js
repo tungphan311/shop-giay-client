@@ -11,11 +11,15 @@ import AdminLayout from "../Layout/AdminLayout/AdminLayout";
 import AAddShoes from "pages/Admin/AddShoes/AddShoes";
 import ClientCart from "../pages/Client/Cart";
 import ClientLogin from "../pages/Client/Login";
-import { useSelector } from "react-redux";
+import ClientShipping from "../pages/Client/Shipping";
+import ClientPayment from "pages/Client/Payment/index";
+import ClientOrder from "pages/Client/Order/index";
+import ClientOrderDetail from "pages/Client/OrderDetail/index";
 import { getItemFromStorage } from "utils/storage";
 import AShoesList from "pages/Admin/ShoesList/ShoesList";
 import ANewImport from "pages/Admin/NewImport/NewImport";
 import StyleGuide from "pages/Admin/StyleGuide/StyleGuide";
+import { TOKEN_KEY } from "constants/index";
 
 // component for admin site to determine user is logined or not
 export const AuthorizedRoute = ({ component: Component, isUser, ...rest }) => (
@@ -59,26 +63,58 @@ export const CAuthorizedRoute = ({
 function Routes() {
   const isUser = getItemFromStorage("identity");
 
-  const isCustomer = useSelector((state) => state.cauth.username);
+  const isCustomer = getItemFromStorage(TOKEN_KEY);
 
   return (
     <Switch>
       <Route
         exact
-        path={["/", "/products", "/products/:id", "/cart", "/login"]}
+        path={[
+          "/",
+          "/products",
+          "/products/:id",
+          "/cart",
+          "/checkout/shipping",
+          "/checkout/payment",
+          "/order",
+          "/order/:id",
+        ]}
       >
         <ClientLayout>
           <Route exact path="/" component={ClientHome} />
           <Route exact path="/products" component={ClientProductList} />
           <Route exact path="/products/:id" component={ClientProductDetail} />
-          <Route exact path="/login" component={ClientLogin} />
+          <Route exact path="/cart" component={ClientCart} />
           <CAuthorizedRoute
             exact
-            path="/cart"
-            component={ClientCart}
+            path="/checkout/shipping"
+            component={ClientShipping}
+            isCustomer={isCustomer}
+          />
+          <CAuthorizedRoute
+            exact
+            path="/checkout/payment"
+            component={ClientPayment}
+            isCustomer={isCustomer}
+          />
+          <CAuthorizedRoute
+            exact
+            path="/order"
+            component={ClientOrder}
+            isCustomer={isCustomer}
+          />
+          <CAuthorizedRoute
+            exact
+            path="/order/:id"
+            component={ClientOrderDetail}
             isCustomer={isCustomer}
           />
         </ClientLayout>
+      </Route>
+      <Route exact path={["/login"]}>
+        <EmptyLayout>
+          <Route exact path="/login" component={ClientLogin} />
+        </EmptyLayout>
       </Route>
       <Route
         exact

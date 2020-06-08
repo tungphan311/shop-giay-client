@@ -32,7 +32,7 @@ class NavBarItem extends Component {
         <a className={containerClassName} href={href}>
           {label}
         </a>
-        <div className={contentClassName}>{children}</div>
+        {children && <div className={contentClassName}>{children}</div>}
       </div>
     );
   }

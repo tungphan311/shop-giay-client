@@ -9,16 +9,19 @@ import {
   ACTION_UPDATE_CART,
   ACTION_REMOVE_CART,
 } from "state/reducers/cCartReducer";
+import { toastErr } from "utils/index";
 
 const CCart = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch({ type: ACTION_GET_CART_ITEMS });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const cartItems = useSelector((state) => state.ccart.cartItems);
   const [quantityList, setQuantityList] = useState({});
+  const isLoggedIn = useSelector((state) => state.cauth.username);
 
   return (
     <div className="cart-wrapper">
@@ -38,90 +41,110 @@ const CCart = () => {
             </tr>
           </thead>
           <tbody>
-            {cartItems.map(
-              ({ stockId, image, name, sizeName, price, quantity }, index) => (
-                <tr
-                  key={index}
-                  className={`cart-table-row-${
-                    index % 2 === 1 ? "even" : "odd"
-                  }`}
-                >
-                  <td className="product-image">
-                    <img
-                      onClick={() => history.push("/products/" + stockId)}
-                      src={image}
-                      alt="WTF"
-                    />
-                  </td>
-                  <td className="product-name">
-                    <div
-                      onClick={() => history.push("/products/" + stockId)}
-                      className="name"
-                    >
-                      {name}
-                    </div>
-                    <div className="size">Size: {sizeName}</div>
-                  </td>
-                  <td className="product-remove">
-                    <div
-                      onClick={() =>
-                        dispatch({
-                          type: ACTION_REMOVE_CART,
-                          payload: { stockId },
-                        })
-                      }
-                      className="remove"
-                    ></div>
-                    <div
-                      onClick={() =>
-                        dispatch({
-                          type: ACTION_REMOVE_CART,
-                          payload: { stockId },
-                        })
-                      }
-                      className="remove-text"
-                    >
-                      Xóa
-                    </div>
-                  </td>
-                  <td className="product-price">{vietNamCurrency(price)}</td>
-                  <td className="product-qty">
-                    <input
-                      style={{ appearance: "none" }}
-                      type="number"
-                      value={
-                        quantityList[stockId] ? quantityList[stockId] : quantity
-                      }
-                      onChange={({ target: { value } }) => {
-                        setQuantityList((state) => ({
-                          ...state,
-                          [stockId]: value > 99 ? 99 : value,
-                        }));
-                      }}
-                    />
-                  </td>
-                  <td className="product-subtotal">
-                    {vietNamCurrency(
-                      (quantityList[stockId]
-                        ? quantityList[stockId]
-                        : quantity) * price
-                    )}
-                  </td>
-                </tr>
+            {cartItems && cartItems.length !== 0 ? (
+              cartItems.map(
+                (
+                  { stockId, image, name, sizeName, price, quantity, shoesId },
+                  index
+                ) => (
+                  <tr
+                    key={index}
+                    className={`cart-table-row-${
+                      index % 2 === 1 ? "even" : "odd"
+                    }`}
+                  >
+                    <td className="product-image">
+                      <img
+                        onClick={() => history.push("/products/" + shoesId)}
+                        src={image}
+                        alt="shoesimage"
+                      />
+                    </td>
+                    <td className="product-name">
+                      <div
+                        onClick={() => history.push("/products/" + shoesId)}
+                        className="name"
+                      >
+                        {name}
+                      </div>
+                      <div className="size">Size: {sizeName}</div>
+                    </td>
+                    <td className="product-remove">
+                      <div
+                        onClick={() =>
+                          dispatch({
+                            type: ACTION_REMOVE_CART,
+                            payload: { stockId },
+                          })
+                        }
+                        className="remove"
+                      ></div>
+                      <div
+                        onClick={() =>
+                          dispatch({
+                            type: ACTION_REMOVE_CART,
+                            payload: { stockId },
+                          })
+                        }
+                        className="remove-text"
+                      >
+                        Xóa
+                      </div>
+                    </td>
+                    <td className="product-price">{vietNamCurrency(price)}</td>
+                    <td className="product-qty">
+                      <input
+                        style={{ appearance: "none" }}
+                        type="number"
+                        value={
+                          quantityList[stockId] || quantityList[stockId] === 0
+                            ? quantityList[stockId]
+                            : quantity
+                        }
+                        onChange={({ target: { value } }) => {
+                          setQuantityList((state) => ({
+                            ...state,
+                            [stockId]: !value ? 0 : value > 999 ? 999 : value,
+                          }));
+                        }}
+                      />
+                    </td>
+                    <td className="product-subtotal">
+                      {vietNamCurrency(
+                        (quantityList[stockId] || quantityList[stockId] === 0
+                          ? quantityList[stockId]
+                          : quantity) * price
+                      )}
+                    </td>
+                  </tr>
+                )
               )
+            ) : (
+              <tr className="cart-table-row-even">
+                <td className="no-product" colSpan="6">
+                  Giỏ hàng rỗng
+                </td>
+              </tr>
             )}
           </tbody>
         </table>
         <div>
           <div className="update-buttons">
-            <CButton className="continue-shopping" label="Tiếp tục mua sắm" />
             <CButton
-              onClick={() =>
-                dispatch({
-                  type: ACTION_UPDATE_CART,
-                  payload: { data: quantityList },
-                })
-              }
+              href="/products"
+              className="continue-shopping"
+              label="Tiếp tục mua sắm"
+            />
+            <CButton
+              onClick={() => {
+                if (Object.keys(quantityList).length !== 0) {
+                  dispatch({
+                    type: ACTION_UPDATE_CART,
+                    payload: { data: quantityList },
+                  });
+                  setQuantityList({});
+                } else toastErr("Không có gì để cập nhật");
+              }}
               label="Cập nhật giỏ hàng"
             />
           </div>
@@ -156,7 +179,16 @@ const CCart = () => {
         </div>{" "}
         <div>
           <div className="checkout">
-            <CButton label="Tiến hành đặt hàng" />
+            <CButton
+              onClick={() =>
+                cartItems && cartItems.length !== 0
+                  ? isLoggedIn
+                    ? history.push("/checkout/shipping")
+                    : history.push("/login?r=/checkout/shipping")
+                  : toastErr("Giỏ hàng rỗng")
+              }
+              label="Tiến hành đặt hàng"
+            />
           </div>
         </div>
       </div>

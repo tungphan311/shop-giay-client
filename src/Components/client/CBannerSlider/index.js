@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./BannerSlider.scss";
 import CLoadingIndicator from "Components/client/CLoadingIndicator";
 import { BANNERS } from "constants/index.js";
+import history from "state/history";
 
 const CBannerSlider = () => {
   const [buttonShow, setButtonShow] = useState(false);
@@ -46,9 +47,9 @@ const CBannerSlider = () => {
                 : "bannerSlider__item_hidden"
             }`}
           >
-            <a href={banner.href}>
+            <div onClick={() => history.push(banner.href)}>
               <img className="bannerSlider__image" alt="" src={banner.url} />
-            </a>
+            </div>
           </li>
         ))}
         <button

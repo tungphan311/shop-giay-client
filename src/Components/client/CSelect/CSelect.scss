@@ -1,0 +1,33 @@
+$primary: #f3ac00;
+.select__wrapper {
+  margin-top: 30px;
+  .select__field {
+    background: transparent;
+    border: none;
+    border: 1px solid #434a52;
+    color: #fff;
+    width: 100%;
+    display: block;
+    height: auto;
+    line-height: 1.5;
+    border-radius: 5px;
+    margin: 0;
+    padding: 0;
+    [class*="control"] {
+      color: #fff;
+      background: transparent;
+
+      input {
+        color: #fff !important;
+        background: transparent;
+        outline: none !important;
+      }
+      [class*="singleValue"] {
+        color: #fff !important;
+      }
+    }
+    [class*="menu"] {
+      color: #000;
+    }
+  }
+}

@@ -31,7 +31,7 @@ export const NAVBAR_BUTTON_LIST = [
   // },
   {
     icon: "inventory",
-    hoverComponent: CHoverContainer,
+    //hoverComponent: CHoverContainer,
     href: "/cart",
   },
 ];
@@ -42,19 +42,7 @@ export const USER_HOVER_CONTENT = [
     href: "#",
   },
   {
-    label: "Thông tin đăng nhập",
-    href: "#",
-  },
-  {
-    label: "Theo dõi đơn hàng",
-    href: "#",
-  },
-  {
-    label: "Đánh giá",
-    href: "#",
-  },
-  {
-    label: "Điểm tích lũy",
-    href: "#",
+    label: "Đơn hàng của bạn",
+    href: "/order",
   },
 ];

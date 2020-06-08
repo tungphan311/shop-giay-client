@@ -8,13 +8,13 @@ export async function cGetCartItems() {
   return await API.get(path, { headers: { Authorization: AuthStr } });
 }
 
-export async function cAddProductToCart({ shoesId, sizeName }) {
+export async function cAddProductToCart({ shoesId, sizeName, stockId }) {
   const path = "/cart/add";
   const token = localStorage.getItem(TOKEN_KEY);
   const AuthStr = "Bearer " + token;
   return await API.post(
     path,
-    { shoesId, sizeName, quantity: 1 },
+    { shoesId, sizeName, quantity: 1, stockId },
     {
       headers: { Authorization: AuthStr },
     }
@@ -32,4 +32,13 @@ export async function cUpdateCart(items) {
 
 export async function cRemoveCart(stockId) {
   return cUpdateCart([{ stockId, quantity: 0 }]);
+}
+
+export async function cSyncCart(items) {
+  const path = "/cart/sync";
+  const token = localStorage.getItem(TOKEN_KEY);
+  const AuthStr = "Bearer " + token;
+  return await API.post(path, items, {
+    headers: { Authorization: AuthStr },
+  });
 }
