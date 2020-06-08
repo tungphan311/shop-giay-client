@@ -20,7 +20,7 @@ export async function cGetWardList(id) {
 }
 
 export async function cPlaceOrder({ id }) {
-  const path = "/order?addressId=" + id;
+  const path = "client/order?addressId=" + id;
   const token = localStorage.getItem(TOKEN_KEY);
   const AuthStr = "Bearer " + token;
   return await API.post(
@@ -33,7 +33,7 @@ export async function cPlaceOrder({ id }) {
 }
 
 export async function cGetOrder(page = 1, pageSize = 10) {
-  const path = `/order/list?page=${page}&pageSize=${pageSize}`;
+  const path = `client/order/list?page=${page}&pageSize=${pageSize}`;
   const token = localStorage.getItem(TOKEN_KEY);
   const AuthStr = "Bearer " + token;
   return await API.get(path, {
@@ -42,7 +42,7 @@ export async function cGetOrder(page = 1, pageSize = 10) {
 }
 
 export async function cGetOrderDetail(id) {
-  const path = "/order/" + id;
+  const path = "client/order/" + id;
   const token = localStorage.getItem(TOKEN_KEY);
   const AuthStr = "Bearer " + token;
   return await API.get(path, {
