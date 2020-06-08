@@ -24,12 +24,14 @@ import {
   addColor,
   getSizes,
   addSize,
+  deleteShoes,
 } from "services/admin/shoesServices";
-import { getShoesAction } from "state/actions/index";
+import { getShoesAction, deleteShoesAction } from "state/actions/index";
 import {
   resolvePromiseAction,
   rejectPromiseAction,
 } from "@adobe/redux-saga-promise";
+import { SET_LOADING } from "state/reducers/aLoadingReducer";
 
 export function* getAllShoesSaga() {
   try {
@@ -52,6 +54,7 @@ export function* getAllShoesSaga() {
 
 export function* getShoesSaga(action) {
   try {
+    yield put({ type: SET_LOADING });
     const result = yield call(getAllShoes);
     const responseJSON = result.data.data;
 
@@ -63,7 +66,22 @@ export function* getShoesSaga(action) {
   } catch (err) {
     yield call(rejectPromiseAction, action, String(err));
   } finally {
-    // yield put({ type: SET_LOADING, status: false });
+    yield put({ type: SET_LOADING, status: false });
+  }
+}
+
+export function* deleteShoesSaga(action) {
+  try {
+    yield put({ type: SET_LOADING });
+    yield call(deleteShoes);
+
+    yield toast({ message: "Xoá thành công" });
+
+    yield call(resolvePromiseAction, action);
+  } catch (err) {
+    yield call(rejectPromiseAction, action, String(err));
+  } finally {
+    yield put({ type: SET_LOADING, status: false });
   }
 }
 
@@ -154,4 +172,5 @@ export default function* aShoesSaga() {
   yield takeEvery(GET_SIZES, getSizesSaga);
   yield takeEvery(ADD_SIZE, addSizeSaga);
   yield takeEvery(getShoesAction, getShoesSaga);
+  yield takeEvery(deleteShoesAction, deleteShoesSaga);
 }
