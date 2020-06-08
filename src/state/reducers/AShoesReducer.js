@@ -41,6 +41,7 @@ const initState = {
   genders: [],
   shoesTypes: [],
   shoesBrands: [],
+  totalRows: 0,
 };
 
 export function AShoesReducer(state = initState, action = {}) {
@@ -49,6 +50,7 @@ export function AShoesReducer(state = initState, action = {}) {
   switch (action.type) {
     case GET_SHOES_SUCCESS: {
       newState.shoes = action.response;
+      newState.totalRows = action.total;
       return newState;
     }
 

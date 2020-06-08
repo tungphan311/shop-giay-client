@@ -15,41 +15,43 @@ import { toastErr } from "utils/index";
 import "./ShoesList.scss";
 import history from "state/history";
 import swal from "sweetalert";
+import qs from "query-string";
+import APagination from "Components/Admin/Pagination/Pagination";
 
-function AShoesList() {
+function AShoesList({ location: { search } }) {
   // state
   const [data, setData] = useState([]);
   const [fetch, setFetch] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
   const [toggleCleared, setToggleCleared] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [perPage, setPerPage] = useState(10);
+  const [page, setPage] = useState(1);
 
   // lifecycle
 
   // redux
   const dispatch = useDispatch();
   const shoes = useSelector((state) => state.aShoes.shoes);
+  const totalRows = useSelector((state) => state.aShoes.totalRows) || 0;
 
-  if (!shoes.length && !fetch) {
+  if (!fetch) {
     setFetch(true);
-    dispatch(getShoesAction())
-      .then((res) => {
-        let newData = res.map((s) => ({
-          id: s.Id,
-          name: s.Name,
-          stocks: s.Stocks,
-          inventory: s.Stocks.reduce(
-            (accumulator, currentValue) => accumulator + currentValue.Instock,
-            0
-          ),
-          img: s.ShoesImages,
-          type: s.ShoesType.Name,
-          brand: s.ShoesBrand.Name,
-        }));
+    const parsed = qs.parse(search);
 
+    const page = parsed.page || 1;
+    setPage(parseInt(page));
+    const pageSize = parsed.pageSize || 10;
+
+    dispatch(getShoesAction({ pageSize, page }))
+      .then((res) => {
+        let newData = mapResponseToData(res);
         setData(newData);
       })
       .catch((err) => toastErr(err));
+  } else if (!fetch && shoes.length) {
+    setFetch(true);
+    let newData = mapResponseToData(shoes);
+    setData(newData);
   }
 
   const columns = [
@@ -159,10 +161,20 @@ function AShoesList() {
               onSelectedRowsChange={handleRowSelected}
               clearSelectedRows={toggleCleared}
               pagination
+              paginationServer
+              paginationTotalRows={totalRows}
               striped
               highlightOnHover
               paginationComponentOptions={OPTIONS}
               noDataComponent={NO_DATA_COMPONENT}
+              paginationComponent={() => (
+                <APagination
+                  page={page}
+                  handlePageChange={(page) => setPage(page)}
+                  totalRows={totalRows}
+                  perPage={perPage}
+                />
+              )}
             />
           </div>
         </div>
@@ -175,9 +187,16 @@ export default AShoesList;
 
 const BREADCRUMB = [{ link: "/admin/shoes", name: "Quản lý giày" }];
 
-const Loading = () => (
-  <>
-    <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
-    <span class="sr-only">Loading...</span>
-  </>
-);
+const mapResponseToData = (res) =>
+  res.map((s) => ({
+    id: s.Id,
+    name: s.Name,
+    stocks: s.Stocks,
+    inventory: s.Stocks.reduce(
+      (accumulator, currentValue) => accumulator + currentValue.Instock,
+      0
+    ),
+    img: s.ShoesImages,
+    type: s.ShoesType.Name,
+    brand: s.ShoesBrand.Name,
+  }));

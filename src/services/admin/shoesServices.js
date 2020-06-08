@@ -1,7 +1,9 @@
 import API from "utils/Axios";
+import qs from "query-string";
 
-export async function getAllShoes() {
-  return await API.get("/admin/shoes");
+export async function getAllShoes({ pageSize, page }) {
+  const query = qs.stringify({ pageSize, page });
+  return await API.get(`/admin/shoes?${query}`);
 }
 
 export async function getProviders() {
