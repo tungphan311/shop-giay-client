@@ -32,7 +32,7 @@ export async function deleteShoes({ ids }) {
   let query = "";
   for (let i = 0; i < ids.length; i++) {
     query += `ids=${ids[i]}`;
-    query += i === ids.length - 1 ? "&" : "";
+    query += i === ids.length - 1 ? "" : "&";
   }
   return await API.delete(`/admin/shoes?${query}`);
 }
