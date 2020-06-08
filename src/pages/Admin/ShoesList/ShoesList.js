@@ -113,20 +113,24 @@ function AShoesList() {
         icon: "warning",
         buttons: ["Huỷ", "Xoá"],
         dangerMode: true,
-      }).then((willDelete) => {
-        if (willDelete) {
-          setToggleCleared(!toggleCleared);
-          setData(data.filter((x) => !selectedRows.includes(x)));
-          setLoading(true);
-          // dispatch(deleteShoesAction())
-          // swal("Chúc mừng bạn đã xoá thành công", {
-          //   icon: "success",
-          // });
-        } else {
-          setToggleCleared(!toggleCleared);
-          swal("Chúc mừng dữ liệu của bạn vẫn an toàn!");
-        }
-      });
+      })
+        .then((willDelete) => {
+          if (willDelete) {
+            const ids = selectedRows.map((s) => s.id);
+
+            dispatch(deleteShoesAction(ids)).then(() => {
+              swal("Chúc mừng bạn đã xoá thành công", {
+                icon: "success",
+              });
+              setData(data.filter((x) => !selectedRows.includes(x)));
+              setToggleCleared(!toggleCleared);
+            });
+          } else {
+            setToggleCleared(!toggleCleared);
+            swal("Chúc mừng dữ liệu của bạn vẫn an toàn!");
+          }
+        })
+        .catch((err) => toastErr(err));
     };
 
     return (
@@ -138,8 +142,6 @@ function AShoesList() {
       </button>
     );
   }, [data, selectedRows, toggleCleared]);
-
-  console.log(selectedRows);
 
   return (
     <div>
@@ -161,8 +163,6 @@ function AShoesList() {
               highlightOnHover
               paginationComponentOptions={OPTIONS}
               noDataComponent={NO_DATA_COMPONENT}
-              // progressPending={loading}
-              // progressComponent={<Loading />}
             />
           </div>
         </div>
