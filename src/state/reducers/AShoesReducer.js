@@ -30,6 +30,9 @@ export const GET_SHOESBRANDS_SUCCESS = "aShoes/GET_SHOESBRANDS_SUCCESS";
 
 export const ADD_SHOES = "aShoes/ADD_SHOES";
 
+export const DELETE_SHOES = "aShoes/DELETE_SHOES";
+export const DELETE_SHOES_SUCCESS = "aShoes/DELETE_SHOES_SUCCESS";
+
 const initState = {
   shoes: [],
   providers: [],
