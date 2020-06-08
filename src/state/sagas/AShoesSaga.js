@@ -125,9 +125,9 @@ export function* getShoesSaga(action) {
 export function* deleteShoesSaga(action) {
   try {
     yield put({ type: SET_LOADING });
-    yield call(deleteShoes);
+    const ids = action.payload;
 
-    yield toast({ message: "Xoá thành công" });
+    yield call(deleteShoes, { ids });
 
     yield call(resolvePromiseAction, action);
   } catch (err) {
