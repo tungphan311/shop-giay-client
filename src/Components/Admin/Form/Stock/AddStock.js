@@ -1,121 +1,105 @@
 import React, { useState, useCallback, useMemo, useEffect } from "react";
 import { reduxForm, Field } from "redux-form";
 import { FORM_KEY_ADDSHOES } from "state/reducers/formReducer";
-import DataTable from "react-data-table-component";
-import AInput from "Components/Admin/AInput/input";
-import ASelect from "Components/Admin/ASelect/select";
-import { Button } from "react-bootstrap";
+
 import "./AddStock.scss";
 import AProductSelect from "Components/Admin/ProductSelect/Select";
 
-function AAddStock({ handleSubmit, previousPage }) {
-  const data = [{ id: 1, color: "Red", size: "S", amount: "5" }];
+import React from "react";
+import { Field, FieldArray, reduxForm } from "redux-form";
+import validate from "./validate";
 
-  const [selectedRows, setSelectedRows] = useState([]);
-  const [toggleCleared, setToggleCleared] = useState(false);
+const renderField = ({ input, label, type, meta: { touched, error } }) => (
+  <div>
+    <label>{label}</label>
+    <div>
+      <input {...input} type={type} placeholder={label} />
+      {touched && error && <span>{error}</span>}
+    </div>
+  </div>
+);
 
-  const handleRowSelected = useCallback((state) => {
-    setSelectedRows(state.selectedRows);
-  }, []);
-  const columns = [
-    {
-      name: "Màu",
-      selector: "color",
-      sortable: true,
-      cell: (row) => (
-        <AProductSelect
-          className="stock-selectcolor"
-          id={row.id}
-          selectedOption={{ value: row.code, label: row.name }}
-          // onChange={(selected) => selectProduct(selected, row.id)}
-          placeholder="Chọn màu"
+const renderMembers = ({ fields }) => (
+  <ul>
+    <li>
+      <button type="button" onClick={() => fields.push({})}>
+        Add Member
+      </button>
+    </li>
+    {fields.map((member, index) => (
+      <li key={index}>
+        <button
+          type="button"
+          title="Remove Member"
+          onClick={() => fields.remove(index)}
         />
-      ),
-    },
-    {
-      name: "Kích cỡ",
-      selector: "size",
-      sortable: true,
-      right: true,
-      cell: (row) => (
-        <AProductSelect
-          className="stock-selectsize"
-          id={row.id}
-          selectedOption={{ value: row.code, label: row.name }}
-          // onChange={(selected) => selectProduct(selected, row.id)}
-          placeholder="Chọn Size"
+        <h4>Member #{index + 1}</h4>
+        <Field
+          name={`${member}.firstName`}
+          type="text"
+          component={renderField}
+          label="First Name"
         />
-      ),
-    },
-    {
-      name: "Số lượng",
-      selector: "amount",
-      sortable: true,
-      cell: (row) => (
-        <input
-          type="number"
-          name="amount"
-          className="amount-input"
-          id={row.id}
-          defaultValue={row.amount}
-          // onBlur={updateInputValue}
-        ></input>
-      ),
-    },
-  ];
+        <Field
+          name={`${member}.lastName`}
+          type="text"
+          component={renderField}
+          label="Last Name"
+        />
+        <FieldArray name={`${member}.hobbies`} component={renderHobbies} />
+      </li>
+    ))}
+  </ul>
+);
+
+const renderHobbies = ({ fields, meta: { error } }) => (
+  <ul>
+    <li>
+      <button type="button" onClick={() => fields.push()}>
+        Add Hobby
+      </button>
+    </li>
+    {fields.map((hobby, index) => (
+      <li key={index}>
+        <button
+          type="button"
+          title="Remove Hobby"
+          onClick={() => fields.remove(index)}
+        />
+        <Field
+          name={hobby}
+          type="text"
+          component={renderField}
+          label={`Hobby #${index + 1}`}
+        />
+      </li>
+    ))}
+    {error && <li className="error">{error}</li>}
+  </ul>
+);
+
+const FieldArraysForm = (props) => {
+  const { handleSubmit, pristine, reset, submitting } = props;
   return (
-    <form className="AddStockForm" onSubmit={handleSubmit}>
-      <div className="stockTable">
-        <div>
-          <DataTable
-            title="Stock"
-            columns={columns}
-            pagination
-            striped
-            selectableRows
-            onSelectedRowsChange={handleRowSelected}
-            clearSelectedRows={toggleCleared}
-            highlightOnHover
-            data={data}
-          />
-        </div>
-        <div className="stockForm">
-          <div className="displayRow">
-            <Field
-              label="Chọn màu"
-              name="color"
-              component={ASelect}
-              formClassName="ml-2"
-            />
-            <Field
-              label="Chọn size"
-              name="size"
-              component={ASelect}
-              formClassName="ml-2"
-            />
-            <Field
-              label="Số lượng"
-              name="amount"
-              component={AInput}
-              formClassName="ml-2"
-            />
-          </div>
-          <div className="displayCenter">
-            <Button>Thêm</Button>
-          </div>
-        </div>
-        <div style={{ marginLeft: "auto", marginRight: 0 }} className="mt-5">
-          <button className="btn btn-primary btn-border" onClick={previousPage}>
-            Trở về
-          </button>
-          <button type="submit" className="btn btn-primary ml-2">
-            Hoàn tất
-          </button>
-        </div>
+    <form onSubmit={handleSubmit}>
+      <Field
+        name="clubName"
+        type="text"
+        component={renderField}
+        label="Club Name"
+      />
+      <FieldArray name="members" component={renderMembers} />
+      <div>
+        <button type="submit" disabled={submitting}>
+          Submit
+        </button>
+        <button type="button" disabled={pristine || submitting} onClick={reset}>
+          Clear Values
+        </button>
       </div>
     </form>
   );
-}
+};
 
 AAddStock = reduxForm({
   form: FORM_KEY_ADDSHOES, // a unique identifier for this form
