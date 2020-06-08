@@ -19,6 +19,9 @@ export const GET_SIZES_SUCCESS = "aShoes/GET_SIZES_SUCCESS";
 export const ADD_SIZE = "aShoes/ADD_SIZE";
 export const ADD_SIZE_SUCCESS = "aShoes/ADD_SIZE_SUCCESS";
 
+export const DELETE_SHOES = "aShoes/DELETE_SHOES";
+export const DELETE_SHOES_SUCCESS = "aShoes/DELETE_SHOES_SUCCESS";
+
 const initState = {
   shoes: [],
   providers: [],
