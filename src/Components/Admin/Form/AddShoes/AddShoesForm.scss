@@ -61,3 +61,13 @@
     color-stop(0.6, #54de5d)
   );
 }
+.photoUploadList {
+  display: flex;
+  overflow: hiden;
+  padding: 0;
+  width: 100%;
+}
+
+.photoUploadEle {
+  list-style: none;
+}

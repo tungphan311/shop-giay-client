@@ -9,6 +9,7 @@ function AProviderSelect({
   addReducer,
   stateName,
   placeholder,
+  label,
 }) {
   // state
   const [loading, setLoading] = useState(false);
@@ -24,8 +25,8 @@ function AProviderSelect({
     dispatch({ type: getReducer });
 
     setLoading(true);
-  }, []);
-
+  }, [dispatch, getReducer]);
+  console.log(providers);
   if (providers.length > currentLength && loading) {
     setLoading(false);
 
@@ -61,9 +62,15 @@ function AProviderSelect({
     options,
     value: selected,
     placeholder,
+    label,
   };
 
-  return <ACreatable {...props} />;
+  return (
+    <div>
+      <label>{label}</label>
+      <ACreatable {...props} />
+    </div>
+  );
 }
 
 export default AProviderSelect;

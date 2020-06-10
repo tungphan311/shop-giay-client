@@ -19,11 +19,19 @@ export const GET_SIZES_SUCCESS = "aShoes/GET_SIZES_SUCCESS";
 export const ADD_SIZE = "aShoes/ADD_SIZE";
 export const ADD_SIZE_SUCCESS = "aShoes/ADD_SIZE_SUCCESS";
 
+export const GET_GENDERS = "aShoes/GET_GENDERS";
+export const GET_GENDERS_SUCCESS = "aShoes/GET_GENDERS_SUCCESS";
+
+export const GET_SHOESTYPES = "aShoes/GET_SHOESTYPES";
+export const GET_SHOESTYPES_SUCCESS = "aShoes/GET_SHOESTYPES_SUCCESS";
+
 const initState = {
   shoes: [],
   providers: [],
   colors: [],
   sizes: [],
+  genders: [],
+  shoesTypes: [],
 };
 
 export function AShoesReducer(state = initState, action = {}) {
@@ -65,6 +73,16 @@ export function AShoesReducer(state = initState, action = {}) {
     case ADD_SIZE_SUCCESS: {
       const newSize = action.response;
       newState.sizes = [...newState.sizes, newSize];
+      return newState;
+    }
+
+    case GET_GENDERS_SUCCESS: {
+      newState.genders = action.response;
+      return newState;
+    }
+
+    case GET_SHOESTYPES_SUCCESS: {
+      newState.shoesTypes = action.response;
       return newState;
     }
 

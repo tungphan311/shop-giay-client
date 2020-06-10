@@ -1,13 +1,39 @@
-import React, { Component } from "react";
-import { Field, reduxForm } from "redux-form";
+import React, { Component, Props } from "react";
+import { Field, reduxForm, FieldArray, Fields } from "redux-form";
 import { FORM_KEY_ADDSHOES } from "state/reducers/formReducer";
 import { connect } from "react-redux";
 import AInput from "Components/Admin/AInput/input";
 import "./AddShoesForm.scss";
 import ASelect from "Components/Admin/ASelect/select";
-
+import AProviderSelect from "Components/Admin/Creatable/ProviderSelect";
 import ATextArea from "Components/Admin/ATextArea/TextArea";
 import AUploadPhoto from "Components/Admin/AUploadPhoTo/UploadPhoto";
+import { GET_GENDERS, GET_SHOESTYPES } from "state/reducers/AShoesReducer";
+
+const myCustomInput = ({ getReducer, placeholder, stateName, label }) => (
+  <AProviderSelect
+    getReducer={getReducer}
+    stateName={stateName}
+    placeholder={placeholder}
+    label={label}
+  ></AProviderSelect>
+);
+
+class renderPhotoArray extends Component {
+  render() {
+    let { fields } = this.props;
+
+    return (
+      <ul className="photoUploadList">
+        {fields.map((image, index) => (
+          <li className="photoUploadEle mr-2 ml-2" key={index}>
+            <Field name={image} component={AUploadPhoto}></Field>
+          </li>
+        ))}
+      </ul>
+    );
+  }
+}
 
 class AAddShoesForm extends Component {
   constructor(props) {
@@ -26,31 +52,7 @@ class AAddShoesForm extends Component {
         <div className="container">
           <span>Hình Ảnh</span>
           <div className="displayCenter" id="style-15">
-            <Field
-              label="PhotoUpload"
-              name="photoUpload"
-              component={AUploadPhoto}
-            />
-            <Field
-              label="PhotoUpload"
-              name="photoUpload"
-              component={AUploadPhoto}
-            />
-            <Field
-              label="PhotoUpload"
-              name="photoUpload"
-              component={AUploadPhoto}
-            />
-            <Field
-              label="PhotoUpload"
-              name="photoUpload"
-              component={AUploadPhoto}
-            />
-            <Field
-              label="PhotoUpload"
-              name="photoUpload"
-              component={AUploadPhoto}
-            />
+            <FieldArray name="images" component={renderPhotoArray}></FieldArray>
           </div>
           <div className="displayRow">
             <Field label="Tên" name="name" component={AInput} />
@@ -60,19 +62,31 @@ class AAddShoesForm extends Component {
               component={AInput}
               formClassName="ml-2"
             />
+            <Field
+              label="Giá"
+              name="price"
+              component={AInput}
+              formClassName="ml-2"
+            />
           </div>
           <div className="displayRow">
             <Field label="Năm" name="title" component={AInput} />
             <Field
               label="Kiểu"
               name="style"
-              component={ASelect}
+              type="text"
+              getReducer={GET_SHOESTYPES}
+              stateName="shoesTypes"
+              component={myCustomInput}
               formClassName="ml-2"
             />
             <Field
               label="Thương hiệu"
-              name="brand"
-              component={ASelect}
+              name="genderId"
+              type="text"
+              getReducer={GET_GENDERS}
+              stateName="genders"
+              component={myCustomInput}
               formClassName="ml-2"
             />
           </div>
@@ -83,12 +97,6 @@ class AAddShoesForm extends Component {
               rows="5"
               name="discription"
               component={ATextArea}
-            />
-            <Field
-              label="Giá"
-              name="price"
-              component={AInput}
-              formClassName="ml-2"
             />
           </div>
           <div style={{ marginLeft: "auto", marginRight: 0 }} className="mt-5">
@@ -111,6 +119,6 @@ AAddShoesForm = reduxForm({
 
 export default connect((state) => ({
   initialValues: {
-    // name: getCourseNameSelector(state),
+    images: new Array(5).fill(""),
   },
 }))(AAddShoesForm);

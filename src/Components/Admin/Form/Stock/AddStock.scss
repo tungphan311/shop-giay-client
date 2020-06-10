@@ -1,27 +1,47 @@
-.AddStockForm {
-  .stockForm {
-    margin: 0;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    justify-content: space-between;
-    display: flex;
-    padding-right: 10px;
-    border: solid 1px #e0e5ec;
-    background-color: white;
-
-    flex-direction: column;
-  }
-  .input__container {
+.stockList {
+  padding: 0;
+  .Addbtn {
+    display: block;
     width: 100%;
+    font-size: larger;
   }
-  .displayRow {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
+  .flex {
+    width: 100%;
+    align-content: center;
+    .input__container {
+      margin: 0;
+    }
   }
-  .displayCenter {
-    justify-content: center;
-    padding: 2% 0;
-    display: flex;
+  .removeBtn {
+    position: absolute;
+    top: 20%;
+    right: 3%;
   }
+  .stockListEle {
+    padding: 5% 3%;
+    border: solid 1px #e0e5ec;
+    margin: 3% 2%;
+    position: relative;
+    list-style: none;
+  }
+}
+.displayRow {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+.displayCenter {
+  justify-content: center;
+  padding: 2% 0;
+  display: flex;
+}
+
+.container {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  justify-content: space-between;
+  display: flex;
+  width: 90%;
+  background-color: white;
+  flex-direction: column;
 }

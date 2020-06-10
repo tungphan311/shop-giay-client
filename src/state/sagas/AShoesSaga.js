@@ -15,6 +15,10 @@ import {
   GET_SIZES_SUCCESS,
   ADD_SIZE,
   ADD_SIZE_SUCCESS,
+  GET_GENDERS,
+  GET_GENDERS_SUCCESS,
+  GET_SHOESTYPES,
+  GET_SHOESTYPES_SUCCESS,
 } from "state/reducers/AShoesReducer";
 import {
   getAllShoes,
@@ -24,6 +28,8 @@ import {
   addColor,
   getSizes,
   addSize,
+  getGenders,
+  getShoesType,
 } from "services/admin/shoesServices";
 
 export function* getAllShoesSaga() {
@@ -123,6 +129,32 @@ export function* addSizeSaga({ name }) {
   }
 }
 
+export function* getGendersSaga() {
+  try {
+    const result = yield call(getGenders);
+    const responseJSON = result.data.data;
+
+    const response = JSON.parse(responseJSON);
+
+    yield put({ type: GET_GENDERS_SUCCESS, response });
+  } catch (err) {
+    yield toastErr(String(err));
+  }
+}
+
+export function* getShoesTypesSaga() {
+  try {
+    const result = yield call(getShoesType);
+    const responseJSON = result.data.data;
+
+    const response = JSON.parse(responseJSON);
+
+    yield put({ type: GET_SHOESTYPES_SUCCESS, response });
+  } catch (err) {
+    yield toastErr(String(err));
+  }
+}
+
 export default function* aShoesSaga() {
   yield takeEvery(GET_SHOES, getAllShoesSaga);
   yield takeEvery(GET_PROVIDERS, getProvidersSaga);
@@ -131,4 +163,6 @@ export default function* aShoesSaga() {
   yield takeEvery(ADD_COLOR, addColorSaga);
   yield takeEvery(GET_SIZES, getSizesSaga);
   yield takeEvery(ADD_SIZE, addSizeSaga);
+  yield takeEvery(GET_GENDERS, getGendersSaga);
+  yield takeEvery(GET_SHOESTYPES, getShoesTypesSaga);
 }
