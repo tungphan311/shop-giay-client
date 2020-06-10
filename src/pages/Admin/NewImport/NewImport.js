@@ -202,7 +202,7 @@ function ANewImport() {
             onBlur={updateInputValue}
           />
           <div className="input-group-append">
-            <span class="input-group-text ml-2">VNĐ</span>
+            <span className="input-group-text ml-2">VNĐ</span>
           </div>
         </div>
       ),
@@ -224,7 +224,7 @@ function ANewImport() {
             onBlur={updateInputValue}
           />
           <div className="input-group-append">
-            <span class="input-group-text ml-2">đôi</span>
+            <span className="input-group-text ml-2">đôi</span>
           </div>
         </div>
       ),
