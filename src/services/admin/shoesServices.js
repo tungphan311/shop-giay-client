@@ -13,7 +13,7 @@ export async function addProviders({ name }) {
 }
 
 export async function getColors() {
-  return await API.get("admin/color");
+  return await API.get("/admin/color");
 }
 
 export async function addColor({ name }) {
@@ -21,7 +21,7 @@ export async function addColor({ name }) {
 }
 
 export async function getSizes() {
-  return await API.get("admin/size");
+  return await API.get("/admin/size");
 }
 
 export async function addSize({ name }) {
@@ -29,15 +29,15 @@ export async function addSize({ name }) {
 }
 
 export async function getGenders() {
-  return await API.get("admin/gender");
+  return await API.get("/admin/gender");
 }
 
 export async function getShoesType() {
-  return await API.get("admin/shoestype");
+  return await API.get("/admin/shoestype");
 }
 
 export async function getShoesBrand() {
-  return await API.get("admin/shoesbrand");
+  return await API.get("/admin/shoesbrand");
 }
 
 export async function addShoes({
@@ -51,7 +51,7 @@ export async function addShoes({
   styleId,
   description,
 }) {
-  return await API.post("admin/shoes", {
+  return await API.post("/admin/shoes", {
     name,
     code,
     price,
