@@ -19,6 +19,9 @@ import {
   GET_GENDERS_SUCCESS,
   GET_SHOESTYPES,
   GET_SHOESTYPES_SUCCESS,
+  GET_SHOESBRANDS,
+  GET_SHOESBRANDS_SUCCESS,
+  ADD_SHOES,
 } from "state/reducers/AShoesReducer";
 import {
   getAllShoes,
@@ -30,7 +33,14 @@ import {
   addSize,
   getGenders,
   getShoesType,
+  getShoesBrand,
+  addShoes,
 } from "services/admin/shoesServices";
+import { getFormValues as getReduxFormValues } from "redux-form";
+import { FORM_KEY_ADDSHOES } from "state/reducers/formReducer";
+
+export const getFormValues = (state, formName) =>
+  getReduxFormValues(formName)(state);
 
 export function* getAllShoesSaga() {
   try {
@@ -155,6 +165,63 @@ export function* getShoesTypesSaga() {
   }
 }
 
+export function* getShoesBrandsSaga() {
+  try {
+    const result = yield call(getShoesBrand);
+    const responseJSON = result.data.data;
+
+    const response = JSON.parse(responseJSON);
+
+    yield put({ type: GET_SHOESBRANDS_SUCCESS, response });
+  } catch (err) {
+    yield toastErr(String(err));
+  }
+}
+
+export function* addShoesSaga() {
+  try {
+    let {
+      name,
+      code,
+      price,
+      images,
+      stocks,
+      genderId,
+      brandId,
+      styleId,
+      description,
+    } = yield select((state) => getFormValues(state, FORM_KEY_ADDSHOES));
+
+    brandId = brandId.value;
+    genderId = genderId.value;
+    styleId = styleId.value;
+    stocks = stocks.map((s) => ({
+      instock: parseInt(s.instock),
+      colorId: s.colorId.value,
+      sizeId: s.sizeId.value,
+    }));
+    price = parseFloat(price);
+    images = images.filter((image) => Object.keys(image).length !== 0);
+    images = images.map((i) => ({
+      colorId: 2,
+      imagePath: i,
+    }));
+    yield call(addShoes, {
+      name,
+      code,
+      price,
+      images,
+      stocks,
+      genderId,
+      brandId,
+      styleId,
+      description,
+    });
+  } catch (err) {
+    yield toastErr(String(err));
+  }
+}
+
 export default function* aShoesSaga() {
   yield takeEvery(GET_SHOES, getAllShoesSaga);
   yield takeEvery(GET_PROVIDERS, getProvidersSaga);
@@ -165,4 +232,6 @@ export default function* aShoesSaga() {
   yield takeEvery(ADD_SIZE, addSizeSaga);
   yield takeEvery(GET_GENDERS, getGendersSaga);
   yield takeEvery(GET_SHOESTYPES, getShoesTypesSaga);
+  yield takeEvery(GET_SHOESBRANDS, getShoesBrandsSaga);
+  yield takeEvery(ADD_SHOES, addShoesSaga);
 }

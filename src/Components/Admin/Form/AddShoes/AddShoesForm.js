@@ -4,18 +4,31 @@ import { FORM_KEY_ADDSHOES } from "state/reducers/formReducer";
 import { connect } from "react-redux";
 import AInput from "Components/Admin/AInput/input";
 import "./AddShoesForm.scss";
-import ASelect from "Components/Admin/ASelect/select";
 import AProviderSelect from "Components/Admin/Creatable/ProviderSelect";
 import ATextArea from "Components/Admin/ATextArea/TextArea";
 import AUploadPhoto from "Components/Admin/AUploadPhoTo/UploadPhoto";
-import { GET_GENDERS, GET_SHOESTYPES } from "state/reducers/AShoesReducer";
+import {
+  GET_GENDERS,
+  GET_SHOESTYPES,
+  GET_SHOESBRANDS,
+} from "state/reducers/AShoesReducer";
+import { requireForm } from "utils/index";
 
-const myCustomInput = ({ getReducer, placeholder, stateName, label }) => (
+const myCustomInput = ({
+  input,
+  getReducer,
+  placeholder,
+  stateName,
+  label,
+}) => (
   <AProviderSelect
+    {...input}
     getReducer={getReducer}
     stateName={stateName}
     placeholder={placeholder}
     label={label}
+    selected={input.value}
+    setSelected={input.onChange}
   ></AProviderSelect>
 );
 
@@ -55,47 +68,71 @@ class AAddShoesForm extends Component {
             <FieldArray name="images" component={renderPhotoArray}></FieldArray>
           </div>
           <div className="displayRow">
-            <Field label="Tên" name="name" component={AInput} />
+            <Field
+              label="Tên"
+              validate={[requireForm]}
+              name="name"
+              component={AInput}
+            />
             <Field
               label="Mã giày"
               name="code"
+              validate={[requireForm]}
               component={AInput}
               formClassName="ml-2"
             />
             <Field
               label="Giá"
               name="price"
+              validate={[requireForm]}
               component={AInput}
               formClassName="ml-2"
             />
           </div>
           <div className="displayRow">
-            <Field label="Năm" name="title" component={AInput} />
-            <Field
-              label="Kiểu"
-              name="style"
-              type="text"
-              getReducer={GET_SHOESTYPES}
-              stateName="shoesTypes"
-              component={myCustomInput}
-              formClassName="ml-2"
-            />
-            <Field
-              label="Thương hiệu"
-              name="genderId"
-              type="text"
-              getReducer={GET_GENDERS}
-              stateName="genders"
-              component={myCustomInput}
-              formClassName="ml-2"
-            />
+            <div className="flex">
+              <Field
+                label="Giới tính"
+                name="genderId"
+                type="text"
+                getReducer={GET_GENDERS}
+                stateName="genders"
+                component={myCustomInput}
+                formClassName="ml-2"
+                placeholder="Chọn giới tính..."
+              />
+            </div>
+            <div className="flex mr-2 ml-2">
+              <Field
+                label="Kiểu"
+                name="styleId"
+                type="text"
+                getReducer={GET_SHOESTYPES}
+                stateName="shoesTypes"
+                component={myCustomInput}
+                formClassName="ml-2"
+                placeholder="Chọn kiểu giày..."
+              />
+            </div>
+            <div className="flex">
+              <Field
+                label="Thương hiệu"
+                name="brandId"
+                type="text"
+                getReducer={GET_SHOESBRANDS}
+                stateName="shoesBrands"
+                component={myCustomInput}
+                formClassName="ml-2"
+                placeholder="Chọn thương hiệu"
+              />
+            </div>
           </div>
           <div className="displayRow">
             <Field
               label="Mô tả"
               type="textarea"
               rows="5"
-              name="discription"
+              name="description"
               component={ATextArea}
             />
           </div>

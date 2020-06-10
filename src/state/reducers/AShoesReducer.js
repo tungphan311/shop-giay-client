@@ -25,6 +25,11 @@ export const GET_GENDERS_SUCCESS = "aShoes/GET_GENDERS_SUCCESS";
 export const GET_SHOESTYPES = "aShoes/GET_SHOESTYPES";
 export const GET_SHOESTYPES_SUCCESS = "aShoes/GET_SHOESTYPES_SUCCESS";
 
+export const GET_SHOESBRANDS = "aShoes/GET_SHOESBRANDS";
+export const GET_SHOESBRANDS_SUCCESS = "aShoes/GET_SHOESBRANDS_SUCCESS";
+
+export const ADD_SHOES = "aShoes/ADD_SHOES";
+
 const initState = {
   shoes: [],
   providers: [],
@@ -32,6 +37,7 @@ const initState = {
   sizes: [],
   genders: [],
   shoesTypes: [],
+  shoesBrands: [],
 };
 
 export function AShoesReducer(state = initState, action = {}) {
@@ -86,6 +92,10 @@ export function AShoesReducer(state = initState, action = {}) {
       return newState;
     }
 
+    case GET_SHOESBRANDS_SUCCESS: {
+      newState.shoesBrands = action.response;
+      return newState;
+    }
     default:
       return newState;
   }
