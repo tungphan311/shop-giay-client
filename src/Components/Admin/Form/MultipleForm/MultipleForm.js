@@ -4,11 +4,6 @@ import AAddStock from "Components/Admin/Form/Stock/AddStock";
 import { useDispatch } from "react-redux";
 import { ADD_SHOES } from "state/reducers/AShoesReducer";
 
-const handelSubmit = () => {
-  // const dispatch = useDispatch();
-  // dispatch({ type: ADD_SHOES });
-};
-
 function MultipleForm() {
   const [page, setPage] = useState(1);
 

@@ -20,11 +20,6 @@ class AUploadPhoto extends Component {
     this.setState({ hover: !this.state.hover });
   };
 
-  // inputChange = (event, onChange) => {
-  //   const files = event.target.files[0];
-  //   this.uploadImage(files, onChange);
-  // };
-
   uploadImage = (event, onChange) => {
     const file = event.target.files[0];
     const { cloudName } = this.state;
@@ -52,8 +47,6 @@ class AUploadPhoto extends Component {
 
         this.setState({ image, loading: false });
         onChange(image);
-        // this.props.add(token.join("/"));
-        // document.getElementById('image-loaded').src = token.join('/');
       }
     };
 
@@ -93,10 +86,9 @@ class AUploadPhoto extends Component {
             )
           ) : (
             <Fragment>
-              {/* <div className="image-uploaded" id="gallery" /> */}
               <img
                 src={image}
-                alt="image upload"
+                alt="upload"
                 id="image-loaded"
                 className="add-photo-image-upload"
                 onMouseEnter={this.toggleHover}
