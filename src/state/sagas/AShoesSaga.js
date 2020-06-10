@@ -206,6 +206,8 @@ export function* addShoesSaga() {
       colorId: 2,
       imagePath: i,
     }));
+    description = description || "";
+
     yield call(addShoes, {
       name,
       code,
@@ -217,6 +219,7 @@ export function* addShoesSaga() {
       styleId,
       description,
     });
+    toast({ message: "Thêm thành công" });
   } catch (err) {
     yield toastErr(String(err));
   }

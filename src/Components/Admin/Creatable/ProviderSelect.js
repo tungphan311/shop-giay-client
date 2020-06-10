@@ -26,7 +26,7 @@ function AProviderSelect({
 
     setLoading(true);
   }, [dispatch, getReducer]);
-  console.log(providers);
+
   if (providers.length > currentLength && loading) {
     setLoading(false);
 
