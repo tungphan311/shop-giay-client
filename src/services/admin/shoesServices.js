@@ -35,3 +35,31 @@ export async function getGenders() {
 export async function getShoesType() {
   return await API.get("admin/shoestype");
 }
+
+export async function getShoesBrand() {
+  return await API.get("admin/shoesbrand");
+}
+
+export async function addShoes({
+  name,
+  code,
+  price,
+  images,
+  stocks,
+  genderId,
+  brandId,
+  styleId,
+  description,
+}) {
+  return await API.post("admin/shoes", {
+    name,
+    code,
+    price,
+    images,
+    stocks,
+    genderId,
+    brandId,
+    styleId,
+    description,
+  });
+}

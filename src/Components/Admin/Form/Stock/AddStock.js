@@ -8,22 +8,22 @@ import AProviderSelect from "Components/Admin/Creatable/ProviderSelect";
 import { GET_COLORS, GET_SIZES } from "state/reducers/AShoesReducer";
 import AInput from "Components/Admin/AInput/input";
 import { Button } from "react-bootstrap";
-const renderField = ({ input, label, type, meta: { touched, error } }) => (
-  <div>
-    <label>{label}</label>
-    <div>
-      <input {...input} type={type} placeholder={label} />
-      {touched && error && <span>{error}</span>}
-    </div>
-  </div>
-);
 
-const myCustomInput = ({ getReducer, placeholder, stateName, label }) => (
+const myCustomInput = ({
+  input,
+  getReducer,
+  placeholder,
+  stateName,
+  label,
+}) => (
   <AProviderSelect
+    {...input}
     getReducer={getReducer}
     stateName={stateName}
     placeholder={placeholder}
     label={label}
+    selected={input.value}
+    setSelected={input.onChange}
   ></AProviderSelect>
 );
 
@@ -37,7 +37,7 @@ const renderMembers = ({ fields }) => (
       Thêm phiên bản
     </Button>
 
-    {fields.map((member, index) => (
+    {fields.map((stock, index) => (
       <li className="stockListEle" key={index}>
         <Button
           className="removeBtn fa fa-trash"
@@ -49,7 +49,7 @@ const renderMembers = ({ fields }) => (
         <div className="displayRow">
           <div className="flex">
             <Field
-              name="instock"
+              name={`${stock}.instock`}
               type="text"
               component={AInput}
               placeholder="Số lượng..."
@@ -58,7 +58,7 @@ const renderMembers = ({ fields }) => (
           </div>
           <div className="flex mr-2 ml-2">
             <Field
-              name="colorId"
+              name={`${stock}.colorId`}
               type="text"
               component={myCustomInput}
               getReducer={GET_COLORS}
@@ -69,7 +69,7 @@ const renderMembers = ({ fields }) => (
           </div>
           <div className="flex">
             <Field
-              name="sizeId"
+              name={`${stock}.sizeId`}
               type="text"
               component={myCustomInput}
               getReducer={GET_SIZES}
@@ -84,31 +84,6 @@ const renderMembers = ({ fields }) => (
   </ul>
 );
 
-const renderHobbies = ({ fields, meta: { error } }) => (
-  <ul>
-    <li>
-      <button type="button" onClick={() => fields.push()}>
-        Thêm phiên bản
-      </button>
-    </li>
-    {fields.map((hobby, index) => (
-      <li key={index}>
-        <button
-          type="button"
-          title="Remove Hobby"
-          onClick={() => fields.remove(index)}
-        />
-        <Field
-          name={hobby}
-          type="text"
-          component={renderField}
-          label={`Hobby #${index + 1}`}
-        />
-      </li>
-    ))}
-    {error && <li className="error">{error}</li>}
-  </ul>
-);
 class AAddStock extends Component {
   render() {
     const {
@@ -121,7 +96,7 @@ class AAddStock extends Component {
     return (
       <form className="AddStockForm" onSubmit={handleSubmit}>
         <div className="container">
-          <FieldArray name="members" component={renderMembers} />
+          <FieldArray name="stocks" component={renderMembers} />
           <div>
             <button
               className="btn btn-primary btn-border"
