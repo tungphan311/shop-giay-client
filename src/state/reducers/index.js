@@ -8,7 +8,6 @@ import { formReducer } from "state/reducers/formReducer";
 import { aImportReducer } from "state/reducers/aImportReducer";
 import { cCustomerReducer } from "./cCustomerReducer";
 import { cOrderReducer } from "./cOrderReducer";
-import { formReducer } from "state/reducers/formReducer";
 
 export default combineReducers({
   form: formReducer,
