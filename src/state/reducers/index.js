@@ -4,6 +4,7 @@ import { cCartReducer } from "./cCartReducer";
 import { cProductReducer } from "./cProductReducer";
 import { AAuthReducer } from "./AAuthReducer";
 import { AShoesReducer } from "state/reducers/AShoesReducer";
+import { formReducer } from "state/reducers/formReducer";
 import { aImportReducer } from "state/reducers/aImportReducer";
 import { cCustomerReducer } from "./cCustomerReducer";
 import { cOrderReducer } from "./cOrderReducer";
