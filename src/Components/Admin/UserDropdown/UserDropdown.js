@@ -1,12 +1,19 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
+import { useDispatch } from "react-redux";
+import { LOGOUT } from "state/reducers/AAuthReducer";
 
 function AUserDropdown({
   ava = "/assets/img/profile.png",
-  logout,
   name,
   username,
 }) {
+  const dispatch = useDispatch();
+
+  const logout = () => {
+    dispatch({ type: LOGOUT })
+  }
+
   return (
     <li className="nav-item dropdown hidden-caret">
       <a
