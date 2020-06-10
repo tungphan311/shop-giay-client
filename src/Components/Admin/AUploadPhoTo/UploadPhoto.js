@@ -2,45 +2,16 @@ import React, { Component, Fragment } from "react";
 import "./UploadPhoto.scss";
 import { Button } from "react-bootstrap";
 
-// const UploadPhoto = ({
-//   placeholder = "",
-//   className = "",
-//   label = "",
-//   type = "text",
-//   meta = {}, // redux form
-//   input, // redux form
-//   inputFile = React.createRef(),
-//   data = "",
-//   reader = new FileReader(),
-//   onChangeHandler = (event) => {
-// reader = new FileReader();
-// inputFile = event.target.files[0];
-// reader.onloadend = () => {
-//   console.log(1, reader.result);
-//   data = reader.result;
-// };
-
-// reader.readAsDataURL(inputFile);
-
-//     console.log(3, inputFile);
-//   },
-// }) => {
-//   );
-// };
-
-// export default UploadPhoto;
-
 class AUploadPhoto extends Component {
   state = {
     image: "",
     loading: false,
+    cloudName: "tungg",
     unsignedUploadPreset: "testUpload",
     hover: false,
   };
 
   addPhoto = () => {
-    console.log("click");
-    // if (this.state.image) return;
     var imageInput = this.refs.imageInput;
     imageInput.click();
   };
@@ -50,25 +21,55 @@ class AUploadPhoto extends Component {
     console.log(this.state.hover);
   };
 
-  inputChange = (event) => {
-    const reader = new FileReader();
-    // const files = event.target.files;
-    // if (!files) return;
-    const files = event.target.files[0];
-    reader.onloadend = () => {
-      this.setState({ image: reader.result, loading: false });
-      console.log(this.state);
+  // inputChange = (event, onChange) => {
+  //   const files = event.target.files[0];
+  //   this.uploadImage(files, onChange);
+  // };
+
+  uploadImage = (event, onChange) => {
+    const file = event.target.files[0];
+    const { cloudName } = this.state;
+    var url = `https://api.cloudinary.com/v1_1/${cloudName}/upload`;
+    var xhr = new XMLHttpRequest();
+    var formData = new FormData();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+
+    xhr.upload.addEventListener("progress", (e) => {
+      this.setState({ loading: true });
+    });
+
+    xhr.onreadystatechange = (e) => {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        // file upload successfully
+        var response = JSON.parse(xhr.responseText);
+
+        var url = response.secure_url;
+
+        var token = url.split("/");
+        token.splice(-2, 0, "w_150,c_scale");
+
+        const image = token.join("/");
+
+        this.setState({ image, loading: false });
+        onChange(image);
+        // this.props.add(token.join("/"));
+        // document.getElementById('image-loaded').src = token.join('/');
+      }
     };
 
-    reader.readAsDataURL(files);
-
-    if (!files) return;
+    formData.append("upload_preset", "pcanrb6v");
+    formData.append("tags", "browser_upload");
+    formData.append("file", file);
+    xhr.send(formData);
   };
   removePhoto = () => {
     this.setState({ image: "" });
   };
 
   render() {
+    const { input } = this.props;
+    const { onChange } = input;
     const { image, loading } = this.state;
     return (
       <div id="image-uploader">
@@ -77,8 +78,10 @@ class AUploadPhoto extends Component {
           id="image-input"
           style={{ display: "none" }}
           ref="imageInput"
-          onChange={this.inputChange}
+          accept="image/*"
+          onChange={(event) => this.uploadImage(event, onChange)}
         />
+        <input {...input} type="text" style={{ display: "none" }} />
         <div className="photo-upload-wrapper" onClick={this.addPhoto}>
           {!image ? (
             !loading ? (

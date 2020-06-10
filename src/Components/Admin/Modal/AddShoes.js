@@ -8,20 +8,7 @@ function AAddShoesModal({ show, handleClose, handleAdd, handleAddAndClose }) {
       <Modal.Header closeButton>
         <Modal.Title>THÊM MỚI GIÀY</Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        <MultipleForm />
-      </Modal.Body>
-      {/* <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
-          Trở về
-        </Button>
-        <Button variant="info" onClick={() => handleAddAndClose(shoes)}>
-          Thêm và đóng
-        </Button>
-        <Button variant="primary" onClick={() => handleAdd(shoes)}>
-          Thêm
-        </Button>
-      </Modal.Footer> */}
+      <Modal.Body></Modal.Body>
     </Modal>
   );
 }
