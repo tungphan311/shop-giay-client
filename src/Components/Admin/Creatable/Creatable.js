@@ -8,6 +8,7 @@ function ACreatable({
   options,
   value,
   placeholder,
+  label,
 }) {
   return (
     <CreatableSelect
@@ -18,6 +19,7 @@ function ACreatable({
       onCreateOption={handleCreate}
       options={options}
       value={value}
+      label={label}
       placeholder={placeholder}
       formatCreateLabel={(value) => `Thêm "${value}" vào cơ sở dữ liệu`}
     />

@@ -15,6 +15,13 @@ import {
   GET_SIZES_SUCCESS,
   ADD_SIZE,
   ADD_SIZE_SUCCESS,
+  GET_GENDERS,
+  GET_GENDERS_SUCCESS,
+  GET_SHOESTYPES,
+  GET_SHOESTYPES_SUCCESS,
+  GET_SHOESBRANDS,
+  GET_SHOESBRANDS_SUCCESS,
+  ADD_SHOES,
 } from "state/reducers/AShoesReducer";
 import {
   getAllShoes,
@@ -24,7 +31,16 @@ import {
   addColor,
   getSizes,
   addSize,
+  getGenders,
+  getShoesType,
+  getShoesBrand,
+  addShoes,
 } from "services/admin/shoesServices";
+import { getFormValues as getReduxFormValues } from "redux-form";
+import { FORM_KEY_ADDSHOES } from "state/reducers/formReducer";
+
+export const getFormValues = (state, formName) =>
+  getReduxFormValues(formName)(state);
 
 export function* getAllShoesSaga() {
   try {
@@ -123,6 +139,92 @@ export function* addSizeSaga({ name }) {
   }
 }
 
+export function* getGendersSaga() {
+  try {
+    const result = yield call(getGenders);
+    const responseJSON = result.data.data;
+
+    const response = JSON.parse(responseJSON);
+
+    yield put({ type: GET_GENDERS_SUCCESS, response });
+  } catch (err) {
+    yield toastErr(String(err));
+  }
+}
+
+export function* getShoesTypesSaga() {
+  try {
+    const result = yield call(getShoesType);
+    const responseJSON = result.data.data;
+
+    const response = JSON.parse(responseJSON);
+
+    yield put({ type: GET_SHOESTYPES_SUCCESS, response });
+  } catch (err) {
+    yield toastErr(String(err));
+  }
+}
+
+export function* getShoesBrandsSaga() {
+  try {
+    const result = yield call(getShoesBrand);
+    const responseJSON = result.data.data;
+
+    const response = JSON.parse(responseJSON);
+
+    yield put({ type: GET_SHOESBRANDS_SUCCESS, response });
+  } catch (err) {
+    yield toastErr(String(err));
+  }
+}
+
+export function* addShoesSaga() {
+  try {
+    let {
+      name,
+      code,
+      price,
+      images,
+      stocks,
+      genderId,
+      brandId,
+      styleId,
+      description,
+    } = yield select((state) => getFormValues(state, FORM_KEY_ADDSHOES));
+
+    brandId = brandId.value;
+    genderId = genderId.value;
+    styleId = styleId.value;
+    stocks = stocks.map((s) => ({
+      instock: parseInt(s.instock),
+      colorId: s.colorId.value,
+      sizeId: s.sizeId.value,
+    }));
+    price = parseFloat(price);
+    images = images.filter((image) => Object.keys(image).length !== 0);
+    images = images.map((i) => ({
+      colorId: 2,
+      imagePath: i,
+    }));
+    description = description || "";
+
+    yield call(addShoes, {
+      name,
+      code,
+      price,
+      images,
+      stocks,
+      genderId,
+      brandId,
+      styleId,
+      description,
+    });
+    toast({ message: "Thêm thành công" });
+  } catch (err) {
+    yield toastErr(String(err));
+  }
+}
+
 export default function* aShoesSaga() {
   yield takeEvery(GET_SHOES, getAllShoesSaga);
   yield takeEvery(GET_PROVIDERS, getProvidersSaga);
@@ -131,4 +233,8 @@ export default function* aShoesSaga() {
   yield takeEvery(ADD_COLOR, addColorSaga);
   yield takeEvery(GET_SIZES, getSizesSaga);
   yield takeEvery(ADD_SIZE, addSizeSaga);
+  yield takeEvery(GET_GENDERS, getGendersSaga);
+  yield takeEvery(GET_SHOESTYPES, getShoesTypesSaga);
+  yield takeEvery(GET_SHOESBRANDS, getShoesBrandsSaga);
+  yield takeEvery(ADD_SHOES, addShoesSaga);
 }

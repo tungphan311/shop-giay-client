@@ -10,3 +10,6 @@ export const require = (value) =>
   required(value)
     ? undefined
     : buildErr("Đây là trường bắt buộc, vui lòng không bỏ trống");
+
+export const requireForm = (value) =>
+  required(value) ? undefined : buildErr("Không được bỏ trống");

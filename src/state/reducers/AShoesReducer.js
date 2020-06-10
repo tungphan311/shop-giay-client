@@ -19,11 +19,25 @@ export const GET_SIZES_SUCCESS = "aShoes/GET_SIZES_SUCCESS";
 export const ADD_SIZE = "aShoes/ADD_SIZE";
 export const ADD_SIZE_SUCCESS = "aShoes/ADD_SIZE_SUCCESS";
 
+export const GET_GENDERS = "aShoes/GET_GENDERS";
+export const GET_GENDERS_SUCCESS = "aShoes/GET_GENDERS_SUCCESS";
+
+export const GET_SHOESTYPES = "aShoes/GET_SHOESTYPES";
+export const GET_SHOESTYPES_SUCCESS = "aShoes/GET_SHOESTYPES_SUCCESS";
+
+export const GET_SHOESBRANDS = "aShoes/GET_SHOESBRANDS";
+export const GET_SHOESBRANDS_SUCCESS = "aShoes/GET_SHOESBRANDS_SUCCESS";
+
+export const ADD_SHOES = "aShoes/ADD_SHOES";
+
 const initState = {
   shoes: [],
   providers: [],
   colors: [],
   sizes: [],
+  genders: [],
+  shoesTypes: [],
+  shoesBrands: [],
 };
 
 export function AShoesReducer(state = initState, action = {}) {
@@ -68,6 +82,20 @@ export function AShoesReducer(state = initState, action = {}) {
       return newState;
     }
 
+    case GET_GENDERS_SUCCESS: {
+      newState.genders = action.response;
+      return newState;
+    }
+
+    case GET_SHOESTYPES_SUCCESS: {
+      newState.shoesTypes = action.response;
+      return newState;
+    }
+
+    case GET_SHOESBRANDS_SUCCESS: {
+      newState.shoesBrands = action.response;
+      return newState;
+    }
     default:
       return newState;
   }
