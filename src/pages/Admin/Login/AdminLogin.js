@@ -39,7 +39,7 @@ function AdminLogin({ login }) {
             <ALoginInput
               label="Mật khẩu"
               id="password"
-              type="password"
+              inputType="password"
               placeholder="********************"
               icon="icon-lock"
             />

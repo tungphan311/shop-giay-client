@@ -37,7 +37,7 @@ export function* getAllShoesSaga() {
   try {
     yield put({ type: SET_LOADING });
 
-    const result = yield call(getAllShoes);
+    const result = yield call(getAllShoes, { page: 0, pageSize: 0 });
     const responseJSON = result.data.data;
     const { total } = result.data;
 
