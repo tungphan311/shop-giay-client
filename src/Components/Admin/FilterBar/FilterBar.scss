@@ -65,6 +65,23 @@
   fill: currentColor;
 }
 
+.next-input__add-on--after {
+  padding-left: 0;
+  padding-right: 10px;
+  cursor: pointer;
+}
+
+.next-input-add-on {
+  align-self: center;
+  flex: none;
+  white-space: nowrap;
+  height: 18px;
+  color: #6c798f;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+}
+
 .btn-bg {
   background: #e9ecef !important;
   border-radius: 4px !important;

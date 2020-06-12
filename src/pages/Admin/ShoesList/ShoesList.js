@@ -3,7 +3,7 @@ import ABreadcrumb from "Components/Admin/Breadcrumb/Breadcrumb";
 import { useSelector, useDispatch } from "react-redux";
 import DataTable from "react-data-table-component";
 import { customStyles } from "constants/index";
-import { OPTIONS, NO_DATA_COMPONENT } from "utils/utils";
+import { OPTIONS, NoDataComponent } from "utils/utils";
 import { getShoesAction, deleteShoesAction } from "state/actions/index";
 import { toastErr } from "utils/index";
 import "./ShoesList.scss";
@@ -183,7 +183,7 @@ function AShoesList({ location: { search } }) {
               striped
               highlightOnHover
               paginationComponentOptions={OPTIONS}
-              noDataComponent={NO_DATA_COMPONENT}
+              noDataComponent={<NoDataComponent title="sản phẩm" />}
               paginationComponent={() => (
                 <APagination
                   page={page}
