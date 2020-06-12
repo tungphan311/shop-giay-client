@@ -88,9 +88,6 @@ function AFilterBar({ onExport }) {
                 </div>
               </div>
             </div>
-            <div className="col-auto pl-3 d-flex">
-              <button className="btn btn-info">Áp dụng</button>
-            </div>
           </div>
         </div>
       </div>
