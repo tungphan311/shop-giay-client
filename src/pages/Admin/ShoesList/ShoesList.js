@@ -34,6 +34,15 @@ function AShoesList({ location: { search } }) {
   const shoes = useSelector((state) => state.aShoes.shoes);
   const totalRows = useSelector((state) => state.aShoes.totalRows) || 0;
 
+  const fetchShoes = (page, pageSize) => {
+    dispatch(getShoesAction({ pageSize, page }))
+      .then((res) => {
+        let newData = mapResponseToData(res);
+        setData(newData);
+      })
+      .catch((err) => toastErr(err));
+  };
+
   if (!fetch) {
     setFetch(true);
     const parsed = qs.parse(search);
@@ -42,12 +51,8 @@ function AShoesList({ location: { search } }) {
     setPage(parseInt(page));
     const pageSize = parsed.pageSize || 10;
 
-    dispatch(getShoesAction({ pageSize, page }))
-      .then((res) => {
-        let newData = mapResponseToData(res);
-        setData(newData);
-      })
-      .catch((err) => toastErr(err));
+    fetchShoes(page, pageSize);
+    setPerPage(pageSize);
   } else if (!fetch && shoes.length) {
     setFetch(true);
     let newData = mapResponseToData(shoes);
@@ -145,6 +150,24 @@ function AShoesList({ location: { search } }) {
     );
   }, [data, selectedRows, toggleCleared]);
 
+  const handlePageChange = (page) => {
+    const search = qs.stringify({ page, pageSize: perPage });
+    history.push(`?${search}`);
+
+    setPage(page);
+    fetchShoes(page, perPage);
+  };
+
+  const handlePerPageChange = (event) => {
+    const pageSize = event.target.value;
+
+    const search = qs.stringify({ page, pageSize });
+    history.push(`?${search}`);
+
+    setPerPage(pageSize);
+    fetchShoes(page, pageSize);
+  };
+
   return (
     <div>
       <ABreadcrumb title="Tất cả sản phẩm" list={BREADCRUMB} />
@@ -170,9 +193,11 @@ function AShoesList({ location: { search } }) {
               paginationComponent={() => (
                 <APagination
                   page={page}
-                  handlePageChange={(page) => setPage(page)}
+                  handlePageChange={(page) => handlePageChange(page)}
                   totalRows={totalRows}
                   perPage={perPage}
+                  pageSizes={[10, 15, 20, 25]}
+                  handlePerPageChange={handlePerPageChange}
                 />
               )}
             />
