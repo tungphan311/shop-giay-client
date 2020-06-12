@@ -51,16 +51,13 @@ function AFilterBar() {
                 </div>
               </div>
             </div>
-            <div className="col-auto pl-3 d-flex">
-              <button className="btn btn-info">Áp dụng</button>
-            </div>
           </div>
         </div>
       </div>
       <div className="col-auto pl-0">
         <button className="btn btn-primary ml-3">
-          <AddIcon />
-          <span className="ml-3 d-none d-sm-inline-block">Tạo sản phẩm</span>
+          <SearchIcon />
+          <span className="ml-3 d-none d-sm-inline-block">Tìm kiếm</span>
         </button>
         <OutsideClickWrapper
           onClickOutside={() => setDropdown("")}
