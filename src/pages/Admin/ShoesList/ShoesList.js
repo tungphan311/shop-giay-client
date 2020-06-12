@@ -74,7 +74,7 @@ function AShoesList({ location: { search } }) {
             >
               {row.name}
             </div>
-            <div className="mt-2 cell--ver">{`${row.inventory} phiên bản`}</div>
+            <div className="mt-2 cell--ver">{`${row.stocks.length} phiên bản`}</div>
           </div>
         </div>
       ),
