@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import "./FilterBar.scss";
-import { FilterIcon, SearchIcon, CloseIcon } from "Components/Admin/Svg/index";
+import {
+  FilterIcon,
+  SearchIcon,
+  CloseIcon,
+} from "Components/Admin/Svg/index";
 import OutsideClickWrapper from "Components/Admin/OutsideClickWrapper/OutsideClickWrapper";
 import AProductSelect from "Components/Admin/ProductSelect/Select";
 import ExportFileModal from "Components/Admin/Modal/ExportFile";
@@ -83,6 +87,9 @@ function AFilterBar({ onExport }) {
                   <CloseIcon />
                 </div>
               </div>
+            </div>
+            <div className="col-auto pl-3 d-flex">
+              <button className="btn btn-info">Áp dụng</button>
             </div>
           </div>
         </div>
