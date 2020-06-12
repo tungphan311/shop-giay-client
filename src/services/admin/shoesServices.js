@@ -4,7 +4,7 @@ import qs from "query-string";
 export async function getAllShoes({ pageSize, page }) {
   const query = qs.stringify({ pageSize, page });
   if (!pageSize || !page) {
-    return await API.get(`/admin/shoes`); 
+    return await API.get(`/admin/shoes`);
   }
   return await API.get(`/admin/shoes?${query}`);
 }
