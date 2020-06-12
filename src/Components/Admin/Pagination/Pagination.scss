@@ -3,6 +3,7 @@ $primary: #337ab7;
 .pagination-admin {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
 
   .pagination-bar {
     display: inline-block;
@@ -58,4 +59,9 @@ $primary: #337ab7;
       background: #ddd;
     }
   }
+}
+
+.pagination__page-size {
+  border: 0;
+  padding: 5px;
 }
