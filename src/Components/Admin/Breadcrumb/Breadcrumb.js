@@ -16,7 +16,14 @@ function ABreadcrumb({ title, list }) {
               <i className="flaticon-right-arrow"></i>
             </li>
             <li className="nav-item">
-              <a href={link}>{name}</a>
+              <a
+                href={link}
+                onClick={(e) => {
+                  e.preventDefault();
+                }}
+              >
+                {name}
+              </a>
             </li>
           </Fragment>
         ))}
