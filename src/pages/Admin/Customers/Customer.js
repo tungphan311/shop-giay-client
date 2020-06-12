@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ABreadcrumb from "Components/Admin/Breadcrumb/Breadcrumb";
 import { customStyles } from "constants/index";
-import { OPTIONS, NO_DATA_COMPONENT } from "utils/utils";
+import { OPTIONS, NoDataComponent } from "utils/utils";
 import APagination from "Components/Admin/Pagination/Pagination";
 import DataTable from "react-data-table-component";
 import history from "state/history";
@@ -87,7 +87,7 @@ function ACustomer() {
               striped
               highlightOnHover
               paginationComponentOptions={OPTIONS}
-              noDataComponent={NO_DATA_COMPONENT}
+              noDataComponent={<NoDataComponent title="khách hàng" />}
               paginationComponent={() => (
                 <APagination
                   page={page}

@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import "./FilterBar.scss";
-import { FilterIcon, SearchIcon, AddIcon } from "Components/Admin/Svg/index";
+import {
+  FilterIcon,
+  SearchIcon,
+  AddIcon,
+  CloseIcon,
+} from "Components/Admin/Svg/index";
 import OutsideClickWrapper from "Components/Admin/OutsideClickWrapper/OutsideClickWrapper";
 
 function AFilterBar() {
@@ -41,7 +46,13 @@ function AFilterBar() {
                   className="next-input next-input--invisible"
                   placeholder="Tìm kiếm ..."
                 />
+                <div className="next-input-add-on next-input__add-on--after">
+                  <CloseIcon />
+                </div>
               </div>
+            </div>
+            <div className="col-auto pl-3 d-flex">
+              <button className="btn btn-info">Áp dụng</button>
             </div>
           </div>
         </div>

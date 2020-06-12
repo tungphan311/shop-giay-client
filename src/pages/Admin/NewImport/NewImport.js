@@ -2,7 +2,7 @@ import React, { useState, useCallback, useMemo, useEffect } from "react";
 import ABreadcrumb from "Components/Admin/Breadcrumb/Breadcrumb";
 import DataTable from "react-data-table-component";
 import { customStyles } from "constants/index";
-import { OPTIONS, NO_DATA_COMPONENT } from "utils/utils";
+import { OPTIONS, NoDataComponent } from "utils/utils";
 import "./NewImport.scss";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -351,7 +351,7 @@ function ANewImport() {
               striped
               highlightOnHover
               paginationComponentOptions={OPTIONS}
-              noDataComponent={NO_DATA_COMPONENT}
+              noDataComponent="Danh sách hiện tại còn trống"
             />
             <div className="card-action">
               <button className="btn btn-success" onClick={updateDB}>
@@ -367,8 +367,8 @@ function ANewImport() {
       <AddShoesModal
         show={showModal}
         handleClose={handleClose}
-      // handleAdd={handleAdd}
-      // handleAddAndClose={handleAddAndClose}
+        // handleAdd={handleAdd}
+        // handleAddAndClose={handleAddAndClose}
       />
     </div>
   );
