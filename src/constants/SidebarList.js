@@ -6,10 +6,10 @@ export const SIDEBAR_LIST = [
     href: "/admin",
   },
   {
-    id: "bills",
+    id: "orders",
     icon: "fas fa-file-invoice-dollar",
-    title: "Tra cứu hoá đơn",
-    href: "/admin/invoices",
+    title: "Đon hàng",
+    href: "/admin/orders",
   },
   {
     id: "shoes",
@@ -23,9 +23,9 @@ export const SIDEBAR_LIST = [
     ],
   },
   {
-    id: "member",
+    id: "customers",
     icon: "fas fa-user",
-    title: "Hội viên",
-    href: "/admin/members",
+    title: "Khách hàng",
+    href: "/admin/customers",
   },
 ];

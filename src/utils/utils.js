@@ -34,6 +34,6 @@ export const NO_DATA_COMPONENT = (
       padding: "10px 0",
     }}
   >
-    Không có sản phẩm nào
+    Không có dữ liệu
   </div>
 );
