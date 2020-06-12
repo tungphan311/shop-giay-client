@@ -1,4 +1,8 @@
 import { createPromiseAction } from "@adobe/redux-saga-promise";
-import { ADD_IMPORT } from "state/reducers/aImportReducer";
+import { DELETE_SHOES } from "state/reducers/AShoesReducer";
 
 export const addImportAction = createPromiseAction("ADD_IMPORT");
+
+export const getShoesAction = createPromiseAction("GET_SHOES");
+
+export const deleteShoesAction = createPromiseAction(DELETE_SHOES);

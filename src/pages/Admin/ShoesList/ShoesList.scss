@@ -1,0 +1,37 @@
+.shoes__ava {
+  max-width: 64px;
+  max-height: 64px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+}
+
+.cell--image {
+  height: 64px;
+  width: 64px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cell--info {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  pointer-events: auto;
+  display: block;
+  word-break: break-all;
+  word-break: break-word;
+  color: #2962ff;
+  font-size: 14px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.cell--ver {
+  color: grey;
+  font-size: 12px;
+}

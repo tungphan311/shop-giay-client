@@ -35,29 +35,72 @@ import {
   getShoesType,
   getShoesBrand,
   addShoes,
+  deleteShoes,
 } from "services/admin/shoesServices";
 import { getFormValues as getReduxFormValues } from "redux-form";
 import { FORM_KEY_ADDSHOES } from "state/reducers/formReducer";
+import { getShoesAction, deleteShoesAction } from "state/actions/index";
+import {
+  resolvePromiseAction,
+  rejectPromiseAction,
+} from "@adobe/redux-saga-promise";
+import { SET_LOADING } from "state/reducers/aLoadingReducer";
 
 export const getFormValues = (state, formName) =>
   getReduxFormValues(formName)(state);
 
 export function* getAllShoesSaga() {
   try {
-    // yield put({ type: SET_LOADING });
+    yield put({ type: SET_LOADING });
 
-    const result = yield call(getAllShoes);
+    const result = yield call(getAllShoes, { page: 0, pageSize: 0 });
     const responseJSON = result.data.data;
+    const { total } = result.data;
 
     const response = JSON.parse(responseJSON);
 
-    yield put({ type: GET_SHOES_SUCCESS, response });
+    yield put({ type: GET_SHOES_SUCCESS, response, total });
 
     yield toast({ message: "Lấy danh sách giày thành công" });
   } catch (err) {
     yield toastErr(String(err));
   } finally {
-    // yield put({ type: SET_LOADING, status: false });
+    yield put({ type: SET_LOADING, status: false });
+  }
+}
+
+export function* getShoesSaga(action) {
+  try {
+    yield put({ type: SET_LOADING });
+    const { pageSize, page } = action.payload;
+    const result = yield call(getAllShoes, { pageSize, page });
+    const responseJSON = result.data.data;
+    const { total } = result.data;
+
+    const response = JSON.parse(responseJSON);
+
+    yield put({ type: GET_SHOES_SUCCESS, response, total });
+
+    yield call(resolvePromiseAction, action, response);
+  } catch (err) {
+    yield call(rejectPromiseAction, action, String(err));
+  } finally {
+    yield put({ type: SET_LOADING, status: false });
+  }
+}
+
+export function* deleteShoesSaga(action) {
+  try {
+    yield put({ type: SET_LOADING });
+    const ids = action.payload;
+
+    yield call(deleteShoes, { ids });
+
+    yield call(resolvePromiseAction, action);
+  } catch (err) {
+    yield call(rejectPromiseAction, action, String(err));
+  } finally {
+    yield put({ type: SET_LOADING, status: false });
   }
 }
 
@@ -237,4 +280,6 @@ export default function* aShoesSaga() {
   yield takeEvery(GET_SHOESTYPES, getShoesTypesSaga);
   yield takeEvery(GET_SHOESBRANDS, getShoesBrandsSaga);
   yield takeEvery(ADD_SHOES, addShoesSaga);
+  yield takeEvery(getShoesAction, getShoesSaga);
+  yield takeEvery(deleteShoesAction, deleteShoesSaga);
 }

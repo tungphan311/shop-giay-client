@@ -1,9 +1,7 @@
 import React from "react";
 import AUserDropdown from "../UserDropdown/UserDropdown";
-// import SearchForm from "Components/Navbar/SearchForm/SearchForm";
 import ANotification from "../Notification/Notification";
 import AShortcuts from "../Shortcuts/Shortcuts";
-// import Shortcuts from "Components/Navbar/Shortcuts/Shortcuts";
 
 function AExpandNavBar() {
   return (
