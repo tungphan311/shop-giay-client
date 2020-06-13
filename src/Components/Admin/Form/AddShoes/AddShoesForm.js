@@ -12,10 +12,11 @@ import {
   GET_SHOESTYPES,
   GET_SHOESBRANDS,
 } from "state/reducers/AShoesReducer";
-import { requireForm } from "utils/index";
+import { requireForm, validFloatNumber } from "utils/index";
 
 const myCustomInput = ({
   input,
+  meta = {},
   getReducer,
   placeholder,
   stateName,
@@ -29,6 +30,7 @@ const myCustomInput = ({
     label={label}
     selected={input.value}
     setSelected={input.onChange}
+    meta={meta}
   ></AProviderSelect>
 );
 
@@ -84,7 +86,7 @@ class AAddShoesForm extends Component {
             <Field
               label="Giá"
               name="price"
-              validate={[requireForm]}
+              validate={[requireForm, validFloatNumber]}
               component={AInput}
               formClassName="ml-2"
             />
@@ -100,6 +102,7 @@ class AAddShoesForm extends Component {
                 component={myCustomInput}
                 formClassName="ml-2"
                 placeholder="Chọn giới tính..."
+                validate={[requireForm]}
               />
             </div>
             <div className="flex mr-2 ml-2">
@@ -112,6 +115,7 @@ class AAddShoesForm extends Component {
                 component={myCustomInput}
                 formClassName="ml-2"
                 placeholder="Chọn kiểu giày..."
+                validate={[requireForm]}
               />
             </div>
             <div className="flex">
@@ -124,6 +128,7 @@ class AAddShoesForm extends Component {
                 component={myCustomInput}
                 formClassName="ml-2"
                 placeholder="Chọn thương hiệu"
+                validate={[requireForm]}
               />
             </div>
           </div>
