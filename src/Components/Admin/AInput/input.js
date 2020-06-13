@@ -25,7 +25,11 @@ const AInput = ({
           className={`input__field ${className}`}
           type={type}
         />
-        {showError && <span className="error">{errCode}</span>}
+        {showError && (
+          <span style={{ position: "absolute", color: "#f25961" }}>
+            {errCode}
+          </span>
+        )}
       </div>
     </div>
   );
