@@ -10,7 +10,7 @@ function AProviderSelect({
   stateName,
   placeholder,
   label,
-  meta,
+  meta = {},
 }) {
   const { touched, error } = meta;
   const showError = touched && error;
