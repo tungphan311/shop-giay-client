@@ -1,12 +1,8 @@
 import React, { useState } from "react";
 import "./FilterBar.scss";
-import {
-  FilterIcon,
-  SearchIcon,
-  AddIcon,
-  CloseIcon,
-} from "Components/Admin/Svg/index";
+import { FilterIcon, SearchIcon, CloseIcon } from "Components/Admin/Svg/index";
 import OutsideClickWrapper from "Components/Admin/OutsideClickWrapper/OutsideClickWrapper";
+import AProductSelect from "Components/Admin/ProductSelect/Select";
 
 function AFilterBar() {
   const [dropdown, setDropdown] = useState("");
@@ -23,18 +19,56 @@ function AFilterBar() {
     }
   };
 
+  const handleFilterDropdown = () => {
+    setDropdown(dropdown === "filter" ? "" : "filter");
+  };
+
   return (
     <div className="row no-gutters">
       <div className="col">
         <div>
-          <div className="row no-gutters">
+          <div className="row no-gutters" style={{ position: "relative" }}>
             <div className="col-auto pr-3">
-              <div className="filter__dropdown">
-                <FilterIcon />
-                <span className="ml-3 d-none d-sm-inline-block">
-                  Thêm điều kiện lọc
-                </span>
-              </div>
+              <OutsideClickWrapper
+                onClickOutside={() => setDropdown("")}
+                isShowing={dropdown === "filter"}
+              >
+                <div
+                  className="filter__dropdown"
+                  onClick={() => handleFilterDropdown()}
+                >
+                  <FilterIcon />
+                  <span className="ml-3 d-none d-sm-inline-block">
+                    Thêm điều kiện lọc
+                  </span>
+                </div>
+                <div
+                  style={{ position: "absolute", zIndex: "1000", top: "48px" }}
+                  className={dropdown === "filter" ? "filter--show" : "d-none"}
+                >
+                  <div>
+                    <div className="filter__popover">
+                      <div className="filter__popover--content">
+                        <div className="filter__popover--inner">
+                          <div
+                            style={{ color: "#212121", position: "relative" }}
+                          >
+                            <div className="p-4">
+                              <div className="mb-2">
+                                Hiển thị tất cả khách hàng theo:
+                              </div>
+                              <AProductSelect
+                                selectedOption={{}}
+                                options={[]}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </OutsideClickWrapper>
             </div>
             <div className="col">
               <div className="filter__input">
