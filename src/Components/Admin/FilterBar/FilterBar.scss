@@ -191,3 +191,54 @@
     }
   }
 }
+
+.filter__popover {
+  width: 258px;
+  transform-origin: 0 -4px;
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
+  white-space: normal;
+}
+
+.filter__popover:after {
+  content: "";
+  position: absolute;
+  background: hsla(0, 0%, 100%, 0.01);
+}
+
+.filter__popover--inner {
+  background-color: #fff;
+  background-clip: padding-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 10px rgba(33, 33, 33, 0.2);
+}
+
+.filter--show {
+  animation-name: antZoomBigIn;
+  animation-play-state: running;
+  animation-duration: 0.2s;
+}
+
+@keyframes antZoomBigIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.select-items {
+  border: 0;
+  width: 100%;
+  outline: none;
+  font-size: 14px;
+  line-height: 18px;
+  padding: 11px;
+  color: #212121;
+  white-space: nowrap;
+}
