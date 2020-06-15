@@ -71,10 +71,7 @@ export const downloadExcel = (arr, title) => {
   const date = formatDateToString(new Date());
   const fileName = `${title}-${date}`;
 
-  const csv = convertArrayOfObjectsToCSV(arr);
-  if (!csv) return;
-
-  const ws = XLSX.utils.json_to_sheet(csv);
+  const ws = XLSX.utils.json_to_sheet(arr);
   const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
   const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
   const data = new Blob([excelBuffer], { type: fileType });
