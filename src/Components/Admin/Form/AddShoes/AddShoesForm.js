@@ -13,6 +13,14 @@ import {
   GET_SHOESBRANDS,
 } from "state/reducers/AShoesReducer";
 import { requireForm } from "utils/index";
+const formatData = (data) => {
+  console.log(99, data);
+  const newData = {
+    label: data.Name,
+    value: data.Id,
+  };
+  return newData;
+};
 
 const myCustomInput = ({
   input,
@@ -54,12 +62,12 @@ class AAddShoesForm extends Component {
 
     this.state = {
       defaultF: "",
+      type: this.props.type,
     };
   }
 
   render() {
-    const { handleSubmit } = this.props;
-
+    const { handleSubmit, type } = this.props;
     return (
       <form className="AddShoesForm" onSubmit={handleSubmit}>
         <div className="container">
@@ -152,59 +160,52 @@ AAddShoesForm = reduxForm({
   form: FORM_KEY_ADDSHOES, // a unique identifier for this form
   destroyOnUnmount: false,
   touchOnBlur: false,
+  keepDirtyOnReinitialize: true,
   enableReinitialize: true,
 })(AAddShoesForm);
 
 export default connect((state) => {
   const data = state.aShoes.shoesEdit;
   const temp = new Array(5).fill("");
-  if (data) {
-    switch (data.GenderId) {
-      case 1: {
-        data.GenderId = {
-          value: 1,
-          label: "Unisex",
-        };
-        break;
-      }
-      case 2: {
-        data.GenderId = {
-          value: 2,
-          label: "Female",
-        };
-        break;
-      }
-      case 3: {
-        data.GenderId = {
-          value: 3,
-          label: "Male",
-        };
-        break;
-      }
-      default:
-        break;
-    }
-    data.ShoesImages = [...data.ShoesImages, ...temp].slice(0, 5);
-  }
-  return state.aShoes.shoesEdit
-    ? {
-        initialValues: {
-          images: data.ShoesImages.map((ele) =>
+  data.ShoesImages =
+    data.ShoesImages && [...data.ShoesImages, ...temp].slice(0, 5);
+
+  return {
+    initialValues: {
+      images:
+        (data.ShoesImages &&
+          data.ShoesImages.map((ele) =>
             ele.ImagePath ? ele.ImagePath : ""
-          ),
-          stocks: data.Stocks.map((ele) => ({
-            instock: ele.Instock,
-          })),
-          name: data.Name,
-          code: data.Code,
-          price: data.Price,
-          genderId: data.GenderId,
-          description: data.Description || "",
-        },
-      }
-    : {
-        initialValues: {
-          images: new Array(5).fill(""),
-        },
-      };
+          )) ||
+        new Array(5).fill(""),
+      name: data.Name,
+      code: data.Code,
+      price: data.Price,
+      genderId: data.Gender && {
+        value: data.Gender.Id,
+        label: data.Gender.Name,
+      },
+      styleId: data.ShoesType && {
+        value: data.ShoesType.Id,
+        label: data.ShoesType.Name,
+      },
+      brandId: data.ShoesBrand && {
+        value: data.ShoesBrand.Id,
+        label: data.ShoesBrand.Name,
+      },
+      description: data.Description || "",
+      stocks:
+        data.Stocks &&
+        data.Stocks.map((ele) => ({
+          instock: ele.Instock,
+          id: ele.Id,
+          colorId:
+            state.aShoes.colors.find((e) => e.Id === ele.ColorId) &&
+            formatData(state.aShoes.colors.find((e) => e.Id === ele.ColorId)),
+          sizeId:
+            state.aShoes.sizes.find((e) => e.Id === ele.SizeId) &&
+            formatData(state.aShoes.sizes.find((e) => e.Id === ele.SizeId)),
+        })),
+    },
+  };
 })(AAddShoesForm);

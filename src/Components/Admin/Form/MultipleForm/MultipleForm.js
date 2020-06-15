@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import AddShoesForm from "Components/Admin/Form/AddShoes/AddShoesForm";
 import AAddStock from "Components/Admin/Form/Stock/AddStock";
 import { useDispatch } from "react-redux";
-import { ADD_SHOES } from "state/reducers/AShoesReducer";
+import { ADD_SHOES, EDIT_SHOES } from "state/reducers/AShoesReducer";
 
 function MultipleForm({ id, type }) {
   const [page, setPage] = useState(1);
@@ -11,6 +11,7 @@ function MultipleForm({ id, type }) {
 
   const nextPage = () => setPage(page + 1);
   const previousPage = () => setPage(page - 1);
+  console.log(id);
 
   switch (page) {
     case 1:
@@ -22,7 +23,9 @@ function MultipleForm({ id, type }) {
           id={id}
           type={type}
           onSubmit={(type) =>
-            type === "add" ? dispatch({ type: ADD_SHOES }) : "0"
+            type === "add"
+              ? dispatch({ type: ADD_SHOES })
+              : dispatch({ type: EDIT_SHOES, id })
           }
           previousPage={previousPage}
         />
