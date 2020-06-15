@@ -12,7 +12,7 @@ import swal from "sweetalert";
 import qs from "query-string";
 import APagination from "Components/Admin/Pagination/Pagination";
 import AFilterBar from "Components/Admin/FilterBar/FilterBar";
-import { downloadExcel, formatDateToString } from "utils/helper";
+import { downloadExcel, downloadCSV } from "utils/helper";
 
 function AShoesList({ location: { search } }) {
   // state
@@ -173,55 +173,6 @@ function AShoesList({ location: { search } }) {
     } else {
       downloadExcel(data, "shoes");
     }
-  };
-
-  const convertArrayOfObjectsToCSV = (array) => {
-    console.log(array);
-    let result;
-
-    const columnDelimiter = ",";
-    const lineDelimiter = "\n";
-    const keys = Object.keys(data[0]);
-
-    result = "";
-    result += keys.join(columnDelimiter);
-    result += lineDelimiter;
-
-    array.forEach((item) => {
-      let ctr = 0;
-      keys.forEach((key) => {
-        if (ctr > 0) result += columnDelimiter;
-
-        result += item[key];
-
-        ctr++;
-      });
-      result += lineDelimiter;
-    });
-
-    return result;
-  };
-
-  const downloadCSV = (source) => {
-    let arr = [];
-    if (source === "current") {
-      arr = data;
-    }
-
-    const link = document.createElement("a");
-
-    let csv = convertArrayOfObjectsToCSV(arr);
-    if (!csv) return;
-
-    const date = formatDateToString(new Date());
-    const fileName = `shoes-${date}.csv`;
-    if (!csv.match(/^data:text\/csv/i)) {
-      csv = `data:text/csv;charset=utf-8,${csv}`;
-    }
-
-    link.setAttribute("href", encodeURI(csv));
-    link.setAttribute("download", fileName);
-    link.click();
   };
 
   return (
