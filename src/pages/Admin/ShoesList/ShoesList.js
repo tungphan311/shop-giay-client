@@ -12,7 +12,7 @@ import swal from "sweetalert";
 import qs from "query-string";
 import APagination from "Components/Admin/Pagination/Pagination";
 import AFilterBar from "Components/Admin/FilterBar/FilterBar";
-import { downloadExcel, downloadCSV } from "utils/helper";
+import { downloadCSV, downloadExcel } from "utils/helper";
 
 function AShoesList({ location: { search } }) {
   // state
