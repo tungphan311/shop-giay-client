@@ -3,35 +3,36 @@ import "./FilterBar.scss";
 import { FilterIcon, SearchIcon, CloseIcon } from "Components/Admin/Svg/index";
 import OutsideClickWrapper from "Components/Admin/OutsideClickWrapper/OutsideClickWrapper";
 import AProductSelect from "Components/Admin/ProductSelect/Select";
+import ExportFileModal from "Components/Admin/Modal/ExportFile";
 
-function AFilterBar() {
-  const [dropdown, setDropdown] = useState("");
+function AFilterBar({ onExport }) {
+  const [dropdown, setDropdown] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleOpenModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
 
   const btnClassNames = `dropdown ui-popover-arrow-right ui-popover-placement-right ${
     dropdown === "btn" ? "ui-popover__container--contains-active-popover" : ""
   }`;
 
-  const handleBtnDropdown = () => {
-    if (dropdown !== "btn") {
-      setDropdown("btn");
-    } else {
-      setDropdown("");
+  const handleFilterDropdown = () => setDropdown(!dropdown);
+
+  const handleExport = (source, type) => {
+    if (type === "csv") {
+      onExport(source);
     }
   };
 
-  const handleFilterDropdown = () => {
-    setDropdown(dropdown === "filter" ? "" : "filter");
-  };
-
   return (
-    <div className="row no-gutters">
+    <div className="row no-gutters mt-4">
       <div className="col">
         <div>
           <div className="row no-gutters" style={{ position: "relative" }}>
             <div className="col-auto pr-3">
               <OutsideClickWrapper
                 onClickOutside={() => setDropdown("")}
-                isShowing={dropdown === "filter"}
+                isShowing={dropdown}
               >
                 <div
                   className="filter__dropdown"
@@ -44,7 +45,7 @@ function AFilterBar() {
                 </div>
                 <div
                   style={{ position: "absolute", zIndex: "1000", top: "48px" }}
-                  className={dropdown === "filter" ? "filter--show" : "d-none"}
+                  className={dropdown ? "filter--show" : "d-none"}
                 >
                   <div>
                     <div className="filter__popover">
@@ -93,42 +94,25 @@ function AFilterBar() {
           <SearchIcon />
           <span className="ml-3 d-none d-sm-inline-block">Tìm kiếm</span>
         </button>
-        <OutsideClickWrapper
-          onClickOutside={() => setDropdown("")}
-          isShowing={dropdown === "btn"}
-          className="ml-3 d-inline-block"
-        >
+        <div className="ml-3 d-inline-block">
           <div className={btnClassNames}>
             <div>
               <button
                 className="btn btn-bg cursor-pointer"
-                onClick={handleBtnDropdown}
+                onClick={handleOpenModal}
               >
-                <i
-                  className={
-                    dropdown === "btn" ? "flaticon-cross" : "icon-options"
-                  }
-                />
+                <i className="fas fa-file-export" />
               </button>
             </div>
-            <div
-              className={`ui-popover ${
-                dropdown === "btn" ? "ui-popover--is-active" : ""
-              }`}
-            >
-              <div className="ui-popover__tooltip"></div>
-              <div className="ui-popover__content-wrapper">
-                <div className="ui-popover__content" style={{ width: "160px" }}>
-                  <div className="ui-popover__pane">
-                    <p className="ellipsis-item ">Xuất file csv</p>
-                    <p className="ellipsis-item ">Xuất file excel</p>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
-        </OutsideClickWrapper>
+        </div>
       </div>
+      <ExportFileModal
+        show={showModal}
+        handleClose={handleCloseModal}
+        title="Xuất sản phẩm"
+        handleExport={handleExport}
+      />
     </div>
   );
 }
