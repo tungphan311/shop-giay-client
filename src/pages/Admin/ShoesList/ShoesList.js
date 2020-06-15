@@ -12,7 +12,7 @@ import swal from "sweetalert";
 import qs from "query-string";
 import APagination from "Components/Admin/Pagination/Pagination";
 import AFilterBar from "Components/Admin/FilterBar/FilterBar";
-import { formatDateToString } from "utils/helper";
+import { downloadCSV } from "utils/helper";
 
 function AShoesList({ location: { search } }) {
   // state
@@ -45,7 +45,7 @@ function AShoesList({ location: { search } }) {
 
     const page = parsed.page || 1;
     setPage(parseInt(page));
-    const pageSize = parsed.pageSize || 10;
+    const pageSize = parsed["page-size"] || 10;
 
     fetchShoes(page, pageSize);
     setPerPage(pageSize);
@@ -147,76 +147,36 @@ function AShoesList({ location: { search } }) {
   }, [data, selectedRows, toggleCleared]);
 
   const handlePageChange = (page) => {
-    const search = qs.stringify({ page, pageSize: perPage });
+    const search = qs.stringify({ page, "page-size": perPage });
     history.push(`?${search}`);
 
     setPage(page);
     fetchShoes(page, perPage);
   };
 
-  const handlePerPageChange = (event) => {
+  const handlePerPageChange = async (event) => {
     const pageSize = event.target.value;
 
-    const search = qs.stringify({ page, pageSize });
+    const search = qs.stringify({ page: 1, "page-size": pageSize });
     history.push(`?${search}`);
 
-    setPerPage(pageSize);
-    fetchShoes(page, pageSize);
+    await setPerPage(pageSize);
+    await setPage(1);
+    fetchShoes(1, pageSize);
   };
 
-  const convertArrayOfObjectsToCSV = (array) => {
-    console.log(array);
-    let result;
-
-    const columnDelimiter = ",";
-    const lineDelimiter = "\n";
-    const keys = Object.keys(data[0]);
-
-    result = "";
-    result += keys.join(columnDelimiter);
-    result += lineDelimiter;
-
-    array.forEach((item) => {
-      let ctr = 0;
-      keys.forEach((key) => {
-        if (ctr > 0) result += columnDelimiter;
-
-        result += item[key];
-
-        ctr++;
-      });
-      result += lineDelimiter;
-    });
-
-    return result;
-  };
-
-  const downloadCSV = (source) => {
-    let arr = [];
-    if (source === "current") {
-      arr = data;
+  const handleDownload = (source, type) => {
+    if (type === "csv") {
+      if (source === "current") {
+        downloadCSV(data, "shoes");
+      }
     }
-
-    const link = document.createElement("a");
-
-    let csv = convertArrayOfObjectsToCSV(arr);
-    if (!csv) return;
-
-    const date = formatDateToString(new Date());
-    const fileName = `shoes-${date}.csv`;
-    if (!csv.match(/^data:text\/csv/i)) {
-      csv = `data:text/csv;charset=utf-8,${csv}`;
-    }
-
-    link.setAttribute("href", encodeURI(csv));
-    link.setAttribute("download", fileName);
-    link.click();
   };
 
   return (
     <div>
       <ABreadcrumb title="Tất cả sản phẩm" list={BREADCRUMB} />
-      <AFilterBar onExport={(source) => downloadCSV(source)} />
+      <AFilterBar onExport={(source, type) => handleDownload(source, type)} />
       <div className="row mt-5">
         <div className="col-md-12">
           <div className="card">

@@ -19,9 +19,7 @@ function AFilterBar({ onExport }) {
   const handleFilterDropdown = () => setDropdown(!dropdown);
 
   const handleExport = (source, type) => {
-    if (type === "csv") {
-      onExport(source);
-    }
+    onExport(source, type);
   };
 
   return (
