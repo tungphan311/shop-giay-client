@@ -2,7 +2,7 @@ import API from "utils/Axios";
 import qs from "query-string";
 
 export async function getAllShoes({ pageSize, page }) {
-  const query = qs.stringify({ pageSize, page });
+  const query = qs.stringify({ "page-size": pageSize, page });
   if (!pageSize || !page) {
     return await API.get(`/admin/shoes`);
   }
