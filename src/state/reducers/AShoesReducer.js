@@ -30,6 +30,9 @@ export const GET_SHOESBRANDS_SUCCESS = "aShoes/GET_SHOESBRANDS_SUCCESS";
 
 export const ADD_SHOES = "aShoes/ADD_SHOES";
 
+export const GET_SHOES_BY_ID = "aShoes/GET_SHOES_BY_ID";
+export const GET_SHOES_BY_ID_SUCCESS = "aShoes/GET_SHOES_BY_ID_SUCCESS";
+
 const initState = {
   shoes: [],
   providers: [],
@@ -46,6 +49,11 @@ export function AShoesReducer(state = initState, action = {}) {
   switch (action.type) {
     case GET_SHOES_SUCCESS: {
       newState.shoes = action.response;
+      return newState;
+    }
+
+    case GET_SHOES_BY_ID_SUCCESS: {
+      newState.shoesEdit = action.response;
       return newState;
     }
 

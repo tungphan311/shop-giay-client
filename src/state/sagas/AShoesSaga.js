@@ -22,6 +22,8 @@ import {
   GET_SHOESBRANDS,
   GET_SHOESBRANDS_SUCCESS,
   ADD_SHOES,
+  GET_SHOES_BY_ID,
+  GET_SHOES_BY_ID_SUCCESS,
 } from "state/reducers/AShoesReducer";
 import {
   getAllShoes,
@@ -35,9 +37,11 @@ import {
   getShoesType,
   getShoesBrand,
   addShoes,
+  getShoesById,
 } from "services/admin/shoesServices";
 import { getFormValues as getReduxFormValues } from "redux-form";
 import { FORM_KEY_ADDSHOES } from "state/reducers/formReducer";
+import API from "utils/Axios";
 
 export const getFormValues = (state, formName) =>
   getReduxFormValues(formName)(state);
@@ -58,6 +62,18 @@ export function* getAllShoesSaga() {
     yield toastErr(String(err));
   } finally {
     // yield put({ type: SET_LOADING, status: false });
+  }
+}
+
+export function* getShoesByIdSaga({ id }) {
+  try {
+    const result = yield call(getShoesById, { id });
+    const responseJSON = result.data.data;
+
+    const response = JSON.parse(responseJSON);
+    yield put({ type: GET_SHOES_BY_ID_SUCCESS, response });
+  } catch (err) {
+    yield toastErr(err);
   }
 }
 
@@ -237,4 +253,5 @@ export default function* aShoesSaga() {
   yield takeEvery(GET_SHOESTYPES, getShoesTypesSaga);
   yield takeEvery(GET_SHOESBRANDS, getShoesBrandsSaga);
   yield takeEvery(ADD_SHOES, addShoesSaga);
+  yield takeEvery(GET_SHOES_BY_ID, getShoesByIdSaga);
 }

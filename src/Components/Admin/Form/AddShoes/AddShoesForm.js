@@ -152,10 +152,59 @@ AAddShoesForm = reduxForm({
   form: FORM_KEY_ADDSHOES, // a unique identifier for this form
   destroyOnUnmount: false,
   touchOnBlur: false,
+  enableReinitialize: true,
 })(AAddShoesForm);
 
-export default connect((state) => ({
-  initialValues: {
-    images: new Array(5).fill(""),
-  },
-}))(AAddShoesForm);
+export default connect((state) => {
+  const data = state.aShoes.shoesEdit;
+  const temp = new Array(5).fill("");
+  if (data) {
+    switch (data.GenderId) {
+      case 1: {
+        data.GenderId = {
+          value: 1,
+          label: "Unisex",
+        };
+        break;
+      }
+      case 2: {
+        data.GenderId = {
+          value: 2,
+          label: "Female",
+        };
+        break;
+      }
+      case 3: {
+        data.GenderId = {
+          value: 3,
+          label: "Male",
+        };
+        break;
+      }
+      default:
+        break;
+    }
+    data.ShoesImages = [...data.ShoesImages, ...temp].slice(0, 5);
+  }
+  return state.aShoes.shoesEdit
+    ? {
+        initialValues: {
+          images: data.ShoesImages.map((ele) =>
+            ele.ImagePath ? ele.ImagePath : ""
+          ),
+          stocks: data.Stocks.map((ele) => ({
+            instock: ele.Instock,
+          })),
+          name: data.Name,
+          code: data.Code,
+          price: data.Price,
+          genderId: data.GenderId,
+          description: data.Description || "",
+        },
+      }
+    : {
+        initialValues: {
+          images: new Array(5).fill(""),
+        },
+      };
+})(AAddShoesForm);

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component, Fragment, useEffect } from "react";
 import "./UploadPhoto.scss";
 import { Button } from "react-bootstrap";
 
@@ -32,7 +32,7 @@ class AUploadPhoto extends Component {
     xhr.upload.addEventListener("progress", (e) => {
       this.setState({ loading: true });
     });
-
+    console.log(1);
     xhr.onreadystatechange = (e) => {
       if (xhr.readyState === 4 && xhr.status === 200) {
         // file upload successfully
@@ -59,8 +59,16 @@ class AUploadPhoto extends Component {
     this.setState({ image: "" });
   };
 
+  componentWillReceiveProps = (nextProps) => {
+    console.log(nextProps.input);
+    if (nextProps.input !== this.props.input) {
+      this.setState({ image: nextProps.input.value });
+    }
+  };
+
   render() {
     const { input } = this.props;
+    console.log(input);
     const { onChange } = input;
     const { image, loading } = this.state;
     return (
