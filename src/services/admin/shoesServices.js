@@ -45,6 +45,10 @@ export async function getShoesBrand() {
   return await API.get("/admin/shoesbrand");
 }
 
+export async function getShoesById({ id }) {
+  return await API.get(`/admin/shoes/${id}`);
+}
+
 export async function addShoes({
   name,
   code,

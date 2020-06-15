@@ -33,6 +33,9 @@ export const ADD_SHOES = "aShoes/ADD_SHOES";
 export const DELETE_SHOES = "aShoes/DELETE_SHOES";
 export const DELETE_SHOES_SUCCESS = "aShoes/DELETE_SHOES_SUCCESS";
 
+export const GET_SHOES_BY_ID = "aShoes/GET_SHOES_BY_ID";
+export const GET_SHOES_BY_ID_SUCCESS = "aShoes/GET_SHOES_BY_ID_SUCCESS";
+
 const initState = {
   shoes: [],
   providers: [],
@@ -51,6 +54,11 @@ export function AShoesReducer(state = initState, action = {}) {
     case GET_SHOES_SUCCESS: {
       newState.shoes = action.response;
       newState.totalRows = action.total;
+      return newState;
+    }
+
+    case GET_SHOES_BY_ID_SUCCESS: {
+      newState.shoesEdit = action.response;
       return newState;
     }
 
