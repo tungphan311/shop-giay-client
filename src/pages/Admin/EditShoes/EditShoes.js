@@ -38,7 +38,7 @@ class AEditShoes extends Component {
         <div className="row">
           <div className="col-md-12">
             <div className="card">
-              <MultipleForm id={id} />
+              <MultipleForm id={id} type="edit" />
             </div>
           </div>
         </div>

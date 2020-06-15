@@ -1,4 +1,5 @@
 import API from "utils/Axios";
+import EditShoes from "pages/Admin/EditShoes/EditShoes";
 
 export async function getAllShoes() {
   return await API.get("/shoes");
@@ -42,6 +43,31 @@ export async function getShoesBrand() {
 
 export async function getShoesById({ id }) {
   return await API.get(`/admin/shoes/${id}`);
+}
+
+export async function editShoes({
+  id,
+  name,
+  code,
+  price,
+  images,
+  stocks,
+  genderId,
+  brandId,
+  styleId,
+  description,
+}) {
+  return await API.put(`/admin/shoes/${id}`, {
+    name,
+    code,
+    price,
+    images,
+    stocks,
+    genderId,
+    brandId,
+    styleId,
+    description,
+  });
 }
 
 export async function addShoes({

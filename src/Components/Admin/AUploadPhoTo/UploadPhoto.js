@@ -59,18 +59,11 @@ class AUploadPhoto extends Component {
     this.setState({ image: "" });
   };
 
-  componentWillReceiveProps = (nextProps) => {
-    console.log(nextProps.input);
-    if (nextProps.input !== this.props.input) {
-      this.setState({ image: nextProps.input.value });
-    }
-  };
-
   render() {
     const { input } = this.props;
-    console.log(input);
     const { onChange } = input;
     const { image, loading } = this.state;
+    console.log(input.value);
     return (
       <div id="image-uploader">
         <input
@@ -83,10 +76,10 @@ class AUploadPhoto extends Component {
         />
         <input {...input} type="text" style={{ display: "none" }} />
         <div className="photo-upload-wrapper" onClick={this.addPhoto}>
-          {!image ? (
+          {!input.value ? (
             !loading ? (
               <Fragment>
-                <image alt="add button" className="fa fa-plus-circle " />
+                <div alt="add button" className="fa fa-plus-circle " />
                 <div className="add-btn-label">Thêm ảnh</div>
               </Fragment>
             ) : (
@@ -95,7 +88,7 @@ class AUploadPhoto extends Component {
           ) : (
             <Fragment>
               <img
-                src={image}
+                src={input.value}
                 alt="upload"
                 id="image-loaded"
                 className="add-photo-image-upload"
