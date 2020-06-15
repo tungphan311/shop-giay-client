@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Modal, Button } from "react-bootstrap";
+import React from "react";
+import { Modal } from "react-bootstrap";
 import MultipleForm from "Components/Admin/Form/MultipleForm/MultipleForm";
 
 function AAddShoesModal({ show, handleClose }) {
