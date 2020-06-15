@@ -1,3 +1,6 @@
+import * as FileSaver from "file-saver";
+import * as XLSX from "xlsx";
+
 export const formatDateToString = (date) => {
   const day = date.getDate();
   const month = date.getMonth() + 1;
@@ -58,4 +61,22 @@ export const downloadCSV = (arr, title) => {
   link.setAttribute("href", encodeURI(csv));
   link.setAttribute("download", fileName);
   link.click();
+};
+
+export const downloadExcel = (arr, title) => {
+  const fileType =
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+  const fileExtension = ".xlsx";
+
+  const date = formatDateToString(new Date());
+  const fileName = `${title}-${date}`;
+
+  const csv = convertArrayOfObjectsToCSV(arr);
+  if (!csv) return;
+
+  const ws = XLSX.utils.json_to_sheet(csv);
+  const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+  const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+  const data = new Blob([excelBuffer], { type: fileType });
+  FileSaver.saveAs(data, fileName + fileExtension);
 };
