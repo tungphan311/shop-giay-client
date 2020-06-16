@@ -1,12 +1,17 @@
 import API from "utils/Axios";
+import qs from "query-string";
 
 let token = localStorage.getItem("identity");
 token = token.substring(1, token.length - 1);
 
 const config = { headers: { Authorization: `Bearer ${token}` } };
 
-export async function getAllShoes() {
-  return await API.get("/admin/shoes", config);
+export async function getAllShoes({ pageSize, page }) {
+  const query = qs.stringify({ pageSize, page });
+  if (!pageSize || !page) {
+    return await API.get(`/admin/shoes`, config);
+  }
+  return await API.get(`/admin/shoes?${query}`, config);
 }
 
 export async function getProviders() {
