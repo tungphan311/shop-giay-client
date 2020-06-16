@@ -125,7 +125,7 @@ function Routes() {
           "/admin/shoes/add",
           "/admin/shoes",
           "/admin/shoes/import",
-          "/admin/shoes/edit/:id",
+          "/admin/shoes/:id",
           "/admin/customer/:id",
         ]}
       >
@@ -156,7 +156,7 @@ function Routes() {
           />
           <AuthorizedRoute
             exact
-            path="/admin/shoes/edit/:id"
+            path="/admin/shoes/:id"
             component={AEditShoes}
             isUser={isUser}
           />
