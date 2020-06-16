@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { reduxForm, Field, FieldArray } from "redux-form";
 import { FORM_KEY_ADDSHOES } from "state/reducers/formReducer";
+import { connect } from "react-redux";
 
 import "./AddStock.scss";
 
@@ -26,6 +27,14 @@ const myCustomInput = ({
     setSelected={input.onChange}
   ></AProviderSelect>
 );
+const formatData = (data) => {
+  console.log(99, data);
+  const newData = {
+    label: data.Name,
+    id: data.Id,
+  };
+  return newData;
+};
 
 const renderMembers = ({ fields }) => (
   <ul className="stockList">
@@ -92,6 +101,7 @@ class AAddStock extends Component {
       reset,
       submitting,
       previousPage,
+      type,
     } = this.props;
     return (
       <form className="AddStockForm" onSubmit={handleSubmit}>
@@ -109,7 +119,7 @@ class AAddStock extends Component {
               className="btn btn-primary ml-2"
               disabled={submitting}
             >
-              Hoàn tất
+              {type === "edit" ? " Chỉnh sửa" : "Hoàn tất"}
             </button>
             <button
               type="button"
@@ -130,6 +140,14 @@ AAddStock = reduxForm({
   form: FORM_KEY_ADDSHOES, // a unique identifier for this form
   destroyOnUnmount: false,
   touchOnBlur: false,
+  keepDirtyOnReinitialize: true,
+  // enableReinitialize: true,
 })(AAddStock);
 
-export default AAddStock;
+export default connect((state) => {
+  const data = state.aShoes.shoesEdit;
+
+  return {
+    initialValues: {},
+  };
+})(AAddStock);

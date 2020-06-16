@@ -20,6 +20,8 @@ import AShoesList from "pages/Admin/ShoesList/ShoesList";
 import ANewImport from "pages/Admin/NewImport/NewImport";
 import StyleGuide from "pages/Admin/StyleGuide/StyleGuide";
 import { TOKEN_KEY } from "constants/index";
+import AEditShoes from "pages/Admin/EditShoes/EditShoes";
+import ACustomerDetail from "pages/Admin/CustomerDetail/CustomerDetail";
 
 // component for admin site to determine user is logined or not
 export const AuthorizedRoute = ({ component: Component, isUser, ...rest }) => (
@@ -123,6 +125,8 @@ function Routes() {
           "/admin/shoes/add",
           "/admin/shoes",
           "/admin/shoes/import",
+          "/admin/shoes/:id",
+          "/admin/customer/:id",
         ]}
       >
         <AdminLayout>
@@ -148,6 +152,18 @@ function Routes() {
             exact
             path="/admin/shoes/import"
             component={ANewImport}
+            isUser={isUser}
+          />
+          <AuthorizedRoute
+            exact
+            path="/admin/shoes/:id"
+            component={AEditShoes}
+            isUser={isUser}
+          />
+          <AuthorizedRoute
+            exact
+            path="/admin/customer/:id"
+            component={ACustomerDetail}
             isUser={isUser}
           />
         </AdminLayout>

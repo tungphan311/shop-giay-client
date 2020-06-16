@@ -1,0 +1,25 @@
+#customBox {
+  .info {
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 4px 7px rgba(0, 0, 0, 0.1);
+  }
+  .infoHeader {
+    margin: 0px 15px;
+    .row {
+      margin: 0 0px;
+      justify-content: space-between;
+    }
+  }
+  .infoBody {
+    margin: 15px 15px;
+    .row {
+      margin: 0px 15px;
+      text-align: center;
+    }
+  }
+  .h4 {
+    font-weight: bold !important;
+    color: red($color: #000000);
+  }
+}

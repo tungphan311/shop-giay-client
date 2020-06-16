@@ -1,3 +1,5 @@
+import { act } from "react-dom/test-utils";
+
 export const GET_SHOES = "aShoes/GET_SHOES";
 export const GET_SHOES_SUCCESS = "aShoes/GET_SHOES_SUCCESS";
 
@@ -33,6 +35,11 @@ export const ADD_SHOES = "aShoes/ADD_SHOES";
 export const DELETE_SHOES = "aShoes/DELETE_SHOES";
 export const DELETE_SHOES_SUCCESS = "aShoes/DELETE_SHOES_SUCCESS";
 
+export const GET_SHOES_BY_ID = "aShoes/GET_SHOES_BY_ID";
+export const GET_SHOES_BY_ID_SUCCESS = "aShoes/GET_SHOES_BY_ID_SUCCESS";
+
+export const EDIT_SHOES = "aShoes/EDIT_SHOES";
+
 const initState = {
   shoes: [],
   providers: [],
@@ -42,6 +49,7 @@ const initState = {
   shoesTypes: [],
   shoesBrands: [],
   totalRows: 0,
+  shoesEdit: [],
 };
 
 export function AShoesReducer(state = initState, action = {}) {
@@ -51,6 +59,16 @@ export function AShoesReducer(state = initState, action = {}) {
     case GET_SHOES_SUCCESS: {
       newState.shoes = action.response;
       newState.totalRows = action.total;
+      return newState;
+    }
+
+    case GET_SHOES_BY_ID_SUCCESS: {
+      newState.shoesEdit = action.response;
+      const colors = action.colors;
+      const sizes = action.sizes;
+      newState.colors = colors;
+      newState.sizes = sizes;
+
       return newState;
     }
 
@@ -101,6 +119,7 @@ export function AShoesReducer(state = initState, action = {}) {
       newState.shoesBrands = action.response;
       return newState;
     }
+
     default:
       return newState;
   }
