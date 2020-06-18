@@ -14,6 +14,10 @@ export async function getAllShoes({ pageSize, page }) {
   return await API.get(`/admin/shoes?${query}`, config);
 }
 
+export async function getCustomerById({ id }) {
+  return await API.get(`/admin/customer/${id}`, config);
+}
+
 export async function getProviders() {
   return await API.get("/admin/provider", config);
 }
