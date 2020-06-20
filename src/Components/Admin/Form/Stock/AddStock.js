@@ -91,10 +91,9 @@ class AAddStock extends Component {
       reset,
       submitting,
       previousPage,
-      type,
     } = this.props;
     return (
-      <form className="AddStockForm" onSubmit={handleSubmit}>
+      <form className="AddStockForm" onSubmit={handleSubmit} noValidate> 
         <div className="container">
           <FieldArray name="stocks" component={renderMembers} />
           <div>
@@ -109,7 +108,7 @@ class AAddStock extends Component {
               className="btn btn-primary ml-2"
               disabled={submitting}
             >
-              {type === "edit" ? " Chỉnh sửa" : "Hoàn tất"}
+              {"Hoàn tất"}
             </button>
             <button
               type="button"

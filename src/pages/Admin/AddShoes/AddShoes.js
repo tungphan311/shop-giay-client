@@ -1,6 +1,5 @@
 import React from "react";
 import ABreadcrumb from "Components/Admin/Breadcrumb/Breadcrumb";
-
 import MultipleForm from "Components/Admin/Form/MultipleForm/MultipleForm";
 
 function AAddShoes() {
@@ -10,7 +9,7 @@ function AAddShoes() {
       <div className="row">
         <div className="col-md-12">
           <div className="card">
-            <MultipleForm />
+            <MultipleForm type="add" />
           </div>
         </div>
       </div>

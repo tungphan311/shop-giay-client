@@ -54,12 +54,12 @@ function ExportFileModal({ show, handleClose, title, handleExport }) {
       <Modal.Body>
         <form id="export" onSubmit={handleSubmit}>
           {data.map(({ id, title, checked }) => (
-            <RadioInput id={id} title={title} checked={checked} name="source" />
+            <RadioInput key={id} id={id} title={title} checked={checked} name="source" />
           ))}
 
           <p>Chọn định dạng file xuất</p>
           {type.map(({ id, title, checked }) => (
-            <RadioInput id={id} title={title} checked={checked} name="type" />
+            <RadioInput key={id} id={id} title={title} checked={checked} name="type" />
           ))}
         </form>
       </Modal.Body>

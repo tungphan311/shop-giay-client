@@ -123,9 +123,9 @@ function Routes() {
         exact
         path={[
           "/admin",
-          "/admin/shoes/add",
+          "/admin/shoes-add",
           "/admin/shoes",
-          "/admin/shoes/import",
+          "/admin/shoes-import",
           "/admin/shoes/:id",
           "/admin/customer/:id",
           "/admin/customers",
@@ -140,7 +140,7 @@ function Routes() {
           />
           <AuthorizedRoute
             exact
-            path="/admin/shoes/add"
+            path="/admin/shoes-add"
             component={AAddShoes}
             isUser={isUser}
           />
@@ -152,7 +152,7 @@ function Routes() {
           />
           <AuthorizedRoute
             exact
-            path="/admin/shoes/import"
+            path="/admin/shoes-import"
             component={ANewImport}
             isUser={isUser}
           />
