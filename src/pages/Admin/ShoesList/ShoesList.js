@@ -3,7 +3,7 @@ import ABreadcrumb from "Components/Admin/Breadcrumb/Breadcrumb";
 import { useSelector, useDispatch } from "react-redux";
 import DataTable from "react-data-table-component";
 import { customStyles } from "constants/index";
-import { OPTIONS, NO_DATA_COMPONENT } from "utils/utils";
+import { OPTIONS, NoDataComponent } from "utils/utils";
 import { getShoesAction, deleteShoesAction } from "state/actions/index";
 import { toastErr } from "utils/index";
 import "./ShoesList.scss";
@@ -11,6 +11,8 @@ import history from "state/history";
 import swal from "sweetalert";
 import qs from "query-string";
 import APagination from "Components/Admin/Pagination/Pagination";
+import AFilterBar from "Components/Admin/FilterBar/FilterBar";
+import { downloadCSV, downloadExcel } from "utils/helper";
 
 function AShoesList({ location: { search } }) {
   // state
@@ -43,7 +45,7 @@ function AShoesList({ location: { search } }) {
 
     const page = parsed.page || 1;
     setPage(parseInt(page));
-    const pageSize = parsed.pageSize || 10;
+    const pageSize = parsed["page-size"] || 10;
 
     fetchShoes(page, pageSize);
     setPerPage(pageSize);
@@ -74,7 +76,7 @@ function AShoesList({ location: { search } }) {
             >
               {row.name}
             </div>
-            <div className="mt-2 cell--ver">{`${row.inventory} phiên bản`}</div>
+            <div className="mt-2 cell--ver">{`${row.stocks.length} phiên bản`}</div>
           </div>
         </div>
       ),
@@ -142,30 +144,42 @@ function AShoesList({ location: { search } }) {
         <i className="fa fa-trash" />
       </button>
     );
-  }, [data, selectedRows, toggleCleared]);
+  }, [data, dispatch, selectedRows, toggleCleared]);
 
   const handlePageChange = (page) => {
-    const search = qs.stringify({ page, pageSize: perPage });
+    const search = qs.stringify({ page, "page-size": perPage });
     history.push(`?${search}`);
 
     setPage(page);
     fetchShoes(page, perPage);
   };
 
-  const handlePerPageChange = (event) => {
+  const handlePerPageChange = async (event) => {
     const pageSize = event.target.value;
 
-    const search = qs.stringify({ page, pageSize });
+    const search = qs.stringify({ page: 1, "page-size": pageSize });
     history.push(`?${search}`);
 
-    setPerPage(pageSize);
-    fetchShoes(page, pageSize);
+    await setPerPage(pageSize);
+    await setPage(1);
+    fetchShoes(1, pageSize);
+  };
+
+  const handleDownload = (source, type) => {
+    if (type === "csv") {
+      if (source === "current") {
+        downloadCSV(data, "shoes");
+      }
+    } else {
+      downloadExcel(data, "shoes");
+    }
   };
 
   return (
     <div>
       <ABreadcrumb title="Tất cả sản phẩm" list={BREADCRUMB} />
-      <div className="row">
+      <AFilterBar onExport={(source, type) => handleDownload(source, type)} />
+      <div className="row mt-5">
         <div className="col-md-12">
           <div className="card">
             <DataTable
@@ -183,7 +197,7 @@ function AShoesList({ location: { search } }) {
               striped
               highlightOnHover
               paginationComponentOptions={OPTIONS}
-              noDataComponent={NO_DATA_COMPONENT}
+              noDataComponent={<NoDataComponent title="sản phẩm" />}
               paginationComponent={() => (
                 <APagination
                   page={page}

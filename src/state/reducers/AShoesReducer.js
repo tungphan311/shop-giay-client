@@ -1,5 +1,3 @@
-import { act } from "react-dom/test-utils";
-
 export const GET_SHOES = "aShoes/GET_SHOES";
 export const GET_SHOES_SUCCESS = "aShoes/GET_SHOES_SUCCESS";
 

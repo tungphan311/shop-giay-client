@@ -1,5 +1,5 @@
-import React, { Component, Props } from "react";
-import { Field, reduxForm, FieldArray, Fields } from "redux-form";
+import React, { Component } from "react";
+import { Field, reduxForm, FieldArray } from "redux-form";
 import { FORM_KEY_ADDSHOES } from "state/reducers/formReducer";
 import { connect } from "react-redux";
 import AInput from "Components/Admin/AInput/input";
@@ -12,9 +12,9 @@ import {
   GET_SHOESTYPES,
   GET_SHOESBRANDS,
 } from "state/reducers/AShoesReducer";
-import { requireForm } from "utils/index";
+import { requireForm, validFloatNumber } from "utils/index";
+
 const formatData = (data) => {
-  console.log(99, data);
   const newData = {
     label: data.Name,
     value: data.Id,
@@ -24,6 +24,7 @@ const formatData = (data) => {
 
 const myCustomInput = ({
   input,
+  meta = {},
   getReducer,
   placeholder,
   stateName,
@@ -37,6 +38,7 @@ const myCustomInput = ({
     label={label}
     selected={input.value}
     setSelected={input.onChange}
+    meta={meta}
   ></AProviderSelect>
 );
 
@@ -57,17 +59,8 @@ class renderPhotoArray extends Component {
 }
 
 class AAddShoesForm extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      defaultF: "",
-      type: this.props.type,
-    };
-  }
-
   render() {
-    const { handleSubmit, type } = this.props;
+    const { handleSubmit } = this.props;
     return (
       <form className="AddShoesForm" onSubmit={handleSubmit}>
         <div className="container">
@@ -92,7 +85,7 @@ class AAddShoesForm extends Component {
             <Field
               label="Giá"
               name="price"
-              validate={[requireForm]}
+              validate={[requireForm, validFloatNumber]}
               component={AInput}
               formClassName="ml-2"
             />
@@ -108,6 +101,7 @@ class AAddShoesForm extends Component {
                 component={myCustomInput}
                 formClassName="ml-2"
                 placeholder="Chọn giới tính..."
+                validate={[requireForm]}
               />
             </div>
             <div className="flex mr-2 ml-2">
@@ -120,6 +114,7 @@ class AAddShoesForm extends Component {
                 component={myCustomInput}
                 formClassName="ml-2"
                 placeholder="Chọn kiểu giày..."
+                validate={[requireForm]}
               />
             </div>
             <div className="flex">
@@ -132,6 +127,7 @@ class AAddShoesForm extends Component {
                 component={myCustomInput}
                 formClassName="ml-2"
                 placeholder="Chọn thương hiệu"
+                validate={[requireForm]}
               />
             </div>
           </div>
@@ -164,9 +160,14 @@ AAddShoesForm = reduxForm({
   enableReinitialize: true,
 })(AAddShoesForm);
 
-export default connect((state) => {
+export default connect((state, props) => {
   const data = state.aShoes.shoesEdit;
   const temp = new Array(5).fill("");
+  if (props.type === "add") return {
+    initialValues: {
+      images: temp
+    }
+  }
   data.ShoesImages =
     data.ShoesImages && [...data.ShoesImages, ...temp].slice(0, 5);
 

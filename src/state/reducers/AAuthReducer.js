@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import jwt_decode from "jwt-decode";
 
 export const LOGIN = "aAuth/LOGIN";

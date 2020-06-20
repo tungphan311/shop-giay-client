@@ -1,6 +1,7 @@
 import React from "react";
 import { toast as toaster } from "react-toastify";
 import Toaster from "Components/client/CToaster/Toaster";
+import { get } from "lodash";
 
 export const stringTruncate = (str, length = 50, ending = "") =>
   str &&
@@ -28,9 +29,16 @@ export function toast({ type = "success", message = "" }) {
   return toaster(<Toaster type={type} message={message} />);
 }
 
-export function toastErr(error = "Có lỗi xảy ra") {
-  toast({ type: "error", message: error });
+export function toastErr(error) {
+  let errMsg = get(error, "response.data.msg");
+
+  if (!errMsg) {
+    errMsg = "Có lỗi xảy ra";
+  }
+
+  toast({ type: "error", message: errMsg });
 }
+
 
 export * from "./Validation";
 export * from "./JwtDecoder";

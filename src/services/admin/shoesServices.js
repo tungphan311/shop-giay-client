@@ -7,7 +7,7 @@ token = token.substring(1, token.length - 1);
 const config = { headers: { Authorization: `Bearer ${token}` } };
 
 export async function getAllShoes({ pageSize, page }) {
-  const query = qs.stringify({ pageSize, page });
+  const query = qs.stringify({ "page-size": pageSize, page });
   if (!pageSize || !page) {
     return await API.get(`/admin/shoes`, config);
   }

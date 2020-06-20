@@ -10,7 +10,12 @@ function AProviderSelect({
   stateName,
   placeholder,
   label,
+  meta = {},
 }) {
+  const { touched, error } = meta;
+  const showError = touched && error;
+  const { errCode } = error || {};
+
   // state
   const [loading, setLoading] = useState(false);
   const [options, setOptions] = useState([]);
@@ -69,6 +74,11 @@ function AProviderSelect({
     <div>
       <label>{label}</label>
       <ACreatable {...props} />
+      {showError && (
+        <span style={{ position: "absolute", color: "#f25961" }}>
+          {errCode}
+        </span>
+      )}
     </div>
   );
 }

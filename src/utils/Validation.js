@@ -13,3 +13,8 @@ export const require = (value) =>
 
 export const requireForm = (value) =>
   required(value) ? undefined : buildErr("Không được bỏ trống");
+
+export const floatNumber = (value) =>
+  /^[+]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/.test(value);
+export const validFloatNumber = (value) =>
+  floatNumber(value) ? undefined : buildErr("Giá trị không hợp lệ");
