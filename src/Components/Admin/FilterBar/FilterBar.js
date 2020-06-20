@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import "./FilterBar.scss";
-import {
-  FilterIcon,
-  SearchIcon,
-  CloseIcon,
-} from "Components/Admin/Svg/index";
+import { FilterIcon, SearchIcon, CloseIcon } from "Components/Admin/Svg/index";
 import OutsideClickWrapper from "Components/Admin/OutsideClickWrapper/OutsideClickWrapper";
 import AProductSelect from "Components/Admin/ProductSelect/Select";
 import ExportFileModal from "Components/Admin/Modal/ExportFile";
