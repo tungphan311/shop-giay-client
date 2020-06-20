@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import ABreadcrumb from "Components/Admin/Breadcrumb/Breadcrumb";
-import MultipleForm from "Components/Admin/Form/MultipleForm/MultipleForm";
-import { useDispatch } from "react-redux";
 import { connect } from "react-redux";
 import "./CustomerDetail.scss";
 import { GET_CUSTOMER_BY_ID } from "state/reducers/ACustomerReducer";
@@ -25,6 +23,7 @@ class ACustomerDetail extends Component {
       id: 0,
     };
   }
+
   componentDidMount = () => {
     const {
       getCustomer,
@@ -61,7 +60,7 @@ class ACustomerDetail extends Component {
         tg: new Date().toISOString().slice(0, 10),
       },
     ];
-    console.log(reptiles);
+
     return (
       <div className="ACustomerDetail" id="customBox">
         <ABreadcrumb title="Thông tin khách hàng" list={BREADCRUMB} />

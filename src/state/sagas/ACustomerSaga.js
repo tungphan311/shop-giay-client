@@ -1,4 +1,5 @@
-import { takeEvery, put, call, select } from "redux-saga/effects";
+import { takeEvery, put, call } from "redux-saga/effects";
+// eslint-disable-next-line no-unused-vars
 import { toast, toastErr } from "utils";
 
 import {
