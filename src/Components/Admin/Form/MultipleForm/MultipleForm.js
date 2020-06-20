@@ -9,24 +9,23 @@ function MultipleForm({ id, type }) {
 
   const dispatch = useDispatch();
 
+  const handleSubmit = () => 
+    type === "add"
+      ? dispatch({ type: ADD_SHOES })
+      : dispatch({ type: EDIT_SHOES, id })
+
   const nextPage = () => setPage(page + 1);
   const previousPage = () => setPage(page - 1);
-  console.log(id);
 
   switch (page) {
     case 1:
-      return <AddShoesForm id={id} type={type} onSubmit={nextPage} />;
+      return <AddShoesForm type={type} onSubmit={nextPage} />;
 
     case 2:
       return (
         <AAddStock
-          id={id}
           type={type}
-          onSubmit={(type) =>
-            type === "add"
-              ? dispatch({ type: ADD_SHOES })
-              : dispatch({ type: EDIT_SHOES, id })
-          }
+          onSubmit={handleSubmit}
           previousPage={previousPage}
         />
       );

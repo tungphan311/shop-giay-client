@@ -59,15 +59,6 @@ class renderPhotoArray extends Component {
 }
 
 class AAddShoesForm extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      defaultF: "",
-      type: this.props.type,
-    };
-  }
-
   render() {
     const { handleSubmit } = this.props;
     return (
@@ -169,9 +160,14 @@ AAddShoesForm = reduxForm({
   enableReinitialize: true,
 })(AAddShoesForm);
 
-export default connect((state) => {
+export default connect((state, props) => {
   const data = state.aShoes.shoesEdit;
   const temp = new Array(5).fill("");
+  if (props.type === "add") return {
+    initialValues: {
+      images: temp
+    }
+  }
   data.ShoesImages =
     data.ShoesImages && [...data.ShoesImages, ...temp].slice(0, 5);
 
