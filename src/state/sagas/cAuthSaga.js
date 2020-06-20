@@ -22,44 +22,50 @@ import {
   ACTION_GET_CART_ITEMS,
   ACTION_SYNC_CART,
 } from "state/reducers/cCartReducer";
+
 function* Login(action) {
-  const { username, password } = yield select((state) =>
-    getFormValues(LOGIN_FORM_KEY)(state)
-  );
-  const { data: { code, data, msg } = {} } = yield call(cLogin, {
-    username,
-    password,
-  });
-  switch (code) {
-    case "200":
-      const { token } = data.match(/^AuthorizedToken: (?<token>.*)/).groups;
-      yield put({
-        type: ACTION_LOGIN_SUCCESS,
-        payload: {
-          username: username,
-          token: token,
-        },
-      });
+  try {
+    const { username, password } = yield select((state) =>
+      getFormValues(LOGIN_FORM_KEY)(state)
+    );
+    const { data: { code, data, msg } = {} } = yield call(cLogin, {
+      username,
+      password,
+    });
+    switch (code) {
+      case "200":
+        const { token } = data.match(/^AuthorizedToken: (?<token>.*)/).groups;
+        yield put({
+          type: ACTION_LOGIN_SUCCESS,
+          payload: {
+            username: username,
+            token: token,
+          },
+        });
 
-      // get user info on login success, another solution: login api return userinfo directly
-      yield put({ type: ACTION_VERIFY_TOKEN });
-      // sync if local cart is not null
-      const cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
-      if (cart.length > 0) {
-        yield put({ type: ACTION_SYNC_CART });
-      } else yield put({ type: ACTION_GET_CART_ITEMS });
+        // get user info on login success, another solution: login api return userinfo directly
+        yield put({ type: ACTION_VERIFY_TOKEN });
+        // sync if local cart is not null
+        const cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+        if (cart.length > 0) {
+          yield put({ type: ACTION_SYNC_CART });
+        } else yield put({ type: ACTION_GET_CART_ITEMS });
 
-      const parsed = queryString.parse(history.location.search);
-      yield call(history.push, parsed && parsed.r ? parsed.r : "/");
-      yield call(toast, { message: "Đăng nhập thành công" });
-      break;
-    case "403":
-      yield put({ type: ACTION_LOGIN_FAIL });
-      yield call(toastErr, msg);
-      break;
-    default:
-      yield put({ type: ACTION_LOGIN_FAIL });
-      yield call(toastErr, "Lỗi không xác định");
+        const parsed = queryString.parse(history.location.search);
+        yield call(history.push, parsed && parsed.r ? parsed.r : "/");
+        yield call(toast, { message: "Đăng nhập thành công" });
+        break;
+      case "403":
+        yield put({ type: ACTION_LOGIN_FAIL });
+        yield call(toastErr, msg);
+        break;
+      default:
+        yield put({ type: ACTION_LOGIN_FAIL });
+        yield call(toastErr, "Lỗi không xác định");
+    }
+  } catch (err) {
+    yield put({ type: ACTION_LOGIN_FAIL });
+    yield call(toastErr, err);
   }
 }
 

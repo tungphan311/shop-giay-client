@@ -85,7 +85,7 @@ const Payment = () => {
                     <span className="label">Giao hàng tiêu chuẩn</span>
                   </label>
                 </div>
-                <div className="list-item">
+                {/* <div className="list-item">
                   <label>
                     <input
                       type="radio"
@@ -97,7 +97,7 @@ const Payment = () => {
                     <span className="radio-fake"></span>
                     <span className="label">Giao hàng nhanh</span>
                   </label>
-                </div>
+                </div> */}
               </ul>
             </div>
             <div className="title">2. Chọn hình thức thanh toán</div>
@@ -124,11 +124,14 @@ const Payment = () => {
                       type="radio"
                       name="paymentMethod"
                       value="momo"
+                      disabled
                       checked={"momo" === paymentMethod}
                       onChange={(e) => setPaymentMethod(e.target.value)}
                     />
                     <span className="radio-fake"></span>
-                    <span className="label">Thanh toán bằng ví Momo</span>
+                    <span className="label">
+                      Thanh toán bằng ví Momo (trong quá trình phát triển)
+                    </span>
                   </label>
                 </div>
               </ul>
