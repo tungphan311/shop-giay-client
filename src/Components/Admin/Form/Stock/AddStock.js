@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import { reduxForm, Field, FieldArray } from "redux-form";
 import { FORM_KEY_ADDSHOES } from "state/reducers/formReducer";
 import { connect } from "react-redux";
-
 import "./AddStock.scss";
-
 import AProviderSelect from "Components/Admin/Creatable/ProviderSelect";
 import { GET_COLORS, GET_SIZES } from "state/reducers/AShoesReducer";
 import AInput from "Components/Admin/AInput/input";
@@ -27,14 +25,6 @@ const myCustomInput = ({
     setSelected={input.onChange}
   ></AProviderSelect>
 );
-const formatData = (data) => {
-  console.log(99, data);
-  const newData = {
-    label: data.Name,
-    id: data.Id,
-  };
-  return newData;
-};
 
 const renderMembers = ({ fields }) => (
   <ul className="stockList">
@@ -145,8 +135,6 @@ AAddStock = reduxForm({
 })(AAddStock);
 
 export default connect((state) => {
-  const data = state.aShoes.shoesEdit;
-
   return {
     initialValues: {},
   };

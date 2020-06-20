@@ -1,16 +1,16 @@
 import React from "react";
+import "./Shortcuts.scss"
 
 function AShortcuts() {
   return (
     <li className="nav-item dropdown hidden-caret">
-      <a
+      <button
         className="nav-link"
         data-toggle="dropdown"
-        href="#"
         aria-expanded="false"
       >
         <i className="fas fa-layer-group"></i>
-      </a>
+      </button>
       <div className="dropdown-menu quick-actions quick-actions-info animated fadeIn">
         <div className="quick-actions-header">
           <span className="title mb-1">Thao tác nhanh</span>
