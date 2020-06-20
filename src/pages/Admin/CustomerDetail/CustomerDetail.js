@@ -37,6 +37,10 @@ class ACustomerDetail extends Component {
 
   render() {
     const { customerInfo } = this.props;
+    const test = customerInfo.Addresses;
+    if (test) {
+      console.log(test[0]);
+    }
     const reptiles = [
       {
         name: "Tung",
@@ -72,19 +76,23 @@ class ACustomerDetail extends Component {
                   <div className="row">
                     <div className="col-6 col-md-4">
                       <p>Đơn hàng gần nhất</p>
-                      <p className="font-weight-bold">
+                      <p className="font-weight-bold highlight">
                         {new Date().toISOString().slice(0, 10)}
                       </p>
-                      <p className="color-gray-solid">Nguồn : ViettelPost</p>
+                      <p className="color-gray-solid"></p>
                     </div>
                     <div className="col-6 col-md-4">
                       <p>Doanh thu tích lũy</p>
-                      <p className="font-weight-bold">354,343,232 đ</p>
+                      <p className="font-weight-bold highlight">
+                        354,343,232 đ
+                      </p>
                       <p className="color-gray-solid">12 Đơn hàng</p>
                     </div>
                     <div className="col-6 col-md-4">
                       <p>Giá trị trung bình</p>
-                      <p className="font-weight-bold">354,343,232 đ</p>
+                      <p className="font-weight-bold highlight">
+                        354,343,232 đ
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -122,20 +130,17 @@ class ACustomerDetail extends Component {
                 <div className="card-title">
                   <h4 id="h4">Thông tin liên hệ</h4>
                 </div>
-
                 <p>Emai : {customerInfo.Email}</p>
                 <p>SĐT : {customerInfo.PhoneNumber}</p>
-
                 <div className="card-title">
                   <h4 id="h4">Địa chỉ mặc định</h4>
-
                   <p className="font-weight-bold table-break-word">
                     Người nhận : {customerInfo.Name}
                   </p>
-                  <p>Địa chỉ : 01 lê trọng tấn</p>
-                  <p>Phường : An khê</p>
-                  <p>Quận : Thanh Khê</p>
-                  <p>Thành phố : Đà nẵng</p>
+                  <p>Địa chỉ : {test ? test[0].Street : ""} </p>
+                  <p>Phường : {test ? test[0].Ward : ""}</p>
+                  <p>Quận : {test ? test[0].District : ""}</p>
+                  <p>Thành phố : {test ? test[0].City : ""}</p>
                 </div>
               </div>
             </div>
