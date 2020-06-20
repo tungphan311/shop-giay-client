@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import ABreadcrumb from "Components/Admin/Breadcrumb/Breadcrumb";
 import MultipleForm from "Components/Admin/Form/MultipleForm/MultipleForm";
-import { useDispatch } from "react-redux";
 import { connect } from "react-redux";
 import { GET_SHOES_BY_ID } from "state/reducers/AShoesReducer";
 

@@ -3,18 +3,16 @@ import React from "react";
 function ANotification() {
   return (
     <li className="nav-item dropdown hidden-caret">
-      <a
+      <button
         className="nav-link dropdown-toggle"
-        href="#"
         id="notifDropdown"
-        role="button"
         data-toggle="dropdown"
         aria-haspopup="true"
         aria-expanded="false"
       >
         <i className="fa fa-bell"></i>
         <span className="notification">4</span>
-      </a>
+      </button>
       <ul
         className="dropdown-menu notif-box animated fadeIn"
         aria-labelledby="notifDropdown"
@@ -25,7 +23,7 @@ function ANotification() {
         <li>
           <div className="notif-scroll scrollbar-outer">
             <div className="notif-center">
-              <a href="#">
+              <a href="/">
                 <div className="notif-icon notif-primary">
                   {" "}
                   <i className="fa fa-user-plus"></i>{" "}
@@ -35,7 +33,7 @@ function ANotification() {
                   <span className="time">5 minutes ago</span>
                 </div>
               </a>
-              <a href="#">
+              <a href="/">
                 <div className="notif-icon notif-success">
                   {" "}
                   <i className="fa fa-comment"></i>{" "}
@@ -45,7 +43,7 @@ function ANotification() {
                   <span className="time">12 minutes ago</span>
                 </div>
               </a>
-              <a href="#">
+              <a href="/">
                 <div className="notif-img">
                   <img src="/assets/img/profile2.jpg" alt="Img Profile" />
                 </div>
@@ -54,7 +52,7 @@ function ANotification() {
                   <span className="time">12 minutes ago</span>
                 </div>
               </a>
-              <a href="#">
+              <a href="/">
                 <div className="notif-icon notif-danger">
                   {" "}
                   <i className="fa fa-heart"></i>{" "}
@@ -68,7 +66,7 @@ function ANotification() {
           </div>
         </li>
         <li>
-          <a className="see-all" href="#">
+          <a className="see-all" href="/notifications">
             See all notifications
             <i className="fa fa-angle-right"></i>{" "}
           </a>

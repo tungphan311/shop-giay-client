@@ -14,7 +14,7 @@ class App extends React.Component {
   };
 
   render() {
-    const { children, loading } = this.props;
+    const { children } = this.props;
     return (
       <div className="App">
         <Toastify />

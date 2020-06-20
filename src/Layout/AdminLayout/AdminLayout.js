@@ -2,7 +2,7 @@ import React from "react";
 import ASidebar from "Components/Admin/Sidebar/Sidebar";
 import ANavbar from "Components/Admin/Navbar/Navbar";
 import LoadingScreen from "Components/Admin/Loading/LoadingScreen";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 function AdminLayout({ children }) {
   // redux
