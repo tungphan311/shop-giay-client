@@ -60,6 +60,14 @@ function AFilterBar({ onExport }) {
                                 selectedOption={{}}
                                 options={[]}
                               />
+                              <div className="group-filter-btn d-flex">
+                                <div className="group-filter-btn--cancel mr-2">
+                                  <button className="btn btn-border btn-primary mt-3">Huỷ</button>
+                                </div>
+                                <div className="group-filter-btn--add d-flex flex-grow-1 justify-content-end">
+                                  <button className="btn btn-primary mt-3">Thêm điều kiện lọc</button>
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
