@@ -18,15 +18,7 @@ import AProviderSelect from "Components/Admin/Creatable/ProviderSelect";
 import AProductSelect from "Components/Admin/ProductSelect/Select";
 import { addImportAction } from "state/actions/index";
 import { toast, toastErr } from "utils/index";
-
-const DEFAULT_ITEM = {
-  shoes: null,
-  amount: 0,
-  stocks: [],
-  stock: null,
-  stockId: 0,
-  price: 0,
-};
+import ChooseShoesModal from "Components/Admin/Modal/ChooseShoes";
 
 function ANewImport() {
   // List state
@@ -35,11 +27,14 @@ function ANewImport() {
   const [selectedRows, setSelectedRows] = useState([]);
   const [toggleCleared, setToggleCleared] = useState(false);
   const [options, setOptions] = useState([{ value: 0, label: "" }]);
-  const [showModal, setShowModal] = useState(false);
+  const [addModal, setShowAddModal] = useState(false);
+  const [chooeseModal, setShowChooseModal] = useState(false);
   const [provider, setProvider] = useState(null);
 
-  const handleClose = () => setShowModal(false);
-  const handleShow = () => setShowModal(true);
+  const handleCloseAddModal = () => setShowAddModal(false);
+  const handleShowAddModal = () => setShowAddModal(true);
+  const handleCloseChooseModal = () => setShowChooseModal(false);
+  const handleShowChooseModal = () => setShowChooseModal(true);
 
   // create dispatch
   const dispatch = useDispatch();
@@ -98,65 +93,6 @@ function ANewImport() {
     );
   }, [data, selectedRows, toggleCleared]);
 
-  const updateInputValue = (e) => {
-    const value = e.target.value;
-    const name = e.target.name;
-    const id = parseInt(e.target.id);
-
-    let newData = [...data];
-
-    const index = newData.findIndex((ele) => ele.id === id);
-
-    newData[index] = {
-      ...newData[index],
-      [name]: value ? parseInt(value) : 0,
-    };
-
-    setData(newData);
-  };
-
-  const stockDetail = (stock) => {
-    const color = colors.find((c) => c.Id === stock.ColorId).Name;
-    const size = sizes.find((s) => s.Id === stock.SizeId).Name;
-
-    return `Màu: ${color}, Size: ${size}`;
-  };
-
-  const selectProduct = (selected, id) => {
-    let newData = [...data];
-
-    const index = newData.findIndex((ele) => ele.id === id);
-
-    if (newData[index].shoes !== selected) {
-      let stocks = shoes.find((s) => s.Id === selected.value).Stocks;
-      stocks = stocks.map((s) => ({ value: s.Id, label: stockDetail(s) }));
-
-      newData[index] = {
-        ...newData[index],
-        shoes: selected,
-        stocks,
-        stock: null,
-        stockId: 0,
-      };
-
-      setData(newData);
-    }
-  };
-
-  const selectStock = (selected, id) => {
-    let newData = [...data];
-
-    const index = newData.findIndex((ele) => ele.id === id);
-
-    newData[index] = {
-      ...newData[index],
-      stock: selected,
-      stockId: selected.value,
-    };
-
-    setData(newData);
-  };
-
   const columns = [
     {
       name: "Chi tiết giày",
@@ -169,8 +105,8 @@ function ANewImport() {
               options={options}
               className="product-select"
               selectedOption={row.shoes}
-              onChange={(selected) => selectProduct(selected, row.id)}
               placeholder="Chọn sản phẩm"
+              disabled
             />
           </div>
           <div style={{ flexGrow: 2 }} className="ml-2">
@@ -178,8 +114,8 @@ function ANewImport() {
               options={row.stocks}
               className="product-select"
               selectedOption={row.stock}
-              onChange={(selected) => selectStock(selected, row.id)}
               placeholder="Chọn phiên bản"
+              disabled
             />
           </div>
         </div>
@@ -191,21 +127,7 @@ function ANewImport() {
       maxWidth: "170px",
       sortable: true,
       right: true,
-      cell: (row) => (
-        <div className="input-group">
-          <input
-            type="number"
-            name="price"
-            className="amount-input"
-            id={row.id}
-            defaultValue={row.price}
-            onBlur={updateInputValue}
-          />
-          <div className="input-group-append">
-            <span className="input-group-text ml-2">VNĐ</span>
-          </div>
-        </div>
-      ),
+      format: (row) => `${row.price} VNĐ`,
     },
     {
       name: "Số lượng",
@@ -213,27 +135,13 @@ function ANewImport() {
       maxWidth: "130px",
       sortable: true,
       right: true,
-      cell: (row) => (
-        <div className="input-group">
-          <input
-            type="number"
-            name="amount"
-            className="amount-input"
-            id={row.id}
-            defaultValue={row.amount}
-            onBlur={updateInputValue}
-          />
-          <div className="input-group-append">
-            <span className="input-group-text ml-2">đôi</span>
-          </div>
-        </div>
-      ),
+      format: (row) => `${row.price} đôi`,
     },
   ];
 
-  const addNewItem = () => {
-    const id = data.length ? data[0].id + 1 : 0;
-    const item = { ...DEFAULT_ITEM, id };
+  const addNewItem = (newItem) => {
+    const id = data.length ? data + 1 : 0;
+    const item = { ...newItem, id };
 
     let newData = [item, ...data];
     setData(newData);
@@ -241,10 +149,10 @@ function ANewImport() {
 
   const actions = (
     <>
-      <button className="btn btn-info" onClick={handleShow}>
+      <button className="btn btn-info" onClick={handleShowAddModal}>
         Thêm sản phẩm
       </button>
-      <button className="btn btn-primary" onClick={addNewItem}>
+      <button className="btn btn-primary" onClick={handleShowChooseModal}>
         Thêm mới
       </button>
     </>
@@ -276,7 +184,13 @@ function ANewImport() {
     swal("Dữ liệu chưa được lưu. Bạn chắn chắn chứ?", {
       buttons: ["Trở lại", "Chắc chắn"],
       icon: "warning",
-    }).then(() => resetForm());
+    }).then((willReset) => {
+      if (willReset) {
+        resetForm();
+      } else {
+        swal("Chúc mừng dữ liệu của bạn vẫn an toàn!");
+      }
+    });
   };
 
   const updateDB = (e) => {
@@ -364,11 +278,15 @@ function ANewImport() {
           </div>
         </div>
       </div>
-      <AddShoesModal
-        show={showModal}
-        handleClose={handleClose}
-        // handleAdd={handleAdd}
-        // handleAddAndClose={handleAddAndClose}
+      <AddShoesModal show={addModal} handleClose={handleCloseAddModal} />
+      <ChooseShoesModal
+        show={chooeseModal}
+        handleClose={handleCloseChooseModal}
+        options={options}
+        shoesList={shoes}
+        colors={colors}
+        sizes={sizes}
+        addNewItem={addNewItem}
       />
     </div>
   );
