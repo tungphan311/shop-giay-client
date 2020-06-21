@@ -15,11 +15,11 @@ export const SIDEBAR_LIST = [
     id: "shoes",
     icon: "fas fa-capsules",
     title: "Quản lý kho",
-    href: ["/admin/shoes", "/admin/shoes/import", "/admin/shoes/add"],
+    href: ["/admin/shoes", "/admin/shoes-import", "/admin/shoes-add"],
     sub: [
       { href: "/admin/shoes", title: "Danh sách sản phẩm" },
-      { href: "/admin/shoes/import", title: "Nhập hàng mới" },
-      { href: "/admin/shoes/add", title: "Thêm giày mới" },
+      { href: "/admin/shoes-import", title: "Nhập hàng mới" },
+      { href: "/admin/shoes-add", title: "Thêm giày mới" },
     ],
   },
   {
