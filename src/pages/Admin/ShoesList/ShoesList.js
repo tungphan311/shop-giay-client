@@ -23,6 +23,12 @@ import ATag from "Components/Admin/Tags/Tag";
 const SELECT = "select";
 const VALUE = "value";
 
+const COMPARES = [
+  { value: "min", label: "lớn hơn hoặc bằng" },
+  { value: "equal", label: "bằng" },
+  { value: "max", label: "nhỏ hơn hoặc bằng" },
+];
+
 function AShoesList({ location: { search } }) {
   // state
   const [data, setData] = useState([]);
@@ -213,6 +219,11 @@ function AShoesList({ location: { search } }) {
       const newFilter = { ...filter, [name]: value };
       setFilter(newFilter);
       fetchShoes(1, 10, newFilter);
+    } else if (type === VALUE) {
+      const key = `${value}${name}`;
+      const newFilter = { ...filter, [key]: number };
+      setFilter(newFilter);
+      fetchShoes(1, 10, newFilter);
     }
   };
 
@@ -222,20 +233,38 @@ function AShoesList({ location: { search } }) {
     delete newFilter[key];
     setFilter(newFilter);
 
-    fetchShoes(page, perPage, newFilter);
+    fetchShoes(1, 10, newFilter);
   };
 
   const renderTags = () => {
     let res = [];
     for (let key in filter) {
-      res.push(
-        <ATag
-          id={key}
-          name={MAP_NAME_TO_TAG[key]}
-          value={filter[key]}
-          handleRemoveTag={handleRemoveTag}
-        />
-      );
+      if (key.includes("price")) {
+        const com = COMPARES.find((c) => c.value === key.substring(0, 3));
+
+        res.push(
+          <ATag
+            id={key}
+            name="Giá tiền"
+            value={filter[key]}
+            handleRemoveTag={handleRemoveTag}
+            connect={com.label}
+          />
+        );
+      } else {
+        const value =
+          filters[key] && filters[key].find((s) => s.value == filter[key]);
+
+        value &&
+          res.push(
+            <ATag
+              id={key}
+              name={MAP_NAME_TO_TAG[key]}
+              value={value.label}
+              handleRemoveTag={handleRemoveTag}
+            />
+          );
+      }
     }
 
     return res;
