@@ -13,6 +13,15 @@ import qs from "query-string";
 import APagination from "Components/Admin/Pagination/Pagination";
 import AFilterBar from "Components/Admin/FilterBar/FilterBar";
 import { downloadCSV, downloadExcel } from "utils/helper";
+import {
+  GET_PROVIDERS,
+  GET_SHOESBRANDS,
+  GET_SHOESTYPES,
+} from "state/reducers/AShoesReducer";
+import ATag from "Components/Admin/Tags/Tag";
+
+const SELECT = "select";
+const VALUE = "value";
 
 function AShoesList({ location: { search } }) {
   // state
@@ -22,16 +31,26 @@ function AShoesList({ location: { search } }) {
   const [toggleCleared, setToggleCleared] = useState(false);
   const [perPage, setPerPage] = useState(10);
   const [page, setPage] = useState(1);
+  const [filter, setFilter] = useState(null);
 
   // lifecycle
 
   // redux
   const dispatch = useDispatch();
   const shoes = useSelector((state) => state.aShoes.shoes);
+  const shoesTypes = useSelector((state) => state.aShoes.shoesTypes);
+  const shoesBrands = useSelector((state) => state.aShoes.shoesBrands);
   const totalRows = useSelector((state) => state.aShoes.totalRows) || 0;
 
-  const fetchShoes = (page, pageSize) => {
-    dispatch(getShoesAction({ pageSize, page }))
+  const fetchShoes = (page, pageSize, filter) => {
+    const search = qs.stringify({ page, "page-size": pageSize });
+    let f = "";
+    for (var key in filter) {
+      f += `&${key}=${filter[key]}`;
+    }
+    history.push(`?${search}${f}`);
+
+    dispatch(getShoesAction({ pageSize, page, filter }))
       .then((res) => {
         let newData = mapResponseToData(res);
         setData(newData);
@@ -43,12 +62,19 @@ function AShoesList({ location: { search } }) {
     setFetch(true);
     const parsed = qs.parse(search);
 
-    const page = parsed.page || 1;
-    setPage(parseInt(page));
-    const pageSize = parsed["page-size"] || 10;
+    let { page, "page-size": pageSize, ...filter } = parsed;
 
-    fetchShoes(page, pageSize);
+    page = page || 1;
+    pageSize = pageSize || 10;
+
+    fetchShoes(page, pageSize, filter);
+
+    dispatch({ type: GET_SHOESTYPES });
+    dispatch({ type: GET_SHOESBRANDS });
+
+    setPage(parseInt(page));
     setPerPage(pageSize);
+    setFilter(filter);
   } else if (!fetch && shoes.length) {
     setFetch(true);
     let newData = mapResponseToData(shoes);
@@ -151,7 +177,7 @@ function AShoesList({ location: { search } }) {
     history.push(`?${search}`);
 
     setPage(page);
-    fetchShoes(page, perPage);
+    fetchShoes(page, perPage, filter);
   };
 
   const handlePerPageChange = async (event) => {
@@ -162,7 +188,7 @@ function AShoesList({ location: { search } }) {
 
     await setPerPage(pageSize);
     await setPage(1);
-    fetchShoes(1, pageSize);
+    fetchShoes(1, pageSize, filter);
   };
 
   const handleDownload = (source, type) => {
@@ -175,10 +201,60 @@ function AShoesList({ location: { search } }) {
     }
   };
 
+  const filters = {
+    styleId: shoesTypes.map((s) => ({ value: s.Id, label: s.Name })),
+    brandId: shoesBrands.map((s) => ({ value: s.Id, label: s.Name })),
+  };
+
+  const handleAddFilter = (selected, value, number) => {
+    const { type, name } = selected.value;
+
+    if (type === SELECT) {
+      const newFilter = { ...filter, [name]: value };
+      setFilter(newFilter);
+      fetchShoes(1, 10, newFilter);
+    }
+  };
+
+  const handleRemoveTag = (key) => {
+    let newFilter = { ...filter };
+
+    delete newFilter[key];
+    setFilter(newFilter);
+
+    fetchShoes(page, perPage, newFilter);
+  };
+
+  const renderTags = () => {
+    let res = [];
+    for (let key in filter) {
+      res.push(
+        <ATag
+          id={key}
+          name={MAP_NAME_TO_TAG[key]}
+          value={filter[key]}
+          handleRemoveTag={handleRemoveTag}
+        />
+      );
+    }
+
+    return res;
+  };
+
+  const tags = renderTags();
+
   return (
     <div>
       <ABreadcrumb title="Tất cả sản phẩm" list={BREADCRUMB} />
-      <AFilterBar onExport={(source, type) => handleDownload(source, type)} />
+      <AFilterBar
+        onExport={(source, type) => handleDownload(source, type)}
+        options={FILTERS}
+        filters={filters}
+        handleAddFilter={handleAddFilter}
+      />
+      <div className="row selected" style={{ marginTop: "10px" }}>
+        <div className="col filter-render-selected">{tags}</div>
+      </div>
       <div className="row mt-5">
         <div className="col-md-12">
           <div className="card">
@@ -233,3 +309,15 @@ const mapResponseToData = (res) =>
     type: s.ShoesType.Name,
     brand: s.ShoesBrand.Name,
   }));
+
+const FILTERS = [
+  { value: { type: SELECT, name: "styleId" }, label: "Loại sản phẩm" },
+  { value: { type: SELECT, name: "brandId" }, label: "Thương hiệu" },
+  { value: { type: VALUE, name: "price" }, label: "Giá tiền" },
+];
+
+const MAP_NAME_TO_TAG = {
+  styleId: "Loại sản phẩm",
+  brandId: "Thương hiệu",
+  price: "Giá tiền",
+};

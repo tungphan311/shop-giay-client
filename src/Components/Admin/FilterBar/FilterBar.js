@@ -5,9 +5,27 @@ import OutsideClickWrapper from "Components/Admin/OutsideClickWrapper/OutsideCli
 import AProductSelect from "Components/Admin/ProductSelect/Select";
 import ExportFileModal from "Components/Admin/Modal/ExportFile";
 
-function AFilterBar({ onExport }) {
+const SELECT = "select";
+const VALUE = "value";
+
+const DEFAULT_SELECTED = {
+  value: { type: SELECT, name: "styleId" },
+  label: "Loại sản phẩm",
+};
+
+const COMPARES = [
+  { value: "min", label: "lớn hơn hoặc bằng" },
+  { value: "equal", label: "bằng" },
+  { value: "max", label: "nhỏ hơn hoặc bằng" },
+];
+
+function AFilterBar({ onExport, options, filters, handleAddFilter }) {
   const [dropdown, setDropdown] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [selected, setSelected] = useState(DEFAULT_SELECTED);
+
+  const [select, setSelect] = useState(null);
+  const [number, setNumber] = useState(null);
 
   const handleOpenModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
@@ -20,6 +38,16 @@ function AFilterBar({ onExport }) {
 
   const handleExport = (source, type) => {
     onExport(source, type);
+  };
+
+  const handleSelectOptions = (selected) => {
+    setSelected(selected);
+    setSelect(null);
+    setNumber(null);
+  };
+
+  const handleSelect = (selected) => {
+    setSelect(selected);
   };
 
   return (
@@ -42,7 +70,11 @@ function AFilterBar({ onExport }) {
                   </span>
                 </div>
                 <div
-                  style={{ position: "absolute", zIndex: "1000", top: "48px" }}
+                  style={{
+                    position: "absolute",
+                    zIndex: "1000",
+                    top: "48px",
+                  }}
                   className={dropdown ? "filter--show" : "d-none"}
                 >
                   <div>
@@ -57,15 +89,62 @@ function AFilterBar({ onExport }) {
                                 Hiển thị tất cả khách hàng theo:
                               </div>
                               <AProductSelect
-                                selectedOption={{}}
-                                options={[]}
+                                selectedOption={selected}
+                                options={options}
+                                onChange={(selected) =>
+                                  handleSelectOptions(selected)
+                                }
                               />
+                              <div
+                                className="mb-2"
+                                style={{ marginTop: "10px" }}
+                              >
+                                là
+                              </div>
+                              {selected.value.type === SELECT ? (
+                                <AProductSelect
+                                  selectedOption={select}
+                                  options={filters[selected.value.name]}
+                                  onChange={(selected) =>
+                                    handleSelect(selected)
+                                  }
+                                />
+                              ) : (
+                                <div>
+                                  <AProductSelect
+                                    selectedOption={select}
+                                    options={COMPARES}
+                                    onChange={(selected) =>
+                                      handleSelect(selected)
+                                    }
+                                  />
+                                  <input
+                                    className="filter--number"
+                                    type="number"
+                                    value={number}
+                                    onChange={(e) => setNumber(e.target.value)}
+                                  />
+                                </div>
+                              )}
                               <div className="group-filter-btn d-flex">
                                 <div className="group-filter-btn--cancel mr-2">
-                                  <button className="btn btn-border btn-primary mt-3">Huỷ</button>
+                                  <button className="btn btn-border btn-primary mt-3">
+                                    Huỷ
+                                  </button>
                                 </div>
                                 <div className="group-filter-btn--add d-flex flex-grow-1 justify-content-end">
-                                  <button className="btn btn-primary mt-3">Thêm điều kiện lọc</button>
+                                  <button
+                                    className="btn btn-primary mt-3"
+                                    onClick={() =>
+                                      handleAddFilter(
+                                        selected,
+                                        select.value,
+                                        number
+                                      )
+                                    }
+                                  >
+                                    Thêm điều kiện lọc
+                                  </button>
                                 </div>
                               </div>
                             </div>
