@@ -38,6 +38,7 @@ function APagination({
         innerClass="pagination-bar"
         itemClass="itemClass"
         itemClassFirst="itemClass"
+        hideFirstLastPages
       />
     </div>
   );

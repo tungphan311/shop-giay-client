@@ -1,0 +1,21 @@
+.sg--badges {
+  padding: 2px 5px;
+  border-radius: 4px;
+  display: inline-block;
+  color: #fff;
+
+  .sg--badges--body {
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    line-height: 16px !important;
+
+    .pointer {
+      cursor: pointer;
+    }
+  }
+}
+
+.sg--badges--string {
+  background-color: rgba(33, 33, 33, 0.2);
+  color: #212121;
+}
