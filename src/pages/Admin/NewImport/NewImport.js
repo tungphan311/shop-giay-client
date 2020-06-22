@@ -206,20 +206,18 @@ function ANewImport() {
           }
         );
       } else {
-        swal("Yêu cầu của bạn đã được thực hiện", {
-          icon: "success",
-        });
-
         const details = data.map((d) => ({
-          quantity: d.amount,
-          originalPrice: d.price,
+          quantity: parseInt(d.amount),
+          originalPrice: parseFloat(d.price),
           stockId: d.stockId,
         }));
 
         dispatch(addImportAction({ providerId: provider.value, details }))
           .then((res) => {
-            toast(res);
             resetForm();
+            swal("Yêu cầu của bạn đã được thực hiện", {
+              icon: "success",
+            });
           })
           .catch((err) => toastErr(err));
       }
