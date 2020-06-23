@@ -19,7 +19,7 @@ const CShipping = () => {
     dispatch({ type: ACTION_UPDATE_ADDRESS });
   };
   useEffect(() => {
-    dispatch({ type: ACTION_GET_ADDRESSES });
+    // dispatch({ type: ACTION_GET_ADDRESSES });
     // eslint-disable-next-line
   }, []);
 

@@ -68,7 +68,7 @@ export const CAuthorizedRoute = ({
 function Routes() {
   const isUser = getItemFromStorage("identity");
 
-  const isCustomer = getItemFromStorage(TOKEN_KEY);
+  const isCustomer = true;
 
   return (
     <Switch>

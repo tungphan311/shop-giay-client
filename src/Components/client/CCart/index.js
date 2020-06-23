@@ -182,10 +182,10 @@ const CCart = () => {
             <CButton
               onClick={() =>
                 cartItems && cartItems.length !== 0
-                  ? isLoggedIn
-                    ? history.push("/checkout/shipping")
-                    : history.push("/login?r=/checkout/shipping")
-                  : toastErr("Giỏ hàng rỗng")
+                  ? // ? !isLoggedIn
+                    history.push("/checkout/shipping")
+                  : // : history.push("/login?r=/checkout/shipping")
+                    toastErr("Giỏ hàng rỗng")
               }
               label="Tiến hành đặt hàng"
             />

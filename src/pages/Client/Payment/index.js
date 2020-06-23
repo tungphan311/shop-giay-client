@@ -18,13 +18,13 @@ const Payment = () => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (!fullName) history.push("/checkout/shipping");
-    else {
-      dispatch({ type: ACTION_GET_CART_ITEMS });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   if (!fullName) history.push("/checkout/shipping");
+  //   else {
+  //     dispatch({ type: ACTION_GET_CART_ITEMS });
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   const addressString = `${street}, ${ward}, ${district}, ${city}`;
 
