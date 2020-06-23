@@ -11,6 +11,7 @@ import AdminLayout from "../Layout/AdminLayout/AdminLayout";
 import AAddShoes from "pages/Admin/AddShoes/AddShoes";
 import ClientCart from "../pages/Client/Cart";
 import ClientLogin from "../pages/Client/Login";
+import ClientSignup from "../pages/Client/Signup";
 import ClientShipping from "../pages/Client/Shipping";
 import ClientPayment from "pages/Client/Payment/index";
 import ClientOrder from "pages/Client/Order/index";
@@ -116,6 +117,11 @@ function Routes() {
       <Route exact path={["/login"]}>
         <EmptyLayout>
           <Route exact path="/login" component={ClientLogin} />
+        </EmptyLayout>
+      </Route>
+      <Route exact path={["/signup"]}>
+        <EmptyLayout>
+          <Route exact path="/signup" component={ClientSignup} />
         </EmptyLayout>
       </Route>
       <Route
