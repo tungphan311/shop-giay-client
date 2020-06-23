@@ -56,12 +56,17 @@ function AShoesList({ location: { search } }) {
     }
     history.push(`?${search}${f}`);
 
-    dispatch(getShoesAction({ pageSize, page, filter }))
-      .then((res) => {
-        let newData = mapResponseToData(res);
-        setData(newData);
-      })
-      .catch((err) => toastErr(err));
+    if (shoes.length) {
+      let newData = mapResponseToData(shoes);
+      setData(newData);
+    } else {
+      dispatch(getShoesAction({ pageSize, page, filter }))
+        .then((res) => {
+          let newData = mapResponseToData(res);
+          setData(newData);
+        })
+        .catch((err) => toastErr(err));
+    }
   };
 
   if (!fetch) {
@@ -186,14 +191,14 @@ function AShoesList({ location: { search } }) {
     fetchShoes(page, perPage, filter);
   };
 
-  const handlePerPageChange = async (event) => {
+  const handlePerPageChange = (event) => {
     const pageSize = event.target.value;
 
     const search = qs.stringify({ page: 1, "page-size": pageSize });
     history.push(`?${search}`);
 
-    await setPerPage(pageSize);
-    await setPage(1);
+    setPerPage(pageSize);
+    setPage(1);
     fetchShoes(1, pageSize, filter);
   };
 

@@ -1,13 +1,60 @@
-import { takeEvery, put, call } from "redux-saga/effects";
-// eslint-disable-next-line no-unused-vars
-import { toast, toastErr } from "utils";
-
+import { takeEvery, put, call, select } from "redux-saga/effects";
+import { getCustomerAction, getGenderAction } from "state/actions/index";
+import { SET_LOADING } from "state/reducers/aLoadingReducer";
 import {
+  getCustomerService,
+  getGender,
+  getCustomerById,
+} from "services/admin/customerServices";
+import {
+  resolvePromiseAction,
+  rejectPromiseAction,
+} from "@adobe/redux-saga-promise";
+import {
+  GET_CUSTOMER_SUCCESS,
   GET_CUSTOMER_BY_ID,
   GET_CUSTOMER_BY_ID_SUCCESS,
-} from "state/reducers/ACustomerReducer";
+} from "state/reducers/aCustomerReducer";
+import { toastErr } from "utils/index";
 
-import { getCustomerById } from "services/admin/customerServices";
+export function* getCustomerSaga(action) {
+  try {
+    yield put({ type: SET_LOADING });
+
+    const { pageSize, page, filter } = action.payload;
+    const result = yield call(getCustomerService, {
+      pageSize,
+      page,
+      filter,
+    });
+    const responseJSON = result.data.data;
+    const { total } = result.data;
+
+    const response = JSON.parse(responseJSON);
+
+    yield put({ type: GET_CUSTOMER_SUCCESS, response, total });
+
+    yield call(resolvePromiseAction, action, response);
+  } catch (err) {
+    yield call(rejectPromiseAction, action, String(err));
+  } finally {
+    yield put({ type: SET_LOADING, status: false });
+  }
+}
+
+export function* getGenderSaga(action) {
+  try {
+    const result = yield call(getGender);
+    const responseJSON = result.data.data;
+
+    let response = JSON.parse(responseJSON);
+    response = response.map((g) => ({ name: g.Name, id: g.Id }));
+
+    yield call(resolvePromiseAction, action, response);
+  } catch (err) {
+    yield call(rejectPromiseAction, action, String(err));
+  }
+}
 
 export function* getCustomerByIdSaga({ id }) {
   try {
@@ -21,5 +68,7 @@ export function* getCustomerByIdSaga({ id }) {
 }
 
 export default function* aCustomerSaga() {
+  yield takeEvery(getCustomerAction, getCustomerSaga);
+  yield takeEvery(getGenderAction, getGenderSaga);
   yield takeEvery(GET_CUSTOMER_BY_ID, getCustomerByIdSaga);
 }
