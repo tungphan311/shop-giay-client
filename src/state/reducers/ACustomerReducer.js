@@ -9,7 +9,7 @@ const initState = {
   totalRows: 0,
 };
 
-export function aCustomerReducer(state = initState, action = {}) {
+export function ACustomerReducer(state = initState, action = {}) {
   const newState = { ...state };
 
   switch (action.type) {

@@ -11,7 +11,6 @@ import {
   GET_GENDER,
   GET_GENDER_SUCCESS,
 } from "state/reducers/aCustomerReducer";
-import { toastErr } from "utils/index";
 
 export function* getCustomerSaga(action) {
   try {
