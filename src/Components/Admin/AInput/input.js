@@ -6,6 +6,7 @@ const AInput = ({
   className = "",
   formClassName = "",
   label = "",
+  append = "",
   type = "text",
   meta = {}, // redux form
   input, // redux form
@@ -18,13 +19,19 @@ const AInput = ({
   return (
     <div className={`input__container ${formClassName}`}>
       <label className={`${!label ? "d-none" : "input__label"}`}>{label}</label>
-      <div>
+      <div className="input-group mb-3">
         <input
           {...input}
           placeholder={placeholder}
           className={`input__field ${className}`}
           type={type}
         />
+
+        {append ? (
+          <div className="input-group-append">
+            <span className="input-group-text">{append}</span>
+          </div>
+        ) : undefined}
         {showError && <span className="error">{errCode}</span>}
       </div>
     </div>

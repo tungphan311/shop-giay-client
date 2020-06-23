@@ -1,5 +1,5 @@
-import React, { Component, Props } from "react";
-import { Field, reduxForm, FieldArray, Fields } from "redux-form";
+import React, { Component } from "react";
+import { Field, reduxForm, FieldArray } from "redux-form";
 import { FORM_KEY_ADDSHOES } from "state/reducers/formReducer";
 import { connect } from "react-redux";
 import AInput from "Components/Admin/AInput/input";
@@ -13,8 +13,8 @@ import {
   GET_SHOESBRANDS,
 } from "state/reducers/AShoesReducer";
 import { requireForm } from "utils/index";
+
 const formatData = (data) => {
-  console.log(99, data);
   const newData = {
     label: data.Name,
     value: data.Id,
@@ -57,17 +57,8 @@ class renderPhotoArray extends Component {
 }
 
 class AAddShoesForm extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      defaultF: "",
-      type: this.props.type,
-    };
-  }
-
   render() {
-    const { handleSubmit, type } = this.props;
+    const { handleSubmit } = this.props;
     return (
       <form className="AddShoesForm" onSubmit={handleSubmit}>
         <div className="container">
@@ -164,9 +155,12 @@ AAddShoesForm = reduxForm({
   enableReinitialize: true,
 })(AAddShoesForm);
 
-export default connect((state) => {
+export default connect((state, props) => {
+  const { type } = props;
+  if (type === "add") return {};
   const data = state.aShoes.shoesEdit;
   const temp = new Array(5).fill("");
+
   data.ShoesImages =
     data.ShoesImages && [...data.ShoesImages, ...temp].slice(0, 5);
 
@@ -208,4 +202,4 @@ export default connect((state) => {
         })),
     },
   };
-})(AAddShoesForm);
+}, null)(AAddShoesForm);

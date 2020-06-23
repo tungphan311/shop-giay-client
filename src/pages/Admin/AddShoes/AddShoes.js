@@ -10,7 +10,7 @@ function AAddShoes() {
       <div className="row">
         <div className="col-md-12">
           <div className="card">
-            <MultipleForm />
+            <MultipleForm type="add" id="1" />
           </div>
         </div>
       </div>

@@ -32,7 +32,6 @@ class AUploadPhoto extends Component {
     xhr.upload.addEventListener("progress", (e) => {
       this.setState({ loading: true });
     });
-    console.log(1);
     xhr.onreadystatechange = (e) => {
       if (xhr.readyState === 4 && xhr.status === 200) {
         // file upload successfully
@@ -63,7 +62,7 @@ class AUploadPhoto extends Component {
     const { input } = this.props;
     const { onChange } = input;
     const { image, loading } = this.state;
-    console.log(input.value);
+
     return (
       <div id="image-uploader">
         <input

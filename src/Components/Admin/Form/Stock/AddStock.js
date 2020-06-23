@@ -119,7 +119,7 @@ class AAddStock extends Component {
               className="btn btn-primary ml-2"
               disabled={submitting}
             >
-              {type === "edit" ? " Chỉnh sửa" : "Hoàn tất"}
+              Hoàn tất
             </button>
             <button
               type="button"
@@ -144,10 +144,4 @@ AAddStock = reduxForm({
   // enableReinitialize: true,
 })(AAddStock);
 
-export default connect((state) => {
-  const data = state.aShoes.shoesEdit;
-
-  return {
-    initialValues: {},
-  };
-})(AAddStock);
+export default AAddStock;
