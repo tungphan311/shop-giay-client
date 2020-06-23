@@ -28,4 +28,10 @@ export const SIDEBAR_LIST = [
     title: "Hội viên",
     href: "/admin/members",
   },
+  {
+    id: "promotion",
+    icon: "fas fa-tags",
+    title: "Khuyến mãi",
+    href: "/admin/promotion",
+  },
 ];

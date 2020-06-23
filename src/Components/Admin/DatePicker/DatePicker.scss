@@ -4,21 +4,21 @@
       margin-top: 10px;
       height: 37px;
       width: 109px;
-      border: 1px solid grey;
+      border: 1px solid #b9b9b9;
       border-radius: 5px;
       background-color: white;
       text-align: center;
 
       &:focus {
         border-radius: 4px;
-        border: 1px solid blue;
+        border: 1px solid #0167c1;
       }
     }
   }
 
   .react-datepicker {
     font-family: "Muli", sans-serif;
-    font-size: medium;
+    font-size: 20px;
     border: none;
     box-shadow: 0 16px 40px 0 rgba(black, 0.2);
 
@@ -81,7 +81,7 @@
 
       &:hover {
         color: white;
-        background-color: grey;
+        background-color: #b9b9b9;
       }
     }
 
@@ -90,12 +90,11 @@
     }
 
     .react-datepicker__navigation--next {
-      background: url("/public/images/banner-left-arrow-button.png") no-repeat;
+      background: url("/svg/ArrowRight.svg") no-repeat;
       width: 32px;
       height: 32px;
       padding: 4px;
       border-radius: 50%;
-      background-color: grey;
       border: none;
       position: absolute;
       top: 14px;
@@ -103,12 +102,12 @@
     }
 
     .react-datepicker__navigation--previous {
-      background: url("/public/images/banner-left-arrow-button.png") no-repeat !important;
+      background: url("/svg/ArrowLeft.svg") no-repeat !important;
       width: 32px;
       height: 32px;
       padding: 4px;
       border-radius: 50%;
-      background-color: grey;
+      background-color: #b9b9b9;
       border: none;
       position: absolute;
       top: 14px;
@@ -116,7 +115,7 @@
     }
 
     .react-datepicker__day--outside-month {
-      color: grey;
+      color: #b9b9b9;
     }
   }
 
@@ -138,13 +137,13 @@
   &.blue {
     .react-datepicker__day {
       &--today {
-        border: 1.5px solid blue;
+        border: 1.5px solid #0167c1;
         background-color: white;
-        color: blue;
+        color: #0167c1;
       }
 
       &--selected {
-        background-color: blue;
+        background-color: #0167c1;
         color: white;
       }
     }
