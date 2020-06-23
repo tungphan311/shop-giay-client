@@ -28,4 +28,10 @@ export const SIDEBAR_LIST = [
     title: "Khách hàng",
     href: "/admin/customers",
   },
+  {
+    id: "promotion",
+    icon: "fas fa-tags",
+    title: "Khuyến mãi",
+    href: "/admin/promotion",
+  },
 ];
