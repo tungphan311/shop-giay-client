@@ -1,25 +1,49 @@
-#customBox {
+.ACustomerDetail {
+  .highlight {
+    font-size: larger;
+  }
   .info {
     background: #fff;
     border-radius: 5px;
     box-shadow: 0 4px 7px rgba(0, 0, 0, 0.1);
   }
   .infoHeader {
-    margin: 0px 15px;
+    margin: 15px 15px;
     .row {
       margin: 0 0px;
       justify-content: space-between;
     }
   }
   .infoBody {
-    margin: 15px 15px;
+    margin: 0px 15px;
     .row {
       margin: 0px 15px;
       text-align: center;
     }
   }
-  .h4 {
-    font-weight: bold !important;
-    color: red($color: #000000);
+  h4 {
+    font-weight: bold;
+    color: #1a67bb;
+  }
+  h5 {
+    color: #0559b4;
+  }
+  .addressList {
+    border-top: 1px solid #e9eaeb;
+    padding: 0;
+  }
+  .eleWrap {
+    .col {
+      padding-left: 0px !important;
+    }
+    border-bottom: 1px solid #e9eaeb;
+    display: flex;
+    .eleTime {
+      display: flex;
+      align-items: center;
+    }
+  }
+  .addressListEle {
+    list-style: none;
   }
 }

@@ -9,10 +9,10 @@ function MultipleForm({ id, type }) {
 
   const dispatch = useDispatch();
 
-  const handleSubmit = () => 
+  const handleSubmit = () =>
     type === "add"
       ? dispatch({ type: ADD_SHOES })
-      : dispatch({ type: EDIT_SHOES, id })
+      : dispatch({ type: EDIT_SHOES, id });
 
   const nextPage = () => setPage(page + 1);
   const previousPage = () => setPage(page - 1);

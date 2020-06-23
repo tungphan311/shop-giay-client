@@ -9,6 +9,7 @@ import { aImportReducer } from "state/reducers/aImportReducer";
 import { cCustomerReducer } from "./cCustomerReducer";
 import { cOrderReducer } from "./cOrderReducer";
 import { aLoadingReducer } from "state/reducers/aLoadingReducer";
+import { ACustomerReducer } from "state/reducers/ACustomerReducer";
 
 export default combineReducers({
   form: formReducer,
@@ -21,4 +22,5 @@ export default combineReducers({
   ccustomer: cCustomerReducer,
   corder: cOrderReducer,
   aLoading: aLoadingReducer,
+  aCustomer: ACustomerReducer,
 });

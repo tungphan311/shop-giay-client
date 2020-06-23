@@ -8,9 +8,11 @@ import aShoesSaga from "state/sagas/AShoesSaga";
 import aImportSaga from "state/sagas/aImportSaga";
 import cOrderSaga from "./cOrderSaga";
 import cCustomerSaga from "./cCustomerSaga";
+import aCustomerSaga from "./ACustomerSaga";
 
 export default function* rootSaga() {
   yield all([
+    aCustomerSaga(),
     cCartSaga(),
     cProductSaga(),
     cAuthSaga(),

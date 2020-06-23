@@ -163,11 +163,13 @@ AAddShoesForm = reduxForm({
 export default connect((state, props) => {
   const data = state.aShoes.shoesEdit;
   const temp = new Array(5).fill("");
-  if (props.type === "add") return {
-    initialValues: {
-      images: temp
-    }
-  }
+  if (props.type === "add")
+    return {
+      initialValues: {
+        images: temp,
+      },
+    };
+
   data.ShoesImages =
     data.ShoesImages && [...data.ShoesImages, ...temp].slice(0, 5);
 
@@ -209,4 +211,4 @@ export default connect((state, props) => {
         })),
     },
   };
-})(AAddShoesForm);
+}, null)(AAddShoesForm);
