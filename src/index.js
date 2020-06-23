@@ -10,6 +10,7 @@ import * as serviceWorker from "./serviceWorker";
 import history from "./state/history";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
+import "react-datepicker/dist/react-datepicker.css";
 require("dotenv").config();
 
 ReactDOM.render(

@@ -93,7 +93,7 @@ class AAddStock extends Component {
       previousPage,
     } = this.props;
     return (
-      <form className="AddStockForm" onSubmit={handleSubmit} noValidate> 
+      <form className="AddStockForm" onSubmit={handleSubmit} noValidate>
         <div className="container">
           <FieldArray name="stocks" component={renderMembers} />
           <div>
@@ -108,7 +108,7 @@ class AAddStock extends Component {
               className="btn btn-primary ml-2"
               disabled={submitting}
             >
-              {"Hoàn tất"}
+              Hoàn tất
             </button>
             <button
               type="button"
@@ -133,8 +133,4 @@ AAddStock = reduxForm({
   // enableReinitialize: true,
 })(AAddStock);
 
-export default connect((state) => {
-  return {
-    initialValues: {},
-  };
-})(AAddStock);
+export default AAddStock;

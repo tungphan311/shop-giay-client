@@ -12,6 +12,14 @@
   .img {
     opacity: 1;
   }
+  .fa-plus-circle,
+  .fa-edit {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -100%);
+    left: 50%;
+    width: calc(5vw / 3);
+  }
 }
 
 .photo-upload-wrapper:hover {
@@ -21,15 +29,6 @@
   .add-photo-image-upload {
     opacity: 0.4 !important;
   }
-}
-
-.fa-plus-circle,
-.fa-edit {
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -100%);
-  left: 50%;
-  width: calc(5vw / 3);
 }
 
 .add-btn-label {

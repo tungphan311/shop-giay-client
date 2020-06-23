@@ -62,7 +62,7 @@ class ACustomerDetail extends Component {
     ];
 
     return (
-      <div className="ACustomerDetail" id="customBox">
+      <div className="ACustomerDetail">
         <ABreadcrumb title="Thông tin khách hàng" list={BREADCRUMB} />
         <div className="row">
           <div className="col-lg-8 col-12">
