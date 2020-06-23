@@ -14,6 +14,7 @@ export const ACTION_FORCE_LOGOUT = "auth/FORCE_LOGOUT";
 export const ACTION_VERIFY_TOKEN = "auth/VERIFY_TOKEN";
 export const ACTION_VERIFY_TOKEN_SUCCESS = "auth/VERIFY_TOKEN_SUCCESS";
 export const ACTION_VERIFY_TOKEN_FAIl = "auth/VERIFY_TOKEN_FAIL";
+export const ACTION_SIGNUP = "auth/SIGNUP";
 
 export const cAuthReducer = (state = initState, action = {}) => {
   const newState = { ...state };
