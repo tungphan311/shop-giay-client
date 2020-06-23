@@ -13,11 +13,7 @@ import qs from "query-string";
 import APagination from "Components/Admin/Pagination/Pagination";
 import AFilterBar from "Components/Admin/FilterBar/FilterBar";
 import { downloadCSV, downloadExcel } from "utils/helper";
-import {
-  GET_PROVIDERS,
-  GET_SHOESBRANDS,
-  GET_SHOESTYPES,
-} from "state/reducers/AShoesReducer";
+import { GET_SHOESBRANDS, GET_SHOESTYPES } from "state/reducers/AShoesReducer";
 import ATag from "Components/Admin/Tags/Tag";
 
 const SELECT = "select";

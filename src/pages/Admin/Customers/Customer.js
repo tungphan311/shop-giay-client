@@ -8,10 +8,9 @@ import history from "state/history";
 import AFilterBar from "Components/Admin/FilterBar/FilterBar";
 import { useDispatch, useSelector } from "react-redux";
 import qs from "query-string";
-import { getCustomerAction, getGenderAction } from "state/actions/index";
+import { getCustomerAction } from "state/actions/index";
 import { toastErr } from "utils/index";
 import { downloadCSV, downloadExcel } from "utils/helper";
-import { GET_GENDER } from "state/reducers/aCustomerReducer";
 
 const SELECT = "select";
 const VALUE = "value";
@@ -19,8 +18,6 @@ const VALUE = "value";
 function ACustomer({ location: { search } }) {
   // state
   const [data, setData] = useState([]);
-  const [selectedRows, setSelectedRows] = useState([]);
-  const [toggleCleared, setToggleCleared] = useState(false);
   const [perPage, setPerPage] = useState(10);
   const [page, setPage] = useState(1);
   const [fetch, setFetch] = useState(false);
@@ -29,6 +26,21 @@ function ACustomer({ location: { search } }) {
   // redux
   const dispatch = useDispatch();
   const customers = useSelector((state) => state.aCustomer.customers);
+  const totalRows = useSelector((state) => state.aCustomer.totalRows) || 0;
+
+  const mapResponseToData = (res) => {
+    console.log(res);
+    return res.map((s) => ({
+      id: s.Id,
+      name: s.Name,
+      address: s.Addresses.length
+        ? `${s.Addresses[0].District}, ${s.Addresses[0].City}`
+        : "",
+      orders: s.Orders.length,
+      type: s.CustomerType.Name,
+      gender: s.Gender === 1 ? "Nam" : s.Gender === 2 ? "Nữ" : "Khác",
+    }));
+  };
 
   const fetchCustomer = (page, pageSize, filter) => {
     const search = qs.stringify({ page, "page-size": pageSize });
@@ -67,20 +79,6 @@ function ACustomer({ location: { search } }) {
     setPerPage(parseInt(pageSize));
     setFilter(filter);
   }
-
-  const mapResponseToData = (res) => {
-    console.log(res);
-    return res.map((s) => ({
-      id: s.Id,
-      name: s.Name,
-      address: s.Addresses.length
-        ? `${s.Addresses[0].District}, ${s.Addresses[0].City}`
-        : "",
-      orders: s.Orders.length,
-      type: s.CustomerType.Name,
-      gender: s.Gender === 1 ? "Nam" : s.Gender === 2 ? "Nữ" : "Khác",
-    }));
-  };
 
   const columns = [
     {
@@ -174,14 +172,10 @@ function ACustomer({ location: { search } }) {
               customStyles={customStyles}
               columns={columns}
               data={data}
-              selectableRows
-              //   contextActions={contextActions}
-              //   onSelectedRowsChange={handleRowSelected}
-              clearSelectedRows={toggleCleared}
               pagination
               noHeader
               paginationServer
-              //   paginationTotalRows={totalRows}
+              paginationTotalRows={totalRows}
               striped
               highlightOnHover
               paginationComponentOptions={OPTIONS}

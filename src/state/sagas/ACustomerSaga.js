@@ -14,7 +14,7 @@ import {
   GET_CUSTOMER_SUCCESS,
   GET_CUSTOMER_BY_ID,
   GET_CUSTOMER_BY_ID_SUCCESS,
-} from "state/reducers/aCustomerReducer";
+} from "state/reducers/ACustomerReducer";
 import { toastErr } from "utils/index";
 
 export function* getCustomerSaga(action) {
