@@ -1,4 +1,4 @@
-import { takeEvery, put, call, select } from "redux-saga/effects";
+import { takeEvery, put, call } from "redux-saga/effects";
 import { getCustomerAction, getGenderAction } from "state/actions/index";
 import { SET_LOADING } from "state/reducers/aLoadingReducer";
 import {
@@ -15,6 +15,7 @@ import {
   GET_CUSTOMER_BY_ID,
   GET_CUSTOMER_BY_ID_SUCCESS,
 } from "state/reducers/aCustomerReducer";
+import { toastErr } from "utils/index";
 
 export function* getCustomerSaga(action) {
   try {

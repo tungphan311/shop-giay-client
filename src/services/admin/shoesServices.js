@@ -24,10 +24,6 @@ export async function getAllShoes({ pageSize, page, filter }) {
   }
 }
 
-export async function getCustomerById({ id }) {
-  return await API.get(`/admin/customer/${id}`, config);
-}
-
 export async function getProviders() {
   return await API.get("/admin/provider", config);
 }
