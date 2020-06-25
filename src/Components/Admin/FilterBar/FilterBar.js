@@ -19,13 +19,21 @@ const COMPARES = [
   { value: "max", label: "nhỏ hơn hoặc bằng" },
 ];
 
-function AFilterBar({ onExport, options, filters, handleAddFilter }) {
+function AFilterBar({
+  onExport,
+  options,
+  filters,
+  handleAddFilter,
+  handleSearch,
+}) {
   const [dropdown, setDropdown] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [selected, setSelected] = useState(DEFAULT_SELECTED);
 
   const [select, setSelect] = useState(null);
   const [number, setNumber] = useState(null);
+
+  const [keyword, setKeyword] = useState("");
 
   const handleOpenModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
@@ -165,8 +173,15 @@ function AFilterBar({ onExport, options, filters, handleAddFilter }) {
                   type="text"
                   className="next-input next-input--invisible"
                   placeholder="Tìm kiếm ..."
+                  value={keyword}
+                  onChange={(e) => setKeyword(e.target.value)}
                 />
-                <div className="next-input-add-on next-input__add-on--after">
+                <div
+                  className={`next-input-add-on next-input__add-on--after ${
+                    keyword ? "" : "d-none"
+                  }`}
+                  onClick={() => setKeyword("")}
+                >
                   <CloseIcon />
                 </div>
               </div>
@@ -175,7 +190,10 @@ function AFilterBar({ onExport, options, filters, handleAddFilter }) {
         </div>
       </div>
       <div className="col-auto pl-0">
-        <button className="btn btn-primary ml-3">
+        <button
+          className="btn btn-primary ml-3"
+          onClick={() => handleSearch(keyword)}
+        >
           <SearchIcon />
           <span className="ml-3 d-none d-sm-inline-block">Tìm kiếm</span>
         </button>

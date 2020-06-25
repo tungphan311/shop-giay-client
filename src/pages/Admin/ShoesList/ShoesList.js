@@ -52,17 +52,12 @@ function AShoesList({ location: { search } }) {
     }
     history.push(`?${search}${f}`);
 
-    if (shoes.length) {
-      let newData = mapResponseToData(shoes);
-      setData(newData);
-    } else {
-      dispatch(getShoesAction({ pageSize, page, filter }))
-        .then((res) => {
-          let newData = mapResponseToData(res);
-          setData(newData);
-        })
-        .catch((err) => toastErr(err));
-    }
+    dispatch(getShoesAction({ pageSize, page, filter }))
+      .then((res) => {
+        let newData = mapResponseToData(res);
+        setData(newData);
+      })
+      .catch((err) => toastErr(err));
   };
 
   if (!fetch) {
@@ -228,6 +223,19 @@ function AShoesList({ location: { search } }) {
     }
   };
 
+  const handleSearch = (key) => {
+    let newFilter = { ...filter, search: key };
+
+    if (!key) {
+      delete newFilter["search"];
+    }
+
+    console.log(newFilter);
+
+    setFilter(newFilter);
+    fetchShoes(1, 10, newFilter);
+  };
+
   const handleRemoveTag = (key) => {
     let newFilter = { ...filter };
 
@@ -281,6 +289,7 @@ function AShoesList({ location: { search } }) {
         options={FILTERS}
         filters={filters}
         handleAddFilter={handleAddFilter}
+        handleSearch={handleSearch}
       />
       <div className="row selected" style={{ marginTop: "10px" }}>
         <div className="col filter-render-selected">{tags}</div>

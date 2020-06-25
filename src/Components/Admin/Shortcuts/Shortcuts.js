@@ -16,37 +16,37 @@ function AShortcuts() {
         <div className="quick-actions-scroll scrollbar-outer">
           <div className="quick-actions-items">
             <div className="row m-0">
-              <Link className="col-6 col-md-4 p-0" href="/admin">
+              <Link className="col-6 col-md-4 p-0" to="/admin">
                 <div className="quick-actions-item">
                   <i className="flaticon-file"></i>
                   <span className="text">Trang chủ</span>
                 </div>
               </Link>
-              <Link className="col-6 col-md-4 p-0" href="/admin/orders">
+              <Link className="col-6 col-md-4 p-0" to="/admin/orders">
                 <div className="quick-actions-item">
                   <i className="flaticon-file-1"></i>
                   <span className="text">Danh sách đơn hàng</span>
                 </div>
               </Link>
-              <Link className="col-6 col-md-4 p-0" href="/admin/shoes">
+              <Link className="col-6 col-md-4 p-0" to="/admin/shoes">
                 <div className="quick-actions-item">
                   <i className="flaticon-database"></i>
                   <span className="text">Danh sách sản phẩm</span>
                 </div>
               </Link>
-              <Link className="col-6 col-md-4 p-0" href="/admin/shoes-add">
+              <Link className="col-6 col-md-4 p-0" to="/admin/shoes-add">
                 <div className="quick-actions-item">
                   <i className="flaticon-pen"></i>
                   <span className="text">Thêm sản phẩm mới</span>
                 </div>
               </Link>
-              <Link className="col-6 col-md-4 p-0" href="/admin/shoes-import">
+              <Link className="col-6 col-md-4 p-0" to="/admin/shoes-import">
                 <div className="quick-actions-item">
                   <i className="flaticon-interface-1"></i>
                   <span className="text">Nhập đơn hàng mới</span>
                 </div>
               </Link>
-              <Link className="col-6 col-md-4 p-0" href="/admin/promotion">
+              <Link className="col-6 col-md-4 p-0" to="/admin/promotion">
                 <div className="quick-actions-item">
                   <i className="flaticon-list"></i>
                   <span className="text">Khuyến mãi</span>

@@ -123,8 +123,12 @@ function ACustomer({ location: { search } }) {
   ];
 
   const filters = {
-    styleId: [],
-    brandId: [],
+    customerType: [],
+    address: [],
+    month: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((m) => ({
+      value: m,
+      label: `Tháng ${m}`,
+    })),
   };
 
   const handlePageChange = (page) => {
@@ -203,7 +207,9 @@ export default ACustomer;
 const BREADCRUMB = [{ link: "/admin/customers", name: "Danh sách khách hàng" }];
 
 const FILTERS = [
-  { value: { type: SELECT, name: "styleId" }, label: "Loại sản phẩm" },
-  { value: { type: SELECT, name: "brandId" }, label: "Thương hiệu" },
-  { value: { type: VALUE, name: "price" }, label: "Giá tiền" },
+  { value: { type: VALUE, name: "spent" }, label: "Số tiền đã mua" },
+  { value: { type: VALUE, name: "orders" }, label: "Số đơn hàng" },
+  { value: { type: SELECT, name: "customerType" }, label: "Loại khách hàng" },
+  { value: { type: SELECT, name: "address" }, label: "Địa chỉ" },
+  { value: { type: SELECT, name: "month" }, label: "Tháng sinh" },
 ];
