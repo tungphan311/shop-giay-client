@@ -45,12 +45,17 @@ function AShoesList({ location: { search } }) {
   const totalRows = useSelector((state) => state.aShoes.totalRows) || 0;
 
   const fetchShoes = (page, pageSize, filter) => {
-    const search = qs.stringify({ page, "page-size": pageSize });
+    const pageQuery = page > 1 ? page : null;
+    const pageSizeQuery = pageSize > 10 ? pageSize : null;
+    const query = qs.stringify(
+      { page: pageQuery, pageSize: pageSizeQuery },
+      { skipNull: true }
+    );
     let f = "";
     for (var key in filter) {
       f += `&${key}=${filter[key]}`;
     }
-    history.push(`?${search}${f}`);
+    history.push(`?${query}${f}`);
 
     dispatch(getShoesAction({ pageSize, page, filter }))
       .then((res) => {

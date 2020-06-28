@@ -25,6 +25,7 @@ import ACustomerDetail from "pages/Admin/CustomerDetail/CustomerDetail";
 import ACustomer from "pages/Admin/Customers/Customer";
 import APromotion from "pages/Admin/Promotion/Promotion";
 import AAddPromotion from "pages/Admin/AddPromotion/AddPromotion";
+import AOrders from "pages/Admin/Orders/Orders";
 
 // component for admin site to determine user is logined or not
 export const AuthorizedRoute = ({ component: Component, isUser, ...rest }) => (
@@ -133,6 +134,7 @@ function Routes() {
           "/admin/customers",
           "/admin/promotion",
           "/admin/promotion/add",
+          "/admin/orders",
         ]}
       >
         <AdminLayout>
@@ -188,6 +190,12 @@ function Routes() {
             exact
             path="/admin/promotion/add"
             component={AAddPromotion}
+            isUser={isUser}
+          />
+          <AuthorizedRoute
+            exact
+            path="/admin/orders"
+            component={AOrders}
             isUser={isUser}
           />
         </AdminLayout>

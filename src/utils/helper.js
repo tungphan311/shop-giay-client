@@ -11,6 +11,20 @@ export const formatDateToString = (date) => {
   )}`;
 };
 
+export const formatDateTime = (date) => {
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+  const hour = date.getHours();
+  const mins = date.getMinutes();
+
+  return `${formatDateNumber(day)}/${formatDateNumber(
+    month
+  )}/${formatDateNumber(year)} ${formatDateNumber(hour)}:${formatDateNumber(
+    mins
+  )}`;
+};
+
 export const formatDateNumber = (num) => (num > 9 ? String(num) : `0${num}`);
 
 export const convertArrayOfObjectsToCSV = (array) => {

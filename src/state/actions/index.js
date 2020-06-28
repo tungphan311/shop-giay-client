@@ -9,3 +9,5 @@ export const getCustomerAction = createPromiseAction("GET_CUSTOMER");
 export const getGenderAction = createPromiseAction("GET_GENDER");
 
 export const deleteShoesAction = createPromiseAction(DELETE_SHOES);
+
+export const getOrderAction = createPromiseAction("GET_ORDER");
