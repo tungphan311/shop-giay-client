@@ -43,22 +43,38 @@
   display: inline-block;
 }
 
-.circle--status--1 {
+.circle--status--1,
+.circle--status--not-yet {
   border-color: #fdbd41;
 }
-.circle--status--2 {
+.circle--status--2,
+.circle--status--delivered {
   border-color: #22c993;
 }
 .circle--status--3 {
   border-color: #fc625d;
+}
+.circle--status--delivering {
+  border-color: #2962ff;
 }
 
 .status--component span[class^="badges--"] {
   font-weight: 500;
 }
 
-.badges--status--1 {
+.badges--status--1,
+.badges--status--not-yet {
   color: #fdbd41;
+}
+.badges--status--2,
+.badges--status--delivered {
+  color: #22c993;
+}
+.badges--status--3 {
+  color: #fc625d;
+}
+.badges--status--delivering {
+  color: #2962ff;
 }
 
 .order--body {
@@ -124,7 +140,7 @@
 
   textarea {
     font-weight: 400;
-    line-height: 16px;
+    line-height: 20px;
     text-transform: none;
     letter-spacing: normal;
     border-radius: 4px;
@@ -167,4 +183,18 @@
       background-color: #c2cdd8 !important;
     }
   }
+
+  // #printContainer {
+  //   visibility: hidden;
+  //   position: fixed;
+  //   top: 9999999px;
+  //   z-index: -999999999;
+  //   padding: 20mm 30mm;
+
+  //   .print--content {
+  //     margin: 0;
+  //     font-size: 12px;
+  //     page-break-after: always;
+  //   }
+  // }
 }
