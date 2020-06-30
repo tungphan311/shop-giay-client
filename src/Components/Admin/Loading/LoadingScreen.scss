@@ -1,6 +1,6 @@
 .loading-screen {
-  width: 100vw;
-  height: 100vh;
+  width: calc(100vw - 250px);
+  height: calc(100vh - 62px);
   position: fixed;
   display: flex;
   align-items: center;

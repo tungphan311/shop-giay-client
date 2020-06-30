@@ -1,14 +1,11 @@
 import React from "react";
-import "./Shortcuts.scss"
+import "./Shortcuts.scss";
+import { Link } from "react-router-dom";
 
 function AShortcuts() {
   return (
     <li className="nav-item dropdown hidden-caret">
-      <button
-        className="nav-link"
-        data-toggle="dropdown"
-        aria-expanded="false"
-      >
+      <button className="nav-link" data-toggle="dropdown" aria-expanded="false">
         <i className="fas fa-layer-group"></i>
       </button>
       <div className="dropdown-menu quick-actions quick-actions-info animated fadeIn">
@@ -19,42 +16,42 @@ function AShortcuts() {
         <div className="quick-actions-scroll scrollbar-outer">
           <div className="quick-actions-items">
             <div className="row m-0">
-              <a className="col-6 col-md-4 p-0" href="/sell-courses">
+              <Link className="col-6 col-md-4 p-0" to="/admin">
                 <div className="quick-actions-item">
                   <i className="flaticon-file"></i>
-                  <span className="text">Đăng ký gói tập</span>
+                  <span className="text">Trang chủ</span>
                 </div>
-              </a>
-              <a className="col-6 col-md-4 p-0" href="/staffs/add">
+              </Link>
+              <Link className="col-6 col-md-4 p-0" to="/admin/orders">
                 <div className="quick-actions-item">
                   <i className="flaticon-file-1"></i>
-                  <span className="text">Thêm nhân viên mới</span>
+                  <span className="text">Danh sách đơn hàng</span>
                 </div>
-              </a>
-              <a className="col-6 col-md-4 p-0" href="/members/add">
+              </Link>
+              <Link className="col-6 col-md-4 p-0" to="/admin/shoes">
                 <div className="quick-actions-item">
                   <i className="flaticon-database"></i>
-                  <span className="text">Thêm hội viên mới</span>
+                  <span className="text">Danh sách sản phẩm</span>
                 </div>
-              </a>
-              <a className="col-6 col-md-4 p-0" href="/courses/add">
+              </Link>
+              <Link className="col-6 col-md-4 p-0" to="/admin/shoes-add">
                 <div className="quick-actions-item">
                   <i className="flaticon-pen"></i>
-                  <span className="text">Thêm gói tập mới</span>
+                  <span className="text">Thêm sản phẩm mới</span>
                 </div>
-              </a>
-              <a className="col-6 col-md-4 p-0" href="/equipments/add">
+              </Link>
+              <Link className="col-6 col-md-4 p-0" to="/admin/shoes-import">
                 <div className="quick-actions-item">
                   <i className="flaticon-interface-1"></i>
-                  <span className="text">Nhập thiết bị mới</span>
+                  <span className="text">Nhập đơn hàng mới</span>
                 </div>
-              </a>
-              <a className="col-6 col-md-4 p-0" href="/invoices">
+              </Link>
+              <Link className="col-6 col-md-4 p-0" to="/admin/promotion">
                 <div className="quick-actions-item">
                   <i className="flaticon-list"></i>
-                  <span className="text">Tra cứu hoá đơn</span>
+                  <span className="text">Khuyến mãi</span>
                 </div>
-              </a>
+              </Link>
             </div>
           </div>
         </div>

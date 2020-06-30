@@ -141,7 +141,7 @@ class AAddShoesForm extends Component {
             />
           </div>
           <div style={{ marginLeft: "auto", marginRight: 0 }} className="mt-5">
-            <button className="btn btn-primary btn-border">Trở về</button>
+            {/* <button className="btn btn-primary btn-border">Trở về</button> */}
             <button type="submit" className="btn btn-primary ml-2">
               Tiếp theo
             </button>

@@ -77,8 +77,9 @@ export function* getAllShoesSaga() {
 export function* getShoesSaga(action) {
   try {
     yield put({ type: SET_LOADING });
-    const { pageSize, page } = action.payload;
-    const result = yield call(getAllShoes, { pageSize, page });
+
+    const { pageSize, page, filter } = action.payload;
+    const result = yield call(getAllShoes, { pageSize, page, filter });
     const responseJSON = result.data.data;
     const { total } = result.data;
 
@@ -111,6 +112,8 @@ export function* deleteShoesSaga(action) {
 
 export function* getShoesByIdSaga({ id }) {
   try {
+    yield put({ type: SET_LOADING });
+
     const result = yield call(getShoesById, { id });
     const responseJSON = result.data.data;
     const response = JSON.parse(responseJSON);
@@ -133,6 +136,8 @@ export function* getShoesByIdSaga({ id }) {
     yield put({ type: GET_SHOES_BY_ID_SUCCESS, response, colors, sizes });
   } catch (err) {
     yield toastErr(err);
+  } finally {
+    yield put({ type: SET_LOADING, status: false });
   }
 }
 

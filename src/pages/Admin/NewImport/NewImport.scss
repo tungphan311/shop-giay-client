@@ -1,42 +1,56 @@
-.amount-input {
-  width: inherit;
-  border: none;
-  text-align: right;
-  background-color: #fafafa;
-
-  &:hover {
-    background-color: #eee;
-  }
-}
-
-.input-group {
-  flex-flow: row !important;
-}
-
-.rdt_TableRow:hover {
-  .amount-input {
-    background-color: #eee;
-  }
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
 .create-import {
   .form-group {
     margin-bottom: 0;
   }
 
-  .input-group-text {
-    background-color: transparent;
+  .rdt_TableRow:hover {
+    .amount-input {
+      background-color: #eee;
+    }
+  }
+}
+
+.choose-shoes-modal {
+  .amount-input {
+    width: 100%;
     border: none;
-    padding: 0;
+    text-align: right;
+    background-color: #fafafa;
+    padding-right: 10px;
   }
 
   .input-group {
+    flex-grow: 1;
+    margin-top: 40px;
+    position: relative;
     height: 100%;
+
+    .input-wrapper {
+      flex-flow: row !important;
+      display: flex;
+      border: 1px solid #ced4da;
+      border-radius: 0.25rem;
+    }
+
+    .input-title {
+      position: absolute;
+      top: -30px;
+    }
+  }
+
+  .input-group-text {
+    border: none;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
   }
 }
