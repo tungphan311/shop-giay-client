@@ -23,3 +23,19 @@ export async function getOrderService({ page, pageSize, filter }) {
     }
   }
 }
+
+export async function updateOrderService({
+  id,
+  status,
+  deliveryDate,
+  beginDelivery,
+  cancelDate,
+  confirmDate,
+  note,
+}) {
+  return await API.put(
+    `/admin/order/${id}`,
+    { id, status, deliveryDate, beginDelivery, cancelDate, confirmDate, note },
+    config
+  );
+}

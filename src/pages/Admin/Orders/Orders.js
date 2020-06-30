@@ -11,6 +11,9 @@ import history from "state/history";
 import qs from "query-string";
 import { useReactToPrint } from "react-to-print";
 
+const WAITING = 1;
+const CANCEL = 3;
+
 function AOrders({ location: { search } }) {
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
@@ -40,6 +43,7 @@ function AOrders({ location: { search } }) {
         price: i.PricePerUnit,
         amount: i.Amount,
       })),
+      note: r.Note,
     }));
 
   const fillQuery = (page, pageSize) => {
@@ -133,6 +137,7 @@ const Order = ({
   customerId,
   customerName,
   items,
+  note,
 }) => {
   const componentRef = useRef();
 
@@ -194,7 +199,10 @@ const Order = ({
               <div className="order--status--item--top">Mã</div>
               <div className="order--status--item--bottom">
                 <div className="table-break-word">
-                  <Link to={`/admin/orders/${id}`}>
+                  <Link
+                    to={`/admin/orders/${id}`}
+                    className={`${status === CANCEL ? "isCancel" : ""}`}
+                  >
                     <strong>{`#${id}`}</strong>
                   </Link>
                 </div>
@@ -203,7 +211,11 @@ const Order = ({
             <div className="order--status--item pb-4">
               <div className="order--status--item--top">Ngày đặt hàng</div>
               <div className="order--status--item--bottom">
-                <div className="table-break-word">
+                <div
+                  className={`table-break-word ${
+                    status === CANCEL ? "isCancel" : ""
+                  }`}
+                >
                   <span>{formatDateTime(new Date(createDate))}</span>
                 </div>
               </div>
@@ -223,7 +235,7 @@ const Order = ({
                 </div>
               </div>
             </div>
-            {status < 3 && (
+            {status < CANCEL && (
               <div className="order--status--item pb-4">
                 <div className="order--status--item--top">Giao hàng</div>
                 <div className="order--status--item--bottom">
@@ -302,6 +314,7 @@ const Order = ({
             <div className="col-12">
               <label>Ghi chú</label>
               <textarea
+                defaultValue={note}
                 id="order--note"
                 className="order--note"
                 rows={3}
@@ -324,18 +337,53 @@ const Order = ({
             <i className="icon-printer mr-3" />
             In đơn hàng
           </button>
-          <button className="btn btn-clean mb-4">
-            <i className="icon-close mr-3" />
-            Huỷ đơn hàng
-          </button>
+          {status < CANCEL && (
+            <button className="btn btn-clean mb-4">
+              <i className="icon-close mr-3" />
+              Huỷ đơn hàng
+            </button>
+          )}
           <div className="float-right text-right">
-            <button className="btn btn-default mb-4 ml-3">
-              Xác nhận đơn hàng
-            </button>
-            <button className="btn btn-default mb-4 ml-3">
-              <i className="flaticon-delivery-truck mr-2" />
-              Bắt đầu giao hàng
-            </button>
+            {status < CANCEL ? (
+              <>
+                {status === WAITING && (
+                  <button className="btn btn-default mb-4 ml-3">
+                    Xác nhận đơn hàng
+                  </button>
+                )}
+                <button className="btn btn-default mb-4 ml-3">
+                  <i className="flaticon-delivery-truck mr-2" />
+                  Bắt đầu giao hàng
+                </button>{" "}
+              </>
+            ) : (
+              <>
+                <div className="status--component d-inline-block">
+                  <span
+                    className={`circle--status mr-2 circle--status--${status}`}
+                  ></span>
+                  <span className={`badges--status--${status}`}>
+                    Đơn hàng đã bị huỷ
+                  </span>
+                </div>
+                <span className="d-inline-block ml-3">
+                  <svg
+                    className="svg-next-icon mr-2 svg-next-icon-size-14"
+                    width="14"
+                    height="14"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      version="1.1"
+                    >
+                      <path d="M12.512,6.968 L12.512,12.224 L17,14.888 L16.256,16.16 L11,12.968 L11,6.968 L12.512,6.968 Z M11.984,20 C13.4240072,20 14.7679938,19.6320037 16.016,18.896 C17.2320061,18.1919965 18.1919965,17.2320061 18.896,16.016 C19.6320037,14.7679938 20,13.4240072 20,11.984 C20,10.5439928 19.6320037,9.20000624 18.896,7.952 C18.1919965,6.73599392 17.2320061,5.77600352 16.016,5.072 C14.7679938,4.33599632 13.4240072,3.968 11.984,3.968 C10.5439928,3.968 9.20000624,4.33599632 7.952,5.072 C6.73599392,5.77600352 5.77600352,6.73599392 5.072,7.952 C4.33599632,9.20000624 3.968,10.5439928 3.968,11.984 C3.968,13.4240072 4.33599632,14.7679938 5.072,16.016 C5.77600352,17.2320061 6.73599392,18.1919965 7.952,18.896 C9.20000624,19.6320037 10.5439928,20 11.984,20 Z M11.984,2 C13.8080091,2 15.4959922,2.45599544 17.048,3.368 C18.5520075,4.23200432 19.7359957,5.41599248 20.6,6.92 C21.5120046,8.47200776 21.968,10.1599909 21.968,11.984 C21.968,13.8080091 21.5120046,15.4959922 20.6,17.048 C19.7359957,18.5520075 18.5520075,19.7359957 17.048,20.6 C15.4959922,21.5120046 13.8080091,21.968 11.984,21.968 C10.1599909,21.968 8.47200776,21.5120046 6.92,20.6 C5.41599248,19.7199956 4.23200432,18.5280075 3.368,17.024 C2.45599544,15.4719922 2,13.792009 2,11.984 C2,10.175991 2.45599544,8.49600776 3.368,6.944 C4.2480044,5.43999248 5.43999248,4.2480044 6.944,3.368 C8.49600776,2.45599544 10.175991,2 11.984,2 Z"></path>
+                    </svg>
+                  </svg>
+                  <span>{formatDateTime(new Date(cancelDate))}</span>
+                </span>
+              </>
+            )}
           </div>
         </div>
       </div>
