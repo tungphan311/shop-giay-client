@@ -3,15 +3,17 @@ import ABreadcrumb from "Components/Admin/Breadcrumb/Breadcrumb";
 import { Link } from "react-router-dom";
 import "./Orders.scss";
 import { useDispatch } from "react-redux";
-import { getOrderAction } from "state/actions/index";
+import { getOrderAction, updateOrderAction } from "state/actions/index";
 import APagination from "Components/Admin/Pagination/Pagination";
 import { NoDataComponent } from "utils/utils";
 import { formatDateTime, formatDate } from "utils/helper";
 import history from "state/history";
 import qs from "query-string";
 import { useReactToPrint } from "react-to-print";
+import swal from "sweetalert";
 
 const WAITING = 1;
+const CONFIRM = 2;
 const CANCEL = 3;
 
 function AOrders({ location: { search } }) {
@@ -21,30 +23,31 @@ function AOrders({ location: { search } }) {
   const [pageSize, setPageSize] = useState(10);
   const [total, setTotal] = useState(0);
 
-  const mapResponseToData = (res) =>
-    res.map((r) => ({
-      id: r.Id,
-      address: r.DeliverAddress,
-      createDate: r.OrderDate,
-      confirmDate: r.ConfirmDate,
-      cancelDate: r.CancelDate,
-      deliveryDate: r.DeliveryDate,
-      beginDelivery: r.BeginDelivery,
-      receiverName: r.RecipientName,
-      phone: r.RecipientPhoneNumber,
-      status: r.Status,
-      total: r.Total,
-      customerId: r.CustomerId,
-      customerName: r.Customer.Name,
-      items: r.OrderItems.map((i) => ({
-        id: i.ShoesId,
-        name: i.ShoesName,
-        img: i.ImagePath,
-        price: i.PricePerUnit,
-        amount: i.Amount,
-      })),
-      note: r.Note,
-    }));
+  const mapFunction = (r) => ({
+    id: r.Id,
+    address: r.DeliverAddress,
+    createDate: r.OrderDate,
+    confirmDate: r.ConfirmDate,
+    cancelDate: r.CancelDate,
+    deliveryDate: r.DeliveryDate,
+    beginDelivery: r.BeginDelivery,
+    receiverName: r.RecipientName,
+    phone: r.RecipientPhoneNumber,
+    status: r.Status,
+    total: r.Total,
+    customerId: r.CustomerId,
+    customerName: r.Customer.Name,
+    items: r.OrderItems.map((i) => ({
+      id: i.ShoesId,
+      name: i.ShoesName,
+      img: i.ImagePath,
+      price: i.PricePerUnit,
+      amount: i.Amount,
+    })),
+    note: r.Note,
+  });
+
+  const mapResponseToData = (res) => res.map((r) => mapFunction(r));
 
   const fillQuery = (page, pageSize) => {
     const pageQuery = page > 1 ? page : null;
@@ -95,13 +98,124 @@ function AOrders({ location: { search } }) {
     fetchOrder(1, pageSize);
   };
 
+  const updateOrder = (order, res) => ({
+    ...order,
+    status: res.Status,
+    deliveryDate: res.DeliveryDate,
+    beginDelivery: res.BeginDelivery,
+    cancelDate: res.CancelDate,
+    confirmDate: res.ConfirmDate,
+    note: res.Note,
+  });
+
+  const handleUpdateOrder = (
+    id,
+    status,
+    deliveryDate,
+    beginDelivery,
+    cancelDate,
+    confirmDate,
+    note,
+    confirm,
+    msg,
+    icon
+  ) => {
+    if (confirm) {
+      swal(msg, {
+        buttons: ["Trở lại", "Tiếp tục"],
+        icon,
+      }).then((cancel) => {
+        if (cancel) {
+          dispatch(
+            updateOrderAction({
+              id,
+              status,
+              deliveryDate,
+              beginDelivery,
+              cancelDate,
+              confirmDate,
+              note,
+            })
+          ).then((res) => {
+            let newData = [...data];
+            const index = newData.findIndex((x) => x.id === res.Id);
+
+            newData[index] = updateOrder(newData[index], res);
+
+            setData(newData);
+          });
+        }
+      });
+    } else {
+      dispatch(
+        updateOrderAction({
+          id,
+          status,
+          deliveryDate,
+          beginDelivery,
+          cancelDate,
+          confirmDate,
+          note,
+        })
+      ).then((res) => {
+        let newData = [...data];
+        const index = newData.findIndex((x) => x.id === res.Id);
+
+        newData[index] = updateOrder(newData[index], res);
+
+        setData(newData);
+      });
+    }
+  };
+
+  const handleConfirmOrder = (
+    id,
+    status,
+    deliveryDate,
+    beginDelivery,
+    cancelDate,
+    confirmDate,
+    note
+  ) => {
+    swal(`Xác nhận đơn hàng #${id}`, {
+      buttons: ["Trở lại", "Chắc chắn"],
+      icon: "info",
+    }).then((cancel) => {
+      if (cancel) {
+        dispatch(
+          updateOrderAction({
+            id,
+            status,
+            deliveryDate,
+            beginDelivery,
+            cancelDate,
+            confirmDate,
+            note,
+          })
+        ).then((res) => {
+          let newData = [...data];
+          const index = newData.findIndex((x) => x.id === res.Id);
+
+          newData[index] = updateOrder(newData[index], res);
+
+          setData(newData);
+        });
+      }
+    });
+  };
+
   return (
     <div>
       <ABreadcrumb title="Tất cả sản phẩm" list={BREADCRUMB} />
       <div className="row mt-5">
         <div className="col-md-12">
           {data.map((prop, index) => (
-            <Order key={index} {...prop} />
+            <Order
+              key={index}
+              handleUpdateOrder={handleUpdateOrder}
+              handleConfirmOrder={handleConfirmOrder}
+              {...prop}
+            />
           ))}
           {!data.length && <NoDataComponent title="đơn hàng" />}
           <APagination
@@ -138,7 +252,9 @@ const Order = ({
   customerName,
   items,
   note,
+  handleUpdateOrder,
 }) => {
+  const [txtNote, setNote] = useState(note);
   const componentRef = useRef();
 
   const formatStatus = (stt) =>
@@ -175,6 +291,86 @@ const Order = ({
     content: () => componentRef.current,
     documentTitle: "Danh sách đơn hàng",
   });
+
+  const handleCancel = () => {
+    const now = new Date().toISOString();
+    handleUpdateOrder(
+      id,
+      3,
+      deliveryDate,
+      beginDelivery,
+      now,
+      confirmDate,
+      note,
+      true,
+      "Trong trường hợp đơn hàng giả mạo, khách hàng thay đổi nhu cầu hoặc sản phẩm đã hết hàng, bạn nên huỷ đơn hàng. Huỷ bỏ đơn hàng là thao tác không thể phục hồi lại",
+      "warning"
+    );
+  };
+
+  const handleConfirm = () => {
+    const now = new Date().toISOString();
+
+    handleUpdateOrder(
+      id,
+      2,
+      deliveryDate,
+      beginDelivery,
+      cancelDate,
+      now,
+      note,
+      true,
+      `Xác nhận đơn hàng #${id}`,
+      "info"
+    );
+  };
+
+  const handleDelivery = () => {
+    const now = new Date().toISOString();
+
+    handleUpdateOrder(
+      id,
+      status,
+      deliveryDate,
+      now,
+      cancelDate,
+      confirmDate,
+      note,
+      true,
+      `Xác nhận giao đơn hàng #${id}`,
+      "info"
+    );
+  };
+
+  const handleDelivered = () => {
+    const now = new Date().toISOString();
+
+    handleUpdateOrder(
+      id,
+      status,
+      now,
+      beginDelivery,
+      cancelDate,
+      confirmDate,
+      note,
+      true,
+      `Xác nhận giao thành công đơn hàng #${id}`,
+      "info"
+    );
+  };
+
+  const handleSaveNote = () => {
+    handleUpdateOrder(
+      id,
+      status,
+      deliveryDate,
+      beginDelivery,
+      cancelDate,
+      confirmDate,
+      txtNote,
+      false
+    );
+  };
 
   const props = {
     createDate,
@@ -239,7 +435,7 @@ const Order = ({
               <div className="order--status--item pb-4">
                 <div className="order--status--item--top">Giao hàng</div>
                 <div className="order--status--item--bottom">
-                  <div className="table-break-word">
+                  <div className="table-break-word d-inline-block">
                     <div className="status--component">
                       <span
                         className={`circle--status mr-2 circle--status--${delivery}`}
@@ -249,6 +445,12 @@ const Order = ({
                       </span>
                     </div>
                   </div>
+                  {deliveryDate && (
+                    <span className="d-inline-block ml-3">
+                      <Timer />
+                      <span>{formatDateTime(new Date(deliveryDate))}</span>
+                    </span>
+                  )}
                 </div>
               </div>
             )}
@@ -314,7 +516,8 @@ const Order = ({
             <div className="col-12">
               <label>Ghi chú</label>
               <textarea
-                defaultValue={note}
+                value={txtNote}
+                onChange={(e) => setNote(e.target.value)}
                 id="order--note"
                 className="order--note"
                 rows={3}
@@ -322,7 +525,7 @@ const Order = ({
               ></textarea>
             </div>
             <div className="col-12 text-right py-2">
-              <button className="btn btn-clean px-0">
+              <button className="btn btn-clean px-0" onClick={handleSaveNote}>
                 <i className="far fa-save mr-2" />
                 <span>Lưu ghi chú</span>
               </button>
@@ -338,7 +541,7 @@ const Order = ({
             In đơn hàng
           </button>
           {status < CANCEL && (
-            <button className="btn btn-clean mb-4">
+            <button className="btn btn-clean mb-4" onClick={handleCancel}>
               <i className="icon-close mr-3" />
               Huỷ đơn hàng
             </button>
@@ -347,14 +550,33 @@ const Order = ({
             {status < CANCEL ? (
               <>
                 {status === WAITING && (
-                  <button className="btn btn-default mb-4 ml-3">
+                  <button
+                    className="btn btn-default mb-4 ml-3"
+                    onClick={handleConfirm}
+                  >
                     Xác nhận đơn hàng
                   </button>
                 )}
-                <button className="btn btn-default mb-4 ml-3">
-                  <i className="flaticon-delivery-truck mr-2" />
-                  Bắt đầu giao hàng
-                </button>{" "}
+                {!deliveryDate &&
+                  (!beginDelivery ? (
+                    <button
+                      className="btn btn-default mb-4 ml-3"
+                      disabled={status !== CONFIRM}
+                      onClick={handleDelivery}
+                    >
+                      <i className="flaticon-delivery-truck mr-2" />
+                      Bắt đầu giao hàng
+                    </button>
+                  ) : (
+                    <button
+                      className="btn btn-default mb-4 ml-3"
+                      disabled={status !== CONFIRM}
+                      onClick={handleDelivered}
+                    >
+                      <i className="flaticon-delivery-truck mr-2" />
+                      Đã giao hàng
+                    </button>
+                  ))}
               </>
             ) : (
               <>
@@ -367,19 +589,7 @@ const Order = ({
                   </span>
                 </div>
                 <span className="d-inline-block ml-3">
-                  <svg
-                    className="svg-next-icon mr-2 svg-next-icon-size-14"
-                    width="14"
-                    height="14"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      version="1.1"
-                    >
-                      <path d="M12.512,6.968 L12.512,12.224 L17,14.888 L16.256,16.16 L11,12.968 L11,6.968 L12.512,6.968 Z M11.984,20 C13.4240072,20 14.7679938,19.6320037 16.016,18.896 C17.2320061,18.1919965 18.1919965,17.2320061 18.896,16.016 C19.6320037,14.7679938 20,13.4240072 20,11.984 C20,10.5439928 19.6320037,9.20000624 18.896,7.952 C18.1919965,6.73599392 17.2320061,5.77600352 16.016,5.072 C14.7679938,4.33599632 13.4240072,3.968 11.984,3.968 C10.5439928,3.968 9.20000624,4.33599632 7.952,5.072 C6.73599392,5.77600352 5.77600352,6.73599392 5.072,7.952 C4.33599632,9.20000624 3.968,10.5439928 3.968,11.984 C3.968,13.4240072 4.33599632,14.7679938 5.072,16.016 C5.77600352,17.2320061 6.73599392,18.1919965 7.952,18.896 C9.20000624,19.6320037 10.5439928,20 11.984,20 Z M11.984,2 C13.8080091,2 15.4959922,2.45599544 17.048,3.368 C18.5520075,4.23200432 19.7359957,5.41599248 20.6,6.92 C21.5120046,8.47200776 21.968,10.1599909 21.968,11.984 C21.968,13.8080091 21.5120046,15.4959922 20.6,17.048 C19.7359957,18.5520075 18.5520075,19.7359957 17.048,20.6 C15.4959922,21.5120046 13.8080091,21.968 11.984,21.968 C10.1599909,21.968 8.47200776,21.5120046 6.92,20.6 C5.41599248,19.7199956 4.23200432,18.5280075 3.368,17.024 C2.45599544,15.4719922 2,13.792009 2,11.984 C2,10.175991 2.45599544,8.49600776 3.368,6.944 C4.2480044,5.43999248 5.43999248,4.2480044 6.944,3.368 C8.49600776,2.45599544 10.175991,2 11.984,2 Z"></path>
-                    </svg>
-                  </svg>
+                  <Timer />
                   <span>{formatDateTime(new Date(cancelDate))}</span>
                 </span>
               </>
@@ -393,6 +603,18 @@ const Order = ({
     </div>
   );
 };
+
+const Timer = () => (
+  <svg
+    className="svg-next-icon mr-2 svg-next-icon-size-14"
+    width="14"
+    height="14"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" version="1.1">
+      <path d="M12.512,6.968 L12.512,12.224 L17,14.888 L16.256,16.16 L11,12.968 L11,6.968 L12.512,6.968 Z M11.984,20 C13.4240072,20 14.7679938,19.6320037 16.016,18.896 C17.2320061,18.1919965 18.1919965,17.2320061 18.896,16.016 C19.6320037,14.7679938 20,13.4240072 20,11.984 C20,10.5439928 19.6320037,9.20000624 18.896,7.952 C18.1919965,6.73599392 17.2320061,5.77600352 16.016,5.072 C14.7679938,4.33599632 13.4240072,3.968 11.984,3.968 C10.5439928,3.968 9.20000624,4.33599632 7.952,5.072 C6.73599392,5.77600352 5.77600352,6.73599392 5.072,7.952 C4.33599632,9.20000624 3.968,10.5439928 3.968,11.984 C3.968,13.4240072 4.33599632,14.7679938 5.072,16.016 C5.77600352,17.2320061 6.73599392,18.1919965 7.952,18.896 C9.20000624,19.6320037 10.5439928,20 11.984,20 Z M11.984,2 C13.8080091,2 15.4959922,2.45599544 17.048,3.368 C18.5520075,4.23200432 19.7359957,5.41599248 20.6,6.92 C21.5120046,8.47200776 21.968,10.1599909 21.968,11.984 C21.968,13.8080091 21.5120046,15.4959922 20.6,17.048 C19.7359957,18.5520075 18.5520075,19.7359957 17.048,20.6 C15.4959922,21.5120046 13.8080091,21.968 11.984,21.968 C10.1599909,21.968 8.47200776,21.5120046 6.92,20.6 C5.41599248,19.7199956 4.23200432,18.5280075 3.368,17.024 C2.45599544,15.4719922 2,13.792009 2,11.984 C2,10.175991 2.45599544,8.49600776 3.368,6.944 C4.2480044,5.43999248 5.43999248,4.2480044 6.944,3.368 C8.49600776,2.45599544 10.175991,2 11.984,2 Z"></path>
+    </svg>
+  </svg>
+);
 
 const Product = ({ id, name, img, price, amount }) => (
   <div className="order--product--item py-3 px-0">
