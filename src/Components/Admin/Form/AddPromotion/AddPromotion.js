@@ -1,113 +1,92 @@
 import React, { Component } from "react";
-import { reduxForm, Field, FieldArray } from "redux-form";
-
+import { reduxForm, Field } from "redux-form";
 import "./AddPromotion.scss";
 import AInput from "Components/Admin/AInput/input";
+import { connect } from "react-redux";
 import { Button } from "react-bootstrap";
 import { FORM_KEY_ADDPROMOTE } from "state/reducers/formReducer";
-import { GET_COLORS, GET_SIZES } from "state/reducers/AShoesReducer";
-import AProviderSelect from "Components/Admin/Creatable/ProviderSelect";
+import { GET_SHOES } from "state/reducers/AShoesReducer";
 import ADatePicker from "Components/Admin/DatePicker/DatePicker";
-const myCustomInput = ({
-  input,
-  getReducer,
-  placeholder,
-  stateName,
-  label,
-}) => (
-  <AProviderSelect
-    {...input}
-    getReducer={getReducer}
-    stateName={stateName}
-    placeholder={placeholder}
-    label={label}
-    selected={input.value}
-    setSelected={input.onChange}
-  ></AProviderSelect>
-);
+import { requireForm, validDayEx } from "utils/Validation";
+import AMultiSelect from "Components/Admin/ProductSelect/MultiSelect";
+
+const getAllShoes = (state) => state.aShoes.shoes;
+const mapDispatchToProps = (dispatch) => ({
+  getShoes: () => dispatch({ type: GET_SHOES }),
+});
+
+const mapStateToProps = (state) => {
+  return {
+    shoes: getAllShoes(state)
+      .filter((s) => !s.IsOnSale)
+      .map((ele) => ({
+        value: ele.Id,
+        label: ele.Name,
+      })),
+  };
+};
 
 class AAddPromoteForm extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      dateMin: new Date(),
+    };
+  }
+  componentDidMount = () => {
+    const { getShoes } = this.props;
+    getShoes();
+  };
   render() {
-    const { handleSubmit, submitting } = this.props;
+    const { handleSubmit, shoes } = this.props;
+    const sales = [
+      {
+        value: 1,
+        label: "%",
+      },
+      {
+        value: 2,
+        label: "VNĐ",
+      },
+    ];
+    const { dateMin } = this.state;
     return (
       <form className="AddPromoteForm" onSubmit={handleSubmit}>
         <div className="row">
           <div className="col-lg-8 col-12">
             <div className="card">
               <div className="card-body">
-                <Field
-                  label="Tên Chương Trình Khuyến Mãi"
-                  type="text"
-                  name="name"
-                  component={AInput}
-                ></Field>
                 <div className="row">
-                  <div className="wrap ">
+                  <div className="wrap col-12">
+                    <label>Loại Chương Trình Khuyến Mãi</label>
                     <Field
-                      label="Loại Chương Trình Khuyến Mãi"
-                      name="colorId"
+                      isMulti={false}
+                      name="saleType"
                       type="text"
-                      getReducer={GET_COLORS}
-                      stateName="colors"
-                      component={myCustomInput}
-                      formClassName="ml-2"
+                      options={sales}
+                      validate={[requireForm]}
+                      component={AMultiSelect}
                       placeholder="Chọn Loại Chương Trình Khuyến Mãi"
                     />
                   </div>
-                  <div className="wrap">
+                  <div className="col-12">
                     <Field
-                      label="Mức Giảm"
-                      append="Đ"
-                      name="asv"
+                      label="Số Lượng"
+                      type="text"
+                      name="amount"
+                      validate={[requireForm]}
                       component={AInput}
                     ></Field>
                   </div>
-                </div>
-                <div className="row">
-                  <div className="wrap">
+                  <div className="col-12 pt-3">
+                    <label>Sản Phẩm Áp Dụng</label>
                     <Field
-                      label="Áp Dụng Cho"
-                      name="apdung"
-                      type="text"
-                      getReducer={GET_COLORS}
-                      stateName="colors"
-                      component={myCustomInput}
-                      formClassName="ml-2"
-                      placeholder=""
-                    />
-                  </div>
-                  <div className="wrap">
-                    <Field
-                      label="Áp dụng"
-                      name="apdung"
-                      type="text"
-                      getReducer={GET_COLORS}
-                      stateName="colors"
-                      component={myCustomInput}
-                      formClassName="ml-2"
-                      placeholder=""
-                    />
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="wrap">
-                    <Field
-                      label="Loại Chương Trình Khuyến Mãi"
-                      name="colorId"
-                      type="text"
-                      getReducer={GET_COLORS}
-                      stateName="colors"
-                      component={myCustomInput}
-                      formClassName="ml-2"
-                      placeholder="Chọn Loại Chương Trình Khuyến Mãi"
-                    />
-                  </div>
-                  <div className="wrap">
-                    <Field
-                      label="Mức Giảm"
-                      append="Đ"
-                      name="asv"
-                      component={AInput}
+                      name="saleProducts"
+                      isMulti
+                      options={shoes}
+                      validate={[requireForm]}
+                      component={AMultiSelect}
                     ></Field>
                   </div>
                 </div>
@@ -118,34 +97,30 @@ class AAddPromoteForm extends Component {
             <div className="card">
               <div className="card-body">
                 <div className="card-title">Thời Hạn Sử Dụng</div>
-                <div>
+                <div className="col-12">
                   <Field
                     label="Thời Gian Bắt Đầu"
-                    name="ngaybd"
+                    name="beginDate"
+                    minDate={new Date()}
+                    showTimeInput
+                    onChange={(e) => this.setState({ dateMin: e })}
+                    validate={[requireForm]}
                     component={ADatePicker}
                   ></Field>
                 </div>
-                <div>
+                <div className="col-12">
                   <Field
                     label="Thời Gian Kết Thúc"
-                    name="ngaybd"
+                    name="expiredDate"
+                    minDate={dateMin}
+                    showTimeInput
+                    validate={[requireForm, validDayEx]}
                     component={ADatePicker}
                   ></Field>
-                </div>
-                <div>
-                  <div>
-                    <Field
-                      name="employed"
-                      id="employed"
-                      component="input"
-                      type="checkbox"
-                    />
-                    <span>Không bao giờ hết hạn</span>
-                  </div>
                 </div>
               </div>
             </div>
-            <Button className="btn-primary block" type="button">
+            <Button className="btn-primary block" type="submit">
               Lưu
             </Button>
           </div>
@@ -163,4 +138,4 @@ AAddPromoteForm = reduxForm({
   // enableReinitialize: true,
 })(AAddPromoteForm);
 
-export default AAddPromoteForm;
+export default connect(mapStateToProps, mapDispatchToProps)(AAddPromoteForm);

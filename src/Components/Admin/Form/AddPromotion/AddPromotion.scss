@@ -1,14 +1,18 @@
 .AddPromoteForm {
+  .card-body {
+    margin-bottom: 5%;
+  }
+  padding: 0 6%;
+
   .row {
     padding: 0 2%;
+    .input__container {
+      width: 100%;
+      margin-top: 30px;
+    }
     justify-content: space-between;
   }
-  .input__container {
-    margin-top: 0px;
-  }
-  .wrap {
-    width: 49%;
-  }
+
   .btn {
     display: block;
     width: 100%;

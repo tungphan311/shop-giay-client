@@ -13,6 +13,7 @@ function AProductSelect({
   name,
   defaultValue,
   placeholder,
+  isMulti,
 }) {
   return (
     <div className={`hara__dropdown ${className}`}>
@@ -24,6 +25,7 @@ function AProductSelect({
         value={selectedOption}
         onFocus={onFocus}
         onBlur={onBlur}
+        isMulti={isMulti}
         onChange={onChange}
         isDisabled={disabled}
         placeholder={placeholder}

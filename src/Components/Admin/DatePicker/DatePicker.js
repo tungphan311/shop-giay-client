@@ -5,6 +5,7 @@ import "./DatePicker.scss";
 
 const CustomInput = React.forwardRef((props, ref) => {
   const { onClick, value, placeholder } = props;
+
   return (
     <input
       onClick={onClick}
@@ -19,7 +20,16 @@ const CustomInput = React.forwardRef((props, ref) => {
 
 class ADatePicker extends Component {
   render() {
-    const { color = "blue", meta, input, label, placeholder } = this.props;
+    const {
+      color = "blue",
+      meta,
+      input,
+      label,
+      placeholder,
+      maxDate,
+      minDate,
+      showTimeInput,
+    } = this.props;
     const { touched, error } = meta;
     const showError = touched && error;
     const { errCode } = error || {};
@@ -30,14 +40,18 @@ class ADatePicker extends Component {
         <div>
           <ReactDatePicker
             className="datePicker"
+            showTimeInput={showTimeInput}
             placeholderText={placeholder}
             customInput={<CustomInput />}
             selected={input.value}
             onChange={input.onChange}
             showMonthDropdown
             showYearDropdown
+            minDate={minDate}
+            maxDate={maxDate}
+            showDisabledMonthNavigation
             dropdownMode="select"
-            dateFormat="dd/MM/yyyy"
+            dateFormat="dd/MM/yyyy HH:mm"
           />
           <div>{showError && <span className="error">{errCode}</span>}</div>
         </div>

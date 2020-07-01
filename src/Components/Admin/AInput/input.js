@@ -32,7 +32,10 @@ const AInput = ({
           </div>
         ) : undefined}
         {showError && (
-          <span style={{ position: "absolute", color: "#f25961" }}>
+          <span
+            className="error"
+            style={{ position: "absolute", color: "#f25961", top: "38px" }}
+          >
             {errCode}
           </span>
         )}
