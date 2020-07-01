@@ -15,6 +15,7 @@ class App extends React.Component {
 
   render() {
     const { children } = this.props;
+    console.log(process.env.NODE_ENV);
     return (
       <div className="App">
         <Toastify />
