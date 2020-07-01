@@ -11,7 +11,6 @@ import history from "./state/history";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 import "react-datepicker/dist/react-datepicker.css";
-import GA from "utils/GoogleAnalytics";
 require("dotenv").config();
 
 ReactDOM.render(
@@ -20,7 +19,6 @@ ReactDOM.render(
       <Router history={history}>
         <App>
           <Switch>
-            {GA.init() && <GA.RouteTracker />}
             <Route path="/" component={Routes} />
           </Switch>
         </App>
