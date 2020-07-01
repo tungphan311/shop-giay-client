@@ -66,6 +66,7 @@
     "react-datepicker": "^3.0.0",
     "react-dev-utils": "^10.2.1",
     "react-dom": "^16.13.1",
+    "react-ga": "^3.0.0",
     "react-js-pagination": "^3.0.3",
     "react-messenger-customer-chat": "^0.7.2",
     "react-native-vector-icons": "^6.6.0",
