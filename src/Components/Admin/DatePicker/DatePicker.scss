@@ -15,6 +15,11 @@
       }
     }
   }
+  .react-datepicker-time__input {
+    input {
+      width: fit-content !important;
+    }
+  }
 
   .react-datepicker {
     font-family: "Muli", sans-serif;

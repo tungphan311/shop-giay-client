@@ -1,5 +1,6 @@
 import React from "react";
 import "./select.scss";
+import Select from "react-select";
 
 // const Option = (selectlist = {}) =>(
 //     for(int )
@@ -24,18 +25,18 @@ const ASelect = ({
     <div className={`input__container ${formClassName}`}>
       <label>{label}</label>
       <div>
-        <select
+        <Select
           {...input}
           className="select"
+          options={selectlist}
           name={selectName}
-          // onChange={onChange}
         >
-          {selectlist.map(({ value, label }) => (
+          {/* {selectlist.map(({ value, label }) => (
             <option key={value} value={value}>
               {label}
             </option>
-          ))}
-        </select>
+          ))} */}
+        </Select>
         <div>{showError && <span className="error">{errCode}</span>}</div>
       </div>
     </div>

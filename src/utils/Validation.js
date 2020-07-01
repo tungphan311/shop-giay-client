@@ -14,6 +14,9 @@ export const require = (value) =>
 export const requireForm = (value) =>
   required(value) ? undefined : buildErr("Không được bỏ trống");
 
+export const validDayEx = (value, allValues) =>
+  value < allValues.beginDate ? buildErr("Ngày không hợp lệ") : undefined;
+
 export const floatNumber = (value) =>
   /^[+]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/.test(value);
 export const validFloatNumber = (value) =>

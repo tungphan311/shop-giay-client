@@ -14,6 +14,20 @@
       width: 0;
     }
 
+    &__multi-value__remove {
+      color: rgb(0, 184, 217);
+    }
+    &__multi-value__remove:hover {
+      background-color: rgb(115, 204, 255);
+    }
+    &__multi-value {
+      margin: 2px;
+      background-color: rgba(0, 184, 217, 0.1);
+    }
+    &__multi-value__label {
+      color: rgb(0, 184, 217);
+    }
+
     &__single-value {
       font-size: 1rem;
       color: #495057;
@@ -42,10 +56,10 @@
     }
 
     &__value-container {
-      padding-left: 16.5px;
+      padding-left: 4px;
 
       & > div {
-        margin: 0;
+        margin: 2px;
       }
     }
 

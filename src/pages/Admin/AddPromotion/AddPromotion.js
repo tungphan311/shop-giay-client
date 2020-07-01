@@ -1,14 +1,18 @@
 import React, { Component } from "react";
-import ABreadcrumb from "Components/Admin/Breadcrumb/Breadcrumb";
+
+import { useDispatch } from "react-redux";
 
 import "./AddPromotion.scss";
-import { Button } from "react-bootstrap";
+
 import AAddPromoteForm from "Components/Admin/Form/AddPromotion/AddPromotion";
+import { ADD_SALE } from "state/reducers/ASaleReducer";
 
-class AAddPromotion extends Component {
-  render() {
-    return <AAddPromoteForm></AAddPromoteForm>;
-  }
+function AAddPromotion() {
+  const dispatch = useDispatch();
+  const handleSubmit = () => {
+    console.log("a");
+    dispatch({ type: ADD_SALE });
+  };
+  return <AAddPromoteForm onSubmit={handleSubmit}></AAddPromoteForm>;
 }
-
 export default AAddPromotion;
