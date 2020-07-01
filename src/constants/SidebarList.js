@@ -32,6 +32,6 @@ export const SIDEBAR_LIST = [
     id: "promotion",
     icon: "fas fa-tags",
     title: "Khuyến mãi",
-    href: ["/admin/promotion", "/admin/promotion/add"],
+    href: "/admin/promotion",
   },
 ];
