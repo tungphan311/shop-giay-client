@@ -23,7 +23,7 @@ const AInput = ({
         <input
           {...input}
           placeholder={placeholder}
-          className={`input__field ${className}`}
+          className={`input__field ${append ? "input__field-group" : ""} ${className}`}
           type={type}
         />
         {append ? (

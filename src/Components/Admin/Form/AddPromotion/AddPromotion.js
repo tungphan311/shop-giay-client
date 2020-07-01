@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { reduxForm, Field } from "redux-form";
+import { reduxForm, Field, getFormValues } from "redux-form";
 import "./AddPromotion.scss";
 import AInput from "Components/Admin/AInput/input";
 import { connect } from "react-redux";
@@ -11,6 +11,8 @@ import { requireForm, validDayEx } from "utils/Validation";
 import AMultiSelect from "Components/Admin/ProductSelect/MultiSelect";
 
 const getAllShoes = (state) => state.aShoes.shoes;
+const getType = (state) => getFormValues(FORM_KEY_ADDPROMOTE)(state)?.saleType || { label: "" }
+
 const mapDispatchToProps = (dispatch) => ({
   getShoes: () => dispatch({ type: GET_SHOES }),
 });
@@ -23,6 +25,7 @@ const mapStateToProps = (state) => {
         value: ele.Id,
         label: ele.Name,
       })),
+    type: getType(state)
   };
 };
 
@@ -34,12 +37,14 @@ class AAddPromoteForm extends Component {
       dateMin: new Date(),
     };
   }
+
   componentDidMount = () => {
     const { getShoes } = this.props;
     getShoes();
   };
+
   render() {
-    const { handleSubmit, shoes } = this.props;
+    const { handleSubmit, shoes, type } = this.props;
     const sales = [
       {
         value: 1,
@@ -50,6 +55,7 @@ class AAddPromoteForm extends Component {
         label: "VNĐ",
       },
     ];
+
     const { dateMin } = this.state;
     return (
       <form className="AddPromoteForm" onSubmit={handleSubmit}>
@@ -75,6 +81,7 @@ class AAddPromoteForm extends Component {
                       label="Số Lượng"
                       type="text"
                       name="amount"
+                      append={type.label}
                       validate={[requireForm]}
                       component={AInput}
                     ></Field>
@@ -135,7 +142,6 @@ AAddPromoteForm = reduxForm({
   destroyOnUnmount: false,
   touchOnBlur: false,
   keepDirtyOnReinitialize: true,
-  // enableReinitialize: true,
 })(AAddPromoteForm);
 
 export default connect(mapStateToProps, mapDispatchToProps)(AAddPromoteForm);

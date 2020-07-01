@@ -50,6 +50,7 @@ class ADatePicker extends Component {
             minDate={minDate}
             maxDate={maxDate}
             showDisabledMonthNavigation
+            popperPlacement="top-end"
             dropdownMode="select"
             dateFormat="dd/MM/yyyy HH:mm"
           />

@@ -175,3 +175,7 @@
     border-radius: 5px;
   }
 }
+
+.react-datepicker-popper {
+  z-index: 9999999 !important;
+}
