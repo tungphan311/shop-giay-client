@@ -6,6 +6,12 @@ import { GET_CUSTOMER_BY_ID } from "state/reducers/ACustomerReducer";
 
 const getCustomerInfo = (state) => state.aCustomer.customer;
 
+const formatMoney = (num) => {
+  let p = num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
+  p = p.slice(0, p.length - 3);
+  return p;
+};
+
 const mapStateToProps = (state) => {
   return {
     customerInfo: getCustomerInfo(state),
@@ -35,31 +41,16 @@ class ACustomerDetail extends Component {
   };
 
   render() {
+    const reducer = (accumulator, currentValue) => accumulator + currentValue;
     const { customerInfo } = this.props;
     const test = customerInfo.Addresses;
-    if (test) {
-      console.log(test[0]);
-    }
-    const reptiles = [
-      {
-        name: "Tung",
-        ma: "F120934809",
-        gia: "123,423,244 đ",
-        tg: new Date().toISOString().slice(0, 10),
-      },
-      {
-        name: "Tung",
-        ma: "F120934809",
-        gia: "123,423,244 đ",
-        tg: new Date().toISOString().slice(0, 10),
-      },
-      {
-        name: "Tung",
-        ma: "F120934809",
-        gia: "123,423,244 đ",
-        tg: new Date().toISOString().slice(0, 10),
-      },
-    ];
+    const nOrders = customerInfo.Orders ? customerInfo.Orders.length : "0";
+    const lastOrder = customerInfo.Orders
+      ? customerInfo.Orders.reverse()[0].OrderDate
+      : "Chưa đặt hàng";
+    let total = customerInfo.Orders
+      ? customerInfo.Orders.map((e) => e.Total).reduce(reducer)
+      : 0;
 
     return (
       <div className="ACustomerDetail">
@@ -74,23 +65,23 @@ class ACustomerDetail extends Component {
                 <div className="infoBody">
                   <div className="row">
                     <div className="col-6 col-md-4">
-                      <p>Đơn hàng gần nhất</p>
+                      <p>Đơn hàng gần nhất </p>
                       <p className="font-weight-bold highlight">
-                        {new Date().toISOString().slice(0, 10)}
+                        {lastOrder.slice(0, 10)}
                       </p>
                       <p className="color-gray-solid"></p>
                     </div>
                     <div className="col-6 col-md-4">
                       <p>Doanh thu tích lũy</p>
                       <p className="font-weight-bold highlight">
-                        354,343,232 đ
+                        {formatMoney(total)} VNĐ
                       </p>
-                      <p className="color-gray-solid">12 Đơn hàng</p>
+                      <p className="color-gray-solid">Số đơn hàng :{nOrders}</p>
                     </div>
                     <div className="col-6 col-md-4">
                       <p>Giá trị trung bình</p>
                       <p className="font-weight-bold highlight">
-                        354,343,232 đ
+                        {formatMoney(total / nOrders)} VNĐ
                       </p>
                     </div>
                   </div>
@@ -103,20 +94,56 @@ class ACustomerDetail extends Component {
                   <div>
                     <h4 id="h4">Đơn hàng</h4>
                     <ul className="addressList">
-                      {reptiles.map((reptile) => (
-                        <li className="addressListEle">
-                          <div className="eleWrap">
-                            <div className="col">
-                              <h5 id="h5">{reptile.name}</h5>
-                              <p>{reptile.ma}</p>
-                              <p>{reptile.gia}</p>
+                      {customerInfo.Orders.length ? (
+                        customerInfo.Orders.map((order) => (
+                          <li className="addressListEle">
+                            <div className="eleWrap">
+                              <div className="col">
+                                <h5 id="h5">{`Người nhận : ${order.RecipientName}`}</h5>
+                                <p>SĐT : {order.RecipientPhoneNumber}</p>
+                                <p>Địa chỉ nhận : {order.DeliverAddress}</p>
+                                <p>
+                                  Giá trị đơn hàng : {formatMoney(order.Total)}{" "}
+                                  Đ
+                                </p>
+                              </div>
+                              <div className="eleTime">
+                                <p>Ngày Đặt :{order.OrderDate.slice(0, 10)}</p>
+                                <p>
+                                  Ngày nhận :{" "}
+                                  {order.DeliveryDate
+                                    ? order.DeliveryDate
+                                    : "Chưa nhận hàng"}
+                                </p>
+                              </div>
                             </div>
-                            <div className="eleTime">
-                              <p>{reptile.tg}</p>
-                            </div>
+                          </li>
+                        ))
+                      ) : (
+                        <div className="box d-flex align-items-center justify-content-center min-height-500px">
+                          <div className="customer--order-empty text-center">
+                            <svg
+                              height="50px"
+                              width="50px"
+                              className="svg-next-icon mx-auto color-secondary d-block svg-next-icon-size-10"
+                            >
+                              <svg
+                                id="next-icon-order-empty"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 20 20"
+                                aria-hidden="true"
+                              >
+                                <path d="M1 13h5l1 2h6l1-2h5v6H1z"></path>
+                                <path d="M2 18v-4h3.382l.723 1.447c.17.339.516.553.895.553h6c.379 0 .725-.214.895-.553L14.618 14H18v4H2zM19 1a1 1 0 0 1 1 1v17a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h4a1 1 0 0 1 0 2H2v9h4c.379 0 .725.214.895.553L7.618 14h4.764l.723-1.447c.17-.339.516-.553.895-.553h4V3h-3a1 1 0 0 1 0-2h4zM6.293 6.707a.999.999 0 1 1 1.414-1.414L9 6.586V1a1 1 0 0 1 2 0v5.586l1.293-1.293a.999.999 0 1 1 1.414 1.414l-3 3a.997.997 0 0 1-1.414 0l-3-3z"></path>
+                              </svg>
+                            </svg>
+                            <p class="mb-0 mt-2">
+                              {" "}
+                              Khách hàng này hiện không có đơn hàng.
+                            </p>
                           </div>
-                        </li>
-                      ))}
+                        </div>
+                      )}
                     </ul>
                   </div>
                 </div>
