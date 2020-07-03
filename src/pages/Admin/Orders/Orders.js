@@ -605,7 +605,7 @@ const Order = ({
   );
 };
 
-const Timer = () => (
+export const Timer = () => (
   <svg
     className="svg-next-icon mr-2 svg-next-icon-size-14"
     width="14"

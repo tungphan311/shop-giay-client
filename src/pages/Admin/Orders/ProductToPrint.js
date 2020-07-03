@@ -103,9 +103,8 @@ class ProductToPrint extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {items.map((item, index) => (
-                    <Row key={index} {...item} />
-                  ))}
+                  {items &&
+                    items.map((item, index) => <Row key={index} {...item} />)}
                 </tbody>
               </table>
               <h3 style={{ fontSize: "14px", margin: "0 0 1em 0" }}>
