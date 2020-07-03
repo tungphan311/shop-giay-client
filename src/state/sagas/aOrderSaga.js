@@ -1,9 +1,14 @@
 import { takeEvery, put, call } from "redux-saga/effects";
-import { getOrderAction, updateOrderAction } from "state/actions/index";
+import {
+  getOrderAction,
+  updateOrderAction,
+  getOrderByIdAction,
+} from "state/actions/index";
 import { SET_LOADING } from "state/reducers/aLoadingReducer";
 import {
   getOrderService,
   updateOrderService,
+  getOrderByIdService,
 } from "services/admin/orderServices";
 import {
   resolvePromiseAction,
@@ -24,6 +29,26 @@ export function* getOrderSaga(action) {
     const res = { response, total };
 
     yield call(resolvePromiseAction, action, res);
+  } catch (err) {
+    yield call(rejectPromiseAction, action, String(err));
+  } finally {
+    yield put({ type: SET_LOADING, status: false });
+  }
+}
+
+export function* getOrderByIdSaga(action) {
+  try {
+    yield put({ type: SET_LOADING });
+
+    const { id } = action.payload;
+    const result = yield call(getOrderByIdService, {
+      id,
+    });
+
+    const responseJSON = result.data.data;
+    const response = JSON.parse(responseJSON);
+
+    yield call(resolvePromiseAction, action, response);
   } catch (err) {
     yield call(rejectPromiseAction, action, String(err));
   } finally {
@@ -67,5 +92,6 @@ export function* updateOrderSaga(action) {
 
 export default function* aOrderSaga() {
   yield takeEvery(getOrderAction, getOrderSaga);
+  yield takeEvery(getOrderByIdAction, getOrderByIdSaga);
   yield takeEvery(updateOrderAction, updateOrderSaga);
 }
