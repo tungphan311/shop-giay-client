@@ -19,9 +19,10 @@ export const cAuthReducer = (state = initState, action = {}) => {
   const newState = { ...state };
   switch (action.type) {
     case ACTION_LOGIN_SUCCESS: {
-      const { token, username } = action.payload;
+      const { data, username } = action.payload;
       newState.username = username;
-      localStorage.setItem(TOKEN_KEY, token);
+      newState.userInfo = data;
+      localStorage.setItem(TOKEN_KEY, data.authorizedToken);
       return newState;
     }
     case ACTION_LOGIN_FAIL:

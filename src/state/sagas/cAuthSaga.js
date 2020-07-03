@@ -34,17 +34,14 @@ function* Login(action) {
     });
     switch (code) {
       case "200":
-        const { token } = data.match(/^AuthorizedToken: (?<token>.*)/).groups;
         yield put({
           type: ACTION_LOGIN_SUCCESS,
           payload: {
             username: username,
-            token: token,
+            data: JSON.parse(data),
           },
         });
 
-        // get user info on login success, another solution: login api return userinfo directly
-        yield put({ type: ACTION_VERIFY_TOKEN });
         // sync if local cart is not null
         const cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
         if (cart.length > 0) {
