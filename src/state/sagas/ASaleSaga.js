@@ -5,12 +5,16 @@ import { getFormValues as getReduxFormValues } from "redux-form";
 import { FORM_KEY_ADDPROMOTE } from "state/reducers/formReducer";
 import { addSale } from "services/admin/saleServices";
 import { ADD_SALE } from "state/reducers/ASaleReducer";
+import { SET_LOADING } from "state/reducers/aLoadingReducer";
 
 export const getFormValues = (state, formName) =>
   getReduxFormValues(formName)(state);
 
 export function* addSaleSaga() {
   try {
+    yield put({ type: SET_LOADING });
+    const token = yield select((state) => state.aAuth.token);
+
     let {
       saleType,
       amount,
@@ -27,14 +31,6 @@ export function* addSaleSaga() {
     beginDate = new Date(beginDate).toISOString();
     expiredDate = new Date(expiredDate).toISOString();
 
-    console.log("a", {
-      saleType,
-      amount,
-      saleProducts,
-      beginDate,
-      expiredDate,
-    });
-
     const result = yield call(addSale, {
       saleType,
       amount,
@@ -42,12 +38,22 @@ export function* addSaleSaga() {
       beginDate,
       expiredDate,
       status: 1,
+      token,
     });
-    console.log(result);
 
     toast({ message: result.data.msg });
   } catch (err) {
-    yield toastErr(String(err));
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield toastErr("Bạn không có quyền thực hiện chức năng này");
+    } else {
+      yield toastErr(String(err));
+    }
+  } finally {
+    yield put({ type: SET_LOADING, status: false });
   }
 }
 

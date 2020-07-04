@@ -235,8 +235,6 @@ function AShoesList({ location: { search } }) {
       delete newFilter["search"];
     }
 
-    console.log(newFilter);
-
     setFilter(newFilter);
     fetchShoes(1, 10, newFilter);
   };

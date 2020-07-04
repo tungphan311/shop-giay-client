@@ -1,10 +1,10 @@
-import { takeEvery, put, call } from "redux-saga/effects";
+import { takeEvery, put, call, select } from "redux-saga/effects";
 import {
   getOrderAction,
   updateOrderAction,
   getOrderByIdAction,
 } from "state/actions/index";
-import { SET_LOADING } from "state/reducers/aLoadingReducer";
+import { SET_LOADING, SET_AUTHORIZE } from "state/reducers/aLoadingReducer";
 import {
   getOrderService,
   updateOrderService,
@@ -18,9 +18,15 @@ import {
 export function* getOrderSaga(action) {
   try {
     yield put({ type: SET_LOADING });
+    const token = yield select((state) => state.aAuth.token);
 
     const { pageSize, page } = action.payload;
-    const result = yield call(getOrderService, { pageSize, page, filter: {} });
+    const result = yield call(getOrderService, {
+      pageSize,
+      page,
+      filter: {},
+      token,
+    });
     const responseJSON = result.data.data;
     const { total } = result.data;
 
@@ -30,6 +36,14 @@ export function* getOrderSaga(action) {
 
     yield call(resolvePromiseAction, action, res);
   } catch (err) {
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield put({ type: SET_AUTHORIZE, stt: false });
+    }
+
     yield call(rejectPromiseAction, action, String(err));
   } finally {
     yield put({ type: SET_LOADING, status: false });
@@ -39,10 +53,12 @@ export function* getOrderSaga(action) {
 export function* getOrderByIdSaga(action) {
   try {
     yield put({ type: SET_LOADING });
+    const token = yield select((state) => state.aAuth.token);
 
     const { id } = action.payload;
     const result = yield call(getOrderByIdService, {
       id,
+      token,
     });
 
     const responseJSON = result.data.data;
@@ -50,6 +66,14 @@ export function* getOrderByIdSaga(action) {
 
     yield call(resolvePromiseAction, action, response);
   } catch (err) {
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield put({ type: SET_AUTHORIZE, stt: false });
+    }
+
     yield call(rejectPromiseAction, action, String(err));
   } finally {
     yield put({ type: SET_LOADING, status: false });
@@ -59,6 +83,7 @@ export function* getOrderByIdSaga(action) {
 export function* updateOrderSaga(action) {
   try {
     yield put({ type: SET_LOADING });
+    const token = yield select((state) => state.aAuth.token);
 
     const {
       id,
@@ -78,13 +103,26 @@ export function* updateOrderSaga(action) {
       cancelDate,
       confirmDate,
       note,
+      token,
     });
     const responseJSON = result.data.data;
     const response = JSON.parse(responseJSON);
 
     yield call(resolvePromiseAction, action, response);
   } catch (err) {
-    yield call(rejectPromiseAction, action, String(err));
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield call(
+        rejectPromiseAction,
+        action,
+        "Bạn không có quyền để thực hiện chức năng này"
+      );
+    } else {
+      yield call(rejectPromiseAction, action, String(err));
+    }
   } finally {
     yield put({ type: SET_LOADING, status: false });
   }

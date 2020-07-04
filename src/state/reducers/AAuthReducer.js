@@ -7,9 +7,10 @@ export const LOGIN_SUCCESS = "aAuth/LOGIN_SUCCESS";
 export const LOGOUT = "aAuth/LOGOUT";
 export const LOGOUT_SUCCESS = "aAuth/LOGOUT_SUCCESS";
 
+export const INIT_DATA = "aAuth/INIT_DATA";
+
 const initState = {
   token: null,
-  //   identity: {},
 };
 
 export function AAuthReducer(state = initState, action = {}) {
@@ -17,12 +18,23 @@ export function AAuthReducer(state = initState, action = {}) {
 
   switch (action.type) {
     case LOGIN_SUCCESS: {
-      const { token } = action.response;
+      let { token } = action.response;
+
+      newState.token = token;
+      return newState;
+    }
+
+    case INIT_DATA: {
+      let { token } = action;
+      token = token.substring(1, token.length - 1);
+
       newState.token = token;
       return newState;
     }
 
     case LOGOUT_SUCCESS:
+      return initState;
+
     default:
       return newState;
   }

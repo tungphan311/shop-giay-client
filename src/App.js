@@ -9,7 +9,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 class App extends React.Component {
-  componentDidMount = () => {
+  componentWillMount = () => {
     this.props.cInitData();
   };
 

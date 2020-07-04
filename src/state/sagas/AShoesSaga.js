@@ -49,7 +49,7 @@ import {
   resolvePromiseAction,
   rejectPromiseAction,
 } from "@adobe/redux-saga-promise";
-import { SET_LOADING } from "state/reducers/aLoadingReducer";
+import { SET_LOADING, SET_AUTHORIZE } from "state/reducers/aLoadingReducer";
 
 export const getFormValues = (state, formName) =>
   getReduxFormValues(formName)(state);
@@ -58,7 +58,9 @@ export function* getAllShoesSaga() {
   try {
     yield put({ type: SET_LOADING });
 
-    const result = yield call(getAllShoes, { page: 0, pageSize: 0 });
+    const token = yield select((state) => state.aAuth.token);
+
+    const result = yield call(getAllShoes, { page: 0, pageSize: 0, token });
     const responseJSON = result.data.data;
     const { total } = result.data;
 
@@ -68,6 +70,14 @@ export function* getAllShoesSaga() {
 
     yield toast({ message: "Lấy danh sách giày thành công" });
   } catch (err) {
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield put({ type: SET_AUTHORIZE, stt: false });
+    }
+
     yield toastErr(String(err));
   } finally {
     yield put({ type: SET_LOADING, status: false });
@@ -77,9 +87,10 @@ export function* getAllShoesSaga() {
 export function* getShoesSaga(action) {
   try {
     yield put({ type: SET_LOADING });
+    const token = yield select((state) => state.aAuth.token);
 
     const { pageSize, page, filter } = action.payload;
-    const result = yield call(getAllShoes, { pageSize, page, filter });
+    const result = yield call(getAllShoes, { pageSize, page, filter, token });
     const responseJSON = result.data.data;
     const { total } = result.data;
 
@@ -89,6 +100,14 @@ export function* getShoesSaga(action) {
 
     yield call(resolvePromiseAction, action, response);
   } catch (err) {
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield put({ type: SET_AUTHORIZE, stt: false });
+    }
+
     yield call(rejectPromiseAction, action, String(err));
   } finally {
     yield put({ type: SET_LOADING, status: false });
@@ -97,14 +116,28 @@ export function* getShoesSaga(action) {
 
 export function* deleteShoesSaga(action) {
   try {
+    const token = yield select((state) => state.aAuth.token);
+
     yield put({ type: SET_LOADING });
     const ids = action.payload;
 
-    yield call(deleteShoes, { ids });
+    yield call(deleteShoes, { ids, token });
 
     yield call(resolvePromiseAction, action);
   } catch (err) {
-    yield call(rejectPromiseAction, action, String(err));
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield call(
+        rejectPromiseAction,
+        action,
+        "Bạn không có quyền để thực hiện chức năng này"
+      );
+    } else {
+      yield call(rejectPromiseAction, action, String(err));
+    }
   } finally {
     yield put({ type: SET_LOADING, status: false });
   }
@@ -114,7 +147,9 @@ export function* getShoesByIdSaga({ id }) {
   try {
     yield put({ type: SET_LOADING });
 
-    const result = yield call(getShoesById, { id });
+    const token = yield select((state) => state.aAuth.token);
+
+    const result = yield call(getShoesById, { id, token });
     const responseJSON = result.data.data;
     const response = JSON.parse(responseJSON);
 
@@ -135,7 +170,13 @@ export function* getShoesByIdSaga({ id }) {
     }
     yield put({ type: GET_SHOES_BY_ID_SUCCESS, response, colors, sizes });
   } catch (err) {
-    yield toastErr(err);
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield put({ type: SET_AUTHORIZE, stt: false });
+    }
   } finally {
     yield put({ type: SET_LOADING, status: false });
   }
@@ -143,72 +184,114 @@ export function* getShoesByIdSaga({ id }) {
 
 export function* getProvidersSaga() {
   try {
-    const result = yield call(getProviders);
+    const token = yield select((state) => state.aAuth.token);
+
+    const result = yield call(getProviders, { token });
     const responseJSON = result.data.data;
 
     const response = JSON.parse(responseJSON);
 
     yield put({ type: GET_PROVIDERS_SUCCESS, response });
   } catch (err) {
-    yield toastErr(String(err));
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield put({ type: SET_AUTHORIZE, stt: false });
+    }
   }
 }
 
 export function* addProvidersSaga({ name }) {
   try {
-    const result = yield call(addProviders, { name });
+    const token = yield select((state) => state.aAuth.token);
+
+    const result = yield call(addProviders, { name, token });
     const responseJSON = result.data.data;
 
     const response = JSON.parse(responseJSON);
 
     yield put({ type: ADD_PROVIDERS_SUCCESS, response });
   } catch (err) {
-    yield toastErr(String(err));
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield put({ type: SET_AUTHORIZE, stt: false });
+    }
   }
 }
 
 export function* getColorsSaga() {
   try {
-    const result = yield call(getColors);
+    const token = yield select((state) => state.aAuth.token);
+
+    const result = yield call(getColors, { token });
     const responseJSON = result.data.data;
 
     const response = JSON.parse(responseJSON);
 
     yield put({ type: GET_COLORS_SUCCESS, response });
   } catch (err) {
-    yield toastErr(String(err));
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield put({ type: SET_AUTHORIZE, stt: false });
+    }
   }
 }
 
 export function* addColorSaga({ name }) {
   try {
-    const result = yield call(addColor, { name });
+    const token = yield select((state) => state.aAuth.token);
+
+    const result = yield call(addColor, { name, token });
     const responseJSON = result.data.data;
 
     const response = JSON.parse(responseJSON);
 
     yield put({ type: ADD_COLOR_SUCCESS, response });
   } catch (err) {
-    yield toastErr(String(err));
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield put({ type: SET_AUTHORIZE, stt: false });
+    }
   }
 }
 
 export function* getSizesSaga() {
   try {
-    const result = yield call(getSizes);
+    const token = yield select((state) => state.aAuth.token);
+
+    const result = yield call(getSizes, { token });
     const responseJSON = result.data.data;
 
     const response = JSON.parse(responseJSON);
 
     yield put({ type: GET_SIZES_SUCCESS, response });
   } catch (err) {
-    yield toastErr(String(err));
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield put({ type: SET_AUTHORIZE, stt: false });
+    }
   }
 }
 
 export function* addSizeSaga({ name }) {
   try {
-    const result = yield call(addSize, { name });
+    const token = yield select((state) => state.aAuth.token);
+
+    const result = yield call(addSize, { name, token });
     const responseJSON = result.data.data;
 
     const response = JSON.parse(responseJSON);
@@ -221,45 +304,72 @@ export function* addSizeSaga({ name }) {
 
 export function* getGendersSaga() {
   try {
-    const result = yield call(getGenders);
+    const token = yield select((state) => state.aAuth.token);
+
+    const result = yield call(getGenders, { token });
     const responseJSON = result.data.data;
 
     const response = JSON.parse(responseJSON);
 
     yield put({ type: GET_GENDERS_SUCCESS, response });
   } catch (err) {
-    yield toastErr(String(err));
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield put({ type: SET_AUTHORIZE, stt: false });
+    }
   }
 }
 
 export function* getShoesTypesSaga() {
   try {
-    const result = yield call(getShoesType);
+    const token = yield select((state) => state.aAuth.token);
+
+    const result = yield call(getShoesType, { token });
     const responseJSON = result.data.data;
 
     const response = JSON.parse(responseJSON);
 
     yield put({ type: GET_SHOESTYPES_SUCCESS, response });
   } catch (err) {
-    yield toastErr(String(err));
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield put({ type: SET_AUTHORIZE, stt: false });
+    }
   }
 }
 
 export function* getShoesBrandsSaga() {
   try {
-    const result = yield call(getShoesBrand);
+    const token = yield select((state) => state.aAuth.token);
+
+    const result = yield call(getShoesBrand, { token });
     const responseJSON = result.data.data;
 
     const response = JSON.parse(responseJSON);
 
     yield put({ type: GET_SHOESBRANDS_SUCCESS, response });
   } catch (err) {
-    yield toastErr(String(err));
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield put({ type: SET_AUTHORIZE, stt: false });
+    }
   }
 }
 
 export function* editShoesSaga({ id }) {
   try {
+    yield put({ type: SET_LOADING });
+    const token = yield select((state) => state.aAuth.token);
+
     let {
       name,
       code,
@@ -271,18 +381,7 @@ export function* editShoesSaga({ id }) {
       styleId,
       description,
     } = yield select((state) => getFormValues(state, FORM_KEY_ADDSHOES));
-    console.log("go", {
-      id,
-      name,
-      code,
-      price,
-      images,
-      stocks,
-      genderId,
-      brandId,
-      styleId,
-      description,
-    });
+
     brandId = brandId && brandId.value;
     genderId = genderId && genderId.value;
     styleId = styleId && styleId.value;
@@ -312,15 +411,27 @@ export function* editShoesSaga({ id }) {
       brandId,
       styleId,
       description,
+      token,
     });
     toast({ message: "Sửa thành công" });
   } catch (err) {
-    yield toastErr(String(err));
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield put({ type: SET_AUTHORIZE, stt: false });
+    }
+  } finally {
+    yield put({ type: SET_LOADING, status: false });
   }
 }
 
 export function* addShoesSaga() {
   try {
+    yield put({ type: SET_LOADING });
+    const token = yield select((state) => state.aAuth.token);
+
     let {
       name,
       code,
@@ -359,10 +470,19 @@ export function* addShoesSaga() {
       brandId,
       styleId,
       description,
+      token,
     });
     toast({ message: "Thêm thành công" });
   } catch (err) {
-    yield toastErr(String(err));
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield put({ type: SET_AUTHORIZE, stt: false });
+    }
+  } finally {
+    yield put({ type: SET_LOADING, status: false });
   }
 }
 

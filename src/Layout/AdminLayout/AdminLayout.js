@@ -2,12 +2,15 @@ import React from "react";
 import ASidebar from "Components/Admin/Sidebar/Sidebar";
 import ANavbar from "Components/Admin/Navbar/Navbar";
 import LoadingScreen from "Components/Admin/Loading/LoadingScreen";
-import { useSelector } from "react-redux";
+import { connect } from "react-redux";
+import AErrorPage from "pages/Admin/404Error/Error";
 
-function AdminLayout({ children }) {
-  // redux
-  const loading = useSelector((state) => state.aLoading.isLoading);
+const mapStateToProps = (state) => ({
+  loading: state.aLoading.isLoading,
+  isAuthorize: state.aLoading.isAuthorize,
+});
 
+function AdminLayout({ children, loading, isAuthorize }) {
   return (
     <div className="wrapper">
       <ANavbar />
@@ -16,13 +19,12 @@ function AdminLayout({ children }) {
         <div className="content">
           <div className="page-inner">
             <LoadingScreen show={loading} />
-            {children}
+            {isAuthorize ? children : <AErrorPage code={401} />}
           </div>
-          {/* <Footer /> */}
         </div>
       </div>
     </div>
   );
 }
 
-export default AdminLayout;
+export default connect(mapStateToProps, null)(AdminLayout);

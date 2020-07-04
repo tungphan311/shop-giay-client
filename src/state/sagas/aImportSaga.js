@@ -1,4 +1,4 @@
-import { takeEvery, call, put } from "redux-saga/effects";
+import { takeEvery, call, put, select } from "redux-saga/effects";
 import {
   resolvePromiseAction,
   rejectPromiseAction,
@@ -10,14 +10,28 @@ import { SET_LOADING } from "state/reducers/aLoadingReducer";
 export function* addImportSaga(action) {
   try {
     yield put({ type: SET_LOADING });
+    const token = yield select((state) => state.aAuth.token);
+
     const { providerId, details } = action.payload;
 
-    const result = yield call(addImport, { providerId, details });
+    const result = yield call(addImport, { providerId, details, token });
     const response = result.data;
 
     yield call(resolvePromiseAction, action, response.msg);
   } catch (err) {
-    yield call(rejectPromiseAction, action, String(err));
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield call(
+        rejectPromiseAction,
+        action,
+        "Bạn không có quyền thực hiện chức năng này"
+      );
+    } else {
+      yield call(rejectPromiseAction, action, String(err));
+    }
   } finally {
     yield put({ type: SET_LOADING, status: false });
   }

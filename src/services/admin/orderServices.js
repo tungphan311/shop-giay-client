@@ -1,15 +1,12 @@
 import API from "utils/Axios";
 import qs from "query-string";
 
-let token = localStorage.getItem("identity") || "";
-token = token.substring(1, token.length - 1);
-
-const config = { headers: { Authorization: `Bearer ${token}` } };
-
-export async function getOrderService({ page, pageSize, filter }) {
+export async function getOrderService({ page, pageSize, filter, token }) {
   const query = qs.stringify({ "page-size": pageSize, page });
   if (!pageSize || !page) {
-    return await API.get(`/admin/order`, config);
+    return await API.get(`/admin/order`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
   } else {
     if (filter) {
       let f = "";
@@ -17,15 +14,21 @@ export async function getOrderService({ page, pageSize, filter }) {
         f += `&${key}=${filter[key]}`;
       }
 
-      return await API.get(`/admin/order?${query}${f}`, config);
+      return await API.get(`/admin/order?${query}${f}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
     } else {
-      return await API.get(`/admin/order?${query}`, config);
+      return await API.get(`/admin/order?${query}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
     }
   }
 }
 
-export async function getOrderByIdService({ id }) {
-  return await API.get(`/admin/order/${id}`, config);
+export async function getOrderByIdService({ id, token }) {
+  return await API.get(`/admin/order/${id}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
 }
 
 export async function updateOrderService({
@@ -36,10 +39,11 @@ export async function updateOrderService({
   cancelDate,
   confirmDate,
   note,
+  token,
 }) {
   return await API.put(
     `/admin/order/${id}`,
     { id, status, deliveryDate, beginDelivery, cancelDate, confirmDate, note },
-    config
+    { headers: { Authorization: `Bearer ${token}` } }
   );
 }

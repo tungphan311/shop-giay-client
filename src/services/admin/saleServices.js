@@ -1,8 +1,4 @@
 import API from "utils/Axios";
-let token = localStorage.getItem("identity") || "";
-token = token.substring(1, token.length - 1);
-
-const config = { headers: { Authorization: `Bearer ${token}` } };
 
 export async function addSale({
   saleType,
@@ -11,6 +7,7 @@ export async function addSale({
   beginDate,
   expiredDate,
   status,
+  token,
 }) {
   return await API.post(
     `/admin/sale`,
@@ -22,15 +19,6 @@ export async function addSale({
       expiredDate,
       status,
     },
-    config
+    { headers: { Authorization: `Bearer ${token}` } }
   );
-}
-
-export async function deleteShoes({ ids }) {
-  let query = "";
-  for (let i = 0; i < ids.length; i++) {
-    query += `ids=${ids[i]}`;
-    query += i === ids.length - 1 ? "" : "&";
-  }
-  return await API.delete(`/admin/shoes?${query}`);
 }
