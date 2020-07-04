@@ -24,6 +24,10 @@ export async function getOrderService({ page, pageSize, filter }) {
   }
 }
 
+export async function getOrderByIdService({ id }) {
+  return await API.get(`/admin/order/${id}`, config);
+}
+
 export async function updateOrderService({
   id,
   status,
