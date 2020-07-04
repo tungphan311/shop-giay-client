@@ -44,7 +44,7 @@ class ACustomerDetail extends Component {
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
     const { customerInfo } = this.props;
     const test = customerInfo.Addresses;
-    const nOrders = customerInfo.Orders ? customerInfo.Orders.length : "0";
+    const nOrders = customerInfo.Orders ? customerInfo.Orders.length : 0;
     const lastOrder = customerInfo.Orders
       ? customerInfo.Orders.reverse()[0].OrderDate
       : "Chưa đặt hàng";
@@ -94,7 +94,7 @@ class ACustomerDetail extends Component {
                   <div>
                     <h4 id="h4">Đơn hàng</h4>
                     <ul className="addressList">
-                      {customerInfo.Orders.length ? (
+                      {nOrders ? (
                         customerInfo.Orders.map((order) => (
                           <li className="addressListEle">
                             <div className="eleWrap">

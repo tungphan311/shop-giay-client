@@ -13,6 +13,7 @@ import aOrderSaga from "./aOrderSaga";
 import aSaleSaga from "state/sagas/ASaleSaga";
 import aProviderSaga from "state/sagas/AProviderSaga";
 import aReportSaga from "state/sagas/AReportSaga";
+import aAccountSaga from "state/sagas/AAccount";
 
 export default function* rootSaga() {
   yield all([
@@ -30,6 +31,7 @@ export default function* rootSaga() {
     aSaleSaga(),
     aProviderSaga(),
     aReportSaga(),
+    aAccountSaga(),
   ]);
 }
 
