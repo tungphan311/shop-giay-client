@@ -47,7 +47,15 @@ export function* addSaleSaga() {
 
     toast({ message: result.data.msg });
   } catch (err) {
-    yield toastErr(String(err));
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield toastErr("Bạn không có quyền thực hiện chức năng này");
+    } else {
+      yield toastErr(String(err));
+    }
   }
 }
 

@@ -1,6 +1,6 @@
 import { takeEvery, put, call } from "redux-saga/effects";
 import { getCustomerAction, getGenderAction } from "state/actions/index";
-import { SET_LOADING } from "state/reducers/aLoadingReducer";
+import { SET_LOADING, SET_AUTHORIZE } from "state/reducers/aLoadingReducer";
 import {
   getCustomerService,
   getGender,
@@ -36,6 +36,14 @@ export function* getCustomerSaga(action) {
 
     yield call(resolvePromiseAction, action, response);
   } catch (err) {
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield put({ type: SET_AUTHORIZE, stt: false });
+    }
+
     yield call(rejectPromiseAction, action, String(err));
   } finally {
     yield put({ type: SET_LOADING, status: false });
@@ -52,6 +60,14 @@ export function* getGenderSaga(action) {
 
     yield call(resolvePromiseAction, action, response);
   } catch (err) {
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield put({ type: SET_AUTHORIZE, stt: false });
+    }
+
     yield call(rejectPromiseAction, action, String(err));
   }
 }
@@ -63,7 +79,13 @@ export function* getCustomerByIdSaga({ id }) {
     const response = JSON.parse(responseJSON);
     yield put({ type: GET_CUSTOMER_BY_ID_SUCCESS, response });
   } catch (err) {
-    yield toastErr(err);
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield put({ type: SET_AUTHORIZE, stt: false });
+    }
   }
 }
 

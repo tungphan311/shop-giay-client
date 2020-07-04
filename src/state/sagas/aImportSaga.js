@@ -17,7 +17,19 @@ export function* addImportSaga(action) {
 
     yield call(resolvePromiseAction, action, response.msg);
   } catch (err) {
-    yield call(rejectPromiseAction, action, String(err));
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield call(
+        rejectPromiseAction,
+        action,
+        "Bạn không có quyền thực hiện chức năng này"
+      );
+    } else {
+      yield call(rejectPromiseAction, action, String(err));
+    }
   } finally {
     yield put({ type: SET_LOADING, status: false });
   }

@@ -49,7 +49,7 @@ import {
   resolvePromiseAction,
   rejectPromiseAction,
 } from "@adobe/redux-saga-promise";
-import { SET_LOADING } from "state/reducers/aLoadingReducer";
+import { SET_LOADING, SET_AUTHORIZE } from "state/reducers/aLoadingReducer";
 
 export const getFormValues = (state, formName) =>
   getReduxFormValues(formName)(state);
@@ -68,6 +68,14 @@ export function* getAllShoesSaga() {
 
     yield toast({ message: "Lấy danh sách giày thành công" });
   } catch (err) {
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield put({ type: SET_AUTHORIZE, stt: false });
+    }
+
     yield toastErr(String(err));
   } finally {
     yield put({ type: SET_LOADING, status: false });
@@ -89,6 +97,14 @@ export function* getShoesSaga(action) {
 
     yield call(resolvePromiseAction, action, response);
   } catch (err) {
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield put({ type: SET_AUTHORIZE, stt: false });
+    }
+
     yield call(rejectPromiseAction, action, String(err));
   } finally {
     yield put({ type: SET_LOADING, status: false });
@@ -104,7 +120,19 @@ export function* deleteShoesSaga(action) {
 
     yield call(resolvePromiseAction, action);
   } catch (err) {
-    yield call(rejectPromiseAction, action, String(err));
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield call(
+        rejectPromiseAction,
+        action,
+        "Bạn không có quyền để thực hiện chức năng này"
+      );
+    } else {
+      yield call(rejectPromiseAction, action, String(err));
+    }
   } finally {
     yield put({ type: SET_LOADING, status: false });
   }
@@ -135,7 +163,13 @@ export function* getShoesByIdSaga({ id }) {
     }
     yield put({ type: GET_SHOES_BY_ID_SUCCESS, response, colors, sizes });
   } catch (err) {
-    yield toastErr(err);
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield put({ type: SET_AUTHORIZE, stt: false });
+    }
   } finally {
     yield put({ type: SET_LOADING, status: false });
   }
@@ -150,7 +184,13 @@ export function* getProvidersSaga() {
 
     yield put({ type: GET_PROVIDERS_SUCCESS, response });
   } catch (err) {
-    yield toastErr(String(err));
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield put({ type: SET_AUTHORIZE, stt: false });
+    }
   }
 }
 
@@ -163,7 +203,13 @@ export function* addProvidersSaga({ name }) {
 
     yield put({ type: ADD_PROVIDERS_SUCCESS, response });
   } catch (err) {
-    yield toastErr(String(err));
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield put({ type: SET_AUTHORIZE, stt: false });
+    }
   }
 }
 
@@ -176,7 +222,13 @@ export function* getColorsSaga() {
 
     yield put({ type: GET_COLORS_SUCCESS, response });
   } catch (err) {
-    yield toastErr(String(err));
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield put({ type: SET_AUTHORIZE, stt: false });
+    }
   }
 }
 
@@ -189,7 +241,13 @@ export function* addColorSaga({ name }) {
 
     yield put({ type: ADD_COLOR_SUCCESS, response });
   } catch (err) {
-    yield toastErr(String(err));
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield put({ type: SET_AUTHORIZE, stt: false });
+    }
   }
 }
 
@@ -202,7 +260,13 @@ export function* getSizesSaga() {
 
     yield put({ type: GET_SIZES_SUCCESS, response });
   } catch (err) {
-    yield toastErr(String(err));
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield put({ type: SET_AUTHORIZE, stt: false });
+    }
   }
 }
 
@@ -228,7 +292,13 @@ export function* getGendersSaga() {
 
     yield put({ type: GET_GENDERS_SUCCESS, response });
   } catch (err) {
-    yield toastErr(String(err));
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield put({ type: SET_AUTHORIZE, stt: false });
+    }
   }
 }
 
@@ -241,7 +311,13 @@ export function* getShoesTypesSaga() {
 
     yield put({ type: GET_SHOESTYPES_SUCCESS, response });
   } catch (err) {
-    yield toastErr(String(err));
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield put({ type: SET_AUTHORIZE, stt: false });
+    }
   }
 }
 
@@ -254,7 +330,13 @@ export function* getShoesBrandsSaga() {
 
     yield put({ type: GET_SHOESBRANDS_SUCCESS, response });
   } catch (err) {
-    yield toastErr(String(err));
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield put({ type: SET_AUTHORIZE, stt: false });
+    }
   }
 }
 
@@ -315,7 +397,13 @@ export function* editShoesSaga({ id }) {
     });
     toast({ message: "Sửa thành công" });
   } catch (err) {
-    yield toastErr(String(err));
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield put({ type: SET_AUTHORIZE, stt: false });
+    }
   }
 }
 
@@ -362,7 +450,13 @@ export function* addShoesSaga() {
     });
     toast({ message: "Thêm thành công" });
   } catch (err) {
-    yield toastErr(String(err));
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield put({ type: SET_AUTHORIZE, stt: false });
+    }
   }
 }
 

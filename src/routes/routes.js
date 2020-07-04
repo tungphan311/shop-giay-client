@@ -28,6 +28,7 @@ import AAddPromotion from "pages/Admin/AddPromotion/AddPromotion";
 import AOrders from "pages/Admin/Orders/Orders";
 import AOrderDetail from "pages/Admin/OrderDetail/OrderDetail";
 import AErrorPage from "pages/Admin/404Error/Error";
+import AdminRoute from "routes/AdminRoute";
 
 // component for admin site to determine user is logined or not
 export const AuthorizedRoute = ({ component: Component, isUser, ...rest }) => (
@@ -124,106 +125,108 @@ function Routes() {
           <Route exact path="/login" component={ClientLogin} />
         </EmptyLayout>
       </Route>
-      <Route
-        exact
-        path={[
-          "/admin",
-          "/admin/shoes-add",
-          "/admin/shoes",
-          "/admin/shoes-import",
-          "/admin/shoes/:id",
-          "/admin/customer/:id",
-          "/admin/customers",
-          "/admin/promotion",
-          "/admin/promotion/add",
-          "/admin/orders",
-          "/admin/orders/:id",
-          "/admin/*",
-        ]}
-      >
-        <AdminLayout>
-          <Switch>
-            <AuthorizedRoute
-              exact
-              path="/admin"
-              component={AdminHome}
-              isUser={isUser}
-            />
-            <AuthorizedRoute
-              exact
-              path="/admin/shoes-add"
-              component={AAddShoes}
-              isUser={isUser}
-            />
-            <AuthorizedRoute
-              exact
-              path="/admin/shoes"
-              component={AShoesList}
-              isUser={isUser}
-            />
-            <AuthorizedRoute
-              exact
-              path="/admin/shoes-import"
-              component={ANewImport}
-              isUser={isUser}
-            />
-            <AuthorizedRoute
-              exact
-              path="/admin/shoes/:id"
-              component={AEditShoes}
-              isUser={isUser}
-            />
-            <AuthorizedRoute
-              exact
-              path="/admin/customer/:id"
-              component={ACustomerDetail}
-              isUser={isUser}
-            />
-            <AuthorizedRoute
-              exact
-              path="/admin/customers"
-              component={ACustomer}
-              isUser={isUser}
-            />
-            <AuthorizedRoute
-              exact
-              path="/admin/promotion"
-              component={APromotion}
-              isUser={isUser}
-            />
-            <AuthorizedRoute
-              exact
-              path="/admin/promotion/add"
-              component={AAddPromotion}
-              isUser={isUser}
-            />
-            <AuthorizedRoute
-              exact
-              path="/admin/orders"
-              component={AOrders}
-              isUser={isUser}
-            />
-            <AuthorizedRoute
-              exact
-              path="/admin/orders/:id"
-              component={AOrderDetail}
-              isUser={isUser}
-            />
-            <AuthorizedRoute
-              exact
-              path="/admin/*"
-              component={() => <AErrorPage code={401} />}
-              isUser={isUser}
-            />
-          </Switch>
-        </AdminLayout>
-      </Route>
-      <Route exact path={["/admin/login", "/admin/style-guide"]}>
-        <EmptyLayout>
-          <Route exact path="/admin/login" component={AdminLogin} />
-          <Route exact path="/admin/style-guide" component={StyleGuide} />
-        </EmptyLayout>
-      </Route>
+      <AdminRoute>
+        <Route
+          exact
+          path={[
+            "/admin",
+            "/admin/shoes-add",
+            "/admin/shoes",
+            "/admin/shoes-import",
+            "/admin/shoes/:id",
+            "/admin/customer/:id",
+            "/admin/customers",
+            "/admin/promotion",
+            "/admin/promotion/add",
+            "/admin/orders",
+            "/admin/orders/:id",
+            "/admin/*",
+          ]}
+        >
+          <AdminLayout>
+            <Switch>
+              <AuthorizedRoute
+                exact
+                path="/admin"
+                component={AdminHome}
+                isUser={isUser}
+              />
+              <AuthorizedRoute
+                exact
+                path="/admin/shoes-add"
+                component={AAddShoes}
+                isUser={isUser}
+              />
+              <AuthorizedRoute
+                exact
+                path="/admin/shoes"
+                component={AShoesList}
+                isUser={isUser}
+              />
+              <AuthorizedRoute
+                exact
+                path="/admin/shoes-import"
+                component={ANewImport}
+                isUser={isUser}
+              />
+              <AuthorizedRoute
+                exact
+                path="/admin/shoes/:id"
+                component={AEditShoes}
+                isUser={isUser}
+              />
+              <AuthorizedRoute
+                exact
+                path="/admin/customer/:id"
+                component={ACustomerDetail}
+                isUser={isUser}
+              />
+              <AuthorizedRoute
+                exact
+                path="/admin/customers"
+                component={ACustomer}
+                isUser={isUser}
+              />
+              <AuthorizedRoute
+                exact
+                path="/admin/promotion"
+                component={APromotion}
+                isUser={isUser}
+              />
+              <AuthorizedRoute
+                exact
+                path="/admin/promotion/add"
+                component={AAddPromotion}
+                isUser={isUser}
+              />
+              <AuthorizedRoute
+                exact
+                path="/admin/orders"
+                component={AOrders}
+                isUser={isUser}
+              />
+              <AuthorizedRoute
+                exact
+                path="/admin/orders/:id"
+                component={AOrderDetail}
+                isUser={isUser}
+              />
+              <AuthorizedRoute
+                exact
+                path="/admin/*"
+                component={() => <AErrorPage code={401} />}
+                isUser={isUser}
+              />
+            </Switch>
+          </AdminLayout>
+        </Route>
+        <Route exact path={["/admin/login", "/admin/style-guide"]}>
+          <EmptyLayout>
+            <Route exact path="/admin/login" component={AdminLogin} />
+            <Route exact path="/admin/style-guide" component={StyleGuide} />
+          </EmptyLayout>
+        </Route>
+      </AdminRoute>
     </Switch>
   );
 }

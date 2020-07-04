@@ -11,10 +11,17 @@ function AErrorPage({ code }) {
       <section id="error">
         <div className="content">
           <i className="fas fa-exclamation-triangle"></i>
-          <h1>{code === WRONG ? "404" : "401 - Unauthorized"}</h1>
-          {code === WRONG && <p>Có lỗi xảy ra! - Đường dẫn không tồn tại</p>}
+          {code === WRONG && (
+            <>
+              <h1>404</h1>
+              <p>Có lỗi xảy ra! - Đường dẫn không tồn tại</p>
+            </>
+          )}
           {code === UNAUTHORIZED && (
-            <p>Bạn không có quyên truy cập vào chức năng này</p>
+            <>
+              <h1>401 - Unauthorize</h1>
+              <p>Bạn không có quyên truy cập vào chức năng này</p>
+            </>
           )}
           <Link className="back" to="/admin">
             Về trang chủ
