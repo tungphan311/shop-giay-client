@@ -4,7 +4,7 @@ import {
   updateOrderAction,
   getOrderByIdAction,
 } from "state/actions/index";
-import { SET_LOADING } from "state/reducers/aLoadingReducer";
+import { SET_LOADING, SET_AUTHORIZE } from "state/reducers/aLoadingReducer";
 import {
   getOrderService,
   updateOrderService,
@@ -30,6 +30,14 @@ export function* getOrderSaga(action) {
 
     yield call(resolvePromiseAction, action, res);
   } catch (err) {
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield put({ type: SET_AUTHORIZE, stt: false });
+    }
+
     yield call(rejectPromiseAction, action, String(err));
   } finally {
     yield put({ type: SET_LOADING, status: false });
@@ -50,6 +58,14 @@ export function* getOrderByIdSaga(action) {
 
     yield call(resolvePromiseAction, action, response);
   } catch (err) {
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield put({ type: SET_AUTHORIZE, stt: false });
+    }
+
     yield call(rejectPromiseAction, action, String(err));
   } finally {
     yield put({ type: SET_LOADING, status: false });
@@ -84,7 +100,19 @@ export function* updateOrderSaga(action) {
 
     yield call(resolvePromiseAction, action, response);
   } catch (err) {
-    yield call(rejectPromiseAction, action, String(err));
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield call(
+        rejectPromiseAction,
+        action,
+        "Bạn không có quyền để thực hiện chức năng này"
+      );
+    } else {
+      yield call(rejectPromiseAction, action, String(err));
+    }
   } finally {
     yield put({ type: SET_LOADING, status: false });
   }
