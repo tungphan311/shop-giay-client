@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import ABreadcrumb from "Components/Admin/Breadcrumb/Breadcrumb";
 import "./OrderDetail.scss";
 import { useDispatch } from "react-redux";
-import { getOrderByIdAction } from "state/actions/index";
+import { getOrderByIdAction, updateOrderAction } from "state/actions/index";
 import { formatDateTime } from "utils/helper";
 import { Timer } from "pages/Admin/Orders/Orders";
 import OutsideClickWrapper from "Components/Admin/OutsideClickWrapper/OutsideClickWrapper";
@@ -10,6 +10,7 @@ import { useReactToPrint } from "react-to-print";
 import ProductToPrint from "pages/Admin/Orders/ProductToPrint";
 import { Link } from "react-router-dom";
 import { Verify, Warning } from "Components/Admin/Svg/index";
+import swal from "sweetalert";
 
 const WAITING = 1;
 const CONFIRM = 2;
@@ -91,7 +92,9 @@ function AOrderDetail({
     totalPrice,
     customerId,
     customerEmail,
+    confirmDate,
     cancelDate,
+    note,
   } = order;
 
   const formatStatus = (stt) =>
@@ -154,6 +157,156 @@ function AOrderDetail({
     },
   ];
 
+  const updateOrder = (order, res) => ({
+    ...order,
+    status: res.Status,
+    deliveryDate: res.DeliveryDate,
+    beginDelivery: res.BeginDelivery,
+    cancelDate: res.CancelDate,
+    confirmDate: res.ConfirmDate,
+    note: res.Note,
+  });
+
+  const handleUpdateOrder = (
+    id,
+    status,
+    deliveryDate,
+    beginDelivery,
+    cancelDate,
+    confirmDate,
+    note,
+    confirm,
+    msg,
+    icon
+  ) => {
+    if (confirm) {
+      swal(msg, {
+        buttons: ["Trở lại", "Tiếp tục"],
+        icon,
+      }).then((cancel) => {
+        if (cancel) {
+          dispatch(
+            updateOrderAction({
+              id,
+              status,
+              deliveryDate,
+              beginDelivery,
+              cancelDate,
+              confirmDate,
+              note,
+            })
+          ).then((res) => {
+            let newOrder = { ...order };
+            newOrder = updateOrder(newOrder, res);
+            setOrder(newOrder);
+          });
+        }
+      });
+    } else {
+      dispatch(
+        updateOrderAction({
+          id,
+          status,
+          deliveryDate,
+          beginDelivery,
+          cancelDate,
+          confirmDate,
+          note,
+        })
+      ).then((res) => {
+        let newOrder = { ...order };
+        newOrder = updateOrder(newOrder, res);
+        setOrder(newOrder);
+      });
+    }
+  };
+
+  const handleDelivery = (e) => {
+    if (e.target.className.includes("disabled")) return;
+
+    const now = new Date().toISOString();
+    handleUpdateOrder(
+      parseInt(id),
+      status,
+      deliveryDate,
+      now,
+      cancelDate,
+      confirmDate,
+      note,
+      true,
+      `Xác nhận giao đơn hàng #${id}`,
+      "info"
+    );
+  };
+
+  const handleDelivered = (e) => {
+    if (e.target.className.includes("disabled")) return;
+    const now = new Date().toISOString();
+
+    handleUpdateOrder(
+      parseInt(id),
+      status,
+      now,
+      beginDelivery,
+      cancelDate,
+      confirmDate,
+      note,
+      true,
+      `Xác nhận giao thành công đơn hàng #${id}`,
+      "info"
+    );
+  };
+
+  const handleCancel = (e) => {
+    if (e.target.className.includes("disabled")) return;
+
+    const now = new Date().toISOString();
+    console.log(now);
+    handleUpdateOrder(
+      parseInt(id),
+      3,
+      deliveryDate,
+      beginDelivery,
+      now,
+      confirmDate,
+      note,
+      true,
+      "Trong trường hợp đơn hàng giả mạo, khách hàng thay đổi nhu cầu hoặc sản phẩm đã hết hàng, bạn nên huỷ đơn hàng. Huỷ bỏ đơn hàng là thao tác không thể phục hồi lại",
+      "warning"
+    );
+  };
+
+  const handleConfirm = (e) => {
+    if (e.target.className.includes("disabled")) return;
+
+    const now = new Date().toISOString();
+    handleUpdateOrder(
+      parseInt(id),
+      2,
+      deliveryDate,
+      beginDelivery,
+      cancelDate,
+      now,
+      note,
+      true,
+      `Xác nhận đơn hàng #${id}`,
+      "info"
+    );
+  };
+
+  const handleSaveNote = () => {
+    handleUpdateOrder(
+      parseInt(id),
+      status,
+      deliveryDate,
+      beginDelivery,
+      cancelDate,
+      confirmDate,
+      txtNote,
+      false
+    );
+  };
+
   return (
     <div className="order-detail--wrapper">
       <ABreadcrumb title={`Đơn hàng #${id}`} list={BREADCRUMB} />
@@ -205,7 +358,7 @@ function AOrderDetail({
                   <div className="order-detail--info--label pl-0">
                     Trạng thái giao hàng
                   </div>
-                  <div className="order-detail--info--detail">
+                  <div className="order-detail--info--detail d-flex">
                     <div className="table-break-word">
                       <span className="order-detail--info--detail-name">
                         <div className="status--component">
@@ -271,6 +424,7 @@ function AOrderDetail({
                                   : ""
                                 : "disabled"
                             }`}
+                            onClick={handleDelivery}
                           >
                             Bắt đầu giao hàng
                           </p>
@@ -284,6 +438,7 @@ function AOrderDetail({
                                   : "disabled"
                                 : "disabled"
                             }`}
+                            onClick={handleDelivered}
                           >
                             Hoàn tất giao hàng
                           </p>
@@ -291,6 +446,7 @@ function AOrderDetail({
                             className={`ellipsis-item ${
                               status < CANCEL ? "" : "disabled"
                             }`}
+                            onClick={handleCancel}
                           >
                             Huỷ đơn hàng
                           </p>
@@ -403,7 +559,10 @@ function AOrderDetail({
                           ></textarea>
                         </div>
                         <div style={{ marginBottom: "15px" }}>
-                          <button className="btn btn-primary">
+                          <button
+                            className="btn btn-primary"
+                            onClick={handleSaveNote}
+                          >
                             <span>Cập nhật</span>
                           </button>
                         </div>
@@ -435,7 +594,10 @@ function AOrderDetail({
                           <div style={{ marginBottom: "16px" }}>
                             Vui lòng xác nhận đơn hàng
                           </div>
-                          <button className="btn btn-primary w-100">
+                          <button
+                            className="btn btn-primary w-100"
+                            onClick={handleConfirm}
+                          >
                             Xác nhận đơn hàng
                           </button>
                         </>
