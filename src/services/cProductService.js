@@ -34,6 +34,24 @@ export async function cGetRelatedProducts(id) {
   const path = "client/shoes?page-size=6";
   return await API.get(path);
 }
+export async function cGetProductList(id) {
+  const path = "client/shoes?page-size=6";
+  return await API.get(path);
+}
+export async function cGetProductListByBrand(id) {
+  const path = "client/shoes?page-size=6";
+  const params = { brand: id };
+
+  if (id === "Danh sách sản phẩm") {
+    return await API.get(path);
+  }
+
+  return await API.get(path, { params });
+}
+export async function cGetBrandList() {
+  const path = "client/brands";
+  return await API.get(path);
+}
 
 export async function cRateProduct({ shoesId, rating }) {
   const path = "client/shoes/rating";

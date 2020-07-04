@@ -3,7 +3,7 @@ import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { compose } from "redux";
 import ClientHome from "../pages/Client/Home/ClientHome";
 import AdminHome from "../pages/Admin/Home/AdminHome";
-import ClientProductList from "../pages/Client/ProductList/ClientProductList";
+import ClientProductList from "pages/Client/ProductList";
 import ClientProductDetail from "pages/Client/ProductDetail";
 import AdminLogin from "../pages/Admin/Login/AdminLogin";
 import EmptyLayout from "../Layout/EmptyLayout/EmptyLayout";
@@ -104,7 +104,8 @@ class Routes extends Component {
           exact
           path={[
             "/",
-            "/products",
+            "/category",
+            "/category/:id",
             "/products/:id",
             "/cart",
             "/checkout/shipping",
@@ -115,7 +116,8 @@ class Routes extends Component {
         >
           <ClientLayout>
             <Route exact path="/" component={ClientHome} />
-            <Route exact path="/products" component={ClientProductList} />
+            <Route exact path="/category" component={ClientProductList} />
+            <Route exact path="/category/:id" component={ClientProductList} />
             <Route exact path="/products/:id" component={ClientProductDetail} />
             <Route exact path="/cart" component={ClientCart} />
             <CAuthorizedRoute
