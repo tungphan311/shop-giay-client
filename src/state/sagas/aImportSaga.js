@@ -1,4 +1,4 @@
-import { takeEvery, call, put } from "redux-saga/effects";
+import { takeEvery, call, put, select } from "redux-saga/effects";
 import {
   resolvePromiseAction,
   rejectPromiseAction,
@@ -10,9 +10,11 @@ import { SET_LOADING } from "state/reducers/aLoadingReducer";
 export function* addImportSaga(action) {
   try {
     yield put({ type: SET_LOADING });
+    const token = yield select((state) => state.aAuth.token);
+
     const { providerId, details } = action.payload;
 
-    const result = yield call(addImport, { providerId, details });
+    const result = yield call(addImport, { providerId, details, token });
     const response = result.data;
 
     yield call(resolvePromiseAction, action, response.msg);

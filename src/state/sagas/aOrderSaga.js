@@ -1,4 +1,4 @@
-import { takeEvery, put, call } from "redux-saga/effects";
+import { takeEvery, put, call, select } from "redux-saga/effects";
 import {
   getOrderAction,
   updateOrderAction,
@@ -18,9 +18,15 @@ import {
 export function* getOrderSaga(action) {
   try {
     yield put({ type: SET_LOADING });
+    const token = yield select((state) => state.aAuth.token);
 
     const { pageSize, page } = action.payload;
-    const result = yield call(getOrderService, { pageSize, page, filter: {} });
+    const result = yield call(getOrderService, {
+      pageSize,
+      page,
+      filter: {},
+      token,
+    });
     const responseJSON = result.data.data;
     const { total } = result.data;
 
@@ -47,10 +53,12 @@ export function* getOrderSaga(action) {
 export function* getOrderByIdSaga(action) {
   try {
     yield put({ type: SET_LOADING });
+    const token = yield select((state) => state.aAuth.token);
 
     const { id } = action.payload;
     const result = yield call(getOrderByIdService, {
       id,
+      token,
     });
 
     const responseJSON = result.data.data;
@@ -75,6 +83,7 @@ export function* getOrderByIdSaga(action) {
 export function* updateOrderSaga(action) {
   try {
     yield put({ type: SET_LOADING });
+    const token = yield select((state) => state.aAuth.token);
 
     const {
       id,
@@ -94,6 +103,7 @@ export function* updateOrderSaga(action) {
       cancelDate,
       confirmDate,
       note,
+      token,
     });
     const responseJSON = result.data.data;
     const response = JSON.parse(responseJSON);

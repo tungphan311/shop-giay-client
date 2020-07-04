@@ -1,19 +1,18 @@
 import API from "utils/Axios";
 import qs from "query-string";
 
-let token = localStorage.getItem("identity") || "";
-token = token.substring(1, token.length - 1);
-
-const config = { headers: { Authorization: `Bearer ${token}` } };
-
-export async function getCustomerById({ id }) {
-  return await API.get(`/admin/customer/${id}`, config);
+export async function getCustomerById({ id, token }) {
+  return await API.get(`/admin/customer/${id}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
 }
 
-export async function getCustomerService({ pageSize, page, filter }) {
+export async function getCustomerService({ pageSize, page, filter, token }) {
   const query = qs.stringify({ "page-size": pageSize, page });
   if (!pageSize || !page) {
-    return await API.get(`/admin/customer`, config);
+    return await API.get(`/admin/customer`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
   } else {
     if (filter) {
       let f = "";
@@ -21,13 +20,19 @@ export async function getCustomerService({ pageSize, page, filter }) {
         f += `&${key}=${filter[key]}`;
       }
 
-      return await API.get(`/admin/customer?${query}${f}`, config);
+      return await API.get(`/admin/customer?${query}${f}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
     } else {
-      return await API.get(`/admin/customer?${query}`, config);
+      return await API.get(`/admin/customer?${query}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
     }
   }
 }
 
-export async function getGender() {
-  return await API.get("/admin/gender", config);
+export async function getGender({ token }) {
+  return await API.get("/admin/gender", {
+    headers: { Authorization: `Bearer ${token}` },
+  });
 }

@@ -58,7 +58,9 @@ export function* getAllShoesSaga() {
   try {
     yield put({ type: SET_LOADING });
 
-    const result = yield call(getAllShoes, { page: 0, pageSize: 0 });
+    const token = yield select((state) => state.aAuth.token);
+
+    const result = yield call(getAllShoes, { page: 0, pageSize: 0, token });
     const responseJSON = result.data.data;
     const { total } = result.data;
 
@@ -86,8 +88,10 @@ export function* getShoesSaga(action) {
   try {
     yield put({ type: SET_LOADING });
 
+    const token = yield select((state) => state.aAuth.token);
+
     const { pageSize, page, filter } = action.payload;
-    const result = yield call(getAllShoes, { pageSize, page, filter });
+    const result = yield call(getAllShoes, { pageSize, page, filter, token });
     const responseJSON = result.data.data;
     const { total } = result.data;
 
@@ -113,10 +117,12 @@ export function* getShoesSaga(action) {
 
 export function* deleteShoesSaga(action) {
   try {
+    const token = yield select((state) => state.aAuth.token);
+
     yield put({ type: SET_LOADING });
     const ids = action.payload;
 
-    yield call(deleteShoes, { ids });
+    yield call(deleteShoes, { ids, token });
 
     yield call(resolvePromiseAction, action);
   } catch (err) {
@@ -142,7 +148,9 @@ export function* getShoesByIdSaga({ id }) {
   try {
     yield put({ type: SET_LOADING });
 
-    const result = yield call(getShoesById, { id });
+    const token = yield select((state) => state.aAuth.token);
+
+    const result = yield call(getShoesById, { id, token });
     const responseJSON = result.data.data;
     const response = JSON.parse(responseJSON);
 
@@ -177,7 +185,9 @@ export function* getShoesByIdSaga({ id }) {
 
 export function* getProvidersSaga() {
   try {
-    const result = yield call(getProviders);
+    const token = yield select((state) => state.aAuth.token);
+
+    const result = yield call(getProviders, { token });
     const responseJSON = result.data.data;
 
     const response = JSON.parse(responseJSON);
@@ -196,7 +206,9 @@ export function* getProvidersSaga() {
 
 export function* addProvidersSaga({ name }) {
   try {
-    const result = yield call(addProviders, { name });
+    const token = yield select((state) => state.aAuth.token);
+
+    const result = yield call(addProviders, { name, token });
     const responseJSON = result.data.data;
 
     const response = JSON.parse(responseJSON);
@@ -215,7 +227,9 @@ export function* addProvidersSaga({ name }) {
 
 export function* getColorsSaga() {
   try {
-    const result = yield call(getColors);
+    const token = yield select((state) => state.aAuth.token);
+
+    const result = yield call(getColors, { token });
     const responseJSON = result.data.data;
 
     const response = JSON.parse(responseJSON);
@@ -234,7 +248,9 @@ export function* getColorsSaga() {
 
 export function* addColorSaga({ name }) {
   try {
-    const result = yield call(addColor, { name });
+    const token = yield select((state) => state.aAuth.token);
+
+    const result = yield call(addColor, { name, token });
     const responseJSON = result.data.data;
 
     const response = JSON.parse(responseJSON);
@@ -253,7 +269,9 @@ export function* addColorSaga({ name }) {
 
 export function* getSizesSaga() {
   try {
-    const result = yield call(getSizes);
+    const token = yield select((state) => state.aAuth.token);
+
+    const result = yield call(getSizes, { token });
     const responseJSON = result.data.data;
 
     const response = JSON.parse(responseJSON);
@@ -272,7 +290,9 @@ export function* getSizesSaga() {
 
 export function* addSizeSaga({ name }) {
   try {
-    const result = yield call(addSize, { name });
+    const token = yield select((state) => state.aAuth.token);
+
+    const result = yield call(addSize, { name, token });
     const responseJSON = result.data.data;
 
     const response = JSON.parse(responseJSON);
@@ -285,7 +305,9 @@ export function* addSizeSaga({ name }) {
 
 export function* getGendersSaga() {
   try {
-    const result = yield call(getGenders);
+    const token = yield select((state) => state.aAuth.token);
+
+    const result = yield call(getGenders, { token });
     const responseJSON = result.data.data;
 
     const response = JSON.parse(responseJSON);
@@ -304,7 +326,9 @@ export function* getGendersSaga() {
 
 export function* getShoesTypesSaga() {
   try {
-    const result = yield call(getShoesType);
+    const token = yield select((state) => state.aAuth.token);
+
+    const result = yield call(getShoesType, { token });
     const responseJSON = result.data.data;
 
     const response = JSON.parse(responseJSON);
@@ -323,7 +347,9 @@ export function* getShoesTypesSaga() {
 
 export function* getShoesBrandsSaga() {
   try {
-    const result = yield call(getShoesBrand);
+    const token = yield select((state) => state.aAuth.token);
+
+    const result = yield call(getShoesBrand, { token });
     const responseJSON = result.data.data;
 
     const response = JSON.parse(responseJSON);
@@ -342,6 +368,8 @@ export function* getShoesBrandsSaga() {
 
 export function* editShoesSaga({ id }) {
   try {
+    const token = yield select((state) => state.aAuth.token);
+
     let {
       name,
       code,
@@ -394,6 +422,7 @@ export function* editShoesSaga({ id }) {
       brandId,
       styleId,
       description,
+      token,
     });
     toast({ message: "Sửa thành công" });
   } catch (err) {
@@ -409,6 +438,8 @@ export function* editShoesSaga({ id }) {
 
 export function* addShoesSaga() {
   try {
+    const token = yield select((state) => state.aAuth.token);
+
     let {
       name,
       code,
@@ -447,6 +478,7 @@ export function* addShoesSaga() {
       brandId,
       styleId,
       description,
+      token,
     });
     toast({ message: "Thêm thành công" });
   } catch (err) {
