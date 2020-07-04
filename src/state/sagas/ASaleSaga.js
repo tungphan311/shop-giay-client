@@ -27,14 +27,6 @@ export function* addSaleSaga() {
     beginDate = new Date(beginDate).toISOString();
     expiredDate = new Date(expiredDate).toISOString();
 
-    console.log("a", {
-      saleType,
-      amount,
-      saleProducts,
-      beginDate,
-      expiredDate,
-    });
-
     const result = yield call(addSale, {
       saleType,
       amount,
