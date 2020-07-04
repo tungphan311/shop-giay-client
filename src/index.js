@@ -11,15 +11,7 @@ import history from "./state/history";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 import "react-datepicker/dist/react-datepicker.css";
-import ReactGA from "react-ga";
 require("dotenv").config();
-
-ReactGA.initialize("UA-171400327-1");
-
-history.listen((location) => {
-  ReactGA.set({ page: location.pathname });
-  ReactGA.pageview(location.pathname);
-});
 
 ReactDOM.render(
   <React.StrictMode>
