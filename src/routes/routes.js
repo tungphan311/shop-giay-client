@@ -1,5 +1,6 @@
-import React from "react";
-import { Switch, Route, Redirect, BrowserRouter } from "react-router-dom";
+import React, { Component } from "react";
+import { Switch, Route, Redirect, withRouter } from "react-router-dom";
+import { compose } from "redux";
 import ClientHome from "../pages/Client/Home/ClientHome";
 import AdminHome from "../pages/Admin/Home/AdminHome";
 import ClientProductList from "../pages/Client/ProductList/ClientProductList";
@@ -28,7 +29,8 @@ import AAddPromotion from "pages/Admin/AddPromotion/AddPromotion";
 import AOrders from "pages/Admin/Orders/Orders";
 import AOrderDetail from "pages/Admin/OrderDetail/OrderDetail";
 import AErrorPage from "pages/Admin/404Error/Error";
-import AdminRoute from "routes/AdminRoute";
+import { SET_AUTHORIZE } from "state/reducers/aLoadingReducer";
+import { connect } from "react-redux";
 
 // component for admin site to determine user is logined or not
 export const AuthorizedRoute = ({ component: Component, isUser, ...rest }) => (
@@ -69,63 +71,84 @@ export const CAuthorizedRoute = ({
   />
 );
 
-function Routes() {
-  const isUser = getItemFromStorage("identity");
+const mapDispatchToProps = (dispatch) => ({
+  resetAuthorize: () => dispatch({ type: SET_AUTHORIZE }),
+});
 
-  const isCustomer = getItemFromStorage(TOKEN_KEY);
+class Routes extends Component {
+  componentWillMount = () => {
+    this.unlisten = this.props.history.listen(() => {
+      this.props.resetAuthorize();
+    });
+  };
 
-  return (
-    <Switch>
-      <Route
-        exact
-        path={[
-          "/",
-          "/products",
-          "/products/:id",
-          "/cart",
-          "/checkout/shipping",
-          "/checkout/payment",
-          "/order",
-          "/order/:id",
-        ]}
-      >
-        <ClientLayout>
-          <Route exact path="/" component={ClientHome} />
-          <Route exact path="/products" component={ClientProductList} />
-          <Route exact path="/products/:id" component={ClientProductDetail} />
-          <Route exact path="/cart" component={ClientCart} />
-          <CAuthorizedRoute
-            exact
-            path="/checkout/shipping"
-            component={ClientShipping}
-            isCustomer={isCustomer}
-          />
-          <CAuthorizedRoute
-            exact
-            path="/checkout/payment"
-            component={ClientPayment}
-            isCustomer={isCustomer}
-          />
-          <CAuthorizedRoute
-            exact
-            path="/order"
-            component={ClientOrder}
-            isCustomer={isCustomer}
-          />
-          <CAuthorizedRoute
-            exact
-            path="/order/:id"
-            component={ClientOrderDetail}
-            isCustomer={isCustomer}
-          />
-        </ClientLayout>
-      </Route>
-      <Route exact path={["/login"]}>
-        <EmptyLayout>
-          <Route exact path="/login" component={ClientLogin} />
-        </EmptyLayout>
-      </Route>
-      <AdminRoute>
+  componentWillUnmount = () => {
+    this.unlisten();
+  };
+
+  render() {
+    const isUser = getItemFromStorage("identity");
+
+    const isCustomer = getItemFromStorage(TOKEN_KEY);
+
+    return (
+      <Switch>
+        <Route
+          exact
+          path={[
+            "/",
+            "/products",
+            "/products/:id",
+            "/cart",
+            "/checkout/shipping",
+            "/checkout/payment",
+            "/order",
+            "/order/:id",
+          ]}
+        >
+          <ClientLayout>
+            <Route exact path="/" component={ClientHome} />
+            <Route exact path="/products" component={ClientProductList} />
+            <Route exact path="/products/:id" component={ClientProductDetail} />
+            <Route exact path="/cart" component={ClientCart} />
+            <CAuthorizedRoute
+              exact
+              path="/checkout/shipping"
+              component={ClientShipping}
+              isCustomer={isCustomer}
+            />
+            <CAuthorizedRoute
+              exact
+              path="/checkout/payment"
+              component={ClientPayment}
+              isCustomer={isCustomer}
+            />
+            <CAuthorizedRoute
+              exact
+              path="/order"
+              component={ClientOrder}
+              isCustomer={isCustomer}
+            />
+            <CAuthorizedRoute
+              exact
+              path="/order/:id"
+              component={ClientOrderDetail}
+              isCustomer={isCustomer}
+            />
+          </ClientLayout>
+        </Route>
+        <Route exact path={["/login"]}>
+          <EmptyLayout>
+            <Route exact path="/login" component={ClientLogin} />
+          </EmptyLayout>
+        </Route>
+        {/* <AdminRoute> */}
+        <Route exact path={["/admin/login", "/admin/style-guide"]}>
+          <EmptyLayout>
+            <Route exact path="/admin/login" component={AdminLogin} />
+            <Route exact path="/admin/style-guide" component={StyleGuide} />
+          </EmptyLayout>
+        </Route>
         <Route
           exact
           path={[
@@ -220,15 +243,10 @@ function Routes() {
             </Switch>
           </AdminLayout>
         </Route>
-        <Route exact path={["/admin/login", "/admin/style-guide"]}>
-          <EmptyLayout>
-            <Route exact path="/admin/login" component={AdminLogin} />
-            <Route exact path="/admin/style-guide" component={StyleGuide} />
-          </EmptyLayout>
-        </Route>
-      </AdminRoute>
-    </Switch>
-  );
+        {/* </AdminRoute> */}
+      </Switch>
+    );
+  }
 }
 
-export default Routes;
+export default compose(withRouter, connect(null, mapDispatchToProps))(Routes);

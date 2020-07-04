@@ -21,7 +21,6 @@ function AdminLayout({ children, loading, isAuthorize }) {
             <LoadingScreen show={loading} />
             {isAuthorize ? children : <AErrorPage code={401} />}
           </div>
-          {/* <Footer /> */}
         </div>
       </div>
     </div>
