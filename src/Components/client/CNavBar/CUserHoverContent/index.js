@@ -29,7 +29,15 @@ const NotLoggedInUserHoverContent = () => (
     <div className="userhovercontent__row">
       {" "}
       <div className="userhovercontent__title">ĐÃ CÓ TÀI KHOẢN?</div>
-      <CButton href="/login" label="ĐĂNG NHẬP NGAY" />
+      <CButton
+        href="/login"
+        label="ĐĂNG NHẬP NGAY"
+        event={{
+          category: "LOGIN",
+          action: "User click button to the login page",
+          label: "LOGIN-PAGE",
+        }}
+      />
     </div>
     <div className="userhovercontent__divider" />
     <div className="userhovercontent__row">
