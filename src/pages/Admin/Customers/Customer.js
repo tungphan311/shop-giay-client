@@ -29,7 +29,6 @@ function ACustomer({ location: { search } }) {
   const totalRows = useSelector((state) => state.aCustomer.totalRows) || 0;
 
   const mapResponseToData = (res) => {
-    console.log(res);
     return res.map((s) => ({
       id: s.Id,
       name: s.Name,

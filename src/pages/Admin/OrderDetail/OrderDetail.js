@@ -261,7 +261,6 @@ function AOrderDetail({
     if (e.target.className.includes("disabled")) return;
 
     const now = new Date().toISOString();
-    console.log(now);
     handleUpdateOrder(
       parseInt(id),
       3,

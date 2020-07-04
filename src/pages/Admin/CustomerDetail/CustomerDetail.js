@@ -37,9 +37,7 @@ class ACustomerDetail extends Component {
   render() {
     const { customerInfo } = this.props;
     const test = customerInfo.Addresses;
-    if (test) {
-      console.log(test[0]);
-    }
+
     const reptiles = [
       {
         name: "Tung",

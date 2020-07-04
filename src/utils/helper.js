@@ -49,7 +49,6 @@ export const convertArrayOfObjectsToCSV = (array) => {
   result += lineDelimiter;
 
   array.forEach((item) => {
-    console.log(item);
     let ctr = 0;
     keys.forEach((key) => {
       if (ctr > 0) result += columnDelimiter;

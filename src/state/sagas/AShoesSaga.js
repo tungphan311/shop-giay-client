@@ -87,7 +87,6 @@ export function* getAllShoesSaga() {
 export function* getShoesSaga(action) {
   try {
     yield put({ type: SET_LOADING });
-
     const token = yield select((state) => state.aAuth.token);
 
     const { pageSize, page, filter } = action.payload;
@@ -368,6 +367,7 @@ export function* getShoesBrandsSaga() {
 
 export function* editShoesSaga({ id }) {
   try {
+    yield put({ type: SET_LOADING });
     const token = yield select((state) => state.aAuth.token);
 
     let {
@@ -381,18 +381,7 @@ export function* editShoesSaga({ id }) {
       styleId,
       description,
     } = yield select((state) => getFormValues(state, FORM_KEY_ADDSHOES));
-    console.log("go", {
-      id,
-      name,
-      code,
-      price,
-      images,
-      stocks,
-      genderId,
-      brandId,
-      styleId,
-      description,
-    });
+
     brandId = brandId && brandId.value;
     genderId = genderId && genderId.value;
     styleId = styleId && styleId.value;
@@ -433,11 +422,14 @@ export function* editShoesSaga({ id }) {
     if (status === 401) {
       yield put({ type: SET_AUTHORIZE, stt: false });
     }
+  } finally {
+    yield put({ type: SET_LOADING, status: false });
   }
 }
 
 export function* addShoesSaga() {
   try {
+    yield put({ type: SET_LOADING });
     const token = yield select((state) => state.aAuth.token);
 
     let {
@@ -489,6 +481,8 @@ export function* addShoesSaga() {
     if (status === 401) {
       yield put({ type: SET_AUTHORIZE, stt: false });
     }
+  } finally {
+    yield put({ type: SET_LOADING, status: false });
   }
 }
 
