@@ -38,12 +38,11 @@ export async function cGetProductList(id) {
   const path = "client/shoes?page-size=6";
   return await API.get(path);
 }
-export async function cGetProductListByBrand(id) {
-  const path = "client/shoes?page-size=6";
-  const params = { brand: id };
-
+export async function cGetProductListByBrand(id, pageNumber, pageSize) {
+  const path = `client/shoes?page-size=${pageSize}`;
+  let params = { brand: id, page: pageNumber };
   if (id === "Danh sách sản phẩm") {
-    return await API.get(path);
+    params = { page: pageNumber };
   }
 
   return await API.get(path, { params });

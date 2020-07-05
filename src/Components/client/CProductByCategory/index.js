@@ -1,33 +1,40 @@
 import React, { useState, useEffect } from "react";
-import CProductSection from "Components/client/CProductSection";
+import CLoadingIndicator from "Components/client/CLoadingIndicator";
+import CItemCard from "Components/client/CItemCard";
 
 import { cGetProductListByBrand } from "services/cProductService";
 import CMenuBar from "Components/client/CMenuBar/index";
 import "./ProductByCategory.scss";
+import CPagination from "Components/client/CPagination/index";
 
 const intialCategories = [
   {
     label: "Danh sách sản phẩm",
     products: [],
+    total: null,
+    per_page: null,
+    current_page: null,
   },
 ];
 
-const CProductByCategory = (id) => {
+const CProductByCategory = ({ id, pageNumber }) => {
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [categories, setCategories] = useState(intialCategories);
-
-  if (id.id === undefined) {
+  if (id === undefined) {
     id = "Danh sách sản phẩm";
-  } else {
-    id = id.id;
   }
-
-  console.log(id.id);
   const [label, setLabel] = useState(id);
+  const [total, setTotal] = useState(0);
+  const [per_page, setPerPage] = useState(0);
+  const [current_page, setCurrentPage] = useState(pageNumber);
 
+  const Content = () =>
+    categories[selectedCategory].products.map((item, index) => (
+      <CItemCard key={index} {...item}></CItemCard>
+    ));
   useEffect(() => {
-    const list = cGetProductListByBrand(id).then((res) =>
+    const list = cGetProductListByBrand(id, pageNumber, 6).then((res) =>
       JSON.parse(res.data.data)
     );
 
@@ -47,12 +54,17 @@ const CProductByCategory = (id) => {
           });
           let newState = [...prev];
           newState[0].products = listProducts.map(mapData);
-          newState[0].label = id;
+          setLabel(id);
+          setCurrentPage(pageNumber);
+          setPerPage(3);
+          setTotal(11);
+          //todo: waiting for backend
+
           return newState;
         }, setIsLoading(false));
       })
       .catch((error) => console.log(error));
-  }, [id]);
+  }, [current_page, id, pageNumber]);
 
   return (
     <>
@@ -60,14 +72,49 @@ const CProductByCategory = (id) => {
         <CMenuBar />
 
         <div className="page-content-wrapper">
-          <CProductSection
-            label={label}
-            isLoading={isLoading}
-            categories={categories}
-            selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
-            className="newArrivalSection"
-          />
+          <section className={`homeSection`}>
+            {label ? (
+              <div
+                className={`homeSection__header ${
+                  categories.length === 1 && "homeSection__header_only"
+                }`}
+              >
+                <div className="homeSection__header_title">{label}</div>
+                {categories.length > 1 && (
+                  <div className="homeSection__header_category">
+                    <ul>
+                      {categories.map((cat, catIndex) => (
+                        <li
+                          key={cat.label}
+                          onClick={() =>
+                            setSelectedCategory && setSelectedCategory(catIndex)
+                          }
+                          className={`${
+                            selectedCategory === catIndex ? "active" : ""
+                          }`}
+                        >
+                          {cat.label}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            ) : (
+              ""
+            )}
+            <div className="content">
+              <CPagination
+                total={total}
+                per_page={per_page}
+                current_page={current_page}
+              ></CPagination>
+
+              <div className="item-wrapper">
+                {!isLoading ? <Content /> : <CLoadingIndicator />}
+              </div>
+            </div>
+          </section>
         </div>
       </div>
     </>
