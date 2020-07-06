@@ -177,7 +177,7 @@ function AShoesList({ location: { search } }) {
         <i className="fa fa-trash" />
       </button>
     );
-  }, [data, dispatch, selectedRows, toggleCleared]);
+  }, [data, selectedRows, toggleCleared]);
 
   const handlePageChange = (page) => {
     const search = qs.stringify({ page, "page-size": perPage });
