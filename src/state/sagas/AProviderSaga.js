@@ -3,12 +3,16 @@ import {
   getProviderServices,
   deleteProviderService,
   addProviderService,
+  getProviderByIdServices,
+  updateProviderService,
 } from "services/admin/providerServices";
 import { SET_LOADING, SET_AUTHORIZE } from "state/reducers/aLoadingReducer";
 import {
   getProviderAction,
   deleteProviderAction,
   addProviderAction,
+  getProviderByIdAction,
+  updateProviderAction,
 } from "state/actions/index";
 import {
   resolvePromiseAction,
@@ -110,6 +114,72 @@ export function* addProviderSaga(action) {
 
     if (status === 401) {
       yield put({ type: SET_AUTHORIZE, stt: false });
+    } else {
+      yield call(rejectPromiseAction, action, String(err));
+    }
+  } finally {
+    yield put({ type: SET_LOADING, status: false });
+  }
+}
+
+export function* updateProviderSaga(action) {
+  try {
+    yield put({ type: SET_LOADING });
+
+    const token = yield select((state) => state.aAuth.token);
+    const { id } = action.payload;
+
+    const { name, email, address, phoneNumber, TIN } = yield select((state) =>
+      getFormValues(FORM_KEY_ADD_PROVIDER)(state)
+    );
+
+    yield call(updateProviderService, {
+      id,
+      name,
+      email,
+      address,
+      phoneNumber,
+      TIN,
+      token,
+    });
+
+    yield call(resolvePromiseAction, action);
+  } catch (err) {
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield put({ type: SET_AUTHORIZE, stt: false });
+    } else {
+      yield call(rejectPromiseAction, action, String(err));
+    }
+  } finally {
+    yield put({ type: SET_LOADING, status: false });
+  }
+}
+
+export function* getProviderByIdSaga(action) {
+  try {
+    yield put({ type: SET_LOADING });
+
+    const token = yield select((state) => state.aAuth.token);
+    const { id } = action.payload;
+
+    const result = yield call(getProviderByIdServices, { id, token });
+    const responseJSON = result.data.data;
+    const response = JSON.parse(responseJSON);
+
+    yield call(resolvePromiseAction, action, response);
+  } catch (err) {
+    const {
+      response: { status },
+    } = err;
+
+    if (status === 401) {
+      yield put({ type: SET_AUTHORIZE, stt: false });
+    } else {
+      yield call(rejectPromiseAction, action, String(err));
     }
   } finally {
     yield put({ type: SET_LOADING, status: false });
@@ -120,4 +190,6 @@ export default function* aProviderSaga() {
   yield takeEvery(getProviderAction, getCustomerSaga);
   yield takeEvery(deleteProviderAction, deleteProviderSaga);
   yield takeEvery(addProviderAction, addProviderSaga);
+  yield takeEvery(getProviderByIdAction, getProviderByIdSaga);
+  yield takeEvery(updateProviderAction, updateProviderSaga);
 }

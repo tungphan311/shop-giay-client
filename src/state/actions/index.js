@@ -22,4 +22,8 @@ export const deleteProviderAction = createPromiseAction("DELETE_PROVIDER");
 
 export const addProviderAction = createPromiseAction("ADD_PROVIDER");
 
+export const updateProviderAction = createPromiseAction("UPDATE_PROVIDER");
+
+export const getProviderByIdAction = createPromiseAction("GET_PROVIDER_BY_ID");
+
 export * from "./client/orderAction";
