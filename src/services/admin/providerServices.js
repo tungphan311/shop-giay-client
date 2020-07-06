@@ -14,6 +14,12 @@ export async function getProviderServices({ pageSize, page, token }) {
   }
 }
 
+export async function getProviderByIdServices({ id, token }) {
+  return await API.get(`/admin/provider/${id}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+}
+
 export async function deleteProviderService({ ids, token }) {
   let query = "";
   for (let i = 0; i < ids.length; i++) {
@@ -35,6 +41,24 @@ export async function addProviderService({
 }) {
   return await API.post(
     "/admin/provider",
+    { name, email, address, phoneNumber, TIN },
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+}
+
+export async function updateProviderService({
+  id,
+  name,
+  email,
+  address,
+  phoneNumber,
+  TIN,
+  token,
+}) {
+  return await API.put(
+    `/admin/provider/${id}`,
     { name, email, address, phoneNumber, TIN },
     {
       headers: { Authorization: `Bearer ${token}` },
