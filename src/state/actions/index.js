@@ -19,3 +19,5 @@ export const updateOrderAction = createPromiseAction("UPDATE_ORDER");
 export const getProviderAction = createPromiseAction("GET_PROVIDER");
 
 export const deleteProviderAction = createPromiseAction("DELETE_PROVIDER");
+
+export const addProviderAction = createPromiseAction("ADD_PROVIDER");

@@ -24,3 +24,20 @@ export async function deleteProviderService({ ids, token }) {
     headers: { Authorization: `Bearer ${token}` },
   });
 }
+
+export async function addProviderService({
+  name,
+  email,
+  address,
+  phoneNumber,
+  TIN,
+  token,
+}) {
+  return await API.post(
+    "/admin/provider",
+    { name, email, address, phoneNumber, TIN },
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+}
