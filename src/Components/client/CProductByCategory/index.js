@@ -18,6 +18,9 @@ const intialCategories = [
 ];
 
 const CProductByCategory = ({ id, pageNumber }) => {
+  if (pageNumber === undefined) {
+    pageNumber = 1;
+  }
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [categories, setCategories] = useState(intialCategories);
@@ -27,15 +30,18 @@ const CProductByCategory = ({ id, pageNumber }) => {
   const [label, setLabel] = useState(id);
   const [total, setTotal] = useState(0);
   const [per_page, setPerPage] = useState(0);
-  const [current_page, setCurrentPage] = useState(pageNumber);
+  const [current_page, setCurrentPage] = useState(pageNumber - 1);
 
   const Content = () =>
     categories[selectedCategory].products.map((item, index) => (
       <CItemCard key={index} {...item}></CItemCard>
     ));
   useEffect(() => {
-    const list = cGetProductListByBrand(id, pageNumber, 6).then((res) =>
+    const list = cGetProductListByBrand(id, pageNumber - 1, 3).then((res) =>
       JSON.parse(res.data.data)
+    );
+    const total = cGetProductListByBrand(id, pageNumber - 1, 3).then((res) =>
+      JSON.parse(res.data.totalRecords)
     );
 
     Promise.all([list])
@@ -57,13 +63,16 @@ const CProductByCategory = ({ id, pageNumber }) => {
           setLabel(id);
           setCurrentPage(pageNumber);
           setPerPage(3);
-          setTotal(11);
-          //todo: waiting for backend
 
           return newState;
         }, setIsLoading(false));
       })
+
       .catch((error) => console.log(error));
+
+    Promise.all([total]).then(([totalRecords]) => {
+      setTotal(totalRecords);
+    });
   }, [current_page, id, pageNumber]);
 
   return (
@@ -105,6 +114,7 @@ const CProductByCategory = ({ id, pageNumber }) => {
             )}
             <div className="content">
               <CPagination
+                category={label}
                 total={total}
                 per_page={per_page}
                 current_page={current_page}
