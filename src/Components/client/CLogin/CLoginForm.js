@@ -1,8 +1,9 @@
-import { reduxForm, Field } from "redux-form";
+import { reduxForm, Field, isDirty } from "redux-form";
 import React from "react";
 import CButton from "Components/client/CButton";
 import CInput from "../CInput";
 import { require } from "utils/index";
+import { connect } from "react-redux";
 
 export const LOGIN_FORM_KEY = "FORM/LOGIN";
 
@@ -39,6 +40,12 @@ function CLoginForm({ handleSubmit }) {
   );
 }
 
-export default reduxForm({
+CLoginForm = reduxForm({
   form: LOGIN_FORM_KEY,
 })(CLoginForm);
+
+CLoginForm = connect((state) => ({
+  shouldValidate: () => isDirty(LOGIN_FORM_KEY)(state),
+}))(CLoginForm);
+
+export default CLoginForm;

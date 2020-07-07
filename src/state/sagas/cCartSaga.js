@@ -58,51 +58,49 @@ function* addProductToCart(action) {
 }
 
 function* getCartItems(action) {
-  const token = localStorage.getItem(TOKEN_KEY);
+  try {
+    const token = localStorage.getItem(TOKEN_KEY);
 
-  if (!token) {
-    const cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
-    const shoesList = (yield Promise.all(
-      cart.map((item) => cGetProductDetail(item.shoesId))
-    )).map((x) => JSON.parse(x.data.data));
-    yield put({
-      type: ACTION_GET_CART_ITEMS_SUCCESS,
-      payload: {
-        data: cart.map((cartItem) => {
-          const shoes = shoesList.find((x) => x.shoesId === cartItem.id);
-          return {
-            shoesId: cartItem.shoesId,
-            name: shoes.name,
-            stockId: cartItem.stockId,
-            sizeName: shoes.sizes.find((x) => x.stockId === cartItem.stockId)
-              ?.sizeName,
-            quantity: cartItem.quantity,
-            price: shoes.price,
-            image: shoes.images[0],
-          };
-        }),
-      },
-    });
-
-    return;
-  }
-
-  const {
-    data: { code, data },
-  } = yield call(cGetCartItems);
-
-  switch (code) {
-    case "OK":
+    if (!token) {
+      const cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+      const shoesList = (yield Promise.all(
+        cart.map((item) => cGetProductDetail(item.shoesId))
+      )).map((x) => JSON.parse(x.data.data));
       yield put({
         type: ACTION_GET_CART_ITEMS_SUCCESS,
-        payload: { data: JSON.parse(data) },
+        payload: {
+          data: cart.map((cartItem) => {
+            const shoes = shoesList.find((x) => x.shoesId === cartItem.id);
+            return {
+              shoesId: cartItem.shoesId,
+              name: shoes.name,
+              stockId: cartItem.stockId,
+              sizeName: shoes.sizes.find((x) => x.stockId === cartItem.stockId)
+                ?.sizeName,
+              quantity: cartItem.quantity,
+              price: shoes.price,
+              image: shoes.images[0],
+            };
+          }),
+        },
       });
-      break;
-    default:
-      yield put({ type: ACTION_GET_CART_ITEMS_FAIL });
-      yield put({ type: ACTION_FORCE_LOGOUT });
-      history.push("/login");
-      toastErr("Vui lòng đăng nhập");
+
+      return;
+    }
+
+    const {
+      data: { code, data },
+    } = yield call(cGetCartItems);
+
+    yield put({
+      type: ACTION_GET_CART_ITEMS_SUCCESS,
+      payload: { data: JSON.parse(data) },
+    });
+  } catch (error) {
+    yield put({ type: ACTION_GET_CART_ITEMS_FAIL });
+    yield put({ type: ACTION_FORCE_LOGOUT });
+    history.push("/login");
+    toastErr("Vui lòng đăng nhập");
   }
 }
 

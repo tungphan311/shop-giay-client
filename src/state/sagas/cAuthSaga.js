@@ -111,24 +111,23 @@ function* Logout(action) {
 }
 
 function* VerifyToken() {
-  const token = localStorage.getItem(TOKEN_KEY);
+  try {
+    const token = localStorage.getItem(TOKEN_KEY);
 
-  if (!token) return;
+    if (!token) return;
 
-  const {
-    data: { code, data },
-  } = yield call(cVerifyToken, token);
-  switch (code) {
-    case "OK":
-      yield put({
-        type: ACTION_VERIFY_TOKEN_SUCCESS,
-        payload: { token, userInfo: JSON.parse(data) },
-      });
-      break;
-    default:
-      yield put({
-        type: ACTION_VERIFY_TOKEN_FAIl,
-      });
+    const {
+      data: { data },
+    } = yield call(cVerifyToken, token);
+
+    yield put({
+      type: ACTION_VERIFY_TOKEN_SUCCESS,
+      payload: { token, userInfo: JSON.parse(data) },
+    });
+  } catch (error) {
+    yield put({
+      type: ACTION_VERIFY_TOKEN_FAIl,
+    });
   }
 }
 

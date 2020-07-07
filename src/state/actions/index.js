@@ -15,3 +15,5 @@ export const getOrderAction = createPromiseAction("GET_ORDER");
 export const getOrderByIdAction = createPromiseAction("GET_ORDER_BY_ID");
 
 export const updateOrderAction = createPromiseAction("UPDATE_ORDER");
+
+export * from "./client/orderAction";

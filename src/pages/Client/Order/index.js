@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./Order.scss";
-import { vietNamCurrency, stringTruncate } from "utils/index";
+import { vietNamCurrency, stringTruncate, toastErr } from "utils/index";
 import Pagination from "react-js-pagination";
 import CLoadingIndicator from "Components/client/CLoadingIndicator/index";
 import history from "state/history";
 import { cGetOrder } from "services/cOrderService";
+import { useDispatch } from "react-redux";
+import { clientGetOrderAction } from "state/actions/index";
 
 const DEFAULT_PAGESIZE = 10;
 
@@ -44,28 +46,29 @@ const Order = () => {
   const [orderList, setOrderList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [totalRecords, setTotalRecords] = useState(0);
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
     setLoading(true);
 
-    cGetOrder(page, DEFAULT_PAGESIZE).then((res) => {
-      const {
-        data: { code, data, totalRecords },
-      } = res;
+    dispatch(clientGetOrderAction({ page, pageSize: DEFAULT_PAGESIZE })).then(
+      (res) => {
+        const {
+          data: { data, totalRecords },
+        } = res;
 
-      if (code === "OK") {
         const parsed = JSON.parse(data);
         setTotalRecords(totalRecords);
         setOrderList(parsed);
         setLoading(false);
-      } else {
-        history.push("/login");
       }
-    });
+    );
     // setTimeout(() => {
     //   setOrderList([...getOrders(page)]);
     //   setLoading(false);
     // }, 1000);
-  }, [page]);
+  }, []);
 
   return (
     <div className="order-wrapper">
