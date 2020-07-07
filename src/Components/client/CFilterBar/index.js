@@ -3,7 +3,7 @@ import "./CFilterBar.scss";
 import { Navbar, Nav, Form, NavDropdown } from "react-bootstrap";
 const CFilterBar = () => {
   return (
-    <div classname="FilterBar">
+    <div className="FilterBar">
       <Navbar expand="lg">
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

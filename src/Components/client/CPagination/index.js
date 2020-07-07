@@ -27,10 +27,7 @@ const CPagination = ({ category, total, per_page, current_page }) => {
         <span
           key={number}
           className={classes}
-          onClick={() =>
-            // number && history.push("/category/" + category + /page/ + number)
-            number && history.push(href_path + number)
-          }
+          onClick={() => number && history.push(href_path + number)}
         >
           {number}
         </span>
@@ -43,7 +40,7 @@ const CPagination = ({ category, total, per_page, current_page }) => {
     }
     if (current_page > 1) {
       showPrevButton = true;
-      prevPage = parseInt(current_page) + 1;
+      prevPage = parseInt(current_page) - 1;
     }
   }
 
@@ -52,10 +49,7 @@ const CPagination = ({ category, total, per_page, current_page }) => {
       <span
         style={{ display: { showPrevButton } ? "block" : "none" }}
         key={0}
-        onClick={() =>
-          // number && history.push("/category/" + category + /page/ + number)
-          history.push(href_path + prevPage)
-        }
+        onClick={() => history.push(href_path + prevPage)}
       >
         &laquo;
       </span>
@@ -63,10 +57,7 @@ const CPagination = ({ category, total, per_page, current_page }) => {
       <span
         style={{ display: { showNextButton } ? "block" : "none" }}
         key={pageNumber.length + 1}
-        onClick={() =>
-          // number && history.push("/category/" + category + /page/ + number)
-          history.push(href_path + nextPage)
-        }
+        onClick={() => history.push(href_path + nextPage)}
       >
         &raquo;
       </span>
