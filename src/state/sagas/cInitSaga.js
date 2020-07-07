@@ -13,7 +13,7 @@ function* getInitData() {
     location: { pathname },
   } = history;
 
-  if (pathname.substring(0, 7) === "/admin/") {
+  if (pathname.substring(0, 7) === "/admin/" || pathname === "/admin") {
     const token = localStorage.getItem("identity");
     if (token) {
       yield put({ type: INIT_DATA, token });
