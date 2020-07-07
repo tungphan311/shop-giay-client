@@ -2,8 +2,9 @@
   flex: auto;
 }
 .homeSection .content {
-  padding: 25px 0 0;
   min-height: 50vh;
+  display: grid;
+  padding: 0;
 }
 .homeSection__header_title {
   font-size: 38px;
@@ -12,4 +13,11 @@
   text-shadow: 1px 2px 5px rgba(0, 0, 0, 0.8);
   font-weight: 700;
   text-align: left;
+}
+.homeSection__header_only {
+  height: 70px;
+}
+.homeSection__header {
+  background: none !important;
+  padding-top: 40px;
 }
