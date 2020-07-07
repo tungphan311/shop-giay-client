@@ -2,6 +2,7 @@ import React from "react";
 import "./Footer.scss";
 import { Container, Row, Col } from "react-bootstrap";
 import { SHOP_NAME } from "constants/index.js";
+import { Link } from "react-router-dom";
 const CFooter = () => (
   <Container fluid className="footer">
     <Row>
@@ -16,66 +17,66 @@ const CFooter = () => (
       <Col md="9" className="sec-cont">
         <Row className="sec-cont-menu">
           <Col md="3">
-            <a href="/#">
+            <Link href="/#">
               <h4>SẢN PHẨM</h4>
-            </a>
+            </Link>
             <ul>
               <li>
-                <a href="/#">Giày Nam</a>
+                <Link href="/#">Giày Nam</Link>
               </li>
               <li>
-                <a href="/#">Giày Nữ</a>
+                <Link href="/#">Giày Nữ</Link>
               </li>
             </ul>
           </Col>
           <Col md="3">
-            <a href="/#">
+            <Link href="/#">
               <h4>VỀ CÔNG TY</h4>
-            </a>
+            </Link>
             <ul>
               <li>
-                <a href="/#">Tuyển dụng</a>
+                <Link href="/#">Tuyển dụng</Link>
               </li>
               <li>
-                <a href="/#">Liên hệ nhượng quyền</a>
+                <Link href="/#">Liên hệ nhượng quyền</Link>
               </li>
               <li>
-                <a href="/#">Về {SHOP_NAME}</a>
+                <Link href="/#">Về {SHOP_NAME}</Link>
               </li>
             </ul>
           </Col>
           <Col md="3">
-            <a href="/#">
+            <Link href="/#">
               <h4>HỖ TRỢ</h4>
-            </a>
+            </Link>
             <ul>
               <li>
-                <a href="/#">FAQs</a>
+                <Link href="/#">FAQs</Link>
               </li>
               <li>
-                <a href="/#">Bảo mật thông tin</a>
+                <Link href="/#">Bảo mật thông tin</Link>
               </li>
               <li>
-                <a href="/#">Chính sách chung</a>
+                <Link href="/#">Chính sách chung</Link>
               </li>
               <li>
-                <a href="/#">Tra cứu đơn hàng</a>
+                <Link href="/#">Tra cứu đơn hàng</Link>
               </li>
             </ul>
           </Col>
           <Col md="3">
-            <a href="/#">
+            <Link href="/#">
               <h4>LIÊN HỆ</h4>
-            </a>
+            </Link>
             <ul>
               <li>
-                <a href="/#">Email góp ý</a>
+                <Link href="/#">Email góp ý</Link>
               </li>
               <li>
-                <a href="/#">Hotline</a>
+                <Link href="/#">Hotline</Link>
               </li>
               <li>
-                <a href="/#">0123 456 789</a>
+                <Link href="/#">0123 456 789</Link>
               </li>
             </ul>
           </Col>
@@ -83,17 +84,17 @@ const CFooter = () => (
         <Row>
           <Col md="3">
             <h4>{SHOP_NAME} SOCIAL</h4>
-            <a href="https://www.facebook.com/">
+            <Link href="https://www.facebook.com/">
               <img alt="facebook" src="/svg/icon_facebook.svg" />
-            </a>
+            </Link>
             &nbsp;
-            <a href="https://www.instagram.com">
+            <Link href="https://www.instagram.com">
               <img alt="instagram" src="/svg/icon_instagram.svg" />
-            </a>
+            </Link>
             &nbsp;
-            <a href="https://www.youtube.com/">
+            <Link href="https://www.youtube.com/">
               <img alt="youtube" src="/svg/icon_youtube.svg" />
-            </a>
+            </Link>
           </Col>
           <Col md="3">
             <h4>ĐĂNG KÝ NHẬN MAIL</h4>
@@ -103,22 +104,22 @@ const CFooter = () => (
                 className="form-control inputReceiveMail"
                 id="inputRecieveMail"
               />
-              <a href="/#" className="subscribe">
+              <Link href="/#" className="subscribe">
                 <img alt="subscribe" src="/images/arrow_right.jpg" />
-              </a>
+              </Link>
             </div>
           </Col>
           <Col md="6" className="logo-footer">
-            <a href="/#">
+            <Link href="/#">
               <img alt="logo" src="/images/logo-placeholder.png" />
-            </a>
+            </Link>
           </Col>
         </Row>
         <Row>
           <Col md="3" className="icon-bct">
-            <a href="/#">
+            <Link href="/#">
               <img alt="bct" src="/images/icon_bocongthuong.png" />
-            </a>
+            </Link>
           </Col>
           <Col md="9" className="copyright">
             Copyright © {new Date().getFullYear()} {SHOP_NAME}. All rights

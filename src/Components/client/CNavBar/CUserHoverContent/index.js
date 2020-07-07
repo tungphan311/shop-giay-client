@@ -2,6 +2,7 @@ import React from "react";
 import "./UserHoverContent.scss";
 import { USER_HOVER_CONTENT } from "constants/index.js";
 import CButton from "Components/client/CButton";
+import { Link } from "react-router-dom";
 const LoggedInUserHoverContent = ({ identity, handleLogout }) => {
   const { name } = identity;
   return (
@@ -11,9 +12,9 @@ const LoggedInUserHoverContent = ({ identity, handleLogout }) => {
       {USER_HOVER_CONTENT.map((row) => (
         <div key={row.label}>
           <div className="userhovercontent__row">
-            <a className="userhovercontent__label" href={row.href}>
+            <Link className="userhovercontent__label" href={row.href}>
               {row.label}
-            </a>
+            </Link>
           </div>
           <div className="userhovercontent__divider" />
         </div>

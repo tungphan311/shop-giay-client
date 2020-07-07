@@ -2,17 +2,14 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { LOGOUT } from "state/reducers/AAuthReducer";
+import { Link } from "react-router-dom";
 
-function AUserDropdown({
-  ava = "/assets/img/profile.png",
-  name,
-  username,
-}) {
+function AUserDropdown({ ava = "/assets/img/profile.png", name, username }) {
   const dispatch = useDispatch();
 
   const logout = () => {
-    dispatch({ type: LOGOUT })
-  }
+    dispatch({ type: LOGOUT });
+  };
 
   return (
     <li className="nav-item dropdown hidden-caret">
@@ -41,17 +38,17 @@ function AUserDropdown({
           </li>
           <li>
             <div className="dropdown-divider"></div>
-            <a className="dropdown-item" href="#">
+            <Link className="dropdown-item" href="#">
               Tài khoản của tôi
-            </a>
+            </Link>
             <div className="dropdown-divider"></div>
-            <a className="dropdown-item" href="change-password">
+            <Link className="dropdown-item" href="change-password">
               Đổi mật khẩu
-            </a>
+            </Link>
             <div className="dropdown-divider"></div>
-            <a className="dropdown-item" href="#" onClick={logout}>
+            <Link className="dropdown-item" href="#" onClick={logout}>
               Đăng xuất
-            </a>
+            </Link>
           </li>
         </div>
       </ul>

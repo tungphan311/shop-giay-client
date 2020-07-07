@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function ANotification() {
   return (
@@ -23,7 +24,7 @@ function ANotification() {
         <li>
           <div className="notif-scroll scrollbar-outer">
             <div className="notif-center">
-              <a href="/">
+              <Link href="/">
                 <div className="notif-icon notif-primary">
                   {" "}
                   <i className="fa fa-user-plus"></i>{" "}
@@ -32,8 +33,8 @@ function ANotification() {
                   <span className="block">New user registered</span>
                   <span className="time">5 minutes ago</span>
                 </div>
-              </a>
-              <a href="/">
+              </Link>
+              <Link href="/">
                 <div className="notif-icon notif-success">
                   {" "}
                   <i className="fa fa-comment"></i>{" "}
@@ -42,8 +43,8 @@ function ANotification() {
                   <span className="block">Rahmad commented on Admin</span>
                   <span className="time">12 minutes ago</span>
                 </div>
-              </a>
-              <a href="/">
+              </Link>
+              <Link href="/">
                 <div className="notif-img">
                   <img src="/assets/img/profile2.jpg" alt="Img Profile" />
                 </div>
@@ -51,8 +52,8 @@ function ANotification() {
                   <span className="block">Reza send messages to you</span>
                   <span className="time">12 minutes ago</span>
                 </div>
-              </a>
-              <a href="/">
+              </Link>
+              <Link href="/">
                 <div className="notif-icon notif-danger">
                   {" "}
                   <i className="fa fa-heart"></i>{" "}
@@ -61,15 +62,15 @@ function ANotification() {
                   <span className="block">Farrah liked Admin</span>
                   <span className="time">17 minutes ago</span>
                 </div>
-              </a>
+              </Link>
             </div>
           </div>
         </li>
         <li>
-          <a className="see-all" href="/notifications">
+          <Link className="see-all" href="/notifications">
             See all notifications
             <i className="fa fa-angle-right"></i>{" "}
-          </a>
+          </Link>
         </li>
       </ul>
     </li>

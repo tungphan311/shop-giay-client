@@ -6,6 +6,7 @@ import CUserHoverContent from "./CUserHoverContent";
 import CNavBarButton from "./CNavBarButton";
 import { useDispatch, useSelector } from "react-redux";
 import { ACTION_LOGOUT } from "state/reducers/cAuthReducer";
+import { Link } from "react-router-dom";
 const CNavBar = () => {
   const dispatch = useDispatch();
   const username = useSelector((state) => state.cauth.username);
@@ -28,7 +29,7 @@ const CNavBar = () => {
       </div>
       <div className="navbar__container">
         {/* eslint-disable-next-line jsx-a11y/anchor-has-content  */}
-        <a className="navbar__logo" href="/" />
+        <Link className="navbar__logo" href="/" />
         {NAVBAR_ITEM_LIST.map((item) => (
           <CNavBarItem key={item.label} label={item.label} href={item.href} />
         ))}

@@ -3,6 +3,7 @@ import "./Login.scss";
 import CLoginForm from "./CLoginForm";
 import { useDispatch } from "react-redux";
 import { ACTION_LOGIN } from "state/reducers/cAuthReducer";
+import { Link } from "react-router-dom";
 const CLogin = () => {
   const dispatch = useDispatch();
 
@@ -17,9 +18,9 @@ const CLogin = () => {
         />
         <CLoginForm onSubmit={() => dispatch({ type: ACTION_LOGIN })} />
         <div className="login-meta-data">
-          <a href="/register">Đăng ký mới</a>
+          <Link href="/register">Đăng ký mới</Link>
           {"  hoặc  "}
-          <a href="/forget-password">Quên mật khẩu?</a>
+          <Link href="/forget-password">Quên mật khẩu?</Link>
         </div>
       </div>
     </div>

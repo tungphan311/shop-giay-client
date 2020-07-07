@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import { Link } from "react-router-dom";
 
 function ABreadcrumb({ title, list }) {
   return (
@@ -6,9 +7,9 @@ function ABreadcrumb({ title, list }) {
       <h4 className="page-title">{title}</h4>
       <ul className="breadcrumbs">
         <li className="nav-home">
-          <a href="/admin">
+          <Link href="/admin">
             <i className="flaticon-home" />
-          </a>
+          </Link>
         </li>
         {list.map(({ link, name }) => (
           <Fragment key={link}>

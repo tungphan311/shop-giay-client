@@ -9,6 +9,7 @@ import { ACTION_ADD_PRODUCT_TO_CART } from "state/reducers/cCartReducer";
 import history from "state/history";
 import { toastErr } from "utils";
 import { ACTION_GET_PRODUCT_DETAIL } from "../../../state/reducers/cProductReducer";
+import { Link } from "react-router-dom";
 const MAX_STAR_WIDTH = 105;
 const MAX_CHAR = 120;
 const MAX_RATING = 5.0;
@@ -117,7 +118,7 @@ const CProductDetail = ({ id }) => {
                 <div className="size-selection">
                   <p className="detail-section-title">&nbsp;</p>
                   <p className="detail-section-show-size">
-                    <a href="/#">Size Chart</a>
+                    <Link href="/#">Size Chart</Link>
                   </p>
                   <ul className="detail-all-size clearfix">
                     {sizes && sizes.length > 0

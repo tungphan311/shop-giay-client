@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./NavBarItem.scss";
+import { Link } from "react-router-dom";
 
 class NavBarItem extends Component {
   constructor(props) {
@@ -29,9 +30,9 @@ class NavBarItem extends Component {
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
-        <a className={containerClassName} href={href}>
+        <Link className={containerClassName} href={href}>
           {label}
-        </a>
+        </Link>
         {children && <div className={contentClassName}>{children}</div>}
       </div>
     );
