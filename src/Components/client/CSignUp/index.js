@@ -6,6 +6,10 @@ import CSignUpForm from "Components/client/CSignUp/CSignUpForm";
 const CSignUp = () => {
   const dispatch = useDispatch();
 
+  const handleSubmit = () => {
+    dispatch({ type: ACTION_SIGNUP });
+  };
+
   return (
     <div className="clientsignup-wrapper d-flex align-items-center justify-content-center text-center">
       <div>
@@ -15,7 +19,7 @@ const CSignUp = () => {
           alt=""
           style={{ maxWidth: "30%" }}
         />
-        <CSignUpForm onSubmit={() => dispatch({ type: ACTION_SIGNUP })} />
+        <CSignUpForm onSubmit={handleSubmit} />
       </div>
     </div>
   );
