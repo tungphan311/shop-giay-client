@@ -35,6 +35,11 @@ const CMenuBar = ({ current_label }) => {
     );
   });
 
+  let isViewingAll = false;
+  if (current_label === "Danh sách sản phẩm") {
+    isViewingAll = true;
+  }
+
   // const renderBrandList = brands.map((brand_item) => {
 
   // });
@@ -45,7 +50,11 @@ const CMenuBar = ({ current_label }) => {
       <div className="list-group list-group-flush">
         <a
           href="/category/"
-          className="list-group-item list-group-item-action bg-dark"
+          className={
+            isViewingAll
+              ? "list-group-item list-group-item-action bg-dark selected"
+              : "list-group-item list-group-item-action bg-dark"
+          }
         >
           All brands
         </a>
