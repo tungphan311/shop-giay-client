@@ -7,7 +7,7 @@ function ABreadcrumb({ title, list }) {
       <h4 className="page-title">{title}</h4>
       <ul className="breadcrumbs">
         <li className="nav-home">
-          <Link href="/admin">
+          <Link to="/admin">
             <i className="flaticon-home" />
           </Link>
         </li>

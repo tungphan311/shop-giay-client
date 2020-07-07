@@ -18,9 +18,9 @@ const CLogin = () => {
         />
         <CLoginForm onSubmit={() => dispatch({ type: ACTION_LOGIN })} />
         <div className="login-meta-data">
-          <Link href="/register">Đăng ký mới</Link>
+          <Link to="/register">Đăng ký mới</Link>
           {"  hoặc  "}
-          <Link href="/forget-password">Quên mật khẩu?</Link>
+          <Link to="/forget-password">Quên mật khẩu?</Link>
         </div>
       </div>
     </div>

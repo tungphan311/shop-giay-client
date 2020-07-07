@@ -17,66 +17,66 @@ const CFooter = () => (
       <Col md="9" className="sec-cont">
         <Row className="sec-cont-menu">
           <Col md="3">
-            <Link href="/#">
+            <Link to="/#">
               <h4>SẢN PHẨM</h4>
             </Link>
             <ul>
               <li>
-                <Link href="/#">Giày Nam</Link>
+                <Link to="/#">Giày Nam</Link>
               </li>
               <li>
-                <Link href="/#">Giày Nữ</Link>
+                <Link to="/#">Giày Nữ</Link>
               </li>
             </ul>
           </Col>
           <Col md="3">
-            <Link href="/#">
+            <Link to="/#">
               <h4>VỀ CÔNG TY</h4>
             </Link>
             <ul>
               <li>
-                <Link href="/#">Tuyển dụng</Link>
+                <Link to="/#">Tuyển dụng</Link>
               </li>
               <li>
-                <Link href="/#">Liên hệ nhượng quyền</Link>
+                <Link to="/#">Liên hệ nhượng quyền</Link>
               </li>
               <li>
-                <Link href="/#">Về {SHOP_NAME}</Link>
+                <Link to="/#">Về {SHOP_NAME}</Link>
               </li>
             </ul>
           </Col>
           <Col md="3">
-            <Link href="/#">
+            <Link to="/#">
               <h4>HỖ TRỢ</h4>
             </Link>
             <ul>
               <li>
-                <Link href="/#">FAQs</Link>
+                <Link to="/#">FAQs</Link>
               </li>
               <li>
-                <Link href="/#">Bảo mật thông tin</Link>
+                <Link to="/#">Bảo mật thông tin</Link>
               </li>
               <li>
-                <Link href="/#">Chính sách chung</Link>
+                <Link to="/#">Chính sách chung</Link>
               </li>
               <li>
-                <Link href="/#">Tra cứu đơn hàng</Link>
+                <Link to="/#">Tra cứu đơn hàng</Link>
               </li>
             </ul>
           </Col>
           <Col md="3">
-            <Link href="/#">
+            <Link to="/#">
               <h4>LIÊN HỆ</h4>
             </Link>
             <ul>
               <li>
-                <Link href="/#">Email góp ý</Link>
+                <Link to="/#">Email góp ý</Link>
               </li>
               <li>
-                <Link href="/#">Hotline</Link>
+                <Link to="/#">Hotline</Link>
               </li>
               <li>
-                <Link href="/#">0123 456 789</Link>
+                <Link to="/#">0123 456 789</Link>
               </li>
             </ul>
           </Col>
@@ -84,15 +84,15 @@ const CFooter = () => (
         <Row>
           <Col md="3">
             <h4>{SHOP_NAME} SOCIAL</h4>
-            <Link href="https://www.facebook.com/">
+            <Link to="https://www.facebook.com/">
               <img alt="facebook" src="/svg/icon_facebook.svg" />
             </Link>
             &nbsp;
-            <Link href="https://www.instagram.com">
+            <Link to="https://www.instagram.com">
               <img alt="instagram" src="/svg/icon_instagram.svg" />
             </Link>
             &nbsp;
-            <Link href="https://www.youtube.com/">
+            <Link to="https://www.youtube.com/">
               <img alt="youtube" src="/svg/icon_youtube.svg" />
             </Link>
           </Col>
@@ -104,20 +104,20 @@ const CFooter = () => (
                 className="form-control inputReceiveMail"
                 id="inputRecieveMail"
               />
-              <Link href="/#" className="subscribe">
+              <Link to="/#" className="subscribe">
                 <img alt="subscribe" src="/images/arrow_right.jpg" />
               </Link>
             </div>
           </Col>
           <Col md="6" className="logo-footer">
-            <Link href="/#">
+            <Link to="/#">
               <img alt="logo" src="/images/logo-placeholder.png" />
             </Link>
           </Col>
         </Row>
         <Row>
           <Col md="3" className="icon-bct">
-            <Link href="/#">
+            <Link to="/#">
               <img alt="bct" src="/images/icon_bocongthuong.png" />
             </Link>
           </Col>

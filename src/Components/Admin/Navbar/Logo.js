@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function ALogo() {
   return (
-    <Link href="/" className="logo">
+    <Link to="/" className="logo">
       <img
         src="/assets/img/logo.svg"
         alt="navbar brand"

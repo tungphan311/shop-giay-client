@@ -118,7 +118,7 @@ const CProductDetail = ({ id }) => {
                 <div className="size-selection">
                   <p className="detail-section-title">&nbsp;</p>
                   <p className="detail-section-show-size">
-                    <Link href="/#">Size Chart</Link>
+                    <Link to="/#">Size Chart</Link>
                   </p>
                   <ul className="detail-all-size clearfix">
                     {sizes && sizes.length > 0

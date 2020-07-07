@@ -24,7 +24,7 @@ function ANotification() {
         <li>
           <div className="notif-scroll scrollbar-outer">
             <div className="notif-center">
-              <Link href="/">
+              <Link to="/">
                 <div className="notif-icon notif-primary">
                   {" "}
                   <i className="fa fa-user-plus"></i>{" "}
@@ -34,7 +34,7 @@ function ANotification() {
                   <span className="time">5 minutes ago</span>
                 </div>
               </Link>
-              <Link href="/">
+              <Link to="/">
                 <div className="notif-icon notif-success">
                   {" "}
                   <i className="fa fa-comment"></i>{" "}
@@ -44,7 +44,7 @@ function ANotification() {
                   <span className="time">12 minutes ago</span>
                 </div>
               </Link>
-              <Link href="/">
+              <Link to="/">
                 <div className="notif-img">
                   <img src="/assets/img/profile2.jpg" alt="Img Profile" />
                 </div>
@@ -53,7 +53,7 @@ function ANotification() {
                   <span className="time">12 minutes ago</span>
                 </div>
               </Link>
-              <Link href="/">
+              <Link to="/">
                 <div className="notif-icon notif-danger">
                   {" "}
                   <i className="fa fa-heart"></i>{" "}
@@ -67,7 +67,7 @@ function ANotification() {
           </div>
         </li>
         <li>
-          <Link className="see-all" href="/notifications">
+          <Link className="see-all" to="/notifications">
             See all notifications
             <i className="fa fa-angle-right"></i>{" "}
           </Link>
