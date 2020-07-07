@@ -11,6 +11,7 @@ import history from "./state/history";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 require("dotenv").config();
+require("cleave.js/dist/addons/cleave-phone.vi");
 
 ReactDOM.render(
   <React.StrictMode>

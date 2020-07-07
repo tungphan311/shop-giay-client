@@ -2,11 +2,48 @@ import React, { Component } from "react";
 import { reduxForm, Field } from "redux-form";
 import CInput from "../CInput/index";
 import CButton from "Components/client/CButton";
-import CDatePickerField from "Components/client/CDatePicker";
-import Select from "react-select";
 import { require } from "utils/index";
+import Cleave from "cleave.js/react";
 
 export const SIGNUP_FORM_KEY = "FORM/SIGNUP";
+
+const CleaveInput = ({
+  label,
+  labelClassName,
+  className,
+  placeholder = "",
+  options = {},
+  input,
+  icon = null,
+  meta = {},
+}) => {
+  const { touched, error } = meta;
+  const showError = touched && error;
+  const { errCode } = error || {};
+
+  return (
+    <div className="input__container">
+      <label className={`${!label ? "d-none" : labelClassName}`}>{label}</label>
+      <div className="input__wrapper" style={{ position: "relative" }}>
+        <div>
+          {icon && (
+            <label className="input__icon" htmlFor={input.name}>
+              <i className={`icon-${icon}`}></i>
+            </label>
+          )}
+          <Cleave
+            {...input}
+            placeholder={placeholder}
+            options={options}
+            onChange={input.onChange}
+            className={`input__field ${className}`}
+          />
+        </div>
+        {showError && <span className="error">{errCode}</span>}
+      </div>
+    </div>
+  );
+};
 
 function CSignupForm({ handleSubmit }) {
   return (
@@ -46,15 +83,20 @@ function CSignupForm({ handleSubmit }) {
         placeholder="Nguyễn Thị A"
       />
       <div className="dob_gender_container">
-        // Todo: add date time picker here
         <div className="dob__container">
           <Field
-            component={CInput}
             name="dateOfBirth"
             label="Ngày sinh"
             labelClassName="username-label"
-            className="username-input"
-            placeholder="YYYY/MM/DD"
+            className="username-input width-10"
+            placeholder="dd/MM/YYYY"
+            options={{
+              date: true,
+              datePattern: ["d", "m", "Y"],
+              delimiter: "/",
+            }}
+            component={CleaveInput}
+            validate={[require]}
           />
         </div>
         <div className="input__container">
@@ -68,9 +110,9 @@ function CSignupForm({ handleSubmit }) {
               labelClassName="username-label"
               className="username-input"
             >
-              <option value="Male">Nam</option>
-              <option value="Female">Nữ</option>
-              <option value="Undefined">Không xác định</option>
+              <option value={1}>Nam</option>
+              <option value={2}>Nữ</option>
+              <option value={3}>Không xác định</option>
             </Field>
           </div>
         </div>
@@ -86,16 +128,16 @@ function CSignupForm({ handleSubmit }) {
         icon="email"
       />
       <Field
-        component={CInput}
-        validate={[]}
+        component={CleaveInput}
+        validate={[require]}
         name="phoneNumber"
         label="Số điện thoại"
         labelClassName="username-label"
         className="username-input"
-        placeholder="012345869"
+        placeholder="0123 345 869"
+        options={{ phone: true, phoneRegionCode: "vi" }}
         icon="phone"
       />
-      //Todo: Hanlde submit button
       <CButton className="submit-button" type="submit" label="Đăng ký" />
     </form>
   );

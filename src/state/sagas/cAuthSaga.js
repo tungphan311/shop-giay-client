@@ -1,7 +1,7 @@
 import { takeEvery, select, call, put } from "redux-saga/effects";
 import { getFormValues } from "redux-form";
 import { LOGIN_FORM_KEY } from "Components/client/CLogin/CLoginForm.js";
-import { cLogin } from "services/cAuthService";
+import { cLogin, cRegister } from "services/cAuthService";
 import { toastErr, toast } from "utils";
 import history from "state/history";
 import queryString from "query-string";
@@ -14,6 +14,7 @@ import {
   ACTION_VERIFY_TOKEN,
   ACTION_VERIFY_TOKEN_SUCCESS,
   ACTION_VERIFY_TOKEN_FAIl,
+  ACTION_SIGNUP,
 } from "../reducers/cAuthReducer";
 import { TOKEN_KEY, CART_KEY } from "constants/index";
 import { cVerifyToken } from "../../services/cAuthService";
@@ -22,6 +23,7 @@ import {
   ACTION_GET_CART_ITEMS,
   ACTION_SYNC_CART,
 } from "state/reducers/cCartReducer";
+import { SIGNUP_FORM_KEY } from "Components/client/CSignUp/CSignUpForm";
 function* Login(action) {
   const { username, password } = yield select((state) =>
     getFormValues(LOGIN_FORM_KEY)(state)
@@ -63,6 +65,41 @@ function* Login(action) {
   }
 }
 
+function* Signup(action) {
+  try {
+    let {
+      username,
+      password,
+      name,
+      dateOfBirth,
+      gender,
+      email,
+      phoneNumber,
+    } = yield select((state) => getFormValues(SIGNUP_FORM_KEY)(state));
+    dateOfBirth = dateOfBirth.split("/");
+
+    dateOfBirth = new Date(
+      parseInt(dateOfBirth[2]),
+      parseInt(dateOfBirth[1]),
+      parseInt(dateOfBirth[0])
+    ).toISOString();
+
+    const result = yield call(cRegister, {
+      username,
+      password,
+      name,
+      dateOfBirth,
+      gender,
+      email,
+      phoneNumber,
+    });
+
+    console.log(result);
+  } catch (error) {
+    toastErr(error);
+  }
+}
+
 function* Logout(action) {
   yield put({ type: ACTION_LOGOUT_SUCCESS });
   yield put({ type: ACTION_CLEAR_CART });
@@ -94,6 +131,7 @@ function* VerifyToken() {
 
 export default function* cAuthSaga() {
   yield takeEvery(ACTION_LOGIN, Login);
+  yield takeEvery(ACTION_SIGNUP, Signup);
   yield takeEvery(ACTION_LOGOUT, Logout);
   yield takeEvery(ACTION_VERIFY_TOKEN, VerifyToken);
 }
