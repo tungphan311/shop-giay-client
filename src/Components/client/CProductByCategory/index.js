@@ -7,6 +7,7 @@ import "./ProductByCategory.scss";
 import CLoadingIndicator from "Components/client/CLoadingIndicator/index";
 import CItemCard from "Components/client/CItemCard/index";
 import CPagination from "Components/client/CPagination/index";
+import CFilterBar from "Components/client/CFilterBar/index";
 
 const intialCategories = [
   {
@@ -82,7 +83,7 @@ const CProductByCategory = ({ id, pageNumber }) => {
   return (
     <>
       <div className="d-flex" id="wrapper">
-        <CMenuBar />
+        <CMenuBar current_label={label} />
 
         <div className="page-content-wrapper">
           <section className={`homeSection`}>
@@ -117,12 +118,18 @@ const CProductByCategory = ({ id, pageNumber }) => {
               ""
             )}
             <div className="content">
-              <CPagination
-                category={label}
-                total={total}
-                per_page={per_page}
-                current_page={current_page}
-              ></CPagination>
+              <div className="pagination-wrapper">
+                {" "}
+                <CPagination
+                  category={label}
+                  total={total}
+                  per_page={per_page}
+                  current_page={current_page}
+                ></CPagination>
+              </div>
+              <div className="filter-wrapper">
+                <CFilterBar></CFilterBar>
+              </div>
 
               <div className="item-wrapper">
                 {!isLoading ? <Content /> : <CLoadingIndicator />}

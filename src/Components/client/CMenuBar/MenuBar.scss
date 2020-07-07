@@ -22,3 +22,8 @@
 .list-group-item:first-child {
   margin-top: 10px;
 }
+
+.list-group-item.list-group-item-action.bg-dark.selected {
+  color: orange;
+  font-weight: 600;
+}

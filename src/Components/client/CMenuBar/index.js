@@ -1,52 +1,58 @@
-import { Dropdown } from "react-bootstrap";
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import "./MenuBar.scss";
 import { cGetBrandList } from "services/cProductService";
-class CMenuBar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      brandList: [],
-    };
-  }
-  componentDidMount() {
-    const list = cGetBrandList().then(
-      (res) => JSON.parse(res.data.data),
-      this.setState
-    );
-  }
-  render() {
+const initState = [
+  {
+    brands: [],
+  },
+];
+const CMenuBar = ({ current_label }) => {
+  const [brands, setbrands] = useState(initState);
+  useEffect(() => {
+    const list = cGetBrandList().then((res) => JSON.parse(res.data.data));
+    Promise.all([list]).then(([listBrands]) => {
+      setbrands((prev) => {
+        const mapData = (branditem) => ({
+          name: branditem,
+        });
+        setbrands(listBrands.map(mapData));
+      });
+    });
+  });
+  const renderBrandList = brands.map((branditem) => {
+    let className_String = "";
+    let href_string = "/category/" + branditem.name;
+    if (current_label === branditem.name) {
+      className_String =
+        "list-group-item list-group-item-action bg-dark selected";
+    } else {
+      className_String = "list-group-item list-group-item-action bg-dark";
+    }
     return (
-      <div className="bg-dark" id="sidebar-wrapper">
-        <div className="sidebar-heading">BRAND</div>
-        <div className="list-group list-group-flush">
-          <a
-            href="/category/adidas"
-            className="list-group-item list-group-item-action bg-dark"
-          >
-            Adidas
-          </a>
-          <a
-            href="/category/nike"
-            className="list-group-item list-group-item-action bg-dark"
-          >
-            Nike
-          </a>
-          <a
-            href="/category/vans"
-            className="list-group-item list-group-item-action bg-dark"
-          >
-            Vans
-          </a>
-          <a
-            href="/category/converse"
-            className="list-group-item list-group-item-action bg-dark"
-          >
-            Converse
-          </a>
-        </div>
-      </div>
+      <a className={className_String} key={branditem.name} href={href_string}>
+        {branditem.name}
+      </a>
     );
-  }
-}
+  });
+
+  // const renderBrandList = brands.map((brand_item) => {
+
+  // });
+
+  return (
+    <div className="bg-dark" id="sidebar-wrapper">
+      <div className="sidebar-heading">BRAND</div>
+      <div className="list-group list-group-flush">
+        <a
+          href="/category/"
+          className="list-group-item list-group-item-action bg-dark"
+        >
+          All brands
+        </a>
+        {renderBrandList}
+      </div>
+    </div>
+  );
+};
+
 export default CMenuBar;
