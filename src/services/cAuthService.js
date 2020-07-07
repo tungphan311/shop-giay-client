@@ -13,3 +13,26 @@ export async function cVerifyToken(token) {
     headers: { Authorization: AuthStr },
   });
 }
+
+export async function cRegister({
+  username,
+  password,
+  name,
+  dateOfBirth,
+  gender,
+  email,
+  phoneNumber,
+}) {
+  const path = "client/authentication/register";
+  const body = {
+    username,
+    password,
+    name,
+    dateOfBirth,
+    gender,
+    email,
+    phoneNumber,
+  };
+
+  return await API.post(path, body);
+}

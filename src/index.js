@@ -12,6 +12,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 import "react-datepicker/dist/react-datepicker.css";
 require("dotenv").config();
+require("cleave.js/dist/addons/cleave-phone.vi");
 
 ReactDOM.render(
   <React.StrictMode>
