@@ -17,7 +17,7 @@ function ASidebarItem({ item, roleid }) {
     <li className={`nav-item${active ? " active" : ""}`}>
       {sub ? (
         <>
-          <Link data-toggle="collapse" href={`#${id}`}>
+          <Link data-toggle="collapse" to={`#${id}`}>
             <i className={icon}></i>
             <p>{title}</p>
             <span className="caret"></span>
@@ -31,8 +31,8 @@ function ASidebarItem({ item, roleid }) {
           </div>
         </>
       ) : (
-        <a
-          href={href}
+        <Link
+          to={href}
           onClick={(e) => {
             e.preventDefault();
             history.push(href);
@@ -40,7 +40,7 @@ function ASidebarItem({ item, roleid }) {
         >
           <i className={icon}></i>
           <p>{title}</p>
-        </a>
+        </Link>
       )}
     </li>
   );

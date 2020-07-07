@@ -12,7 +12,7 @@ const LoggedInUserHoverContent = ({ identity, handleLogout }) => {
       {USER_HOVER_CONTENT.map((row) => (
         <div key={row.label}>
           <div className="userhovercontent__row">
-            <Link className="userhovercontent__label" href={row.href}>
+            <Link className="userhovercontent__label" to={row.href}>
               {row.label}
             </Link>
           </div>

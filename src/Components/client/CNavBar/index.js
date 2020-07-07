@@ -29,7 +29,7 @@ const CNavBar = () => {
       </div>
       <div className="navbar__container">
         {/* eslint-disable-next-line jsx-a11y/anchor-has-content  */}
-        <Link className="navbar__logo" href="/" />
+        <Link className="navbar__logo" to="/" />
         {NAVBAR_ITEM_LIST.map((item) => (
           <CNavBarItem key={item.label} label={item.label} href={item.href} />
         ))}

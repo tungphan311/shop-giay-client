@@ -30,7 +30,7 @@ class NavBarItem extends Component {
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
-        <Link className={containerClassName} href={href}>
+        <Link className={containerClassName} to={href}>
           {label}
         </Link>
         {children && <div className={contentClassName}>{children}</div>}
