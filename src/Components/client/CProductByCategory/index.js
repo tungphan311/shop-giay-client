@@ -20,6 +20,7 @@ const CProductByCategory = ({ id, pageNumber }) => {
   if (pageNumber === undefined) {
     pageNumber = 1;
   }
+
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [categories, setCategories] = useState(intialCategories);
@@ -33,7 +34,7 @@ const CProductByCategory = ({ id, pageNumber }) => {
   console.log(id.id);
   const [label, setLabel] = useState(id);
   const [total, setTotal] = useState(0);
-  const [per_page, setPerPage] = useState(0);
+  const [per_page, setPerPage] = useState(5);
   const [current_page, setCurrentPage] = useState(pageNumber - 1);
 
   const Content = () =>
@@ -42,12 +43,28 @@ const CProductByCategory = ({ id, pageNumber }) => {
     ));
 
   useEffect(() => {
-    const list = cGetProductListByBrand(id, pageNumber - 1, 3).then((res) =>
-      JSON.parse(res.data.data)
-    );
-    const total = cGetProductListByBrand(id, pageNumber - 1, 3).then((res) =>
-      JSON.parse(res.data.totalRecords)
-    );
+    let perPage = localStorage.getItem("View");
+    if (perPage === null) {
+      perPage = 4;
+    }
+    let style = localStorage.getItem("Style");
+    let size = localStorage.getItem("Size");
+    setPerPage(perPage);
+    console.log(perPage);
+    const list = cGetProductListByBrand(
+      id,
+      pageNumber - 1,
+      per_page,
+      style,
+      size
+    ).then((res) => JSON.parse(res.data.data));
+    const total = cGetProductListByBrand(
+      id,
+      pageNumber - 1,
+      per_page,
+      style,
+      size
+    ).then((res) => JSON.parse(res.data.totalRecords));
 
     Promise.all([list])
       .then(([listProducts]) => {
@@ -67,7 +84,6 @@ const CProductByCategory = ({ id, pageNumber }) => {
           newState[0].products = listProducts.map(mapData);
           setLabel(id);
           setCurrentPage(pageNumber);
-          setPerPage(3);
 
           return newState;
         }, setIsLoading(false));
@@ -78,7 +94,7 @@ const CProductByCategory = ({ id, pageNumber }) => {
     Promise.all([total]).then(([totalRecords]) => {
       setTotal(totalRecords);
     });
-  }, [current_page, id, pageNumber]);
+  }, [current_page, id, pageNumber, per_page]);
 
   return (
     <>
@@ -127,7 +143,11 @@ const CProductByCategory = ({ id, pageNumber }) => {
                 ></CPagination>
               </div>
               <div className="filter-wrapper">
-                <CFilterBar></CFilterBar>
+                <CFilterBar
+                  size_title={localStorage.getItem("Size")}
+                  style_title={localStorage.getItem("Style")}
+                  view={per_page}
+                ></CFilterBar>
               </div>
 
               <div className="item-wrapper">

@@ -38,14 +38,27 @@ export async function cGetProductList(id) {
   const path = "client/shoes?page-size=6";
   return await API.get(path);
 }
-export async function cGetProductListByBrand(id) {
-  const path = "client/shoes?page-size=6";
-  const params = { brand: id };
-
+export async function cGetProductListByBrand(
+  id,
+  pageNumber,
+  pageSize,
+  style,
+  size
+) {
+  let path = `client/shoes?page-size=${pageSize}`;
+  let params = { brand: id, page: pageNumber };
   if (id === "Danh sách sản phẩm") {
     return await API.get(path);
   }
+  if (style !== null) {
+    path = path + "&style=" + style;
+  }
+  if (size !== null) {
+    path = path + "&size=" + size;
+  }
 
+  console.log(style);
+  console.log(size);
   return await API.get(path, { params });
 }
 export async function cGetBrandList() {
