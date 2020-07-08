@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./Order.scss";
-import { vietNamCurrency, stringTruncate, toastErr } from "utils/index";
+import {
+  vietNamCurrency,
+  stringTruncate,
+  toastErr,
+  getOrderStatusString,
+} from "utils/index";
 import Pagination from "react-js-pagination";
 import CLoadingIndicator from "Components/client/CLoadingIndicator/index";
 import history from "state/history";
@@ -102,7 +107,9 @@ const Order = () => {
                     )}
                   </td>
                   <td className="order-total">{vietNamCurrency(total)}</td>
-                  <td className="order-status">{status}</td>
+                  <td className="order-status">
+                    {getOrderStatusString(status)}
+                  </td>
                 </tr>
               )
             )}

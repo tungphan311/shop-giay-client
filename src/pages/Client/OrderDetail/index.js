@@ -3,6 +3,7 @@ import "./OrderDetail.scss";
 import history from "state/history";
 import { vietNamCurrency } from "utils";
 import { cGetOrderDetail } from "services/cOrderService";
+import { getOrderStatusString, getPaymentStatusString } from "utils/index";
 
 const orderIntialState = {
   cartItemDTOList: [],
@@ -34,11 +35,15 @@ function OrderDetail({
     deliveryAddress: address,
     orderDate,
     cartItemDTOList,
+    status,
+    paymentStatus,
   } = order;
   return (
     <div className="orderdetail-wrapper">
       <div className="orderdetail-container">
-        <div className="orderdetail-header">Chi tiết đơn hàng #{id}</div>
+        <div className="orderdetail-header">
+          Chi tiết đơn hàng #{id} - {getOrderStatusString(status)}
+        </div>
         <div className="created-date">Ngày đặt hàng: {orderDate}</div>
         <div className="orderdetail-info">
           <div>
@@ -47,6 +52,15 @@ function OrderDetail({
               <p className="name">{name}</p>
               <p className="address">Địa chỉ: {address}</p>
               <p className="phone">Điện thoại: {phoneNumber}</p>
+            </div>
+          </div>
+          <div>
+            <div className="title">Hình thức thanh toán</div>
+            <div className="content">
+              <p className="address">Thanh toán tiền mặt khi nhận hàng</p>
+              <p className="address">
+                Tình trạng: {getPaymentStatusString(paymentStatus)}
+              </p>
             </div>
           </div>
         </div>

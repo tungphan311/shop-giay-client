@@ -43,5 +43,29 @@ export function toastErr(error) {
   toast({ type: "error", message: errMsg });
 }
 
+export function getOrderStatusString(statusCode) {
+  switch (statusCode) {
+    case 1:
+      return "Đang chờ";
+    case 2:
+      return "Xác nhân";
+    case 3:
+      return "Đã hủy";
+    default:
+      return statusCode;
+  }
+}
+
+export function getPaymentStatusString(paymentStatus) {
+  switch (paymentStatus) {
+    case 1:
+      return "Chưa thanh toán";
+    case 2:
+      return "Đã thanh toán";
+    default:
+      return paymentStatus;
+  }
+}
+
 export * from "./Validation";
 export * from "./JwtDecoder";
