@@ -51,6 +51,14 @@ export async function cGetBrandList() {
   const path = "client/brands";
   return await API.get(path);
 }
+export async function cGetSizeList() {
+  const path = "client/sizes";
+  return await API.get(path);
+}
+export async function cGetStyleList() {
+  const path = "client/types";
+  return await API.get(path);
+}
 
 export async function cRateProduct({ shoesId, rating }) {
   const path = "client/shoes/rating";

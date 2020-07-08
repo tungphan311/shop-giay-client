@@ -16,8 +16,6 @@ const CPagination = ({ category, total, per_page, current_page }) => {
 
   let nextPage = 0;
   let prevPage = 0;
-  let showPrevButton = false;
-  let showNextButton = false;
 
   if (pageNumber.length > 1) {
     renderPageNumbers = pageNumber.map((number) => {
@@ -35,32 +33,30 @@ const CPagination = ({ category, total, per_page, current_page }) => {
     });
 
     if (current_page < pageNumber.length) {
-      showNextButton = true;
       nextPage = parseInt(current_page) + 1;
     }
     if (current_page > 1) {
-      showPrevButton = true;
       prevPage = parseInt(current_page) - 1;
     }
   }
 
   return (
     <div className="pagination">
-      <span
-        style={{ display: { showPrevButton } ? "block" : "none" }}
-        key={0}
-        onClick={() => history.push(href_path + prevPage)}
-      >
-        &laquo;
-      </span>
+      {current_page > 1 && (
+        <span key={0} onClick={() => history.push(href_path + prevPage)}>
+          &laquo;
+        </span>
+      )}
+
       {renderPageNumbers}
-      <span
-        style={{ display: { showNextButton } ? "block" : "none" }}
-        key={pageNumber.length + 1}
-        onClick={() => history.push(href_path + nextPage)}
-      >
-        &raquo;
-      </span>
+      {current_page < pageNumber.length && (
+        <span
+          key={pageNumber.length + 1}
+          onClick={() => history.push(href_path + nextPage)}
+        >
+          &raquo;
+        </span>
+      )}
     </div>
   );
 };

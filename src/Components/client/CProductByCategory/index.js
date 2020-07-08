@@ -112,7 +112,6 @@ const CProductByCategory = ({ id, pageNumber }) => {
             )}
             <div className="content">
               <div className="pagination-wrapper">
-                {" "}
                 <CPagination
                   category={label}
                   total={total}
