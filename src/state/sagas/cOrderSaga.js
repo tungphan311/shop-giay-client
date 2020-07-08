@@ -32,16 +32,9 @@ function* placeOrder(action) {
 function* getOrder(action) {
   try {
     const { page, pageSize } = action.payload;
-<<<<<<< HEAD
 
     const res = yield call(cGetOrder, { page, pageSize });
 
-=======
-    const {
-      data: { code, data, totalRecords },
-    } = yield call(cGetOrder, { page, pageSize });
-    const res = { code, data, totalRecords };
->>>>>>> fix saga
     yield call(resolvePromiseAction, action, res);
   } catch (error) {
     toastErr(error);
