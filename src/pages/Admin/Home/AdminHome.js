@@ -142,6 +142,42 @@ function AdminHome() {
           </div>
         </div>
       </div>
+      <div className="row" style={{ marginBottom: "16px" }}>
+        <div className="col-12">
+          <div className="row align-items-end">
+            <div className="col-12 col-sm-8">
+              <div className="d-flex flex-wrap justify-content-start">
+                <div className="general-time mr-2">
+                  <p>Thời gian</p>
+                  <ADateRangePicker
+                    startDate={startDate}
+                    endDate={endDate}
+                    handleApply={handleApplyDatepicker}
+                  />
+                </div>
+                <div className="general-target">
+                  <p>Đối tượng</p>
+                  <AProductSelect
+                    options={TARGET}
+                    selectedOption={target}
+                    onChange={(select) => setTarget(select)}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-12 col-sm-4">
+              <div className="general-refresh">
+                <p className="mb-0 mr-2">
+                  đã cập nhật <strong>1 phút trước</strong>{" "}
+                </p>
+                <button className="btn btn-primary" onClick={handleUpdate}>
+                  Cập nhật
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="row">
         <div className="col-lg-12">
           <div className="card">
