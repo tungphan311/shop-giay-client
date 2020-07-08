@@ -25,35 +25,31 @@ import { TOKEN_KEY, CART_KEY } from "constants/index";
 import { cGetProductDetail } from "services/cProductService";
 
 function* addProductToCart(action) {
-  const token = localStorage.getItem(TOKEN_KEY);
-  const { id, size, stockId } = action.payload;
-  if (!token) {
-    let cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+  try {
+    const token = localStorage.getItem(TOKEN_KEY);
+    const { id, size, stockId } = action.payload;
+    if (!token) {
+      let cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
 
-    let obj = cart.find((x) => x.stockId === stockId && x.shoesId === id);
+      let obj = cart.find((x) => x.stockId === stockId && x.shoesId === id);
 
-    if (obj) obj.quantity += 1;
-    else cart.push({ shoesId: id, stockId, quantity: 1 });
+      if (obj) obj.quantity += 1;
+      else cart.push({ shoesId: id, stockId, quantity: 1 });
 
-    localStorage.setItem(CART_KEY, JSON.stringify(cart));
-    yield call(history.push, "/cart");
-    toast({ message: "Thêm thành công" });
-    return;
-  }
-
-  const {
-    data: { code },
-  } = yield call(cAddProductToCart, { shoesId: id, sizeName: size, stockId });
-
-  switch (code) {
-    case "OK":
+      localStorage.setItem(CART_KEY, JSON.stringify(cart));
       yield call(history.push, "/cart");
       toast({ message: "Thêm thành công" });
-      break;
-    default:
-      yield put({ type: ACTION_FORCE_LOGOUT });
-      yield call(history.push, "/login");
-      toastErr("Vui lòng đăng nhập lại");
+      return;
+    }
+
+    yield call(cAddProductToCart, { shoesId: id, sizeName: size, stockId });
+
+    yield call(history.push, "/cart");
+    toast({ message: "Thêm thành công" });
+  } catch (err) {
+    yield put({ type: ACTION_FORCE_LOGOUT });
+    yield call(history.push, "/login");
+    yield toastErr(err);
   }
 }
 
@@ -89,7 +85,7 @@ function* getCartItems(action) {
     }
 
     const {
-      data: { code, data },
+      data: { data },
     } = yield call(cGetCartItems);
 
     yield put({
@@ -100,107 +96,103 @@ function* getCartItems(action) {
     yield put({ type: ACTION_GET_CART_ITEMS_FAIL });
     yield put({ type: ACTION_FORCE_LOGOUT });
     history.push("/login");
-    toastErr("Vui lòng đăng nhập");
+    yield toastErr(error);
   }
 }
 
 function* updateCart(action) {
-  const { data } = action.payload;
+  try {
+    const { data } = action.payload;
 
-  const token = localStorage.getItem(TOKEN_KEY);
+    const token = localStorage.getItem(TOKEN_KEY);
 
-  let list = [];
-  for (let stockId in data) {
-    list.push({ stockId, quantity: data[stockId] });
-  }
-  if (!token) {
-    let cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
-    list.map((item) => {
-      if (parseInt(item.quantity) === 0)
-        cart = cart.filter((x) => JSON.stringify(x.stockId) !== item.stockId);
-      else {
-        let obj = cart.find((x) => JSON.stringify(x.stockId) === item.stockId);
-        if (obj) {
-          obj.quantity = item.quantity;
+    let list = [];
+    for (let stockId in data) {
+      list.push({ stockId, quantity: data[stockId] });
+    }
+    if (!token) {
+      let cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+      list.map((item) => {
+        if (parseInt(item.quantity) === 0)
+          cart = cart.filter((x) => JSON.stringify(x.stockId) !== item.stockId);
+        else {
+          let obj = cart.find(
+            (x) => JSON.stringify(x.stockId) === item.stockId
+          );
+          if (obj) {
+            obj.quantity = item.quantity;
+          }
         }
-      }
-      // eslint-disable-next-line array-callback-return
-      return;
-    });
-    localStorage.setItem(CART_KEY, JSON.stringify(cart));
-    yield put({ type: ACTION_GET_CART_ITEMS });
-    toast({ message: "Cập nhật thành công" });
-    return;
-  }
-
-  const {
-    data: { code, data: newData },
-  } = yield call(cUpdateCart, list);
-  switch (code) {
-    case "OK":
-      yield put({
-        type: ACTION_UPDATE_CART_SUCCESS,
-        payload: { data: JSON.parse(newData) },
+        // eslint-disable-next-line array-callback-return
+        return;
       });
-      toast({ message: "Cập nhật thành công" });
-      break;
-    default:
-      yield put({ type: ACTION_UPDATE_CART_FAIL });
-      yield put({ type: ACTION_FORCE_LOGOUT });
-      yield call(history.push, "/login");
-      toastErr("Vui lòng đăng nhập lại");
+      localStorage.setItem(CART_KEY, JSON.stringify(cart));
+      yield put({ type: ACTION_GET_CART_ITEMS });
+      yield toast({ message: "Cập nhật thành công" });
+      return;
+    }
+
+    const {
+      data: { data: newData },
+    } = yield call(cUpdateCart, list);
+    yield put({
+      type: ACTION_UPDATE_CART_SUCCESS,
+      payload: { data: JSON.parse(newData) },
+    });
+    yield toast({ message: "Cập nhật thành công" });
+  } catch (err) {
+    yield put({ type: ACTION_UPDATE_CART_FAIL });
+    yield put({ type: ACTION_FORCE_LOGOUT });
+    yield call(history.push, "/login");
+    yield toastErr(err);
   }
 }
 
 function* removeCart(action) {
-  const { stockId } = action.payload;
+  try {
+    const { stockId } = action.payload;
 
-  const token = localStorage.getItem(TOKEN_KEY);
+    const token = localStorage.getItem(TOKEN_KEY);
 
-  if (!token) {
-    let cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
-    cart = cart.filter((x) => x.stockId !== stockId);
-    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    if (!token) {
+      let cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+      cart = cart.filter((x) => x.stockId !== stockId);
+      localStorage.setItem(CART_KEY, JSON.stringify(cart));
 
-    yield put({ type: ACTION_GET_CART_ITEMS });
-    toast({ message: "Cập nhật thành công" });
-    return;
-  }
+      yield put({ type: ACTION_GET_CART_ITEMS });
+      toast({ message: "Cập nhật thành công" });
+      return;
+    }
 
-  const {
-    data: { code, data: newData },
-  } = yield call(cRemoveCart, stockId);
-  switch (code) {
-    case "OK":
-      yield put({
-        type: ACTION_UPDATE_CART_SUCCESS,
-        payload: { data: JSON.parse(newData) },
-      });
-      toast({ message: "Xóa sản phẩm thành công" });
-      break;
-    default:
-      yield put({ type: ACTION_UPDATE_CART_FAIL });
-      yield put({ type: ACTION_FORCE_LOGOUT });
-      yield call(history.push, "/login");
-      toastErr("Vui lòng đăng nhập lại");
+    const {
+      data: { data: newData },
+    } = yield call(cRemoveCart, stockId);
+    yield put({
+      type: ACTION_UPDATE_CART_SUCCESS,
+      payload: { data: JSON.parse(newData) },
+    });
+    toast({ message: "Xóa sản phẩm thành công" });
+  } catch (err) {
+    yield put({ type: ACTION_UPDATE_CART_FAIL });
+    yield put({ type: ACTION_FORCE_LOGOUT });
+    yield toastErr(err);
+    yield call(history.push, "/login");
   }
 }
 
 function* syncCart(action) {
-  const cart = JSON.parse(localStorage.getItem(CART_KEY));
-  const {
-    data: { code, data },
-  } = yield call(cSyncCart, cart);
-  switch (code) {
-    case "OK":
-      yield put({
-        type: ACTION_GET_CART_ITEMS_SUCCESS,
-        payload: { data: JSON.parse(data) },
-      });
-      localStorage.removeItem(CART_KEY);
-      break;
-    default:
-    //??
+  try {
+    const cart = JSON.parse(localStorage.getItem(CART_KEY));
+    const {
+      data: { data },
+    } = yield call(cSyncCart, cart);
+    yield put({
+      type: ACTION_GET_CART_ITEMS_SUCCESS,
+      payload: { data: JSON.parse(data) },
+    });
+    localStorage.removeItem(CART_KEY);
+  } catch (err) {
+    yield toastErr(err);
   }
 }
 
