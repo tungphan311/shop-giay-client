@@ -11,36 +11,40 @@ import {
 } from "@adobe/redux-saga-promise";
 
 function* placeOrder(action) {
-  //const { paymentMethod, shippingMethod } = action.payload;
-  const { id } = yield select((state) => state.corder.address);
+  try {
+    //const { paymentMethod, shippingMethod } = action.payload;
+    const { id } = yield select((state) => state.corder.address);
 
-  const {
-    data: { code, data },
-  } = yield cPlaceOrder({ id });
+    const {
+      data: { data },
+    } = yield cPlaceOrder({ id });
 
-  switch (code) {
-    case "OK":
-      const parsed = JSON.parse(data);
-      history.push("/order/" + parsed.id);
-      toast({ message: "Đặt đơn hàng thành công" });
-      break;
-    default:
-      yield put({ type: ACTION_FORCE_LOGOUT });
-      toastErr("Vui lòng đăng nhập");
-      history.push("/login");
+    const parsed = JSON.parse(data);
+    history.push("/order/" + parsed.id);
+    toast({ message: "Đặt đơn hàng thành công" });
+  } catch (err) {
+    yield put({ type: ACTION_FORCE_LOGOUT });
+    yield toastErr(err);
+    history.push("/login");
   }
 }
 
 function* getOrder(action) {
   try {
     const { page, pageSize } = action.payload;
+<<<<<<< HEAD
 
     const res = yield call(cGetOrder, { page, pageSize });
 
+=======
+    const {
+      data: { code, data, totalRecords },
+    } = yield call(cGetOrder, { page, pageSize });
+    const res = { code, data, totalRecords };
+>>>>>>> fix saga
     yield call(resolvePromiseAction, action, res);
   } catch (error) {
     toastErr(error);
-
     history.push("/login");
   }
 }

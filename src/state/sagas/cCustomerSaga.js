@@ -15,58 +15,55 @@ import { cAddorUpdateAddress } from "services/cCustomerService";
 import { ACTION_FORCE_LOGOUT } from "../reducers/cAuthReducer";
 
 function* getAddresses() {
-  const {
-    data: { code, data },
-  } = yield cGetAddresses();
-  switch (code) {
-    case "OK":
-      yield put({
-        type: ACTION_GET_ADDRESSES_SUCCESS,
-        payload: { data: JSON.parse(data) },
-      });
-      break;
-    default:
-      yield put({ type: ACTION_GET_ADDRESSES_FAIL });
-      yield history.push("/login");
-      yield toastErr("Vui lòng đăng nhập lại");
+  try {
+    const {
+      data: { data },
+    } = yield cGetAddresses();
+
+    yield put({
+      type: ACTION_GET_ADDRESSES_SUCCESS,
+      payload: { data: JSON.parse(data) },
+    });
+  } catch (err) {
+    yield put({ type: ACTION_GET_ADDRESSES_FAIL });
+    yield history.push("/login");
+    yield toastErr(err);
   }
 }
 
 function* updateAddress() {
-  const {
-    id,
-    fullName,
-    phoneNumber,
-    city,
-    district,
-    ward,
-    street,
-  } = yield select((state) => getFormValues(ADDRESS_FORM_KEY)(state));
+  try {
+    const {
+      id,
+      fullName,
+      phoneNumber,
+      city,
+      district,
+      ward,
+      street,
+    } = yield select((state) => getFormValues(ADDRESS_FORM_KEY)(state));
 
-  const {
-    data: { code, data },
-  } = yield cAddorUpdateAddress({
-    id,
-    name: fullName,
-    phoneNumber,
-    city: city.label,
-    district: district.label,
-    ward: ward.label,
-    street,
-  });
-  switch (code) {
-    case "OK":
-      yield put({
-        type: ACTION_GET_ADDRESSES_SUCCESS,
-        payload: { data: JSON.parse(data) },
-      });
-      yield put({ type: ACTION_HIDE_ADDRESS_FORM });
-      break;
-    default:
-      yield put({ type: ACTION_HIDE_ADDRESS_FORM });
-      yield put({ type: ACTION_FORCE_LOGOUT });
-      toastErr("Vui lòng đăng nhập");
-      history.push("/login");
+    const {
+      data: { data },
+    } = yield cAddorUpdateAddress({
+      id,
+      name: fullName,
+      phoneNumber,
+      city: city.label,
+      district: district.label,
+      ward: ward.label,
+      street,
+    });
+    yield put({
+      type: ACTION_GET_ADDRESSES_SUCCESS,
+      payload: { data: JSON.parse(data) },
+    });
+    yield put({ type: ACTION_HIDE_ADDRESS_FORM });
+  } catch (err) {
+    yield put({ type: ACTION_HIDE_ADDRESS_FORM });
+    yield put({ type: ACTION_FORCE_LOGOUT });
+    yield toastErr(err);
+    history.push("/login");
   }
 }
 

@@ -47,3 +47,12 @@ export async function cRateProduct({ shoesId, rating }) {
     }
   );
 }
+
+export async function cGetProducts({ isNew, pageSize, gender }) {
+  const path = "client/shoes";
+  const params = {};
+  if (isNew) params.new = isNew;
+  if (pageSize) params["page-size"] = pageSize;
+  if (gender) params.gender = gender;
+  return await API.get(path, { params });
+}

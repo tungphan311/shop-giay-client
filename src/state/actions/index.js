@@ -29,3 +29,4 @@ export const getProviderByIdAction = createPromiseAction("GET_PROVIDER_BY_ID");
 export const getReportAction = createPromiseAction("GET_REPORT");
 
 export * from "./client/orderAction";
+export * from "./client/productAction";
