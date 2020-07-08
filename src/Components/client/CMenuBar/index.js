@@ -10,14 +10,16 @@ const CMenuBar = ({ current_label }) => {
   const [brands, setbrands] = useState(initState);
   useEffect(() => {
     const list = cGetBrandList().then((res) => JSON.parse(res.data.data));
-    Promise.all([list]).then(([listBrands]) => {
-      setbrands((prev) => {
-        const mapData = (branditem) => ({
-          name: branditem,
+    Promise.all([list])
+      .then(([listBrands]) => {
+        setbrands((prev) => {
+          const mapData = (branditem) => ({
+            name: branditem,
+          });
+          setbrands(listBrands.map(mapData));
         });
-        setbrands(listBrands.map(mapData));
-      });
-    });
+      })
+      .catch((error) => console.log(error));
   });
   const renderBrandList = brands.map((branditem) => {
     let className_String = "";
@@ -49,6 +51,7 @@ const CMenuBar = ({ current_label }) => {
       <div className="sidebar-heading">BRAND</div>
       <div className="list-group list-group-flush">
         <a
+          key="all"
           href="/category/"
           className={
             isViewingAll

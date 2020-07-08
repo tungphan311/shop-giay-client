@@ -8,30 +8,34 @@ const initState = [
     style: [],
   },
 ];
-const CFilterBar = () => {
+const CFilterBar = ({ size_title, style_title, view }) => {
   const [size, setSize] = useState(initState);
   const [style, setStyle] = useState(initState);
+
   useEffect(() => {
     const listOfSize = cGetSizeList().then((res) => JSON.parse(res.data.data));
-    Promise.all([listOfSize]).then(([listSize]) => {
-      setSize((prev) => {
-        const mapData = (size) => ({
-          name: size,
-        });
-        setSize(listSize.map(mapData));
-      });
-    });
     const listOfStyle = cGetStyleList().then((res) =>
       JSON.parse(res.data.data)
     );
-    Promise.all([listOfStyle]).then(([listStyle]) => {
-      setStyle((prev) => {
-        const mapData = (style) => ({
-          name: style,
-        });
-        setStyle(listStyle.map(mapData));
-      });
-    });
+    Promise.all([listOfSize, listOfStyle])
+      .then(([listSize, listStyle]) => {
+        if (size.length === 1) {
+          setSize(listSize);
+        }
+        if (style.length === 1) {
+          setStyle(listStyle);
+        }
+      })
+      .catch((error) => console.log(error));
+
+    // Promise.all([listOfStyle]).then(([listStyle]) => {
+    //   setStyle((prev) => {
+    //     const mapData = (style) => ({
+    //       name: style,
+    //     });
+    //     setStyle(listStyle.map(mapData));
+    //   });
+    // });
   });
 
   const pageSizeList = [5, 10, 15, 20];
@@ -39,21 +43,25 @@ const CFilterBar = () => {
   const clearFilter = () => {
     localStorage.removeItem("View");
     localStorage.removeItem("Size");
-    console.log("cleared");
+    localStorage.removeItem("Style");
+    window.location.reload(false);
   };
   const setSizeFilter = (size) => {
     localStorage.setItem("Size", size);
+    window.location.reload(false);
   };
   const setViewFilter = (view) => {
     localStorage.setItem("View", view);
+    window.location.reload(false);
   };
   const setStyleFilter = (style) => {
     localStorage.setItem("Style", style);
+    window.location.reload(false);
   };
 
   const renderViewFilter = pageSizeList.map((number) => {
     return (
-      <NavDropdown.Item onClick={() => setViewFilter(number)}>
+      <NavDropdown.Item key={number} onClick={() => setViewFilter(number)}>
         {number}
       </NavDropdown.Item>
     );
@@ -61,20 +69,37 @@ const CFilterBar = () => {
 
   const renderStyleFilter = style.map((style_item) => {
     return (
-      <NavDropdown.Item onClick={() => setStyleFilter(style_item.name)}>
-        {style_item.name}
+      <NavDropdown.Item
+        key={style_item}
+        onClick={() => setStyleFilter(style_item)}
+      >
+        {style_item}
       </NavDropdown.Item>
     );
   });
 
   const renderSizeFilter = size.map((size_item) => {
     return (
-      <NavDropdown.Item onClick={() => setSizeFilter(size_item.name)}>
-        {size_item.name}
+      <NavDropdown.Item
+        key={size_item}
+        onClick={() => setSizeFilter(size_item)}
+      >
+        {size_item}
       </NavDropdown.Item>
     );
   });
-
+  let renderSizeTitle = "Size";
+  if (size_title !== null) {
+    renderSizeTitle = renderSizeTitle + ": " + size_title;
+  }
+  let renderViewTitle = "View";
+  if (view !== null) {
+    renderViewTitle = renderViewTitle + ": " + view;
+  }
+  let renderStyleTitle = "Size";
+  if (style_title !== null) {
+    renderStyleTitle = renderStyleTitle + ": " + style_title;
+  }
   return (
     <div className="FilterBar">
       <Navbar expand="lg">
@@ -83,13 +108,13 @@ const CFilterBar = () => {
           <Nav className="mr-auto"></Nav>
           <Form inline>
             <Nav className="mr-auto">
-              <NavDropdown title="Size" id="basic-nav-dropdown">
+              <NavDropdown title={renderSizeTitle} id="basic-nav-dropdown">
                 {renderSizeFilter}
               </NavDropdown>
-              <NavDropdown title="View" id="basic-nav-dropdown">
+              <NavDropdown title={renderViewTitle} id="basic-nav-dropdown">
                 {renderViewFilter}
               </NavDropdown>
-              <NavDropdown title="Style" id="basic-nav-dropdown">
+              <NavDropdown title={renderStyleTitle} id="basic-nav-dropdown">
                 {renderStyleFilter}
               </NavDropdown>
               <Button variant="light" onClick={() => clearFilter()}>
