@@ -1,0 +1,40 @@
+.admin-home--wrapper {
+  .general-content--info {
+    min-height: 75px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .general-time,
+  .general-target {
+    display: inline-block;
+    flex: 1;
+
+    p {
+      margin-bottom: 10px;
+    }
+  }
+
+  .general-title {
+    flex-grow: 1;
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 600;
+    text-transform: capitalize;
+    display: inline-block;
+  }
+
+  .general-bestsale--nodata {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .general-refresh {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 16px;
+  }
+}

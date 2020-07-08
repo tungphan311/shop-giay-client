@@ -8,8 +8,6 @@ import {
   getProviderByIdAction,
   updateProviderAction,
 } from "state/actions/index";
-import { reset } from "redux-form";
-import { FORM_KEY_ADD_PROVIDER } from "state/reducers/formReducer";
 import { toast, toastErr } from "utils/index";
 
 function AProviderEdit({
