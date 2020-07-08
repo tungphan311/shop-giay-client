@@ -1,11 +1,10 @@
-import { takeEvery, select, put } from "redux-saga/effects";
+import { takeEvery, select, put, call } from "redux-saga/effects";
 import { ACTION_PLACE_ORDER } from "state/reducers/cOrderReducer";
 import { toast, toastErr } from "utils";
 import { cPlaceOrder, cGetOrder } from "services/cOrderService";
 import { ACTION_FORCE_LOGOUT } from "../reducers/cAuthReducer";
 import history from "state/history";
 import { clientGetOrderAction } from "state/actions/index";
-import { call } from "file-loader";
 import {
   resolvePromiseAction,
   rejectPromiseAction,
@@ -36,11 +35,7 @@ function* getOrder(action) {
   try {
     const { page, pageSize } = action.payload;
 
-    const {
-      data: { code, data, totalRecords },
-    } = yield call(cGetOrder, { page, pageSize });
-
-    const res = { code, data, totalRecords };
+    const res = yield call(cGetOrder, { page, pageSize });
 
     yield call(resolvePromiseAction, action, res);
   } catch (error) {

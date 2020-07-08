@@ -55,7 +55,7 @@ const Order = () => {
     dispatch(clientGetOrderAction({ page, pageSize: DEFAULT_PAGESIZE })).then(
       (res) => {
         const {
-          data: { data, totalRecords },
+          data: { data, total: totalRecords },
         } = res;
 
         const parsed = JSON.parse(data);
@@ -64,10 +64,6 @@ const Order = () => {
         setLoading(false);
       }
     );
-    // setTimeout(() => {
-    //   setOrderList([...getOrders(page)]);
-    //   setLoading(false);
-    // }, 1000);
   }, []);
 
   return (
