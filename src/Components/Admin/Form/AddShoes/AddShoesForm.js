@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Field, reduxForm, FieldArray } from "redux-form";
+import { Field, reduxForm, FieldArray, isDirty } from "redux-form";
 import { FORM_KEY_ADDSHOES } from "state/reducers/formReducer";
 import { connect } from "react-redux";
 import AInput from "Components/Admin/AInput/input";
@@ -210,5 +210,6 @@ export default connect((state, props) => {
             formatData(state.aShoes.sizes.find((e) => e.Id === ele.SizeId)),
         })),
     },
+    shouldError: () => isDirty(FORM_KEY_ADDSHOES)(state),
   };
 }, null)(AAddShoesForm);

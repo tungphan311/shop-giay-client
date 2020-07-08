@@ -32,6 +32,9 @@ import AOrderDetail from "pages/Admin/OrderDetail/OrderDetail";
 import AErrorPage from "pages/Admin/404Error/Error";
 import { SET_AUTHORIZE } from "state/reducers/aLoadingReducer";
 import { connect } from "react-redux";
+import AProviderList from "pages/Admin/ProviderList/ProviderList";
+import AAddProvider from "pages/Admin/AddProvider/AddProvider";
+import AProviderEdit from "pages/Admin/ProviderEdit/ProviderEdit";
 
 // component for admin site to determine user is logined or not
 export const AuthorizedRoute = ({ component: Component, isUser, ...rest }) => (
@@ -165,6 +168,9 @@ class Routes extends Component {
             "/admin/promotion/add",
             "/admin/orders",
             "/admin/orders/:id",
+            "/admin/provider",
+            "/admin/add-provider",
+            "/admin/provider/:id",
             "/admin/*",
           ]}
         >
@@ -238,8 +244,26 @@ class Routes extends Component {
               />
               <AuthorizedRoute
                 exact
+                path="/admin/provider"
+                component={AProviderList}
+                isUser={isUser}
+              />
+              <AuthorizedRoute
+                exact
+                path="/admin/provider/:id"
+                component={AProviderEdit}
+                isUser={isUser}
+              />
+              <AuthorizedRoute
+                exact
+                path="/admin/add-provider"
+                component={AAddProvider}
+                isUser={isUser}
+              />
+              <AuthorizedRoute
+                exact
                 path="/admin/*"
-                component={() => <AErrorPage code={401} />}
+                component={() => <AErrorPage code={404} />}
                 isUser={isUser}
               />
             </Switch>

@@ -6,7 +6,6 @@ import AProductSelect from "Components/Admin/ProductSelect/Select";
 import ExportFileModal from "Components/Admin/Modal/ExportFile";
 
 const SELECT = "select";
-const VALUE = "value";
 
 const DEFAULT_SELECTED = {
   value: { type: SELECT, name: "styleId" },

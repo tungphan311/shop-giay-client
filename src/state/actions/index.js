@@ -16,4 +16,16 @@ export const getOrderByIdAction = createPromiseAction("GET_ORDER_BY_ID");
 
 export const updateOrderAction = createPromiseAction("UPDATE_ORDER");
 
+export const getProviderAction = createPromiseAction("GET_PROVIDER");
+
+export const deleteProviderAction = createPromiseAction("DELETE_PROVIDER");
+
+export const addProviderAction = createPromiseAction("ADD_PROVIDER");
+
+export const updateProviderAction = createPromiseAction("UPDATE_PROVIDER");
+
+export const getProviderByIdAction = createPromiseAction("GET_PROVIDER_BY_ID");
+
+export const getReportAction = createPromiseAction("GET_REPORT");
+
 export * from "./client/orderAction";

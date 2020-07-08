@@ -1,20 +1,8 @@
 import React, { Component } from "react";
 import ABreadcrumb from "Components/Admin/Breadcrumb/Breadcrumb";
-import { connect } from "react-redux";
 import "./Promotion.scss";
 import { Button } from "react-bootstrap";
 import history from "state/history";
-
-const mapStateToProps = (state) => {
-  //   return {
-  //     customerInfo: getCustomerInfo(state),
-  //   };
-};
-
-const mapDispatchToProps = (dispatch) => ({
-  //   getCustomer: (id) => dispatch({ type: GET_CUSTOMER_BY_ID, id }),
-});
-
 class APromotion extends Component {
   render() {
     return (
@@ -39,7 +27,10 @@ class APromotion extends Component {
               </div>
             </div>
             <div className="col-xs-12 col-md-6 pt-2">
-              <img src="//hstatic.net/0/0/global/design/omni/discounts-init-v3.svg"></img>
+              <img
+                src="//hstatic.net/0/0/global/design/omni/discounts-init-v3.svg"
+                alt="background"
+              ></img>
             </div>
           </div>
         </div>
@@ -49,4 +40,4 @@ class APromotion extends Component {
 }
 const BREADCRUMB = [{ link: "/admin/promotion", name: "Danh sách khuyến mãi" }];
 
-export default connect(mapStateToProps, mapDispatchToProps)(APromotion);
+export default APromotion;

@@ -157,13 +157,13 @@ export function* getShoesByIdSaga({ id }) {
     let sizes = yield select((state) => state.aShoes.sizes);
 
     if (!colors.length) {
-      const res = yield call(getColors);
+      const res = yield call(getColors, { token });
       const responseJSON = res.data.data;
 
       colors = JSON.parse(responseJSON);
     }
     if (!sizes.length) {
-      const res = yield call(getSizes);
+      const res = yield call(getSizes, { token });
       const responseJSON = res.data.data;
 
       sizes = JSON.parse(responseJSON);

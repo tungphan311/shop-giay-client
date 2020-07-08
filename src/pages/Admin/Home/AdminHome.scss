@@ -1,0 +1,127 @@
+.admin-home--wrapper {
+  .general-content--info {
+    min-height: 75px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .general-time,
+  .general-target {
+    display: inline-block;
+    flex: 1;
+
+    p {
+      margin-bottom: 10px;
+    }
+  }
+
+  .general-title {
+    flex-grow: 1;
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 600;
+    text-transform: capitalize;
+    display: inline-block;
+    margin-bottom: 0;
+  }
+
+  .general-bestsale--nodata {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .general-refresh {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 16px;
+  }
+
+  .general-bestsale {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .bestsale-detail {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+    background: rgba(208, 213, 221, 0.2);
+    border-radius: 4px;
+    margin-bottom: 10px;
+
+    &:nth-child(2n) {
+      background: transparent;
+    }
+  }
+
+  .table-cell--image {
+    max-width: 50px;
+    max-height: 50px;
+    height: 50px;
+    width: 50px;
+    text-align: center;
+    border: 1px solid #ebecf0;
+    vertical-align: middle;
+    background: #fff;
+    margin: 0 auto;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .box-image {
+      max-width: 50px;
+      max-height: 50px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate3d(-50%, -50%, 0);
+    }
+  }
+
+  .bestsale-detail--image {
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+
+    .table-cell--image {
+      max-width: 40px;
+      max-height: 40px;
+      height: 40px;
+      width: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .box-image {
+        max-width: 40px;
+        max-height: 40px;
+      }
+    }
+  }
+
+  .bestsale-detail--text {
+    flex: 2;
+    padding: 0 5px;
+
+    p {
+      color: #212121;
+    }
+  }
+
+  .bestsale-detail--icon {
+    text-align: right;
+    align-self: flex-end;
+  }
+
+  .bestsale-detail-quantity {
+    font-weight: 500;
+    border-bottom: 1px dotted #000;
+    display: inline-block;
+  }
+}

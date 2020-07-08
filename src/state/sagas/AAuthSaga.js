@@ -1,5 +1,10 @@
-import { takeEvery, put, call, select } from "redux-saga/effects";
-import { LOGIN, LOGIN_SUCCESS, LOGOUT, LOGOUT_SUCCESS } from "state/reducers/AAuthReducer";
+import { takeEvery, put, call } from "redux-saga/effects";
+import {
+  LOGIN,
+  LOGIN_SUCCESS,
+  LOGOUT,
+  LOGOUT_SUCCESS,
+} from "state/reducers/AAuthReducer";
 import { login } from "services/admin/authServices";
 import history from "../history";
 import { setStorage } from "utils/storage";
