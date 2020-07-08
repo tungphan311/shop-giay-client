@@ -21,16 +21,12 @@ export function* getReportSaga(action) {
       token,
     });
 
-    console.log(result);
+    const responseJSON = result.data.data;
+    const response = JSON.parse(responseJSON);
 
-    // const responseJSON = result.data.data;
-    // const { total } = result.data;
+    console.log(response);
 
-    // const response = JSON.parse(responseJSON);
-
-    // const res = { total, response };
-
-    // yield call(resolvePromiseAction, action, res);
+    yield call(resolvePromiseAction, action, response);
   } catch (err) {
     const {
       response: { status },

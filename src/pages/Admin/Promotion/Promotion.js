@@ -27,7 +27,10 @@ class APromotion extends Component {
               </div>
             </div>
             <div className="col-xs-12 col-md-6 pt-2">
-              <img src="//hstatic.net/0/0/global/design/omni/discounts-init-v3.svg"></img>
+              <img
+                src="//hstatic.net/0/0/global/design/omni/discounts-init-v3.svg"
+                alt="background"
+              ></img>
             </div>
           </div>
         </div>

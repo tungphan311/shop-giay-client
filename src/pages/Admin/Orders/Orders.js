@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, Component } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import ABreadcrumb from "Components/Admin/Breadcrumb/Breadcrumb";
 import { Link } from "react-router-dom";
 import "./Orders.scss";
@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { getOrderAction, updateOrderAction } from "state/actions/index";
 import APagination from "Components/Admin/Pagination/Pagination";
 import { NoDataComponent } from "utils/utils";
-import { formatDateTime, formatDate } from "utils/helper";
+import { formatDateTime } from "utils/helper";
 import history from "state/history";
 import qs from "query-string";
 import { useReactToPrint } from "react-to-print";
@@ -72,7 +72,7 @@ function AOrders({ location: { search } }) {
   };
 
   useEffect(() => {
-    let { page, "page-size": pageSize, ...filter } = qs.parse(search);
+    let { page, "page-size": pageSize } = qs.parse(search);
 
     page = page || 1;
     pageSize = pageSize || 10;
