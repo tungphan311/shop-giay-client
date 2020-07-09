@@ -1,9 +1,16 @@
-import React, { Component } from "react";
+import React from "react";
 import { reduxForm, Field } from "redux-form";
 import CInput from "../CInput/index";
 import CButton from "Components/client/CButton";
-import { require } from "utils/index";
+import {
+  require,
+  password,
+  dateOfBirth,
+  email,
+  phoneNumber,
+} from "utils/index";
 import Cleave from "cleave.js/react";
+import { connect } from "react-redux";
 
 export const SIGNUP_FORM_KEY = "FORM/SIGNUP";
 
@@ -65,7 +72,7 @@ function CSignupForm({ handleSubmit }) {
       <Field
         type="password"
         component={CInput}
-        validate={[require]}
+        validate={[require, password]}
         name="password"
         label="Mật khẩu"
         labelClassName="username-label"
@@ -96,7 +103,7 @@ function CSignupForm({ handleSubmit }) {
               delimiter: "/",
             }}
             component={CleaveInput}
-            validate={[require]}
+            validate={[require, dateOfBirth]}
           />
         </div>
         <div className="input__container">
@@ -104,7 +111,6 @@ function CSignupForm({ handleSubmit }) {
           <div>
             <Field
               component="select"
-              validate={[]}
               name="gender"
               label="Giới tính"
               labelClassName="username-label"
@@ -118,7 +124,7 @@ function CSignupForm({ handleSubmit }) {
       </div>
       <Field
         component={CInput}
-        validate={[require]}
+        validate={[require, email]}
         name="email"
         label="Địa chỉ email"
         labelClassName="username-label"
@@ -127,8 +133,8 @@ function CSignupForm({ handleSubmit }) {
         icon="email"
       />
       <Field
-        component={CleaveInput}
-        validate={[require]}
+        component={CInput}
+        validate={[require, phoneNumber]}
         name="phoneNumber"
         label="Số điện thoại"
         labelClassName="username-label"
@@ -141,6 +147,15 @@ function CSignupForm({ handleSubmit }) {
     </form>
   );
 }
-export default reduxForm({
+
+CSignupForm = reduxForm({
   form: SIGNUP_FORM_KEY,
 })(CSignupForm);
+
+CSignupForm = connect(() => ({
+  initialValues: {
+    gender: "male",
+  },
+}))(CSignupForm);
+
+export default CSignupForm;
