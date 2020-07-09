@@ -1,0 +1,22 @@
+.navbar {
+  background-color: #3b3b3b;
+  border-radius: 5px;
+  margin: 0 15px 0 5px;
+}
+.navbar .navbar-nav .nav-item .nav-link {
+  color: white;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.dropdown-item:focus,
+.dropdown-item:hover {
+  color: orange !important;
+  background-color: transparent !important;
+}
+.dropdown-menu {
+  background-color: #3b3b3b !important;
+}
+.dropdown-item {
+  color: white !important;
+}

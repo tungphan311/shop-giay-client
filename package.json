@@ -7,7 +7,6 @@
     "@adobe/redux-saga-promise": "^1.1.1",
     "@babel/core": "7.9.0",
     "@fortawesome/fontawesome-free": "^5.13.0",
-    "@material-ui/core": "^4.9.14",
     "@material-ui/lab": "^4.0.0-alpha.53",
     "@svgr/webpack": "4.3.3",
     "@testing-library/jest-dom": "^4.2.4",

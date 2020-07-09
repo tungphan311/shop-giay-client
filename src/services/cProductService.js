@@ -34,6 +34,43 @@ export async function cGetRelatedProducts(id) {
   const path = "client/shoes?page-size=6";
   return await API.get(path);
 }
+export async function cGetProductList(id) {
+  const path = "client/shoes?page-size=6";
+  return await API.get(path);
+}
+export async function cGetProductListByBrand(
+  id,
+  pageNumber,
+  pageSize,
+  style,
+  size
+) {
+  let path = `client/shoes?page-size=${pageSize}`;
+  let params = { brand: id, page: pageNumber };
+  if (id === "Danh sách sản phẩm") {
+    return await API.get(path);
+  }
+  if (style !== "") {
+    path = path + "&style=" + style;
+  }
+  if (size !== 0) {
+    path = path + "&size=" + size;
+  }
+
+  return await API.get(path, { params });
+}
+export async function cGetBrandList() {
+  const path = "client/brands";
+  return await API.get(path);
+}
+export async function cGetSizeList() {
+  const path = "client/sizes";
+  return await API.get(path);
+}
+export async function cGetStyleList() {
+  const path = "client/types";
+  return await API.get(path);
+}
 
 export async function cRateProduct({ shoesId, rating }) {
   const path = "client/shoes/rating";
