@@ -20,7 +20,7 @@ const CMenuBar = ({ current_label }) => {
         });
       })
       .catch((error) => console.log(error));
-  });
+  }, []);
   const renderBrandList = brands.map((branditem) => {
     let className_String = "";
     let href_string = "/category/" + branditem.name;

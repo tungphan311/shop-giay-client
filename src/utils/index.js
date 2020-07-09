@@ -10,19 +10,26 @@ export const stringTruncate = (str, length = 50, ending = "") =>
     : str.substring(0, length - ending.length) + ending);
 
 export const vietNamCurrency = (value) => {
-  const space_every_nr = 3;
-  const character = ".";
-  let count = 0;
-  value = value + "";
-  let insert_string = value;
-  for (let i = value.length - space_every_nr; i > 0; i -= space_every_nr) {
-    insert_string =
-      insert_string.substring(0, i) +
-      character +
-      insert_string.substring(i, value.length + count);
-    count++;
-  }
-  return insert_string + "₫";
+  // const space_every_nr = 3;
+  // const character = ".";
+  // let count = 0;
+  // value = value + "";
+  // let insert_string = value;
+  // for (let i = value.length - space_every_nr; i > 0; i -= space_every_nr) {
+  //   insert_string =
+  //     insert_string.substring(0, i) +
+  //     character +
+  //     insert_string.substring(i, value.length + count);
+  //   count++;
+  // }
+  // return insert_string + "₫";
+
+  const cur = value.toLocaleString("it-IT", {
+    style: "currency",
+    currency: "VND",
+  });
+
+  return cur;
 };
 
 export function toast({ type = "success", message = "" }) {
@@ -38,7 +45,6 @@ export function toastErr(error) {
 
   toast({ type: "error", message: errMsg });
 }
-
 
 export * from "./Validation";
 export * from "./JwtDecoder";

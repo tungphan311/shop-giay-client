@@ -94,7 +94,6 @@ const CProductByCategory = ({ id, pageNumber }) => {
           return newState;
         }, setIsLoading(false));
       })
-
       .catch((error) => console.log(error));
 
     Promise.all([total]).then(([totalRecords]) => {
@@ -161,12 +160,10 @@ const CProductByCategory = ({ id, pageNumber }) => {
               </div>
 
               <div className="item-wrapper">
-                {!isLoading ? (
-                  total !== 0 ? (
-                    <Content />
-                  ) : (
-                    <CLoadingIndicator />
-                  )
+                {isLoading ? (
+                  <CLoadingIndicator />
+                ) : total !== 0 ? (
+                  <Content />
                 ) : (
                   <NoDataComponent title="sản phẩm" />
                 )}
