@@ -1,10 +1,17 @@
 import { takeEvery, select, put, call } from "redux-saga/effects";
 import { ACTION_PLACE_ORDER } from "state/reducers/cOrderReducer";
 import { toast, toastErr } from "utils";
-import { cPlaceOrder, cGetOrder } from "services/cOrderService";
+import {
+  cPlaceOrder,
+  cGetOrder,
+  cGetOrderDetail,
+} from "services/cOrderService";
 import { ACTION_FORCE_LOGOUT } from "../reducers/cAuthReducer";
 import history from "state/history";
-import { clientGetOrderAction } from "state/actions/index";
+import {
+  clientGetOrderAction,
+  clientGetOrderByIdAction,
+} from "state/actions/index";
 import {
   resolvePromiseAction,
   rejectPromiseAction,
@@ -42,7 +49,20 @@ function* getOrder(action) {
   }
 }
 
+function* getOrderById(action) {
+  try {
+    const { id } = action.payload;
+
+    const res = yield call(cGetOrderDetail, id);
+
+    yield call(resolvePromiseAction, action, res);
+  } catch (error) {
+    toastErr(error);
+  }
+}
+
 export default function* cOrderSaga() {
   yield takeEvery(ACTION_PLACE_ORDER, placeOrder);
   yield takeEvery(clientGetOrderAction, getOrder);
+  yield takeEvery(clientGetOrderByIdAction, getOrderById);
 }

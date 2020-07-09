@@ -4,6 +4,8 @@ import history from "state/history";
 import { vietNamCurrency } from "utils";
 import { cGetOrderDetail } from "services/cOrderService";
 import { getOrderStatusString, getPaymentStatusString } from "utils/index";
+import { useDispatch } from "react-redux";
+import { clientGetOrderByIdAction } from "state/actions/index";
 
 const orderIntialState = {
   cartItemDTOList: [],
@@ -15,18 +17,13 @@ function OrderDetail({
   },
 }) {
   const [order, setOrder] = useState(orderIntialState);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    cGetOrderDetail(id).then((res) => {
-      const {
-        data: { code, data },
-      } = res;
-      if (code === "OK") {
-        const parsed = JSON.parse(data);
-        setOrder(parsed);
-      } else history.push("/login");
+    dispatch(clientGetOrderByIdAction({ id })).then(({ data: { data } }) => {
+      const parsed = JSON.parse(data);
+      setOrder(parsed);
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const {
