@@ -18,7 +18,7 @@ class AAddAccountForm extends Component {
     ];
     return (
       <form className="AAddAccountForm" onSubmit={handleSubmit}>
-        <div className="card">
+        <div className="card mt-5">
           <div className="card-body">
             <div className="card-title">Thêm tài khoản</div>
             <Field
@@ -110,6 +110,10 @@ export default connect((state, props) => {
         email: data.Email,
         phoneNumber: data.PhoneNumber,
       },
+    };
+  } else {
+    return {
+      initialValues: {},
     };
   }
 }, null)(AAddAccountForm);

@@ -140,7 +140,7 @@ function Routes() {
           "/admin/orders",
           "/admin/account",
           "/admin/account/:id",
-          "/admin/account/add",
+          "/admin/account-add",
         ]}
       >
         <AdminLayout>
@@ -212,7 +212,7 @@ function Routes() {
           />
           <AuthorizedRoute
             exact
-            path="/admin/account/add"
+            path="/admin/account-add"
             component={AAddAccount}
             isUser={isUser}
           />
