@@ -20,7 +20,9 @@ class AAddAccountForm extends Component {
       <form className="AAddAccountForm" onSubmit={handleSubmit}>
         <div className="card mt-5">
           <div className="card-body">
-            <div className="card-title">Thêm tài khoản</div>
+            <div className="card-title">{`${
+              type === "add" ? "Thêm tài khoản" : "Cập nhật tài khoản"
+            }`}</div>
             <Field
               label="Tên"
               name="name"

@@ -17,9 +17,7 @@ function AAddAccount() {
       <ABreadcrumb title="Cập nhật thông tin giày" list={BREADCRUMB} />
       <div className="row">
         <div className="col-md-12">
-          <div className="card">
-            <AAddAccountForm type="add" onSubmit={handleSubmit} />
-          </div>
+          <AAddAccountForm type="add" onSubmit={handleSubmit} />
         </div>
       </div>
     </div>

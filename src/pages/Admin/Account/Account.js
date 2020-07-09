@@ -30,7 +30,7 @@ function AAccount() {
       phoneNumber: s.PhoneNumber,
       userName: s.Username,
       email: s.Email,
-      role: s.RoleId === 1 ? "Nhân viên" : "Quản lý",
+      role: s.RoleId === 1 ? "Quản lý" : "Nhân viên",
     }));
   };
 

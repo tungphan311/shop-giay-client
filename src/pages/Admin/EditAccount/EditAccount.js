@@ -35,24 +35,27 @@ class AEditAccount extends Component {
   render() {
     const { id } = this.state;
     const { handleSubmit } = this.props;
+
+    const BREADCRUMB = [
+      { link: "/admin/account", name: "Tài Khoản" },
+      { link: `/admin/account/${id}`, name: `#${id}` },
+    ];
+
     return (
       <div>
         <ABreadcrumb title="Cập nhật thông tin giày" list={BREADCRUMB} />
         <div className="row">
           <div className="col-md-12">
-            <div className="card">
-              <AAddAccountForm
-                id={id}
-                onSubmit={() => handleSubmit(id)}
-                type="edit"
-              />
-            </div>
+            <AAddAccountForm
+              id={id}
+              onSubmit={() => handleSubmit(id)}
+              type="edit"
+            />
           </div>
         </div>
       </div>
     );
   }
 }
-const BREADCRUMB = [{ link: "/admin/account", name: "Quản Tài Khoản" }];
 
 export default connect(null, mapDispatchToProps)(AEditAccount);
