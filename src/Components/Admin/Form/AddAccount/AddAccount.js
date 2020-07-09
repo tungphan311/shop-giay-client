@@ -5,9 +5,10 @@ import { FORM_KEY_ADDACCOUNT } from "state/reducers/formReducer";
 import AMultiSelect from "Components/Admin/ProductSelect/MultiSelect";
 import { requireForm, matchPassword } from "utils/Validation";
 import "./AddAccount.scss";
+import { connect } from "react-redux";
 class AAddAccountForm extends Component {
   render() {
-    const { handleSubmit } = this.props;
+    const { handleSubmit, type } = this.props;
     const roles = [
       {
         value: 1,
@@ -57,24 +58,28 @@ class AAddAccountForm extends Component {
               validate={[requireForm]}
               component={AInput}
             />
-            <Field
-              label="Mật khẩu"
-              type="password"
-              name="password"
-              validate={[requireForm]}
-              component={AInput}
-            />
-            <Field
-              type="password"
-              label="Xác nhận mật khẩu"
-              name="confirmPassword"
-              validate={[requireForm, matchPassword]}
-              component={AInput}
-            />
+            {type === "edit" ? undefined : (
+              <div>
+                <Field
+                  label="Mật khẩu"
+                  type="password"
+                  name="password"
+                  validate={[requireForm]}
+                  component={AInput}
+                />
+                <Field
+                  type="password"
+                  label="Xác nhận mật khẩu"
+                  name="confirmPassword"
+                  validate={[requireForm, matchPassword]}
+                  component={AInput}
+                />
+              </div>
+            )}
           </div>
           <div className="card-action">
             <button class="btn btn-success block" type="submit">
-              Submit
+              {type === "edit" ? "Thay Đổi" : "Thêm Mới"}
             </button>
           </div>
         </div>
@@ -91,4 +96,20 @@ AAddAccountForm = reduxForm({
   enableReinitialize: true,
 })(AAddAccountForm);
 
-export default AAddAccountForm;
+export default connect((state, props) => {
+  const data = state.aAccount.accountEdit;
+  if (props.type === "edit") {
+    return {
+      initialValues: {
+        name: data.Name,
+        userName: data.Username,
+        roleId: {
+          value: data.Id,
+          label: data.Id === 1 ? "Nhân viên" : "Quản lý",
+        },
+        email: data.Email,
+        phoneNumber: data.PhoneNumber,
+      },
+    };
+  }
+}, null)(AAddAccountForm);

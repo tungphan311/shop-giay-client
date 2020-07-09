@@ -8,6 +8,27 @@ export async function getAllAccount() {
   return await API.get(`/admin/auth`, config);
 }
 
+export async function editAccout({
+  id,
+  userName,
+  roleId,
+  name,
+  email,
+  phoneNumber,
+}) {
+  return API.put(
+    `/admin/auth/${id}`,
+    {
+      userName,
+      roleId,
+      name,
+      email,
+      phoneNumber,
+    },
+    config
+  );
+}
+
 export async function addAccount({
   userName,
   password,
@@ -28,6 +49,10 @@ export async function addAccount({
     },
     config
   );
+}
+
+export async function getAccountById({ id }) {
+  return await API.get(`/admin/auth/${id}`, config);
 }
 
 export async function deleteShoes({ ids }) {
