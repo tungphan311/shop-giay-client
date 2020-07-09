@@ -16,7 +16,7 @@
   .required-star:before {
     color: #f3ac00;
     content: "*";
-    font-family: Roboto Condensed;
+    font-family: "Roboto", sans-serif;
     font-size: 65%;
     font-weight: 400 !important;
     margin: 0 2px 0 0;
@@ -36,7 +36,7 @@
       line-height: 25px;
     }
     .require-info {
-      font-family: "Roboto Condensed", Arial, Helvetica, sans-serif;
+      font-family: "Roboto", sans-serif;
       font-size: 13px;
       font-weight: 400;
       text-transform: capitalize;

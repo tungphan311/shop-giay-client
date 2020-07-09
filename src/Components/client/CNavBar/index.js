@@ -66,7 +66,7 @@ const CNavBar = () => {
           </div>
         </div>
       </header>
-      <nav className="nav--bar">
+      <nav className="nav--bar" style={{ zIndex: "0" }}>
         <div className="nav--bar__inner">
           <div className="navbar__container">
             <ul

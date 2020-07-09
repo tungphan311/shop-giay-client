@@ -11,7 +11,7 @@ $primary: #f3ac00;
   overflow: hidden;
   h4 {
     color: #fff;
-    font-family: "Roboto Condensed";
+    font-family: "Roboto", sans-serif;
     font-size: 23px;
     padding-bottom: 9px;
     line-height: 1.6em;
@@ -30,7 +30,7 @@ $primary: #f3ac00;
     background-color: #f15e2c;
     border: #f15e2c 1px solid;
     color: #fff;
-    font-family: "Roboto Condensed";
+    font-family: "Roboto", sans-serif;
     font-weight: 600;
     font-size: 23px;
     width: 279px;
@@ -54,7 +54,7 @@ $primary: #f3ac00;
       a,
       a:active {
         color: #cccccc;
-        font-family: "Roboto Condensed";
+        font-family: "Roboto", sans-serif;
         font-size: 16px;
         text-decoration: none;
       }
@@ -75,7 +75,7 @@ $primary: #f3ac00;
 
   .copyright {
     margin-top: 65px;
-    font-family: "Roboto Condensed";
+    font-family: "Roboto", sans-serif;
     font-size: 16px;
     letter-spacing: 1px;
     color: #808080;
