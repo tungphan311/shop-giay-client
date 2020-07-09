@@ -34,4 +34,10 @@ export const SIDEBAR_LIST = [
     title: "Khuyến mãi",
     href: "/admin/promotion",
   },
+  {
+    id: "account",
+    icon: "fas fa-user",
+    title: "Tài khoản",
+    href: "/admin/account",
+  },
 ];

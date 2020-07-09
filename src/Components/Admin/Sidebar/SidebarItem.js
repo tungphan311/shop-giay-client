@@ -17,11 +17,11 @@ function ASidebarItem({ item, roleid }) {
     <li className={`nav-item${active ? " active" : ""}`}>
       {sub ? (
         <>
-          <Link data-toggle="collapse" to={`#${id}`}>
+          <a data-toggle="collapse" href={`#${id}`}>
             <i className={icon}></i>
             <p>{title}</p>
             <span className="caret"></span>
-          </Link>
+          </a>
           <div className="collapse" id={id}>
             <ul className="nav nav-collapse">
               {sub.map(({ href, title }) => (

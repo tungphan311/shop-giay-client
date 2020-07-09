@@ -18,7 +18,7 @@ function AProductSelect({
 }) {
   return (
     <div className={`hara__dropdown ${className}`}>
-      <label>{label}</label>
+      {label && <label>{label}</label>}
       <ReactSelect
         name={name}
         options={options}
