@@ -4,12 +4,12 @@ import CProductRating from "Components/client/CProductRating";
 import CProductByCategory from "../../../Components/client/CProductByCategory/index";
 function ProductDetail({
   match: {
-    params: { id },
+    params: { id, pageNumber },
   },
 }) {
   return (
     <>
-      <CProductByCategory id={id} />
+      <CProductByCategory id={id} pageNumber={pageNumber} />
     </>
   );
 }

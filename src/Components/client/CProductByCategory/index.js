@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import CProductSection from "Components/client/CProductSection";
+import CLoadingIndicator from "Components/client/CLoadingIndicator";
+import CItemCard from "Components/client/CItemCard";
 
 import { cGetProductListByBrand } from "services/cProductService";
 import CMenuBar from "Components/client/CMenuBar/index";
 import "./ProductByCategory.scss";
-import CLoadingIndicator from "Components/client/CLoadingIndicator/index";
-import CItemCard from "Components/client/CItemCard/index";
 import CPagination from "Components/client/CPagination/index";
 import CFilterBar from "Components/client/CFilterBar/index";
 import { NoDataComponent } from "utils/utils";
@@ -25,14 +25,9 @@ const CProductByCategory = ({ id, pageNumber }) => {
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [categories, setCategories] = useState(intialCategories);
-
-  if (id.id === undefined) {
+  if (id === undefined) {
     id = "Danh sách sản phẩm";
-  } else {
-    id = id.id;
   }
-
-  console.log(id.id);
   const [label, setLabel] = useState(id);
   const [total, setTotal] = useState(0);
   const [per_page, setPerPage] = useState(5);

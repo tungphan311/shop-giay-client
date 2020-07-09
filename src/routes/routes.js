@@ -105,7 +105,9 @@ class Routes extends Component {
           path={[
             "/",
             "/category",
-            "/category/:id",
+            "/category/page/:pageNumber",
+            "/category/:id/",
+            "/category/:id/page/:pageNumber",
             "/products/:id",
             "/cart",
             "/checkout/shipping",
@@ -118,6 +120,16 @@ class Routes extends Component {
             <Route exact path="/" component={ClientHome} />
             <Route exact path="/category" component={ClientProductList} />
             <Route exact path="/category/:id" component={ClientProductList} />
+            <Route
+              exact
+              path="/category/:id/page/:pageNumber"
+              component={ClientProductList}
+            />
+            <Route
+              exact
+              path="/category/page/:pageNumber"
+              component={ClientProductList}
+            />
             <Route exact path="/products/:id" component={ClientProductDetail} />
             <Route exact path="/cart" component={ClientCart} />
             <CAuthorizedRoute

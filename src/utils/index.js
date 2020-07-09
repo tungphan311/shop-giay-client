@@ -1,7 +1,6 @@
 import React from "react";
 import { toast as toaster } from "react-toastify";
 import Toaster from "Components/client/CToaster/Toaster";
-import { get } from "lodash";
 
 export const stringTruncate = (str, length = 50, ending = "") =>
   str &&
