@@ -96,7 +96,7 @@ const CFilterBar = ({ size_title, style_title, view }) => {
   if (view !== null) {
     renderViewTitle = renderViewTitle + ": " + view;
   }
-  let renderStyleTitle = "Size";
+  let renderStyleTitle = "Style";
   if (style_title !== null) {
     renderStyleTitle = renderStyleTitle + ": " + style_title;
   }

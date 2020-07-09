@@ -7,6 +7,7 @@ import CMenuBar from "Components/client/CMenuBar/index";
 import "./ProductByCategory.scss";
 import CPagination from "Components/client/CPagination/index";
 import CFilterBar from "Components/client/CFilterBar/index";
+import { NoDataComponent } from "utils/utils";
 
 const intialCategories = [
   {
@@ -145,7 +146,21 @@ const CProductByCategory = ({ id, pageNumber }) => {
               </div>
 
               <div className="item-wrapper">
-                {!isLoading ? <Content /> : <CLoadingIndicator />}
+                {!isLoading ? (
+                  total !== 0 ? (
+                    <Content />
+                  ) : (
+                    <CLoadingIndicator />
+                  )
+                ) : (
+                  // <div className="empty-page">
+                  //   Không có sản phẩm nào thoả mãn điều kiện
+                  // </div>
+                  <NoDataComponent title="sản phẩm" />
+                  // <div class="text-center text-secondary">
+                  //   Hãy thay đổi bộ lọc hoặc điều kiện tìm kiếm
+                  // </div>
+                )}
               </div>
             </div>
           </section>
