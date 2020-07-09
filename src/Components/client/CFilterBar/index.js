@@ -8,7 +8,15 @@ const initState = [
     style: [],
   },
 ];
-const CFilterBar = ({ size_title, style_title, view }) => {
+const CFilterBar = ({
+  set_size,
+  set_style,
+  set_view,
+  clear_filter,
+  size_title,
+  style_title,
+  view,
+}) => {
   const [size, setSize] = useState(initState);
   const [style, setStyle] = useState(initState);
 
@@ -27,36 +35,22 @@ const CFilterBar = ({ size_title, style_title, view }) => {
         }
       })
       .catch((error) => console.log(error));
-
-    // Promise.all([listOfStyle]).then(([listStyle]) => {
-    //   setStyle((prev) => {
-    //     const mapData = (style) => ({
-    //       name: style,
-    //     });
-    //     setStyle(listStyle.map(mapData));
-    //   });
-    // });
   });
 
   const pageSizeList = [5, 10, 15, 20];
 
   const clearFilter = () => {
-    localStorage.removeItem("View");
-    localStorage.removeItem("Size");
-    localStorage.removeItem("Style");
-    window.location.reload(false);
+    clear_filter();
   };
   const setSizeFilter = (size) => {
-    localStorage.setItem("Size", size);
-    window.location.reload(false);
+    set_size(size);
   };
   const setViewFilter = (view) => {
-    localStorage.setItem("View", view);
-    window.location.reload(false);
+    set_view(view);
   };
   const setStyleFilter = (style) => {
-    localStorage.setItem("Style", style);
-    window.location.reload(false);
+    // pass style object to this func
+    set_style(style);
   };
 
   const renderViewFilter = pageSizeList.map((number) => {
@@ -89,7 +83,7 @@ const CFilterBar = ({ size_title, style_title, view }) => {
     );
   });
   let renderSizeTitle = "Size";
-  if (size_title !== null) {
+  if (size_title !== null && size_title !== 0) {
     renderSizeTitle = renderSizeTitle + ": " + size_title;
   }
   let renderViewTitle = "View";
