@@ -131,7 +131,7 @@ const CCart = () => {
         <div>
           <div className="update-buttons">
             <CButton
-              href="/products"
+              href="/category"
               className="continue-shopping"
               label="Tiếp tục mua sắm"
             />

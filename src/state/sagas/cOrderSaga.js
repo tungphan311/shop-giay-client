@@ -45,7 +45,7 @@ function* getOrder(action) {
     yield call(resolvePromiseAction, action, res);
   } catch (error) {
     toastErr(error);
-    history.push("/login");
+    // history.push("/login");
   }
 }
 
