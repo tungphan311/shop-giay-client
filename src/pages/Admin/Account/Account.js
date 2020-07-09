@@ -21,8 +21,6 @@ function AAccount() {
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
 
-  const [fetch, setFetch] = useState(false);
-
   const accounts = useSelector((state) => state.aAccount.accounts);
 
   const mapResponseToData = (res) => {
@@ -48,7 +46,7 @@ function AAccount() {
     <>
       <button
         className="btn btn-primary"
-        onClick={() => history.push("/admin/account/add")}
+        onClick={() => history.push("/admin/account-add")}
       >
         Thêm tài khoản
       </button>
@@ -59,6 +57,18 @@ function AAccount() {
       name: "Họ và tên",
       selector: "name",
       sortable: true,
+      cell: (row) => (
+        <div className="d-flex" style={{ padding: "15px 0" }}>
+          <div className="ml-3 align-self-center">
+            <div
+              className="cell--info"
+              onClick={() => history.push(`/admin/account/${row.id}`)}
+            >
+              {row.name}
+            </div>
+          </div>
+        </div>
+      ),
     },
     {
       name: "Chức vụ",

@@ -175,7 +175,7 @@ class Routes extends Component {
             "/admin/add-provider",
             "/admin/provider/:id",
             "/admin/account",
-            "/admin/account/add",
+            "/admin/account-add",
             "/admin/account/:id",
             "/admin/*",
           ]}
@@ -274,7 +274,7 @@ class Routes extends Component {
               />
               <AuthorizedRoute
                 exact
-                path="/admin/account/add"
+                path="/admin/account-add"
                 component={AAddAccount}
                 isUser={isUser}
               />
