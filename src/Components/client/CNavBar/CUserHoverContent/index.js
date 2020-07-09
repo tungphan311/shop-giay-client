@@ -3,6 +3,7 @@ import "./UserHoverContent.scss";
 import { USER_HOVER_CONTENT } from "constants/index.js";
 import CButton from "Components/client/CButton";
 import { Link } from "react-router-dom";
+
 const LoggedInUserHoverContent = ({ identity, handleLogout }) => {
   const { name } = identity;
   return (
@@ -25,11 +26,11 @@ const LoggedInUserHoverContent = ({ identity, handleLogout }) => {
     </>
   );
 };
+
 const NotLoggedInUserHoverContent = () => (
   <>
     <div className="userhovercontent__row">
-      {" "}
-      <div className="userhovercontent__title">ĐÃ CÓ TÀI KHOẢN?</div>
+      <div className="userhovercontent__title">Đã có tài khoản?</div>
       <CButton
         href="/login"
         label="ĐĂNG NHẬP NGAY"
@@ -43,11 +44,12 @@ const NotLoggedInUserHoverContent = () => (
     <div className="userhovercontent__divider" />
     <div className="userhovercontent__row">
       {" "}
-      <div className="userhovercontent__subtitle">BẠN CHƯA CÓ TÀI KHOẢN?</div>
+      <div className="userhovercontent__subtitle">Khách hàng mới?</div>
       <CButton href="/signup" label="TẠO TÀI KHOẢN MỚI" />
     </div>
   </>
 );
+
 const UserHoverContent = ({ identity, handleLogout }) => (
   <div className="userhovercontent__container">
     {identity ? (

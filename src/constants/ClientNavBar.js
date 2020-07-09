@@ -18,20 +18,12 @@ export const NAVBAR_ITEM_LIST = [
 
 export const NAVBAR_BUTTON_LIST = [
   {
-    icon: "search",
-    hoverComponent: CSearchHoverContainer,
-  },
-  {
     icon: "user",
     hoverComponent: CHoverContainer,
   },
-  // {
-  //   icon: "info",
-  //   hoverComponent: CHoverContainer,
-  // },
   {
     icon: "inventory",
-    //hoverComponent: CHoverContainer,
+    // hoverComponent: CHoverContainer,
     href: "/cart",
   },
 ];

@@ -1,6 +1,7 @@
 .cart-wrapper {
-  background: url("/images/bg-noise.jpg") repeat #080808;
+  background: #080808;
   min-width: 1024px;
+
   .cart-container {
     padding: 55px 55px 0;
     margin: 0 auto;
@@ -124,11 +125,13 @@
   }
 
   .update-buttons {
-    display: inline-block;
+    display: flex;
     padding: 0 0 50px;
     position: relative;
     left: 100%;
     transform: translateX(-100%);
+    width: 50%;
+
     .continue-shopping {
       margin-right: 20px;
     }

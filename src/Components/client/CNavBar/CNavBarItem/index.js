@@ -25,16 +25,21 @@ class NavBarItem extends Component {
       isHover ? "navbaritem__container_hover" : ""
     }`;
     return (
-      <div
-        className="navbaritem__wrapper"
-        onMouseEnter={this.handleMouseEnter}
-        onMouseLeave={this.handleMouseLeave}
-      >
-        <Link className={containerClassName} to={href}>
+      // <div
+      //   className="navbaritem__wrapper"
+      //   onMouseEnter={this.handleMouseEnter}
+      //   onMouseLeave={this.handleMouseLeave}
+      // >
+      //   <Link className={containerClassName} to={href}>
+      //     {label}
+      //   </Link>
+      //   {children && <div className={contentClassName}>{children}</div>}
+      // </div>
+      <li className="nav--bar__item nav--bar__item--static">
+        <Link to={`/category`} className="nav-bar__link link">
           {label}
         </Link>
-        {children && <div className={contentClassName}>{children}</div>}
-      </div>
+      </li>
     );
   }
 }

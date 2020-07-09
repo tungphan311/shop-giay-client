@@ -1,0 +1,45 @@
+.navbar__logo {
+  display: inline-block;
+  vertical-align: middle;
+  margin-bottom: 0;
+}
+
+.navbar__logo--link {
+  display: block;
+}
+
+.navbar__logo-image {
+  display: block;
+  max-height: 56px;
+  max-width: 200px;
+}
+
+@media screen and (max-width: 640px) {
+  .navbar__logo-image {
+    height: 36px;
+  }
+}
+
+@media screen and (min-width: 641px) {
+  .navbar__logo {
+    margin-right: 35px;
+  }
+}
+
+@media screen and (max-width: 999px) and (min-width: 641px) {
+  .navbar__logo-image {
+    height: 36px;
+  }
+}
+
+@media screen and (min-width: 999px) {
+  .navbar__logo-image {
+    max-width: 300px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .navbar__logo {
+    margin-right: 40px;
+  }
+}
