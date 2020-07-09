@@ -110,9 +110,8 @@ function CSignupForm({ handleSubmit }) {
               labelClassName="username-label"
               className="username-input"
             >
-              <option value={1}>Nam</option>
-              <option value={2}>Nữ</option>
-              <option value={3}>Không xác định</option>
+              <option value="male">Nam</option>
+              <option value="female">Nữ</option>
             </Field>
           </div>
         </div>

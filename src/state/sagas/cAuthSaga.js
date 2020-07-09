@@ -84,10 +84,12 @@ function* Signup(action) {
     dateOfBirth = new Date(
       parseInt(dateOfBirth[2]),
       parseInt(dateOfBirth[1]),
-      parseInt(dateOfBirth[0])
+      parseInt(dateOfBirth[1])
     ).toISOString();
 
-    const result = yield call(cRegister, {
+    const {
+      data: { data },
+    } = yield call(cRegister, {
       username,
       password,
       name,
@@ -97,7 +99,18 @@ function* Signup(action) {
       phoneNumber,
     });
 
-    console.log(result);
+    const response = JSON.parse(data);
+
+    yield put({
+      type: ACTION_LOGIN_SUCCESS,
+      payload: {
+        username: username,
+        data: response,
+      },
+    });
+
+    yield toast({ message: "Đăng ký thành công" });
+    yield history.push("/");
   } catch (error) {
     toastErr(error);
   }
