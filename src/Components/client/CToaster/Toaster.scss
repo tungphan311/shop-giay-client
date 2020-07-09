@@ -1,6 +1,3 @@
-$yellow2: #e3a20a;
-$yellow1: #e29200;
-
 .md__toast {
   width: 100%;
   height: 100%;
@@ -8,7 +5,7 @@ $yellow1: #e29200;
   padding: 16px 30px 16px 86px;
   border-radius: 5px;
   display: inline-flex;
-  background: url("/images/bg-button.png") repeat-x $yellow1;
+  background: url("/images/bg-button.png") repeat-x white;
 
   &--success {
     border: 1px solid #1cde93;
@@ -29,7 +26,7 @@ $yellow1: #e29200;
     font-family: "Roboto Condensed", Arial, Helvetica, sans-serif;
     font-size: 17px;
     letter-spacing: 1px;
-    color: #fff;
+    color: #221e1f;
   }
 
   .icon {
