@@ -50,15 +50,13 @@ export async function cGetProductListByBrand(
   if (id === "Danh sách sản phẩm") {
     params = { page: pageNumber };
   }
-  if (style !== null) {
+  if (style !== "") {
     path = path + "&style=" + style;
   }
-  if (size !== null) {
+  if (size !== 0) {
     path = path + "&size=" + size;
   }
 
-  console.log(style);
-  console.log(size);
   return await API.get(path, { params });
 }
 export async function cGetBrandList() {

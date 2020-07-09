@@ -31,6 +31,25 @@ const CProductByCategory = ({ id, pageNumber }) => {
   const [total, setTotal] = useState(0);
   const [per_page, setPerPage] = useState(5);
   const [current_page, setCurrentPage] = useState(pageNumber - 1);
+  const [size, setSize] = useState(0);
+  const [style, setStyle] = useState("");
+
+  const clearFilter = () => {
+    setSize(0);
+    setStyle("");
+    setPerPage(5);
+  };
+
+  const updateSize = (selected_size) => {
+    setSize(selected_size);
+  };
+
+  const updateStyle = (selected_style) => {
+    setStyle(selected_style);
+  };
+  const updatePerPage = (selected_perpage) => {
+    setPerPage(selected_perpage);
+  };
 
   const Content = () =>
     categories[selectedCategory].products.map((item, index) => (
@@ -38,14 +57,6 @@ const CProductByCategory = ({ id, pageNumber }) => {
     ));
 
   useEffect(() => {
-    let perPage = localStorage.getItem("View");
-    if (perPage === null) {
-      perPage = 4;
-    }
-    let style = localStorage.getItem("Style");
-    let size = localStorage.getItem("Size");
-    setPerPage(perPage);
-    console.log(perPage);
     const list = cGetProductListByBrand(
       id,
       pageNumber - 1,
@@ -89,7 +100,7 @@ const CProductByCategory = ({ id, pageNumber }) => {
     Promise.all([total]).then(([totalRecords]) => {
       setTotal(totalRecords);
     });
-  }, [current_page, id, pageNumber, per_page]);
+  }, [current_page, id, pageNumber, per_page, size, style]);
 
   return (
     <>
@@ -139,8 +150,12 @@ const CProductByCategory = ({ id, pageNumber }) => {
               </div>
               <div className="filter-wrapper">
                 <CFilterBar
-                  size_title={localStorage.getItem("Size")}
-                  style_title={localStorage.getItem("Style")}
+                  set_style={updateStyle}
+                  set_size={updateSize}
+                  set_view={updatePerPage}
+                  clear_filter={clearFilter}
+                  size_title={size}
+                  style_title={style}
                   view={per_page}
                 ></CFilterBar>
               </div>
@@ -153,13 +168,7 @@ const CProductByCategory = ({ id, pageNumber }) => {
                     <CLoadingIndicator />
                   )
                 ) : (
-                  // <div className="empty-page">
-                  //   Không có sản phẩm nào thoả mãn điều kiện
-                  // </div>
                   <NoDataComponent title="sản phẩm" />
-                  // <div class="text-center text-secondary">
-                  //   Hãy thay đổi bộ lọc hoặc điều kiện tìm kiếm
-                  // </div>
                 )}
               </div>
             </div>
