@@ -124,11 +124,13 @@
   }
 
   .update-buttons {
-    display: inline-block;
+    display: flex;
     padding: 0 0 50px;
     position: relative;
     left: 100%;
     transform: translateX(-100%);
+    width: 50%;
+
     .continue-shopping {
       margin-right: 20px;
     }

@@ -1,17 +1,21 @@
-$yellow2: #e3a20a;
-$yellow1: #e29200;
+$yellow2: rgba(255, 194, 48, 0.8);
+$yellow1: #ffc230;
 
 .button-default {
   outline: none !important;
   text-decoration: none;
   border: none;
-  border-radius: 3px;
+  width: 100%;
 
-  background: url("/images/bg-button.png") repeat-x $yellow1;
+  padding: 0 30px;
+  line-height: 48px;
+  border-radius: 4px;
+
+  background: $yellow1;
 
   color: #fff;
   text-shadow: -1px -1px transparent;
-  line-height: 35px;
+  line-height: 48px;
   text-align: center;
   cursor: pointer;
 

@@ -35,7 +35,7 @@ export default class NavBarButton extends Component {
         onClick={() => href && history.push(href)}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
-        className={`navbarbutton__container ${href ? "pointer" : ""}`}
+        className={`navbarbutton__container pointer`}
       >
         <CIcon color="white" type={icon} />
         {floatNumber && floatNumber !== 0 ? (
