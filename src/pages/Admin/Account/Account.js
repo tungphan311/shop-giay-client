@@ -13,12 +13,11 @@ import { toastErr } from "utils/index";
 // import AAddPromoteForm from "Components/Admin/Form/AddPromotion/AddPromotion";
 
 import { OPTIONS, NoDataComponent } from "utils/utils";
-import { GET_ALL_ACCOUNT } from "state/reducers/AAccount";
+import { GET_ALL_ACCOUNT } from "state/reducers/AAccountReducer";
 const SELECT = "select";
 const VALUE = "value";
 
 function AAccount() {
-
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
 

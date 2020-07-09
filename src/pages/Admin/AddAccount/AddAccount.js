@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React from "react";
 
 import { useDispatch } from "react-redux";
 
 import "./AddAccount.scss";
 
 import AAddAccountForm from "Components/Admin/Form/AddAccount/AddAccount";
-import { ADD_ACCOUNT } from "state/reducers/AAccount";
+import { ADD_ACCOUNT } from "state/reducers/AAccountReducer";
 
 function AAddAccount() {
   const dispatch = useDispatch();

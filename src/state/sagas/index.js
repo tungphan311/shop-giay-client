@@ -10,8 +10,8 @@ import cOrderSaga from "./cOrderSaga";
 import cCustomerSaga from "./cCustomerSaga";
 import aCustomerSaga from "./ACustomerSaga";
 import aOrderSaga from "./aOrderSaga";
-import aSaleSaga from "state/sagas/ASaleSaga";
-import aAccountSaga from "state/sagas/AAccount";
+import aSaleSaga from "./ASaleSaga";
+import aAccountSaga from "./AAccountSaga";
 
 export default function* rootSaga() {
   yield all([

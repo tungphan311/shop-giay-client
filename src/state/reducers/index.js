@@ -11,7 +11,7 @@ import { cOrderReducer } from "./cOrderReducer";
 import { aLoadingReducer } from "state/reducers/aLoadingReducer";
 import { ACustomerReducer } from "state/reducers/ACustomerReducer";
 import { ASaleReducer } from "state/reducers/ASaleReducer";
-import { AAccountReducer } from "state/reducers/AAccount";
+import { AAccountReducer } from "state/reducers/AAccountReducer";
 
 export default combineReducers({
   form: formReducer,
