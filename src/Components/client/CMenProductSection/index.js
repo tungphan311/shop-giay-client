@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import CProductSection from "Components/client/CProductSection";
 import "./MenProductSection.scss";
-import { cGetMenProducts } from "services/cProductService";
+import { useDispatch } from "react-redux";
+import { clientGetProductAction } from "state/actions/index";
 
 const intialCategories = [
   {
@@ -14,11 +15,11 @@ const CMenProductSection = () => {
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [categories, setCategories] = useState(intialCategories);
-
+  const dispatch = useDispatch();
   useEffect(() => {
-    cGetMenProducts()
+    dispatch(clientGetProductAction({ gender: "nam", pageSize: 6 }))
       .then((res) => {
-        const data = JSON.parse(res.data.data);
+        const data = JSON.parse(res.data);
         setCategories((prev) => {
           const mapData = (shoes) => ({
             name: shoes.name,
@@ -37,6 +38,7 @@ const CMenProductSection = () => {
         }, setIsLoading(false));
       })
       .catch((error) => console.log(error));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

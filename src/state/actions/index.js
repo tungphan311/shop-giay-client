@@ -1,5 +1,7 @@
 import { createPromiseAction } from "@adobe/redux-saga-promise";
 import { DELETE_SHOES } from "state/reducers/AShoesReducer";
+export * from "./client/orderAction";
+export * from "./client/productAction";
 
 export const addImportAction = createPromiseAction("ADD_IMPORT");
 
@@ -27,5 +29,3 @@ export const updateProviderAction = createPromiseAction("UPDATE_PROVIDER");
 export const getProviderByIdAction = createPromiseAction("GET_PROVIDER_BY_ID");
 
 export const getReportAction = createPromiseAction("GET_REPORT");
-
-export * from "./client/orderAction";

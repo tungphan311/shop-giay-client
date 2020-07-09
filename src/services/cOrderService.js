@@ -32,7 +32,7 @@ export async function cPlaceOrder({ id }) {
   );
 }
 
-export async function cGetOrder(page = 1, pageSize = 10) {
+export async function cGetOrder({ page = 1, pageSize = 10 }) {
   const path = `client/order/list?page=${page}&pageSize=${pageSize}`;
   const token = localStorage.getItem(TOKEN_KEY);
   const AuthStr = "Bearer " + token;
