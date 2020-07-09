@@ -23,7 +23,7 @@ export async function cRegister({
   email,
   phoneNumber,
 }) {
-  const path = "client/authentication/register";
+  const path = "client/customer/register";
   const body = {
     username,
     password,

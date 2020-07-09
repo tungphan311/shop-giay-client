@@ -30,7 +30,11 @@ export function toast({ type = "success", message = "" }) {
 }
 
 export function toastErr(error) {
-  let errMsg = get(error, "response.data.msg");
+  let {
+    response: { data },
+  } = error;
+
+  let errMsg = data.msg || null;
 
   if (!errMsg) {
     errMsg = "Có lỗi xảy ra";
@@ -38,7 +42,6 @@ export function toastErr(error) {
 
   toast({ type: "error", message: errMsg });
 }
-
 
 export * from "./Validation";
 export * from "./JwtDecoder";
