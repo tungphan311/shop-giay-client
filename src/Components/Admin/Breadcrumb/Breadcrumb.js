@@ -4,8 +4,11 @@ import { Link } from "react-router-dom";
 function ABreadcrumb({ title, list }) {
   return (
     <div className="page-header">
-      <h4 className="page-title">{title}</h4>
-      <ul className="breadcrumbs">
+      {/* <h4 className="page-title">{title}</h4> */}
+      <ul
+        className="breadcrumbs"
+        style={{ marginLeft: 0, paddingLeft: 0, border: 0 }}
+      >
         <li className="nav-home">
           <Link to="/admin">
             <i className="flaticon-home" />

@@ -39,6 +39,11 @@ export const requireForm = (value) =>
 export const validDayEx = (value, allValues) =>
   value < allValues.beginDate ? buildErr("Ngày không hợp lệ") : undefined;
 
+export const matchPassword = (value, allValues) =>
+  value !== allValues.password
+    ? buildErr("Mật khẩu không trùng khớp. Vui lòng nhập lại")
+    : undefined;
+
 export const floatNumber = (value) =>
   /^[+]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/.test(value);
 export const validFloatNumber = (value) =>

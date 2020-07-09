@@ -8,6 +8,9 @@ export const addImportAction = createPromiseAction("ADD_IMPORT");
 export const getShoesAction = createPromiseAction("GET_SHOES");
 
 export const getCustomerAction = createPromiseAction("GET_CUSTOMER");
+
+// export const getAllAccountAction = createPromiseAction("GET_ALL_ACCOUNT");
+
 export const getGenderAction = createPromiseAction("GET_GENDER");
 
 export const deleteShoesAction = createPromiseAction(DELETE_SHOES);

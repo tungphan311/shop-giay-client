@@ -35,6 +35,9 @@ import { connect } from "react-redux";
 import AProviderList from "pages/Admin/ProviderList/ProviderList";
 import AAddProvider from "pages/Admin/AddProvider/AddProvider";
 import AProviderEdit from "pages/Admin/ProviderEdit/ProviderEdit";
+import AAccount from "pages/Admin/Account/Account";
+import AAddAccount from "pages/Admin/AddAccount/AddAccount";
+import AEditAccount from "pages/Admin/EditAccount/EditAccount";
 
 // component for admin site to determine user is logined or not
 export const AuthorizedRoute = ({ component: Component, isUser, ...rest }) => (
@@ -171,6 +174,9 @@ class Routes extends Component {
             "/admin/provider",
             "/admin/add-provider",
             "/admin/provider/:id",
+            "/admin/account",
+            "/admin/account-add",
+            "/admin/account/:id",
             "/admin/*",
           ]}
         >
@@ -258,6 +264,24 @@ class Routes extends Component {
                 exact
                 path="/admin/add-provider"
                 component={AAddProvider}
+                isUser={isUser}
+              />
+              <AuthorizedRoute
+                exact
+                path="/admin/account"
+                component={AAccount}
+                isUser={isUser}
+              />
+              <AuthorizedRoute
+                exact
+                path="/admin/account-add"
+                component={AAddAccount}
+                isUser={isUser}
+              />
+              <AuthorizedRoute
+                exact
+                path="/admin/account/:id"
+                component={AEditAccount}
                 isUser={isUser}
               />
               <AuthorizedRoute
