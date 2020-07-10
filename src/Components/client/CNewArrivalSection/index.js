@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
 import CProductSection from "Components/client/CProductSection";
 import "./NewArrivalSection.scss";
-import {
-  cGetMenNewArrivals,
-  cGetWomenNewArrivals,
-} from "services/cProductService";
-
+import { useDispatch } from "react-redux";
+import { clientGetNewArrivalsAction } from "state/actions/index";
 const intialCategories = [
   {
     label: "NAM",
@@ -22,33 +19,29 @@ const CNewArrivalSection = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [categories, setCategories] = useState(intialCategories);
 
+  const dispatch = useDispatch();
   useEffect(() => {
-    const men = cGetMenNewArrivals().then((res) => JSON.parse(res.data.data));
-    const women = cGetWomenNewArrivals().then((res) =>
-      JSON.parse(res.data.data)
-    );
-
-    Promise.all([men, women])
-      .then(([menProducts, womenProducts]) => {
-        setCategories((prev) => {
-          const mapData = (shoes) => ({
-            name: shoes.name,
-            type: shoes.styleName,
-            price: shoes.price,
-            salePrice: shoes.salePrice,
-            image: shoes.imagePath,
-            description: shoes.description,
-            isNew: shoes.isNew,
-            isOnSale: shoes.isOnSale,
-            href: "/products/" + shoes.id,
-          });
-          let newState = [...prev];
-          newState[0].products = menProducts.map(mapData);
-          newState[1].products = womenProducts.map(mapData);
-          return newState;
-        }, setIsLoading(false));
-      })
-      .catch((error) => console.log(error));
+    dispatch(clientGetNewArrivalsAction()).then((res) => {
+      const { men, women } = res;
+      setCategories((prev) => {
+        const mapData = (shoes) => ({
+          name: shoes.name,
+          type: shoes.styleName,
+          price: shoes.price,
+          salePrice: shoes.salePrice,
+          image: shoes.imagePath,
+          description: shoes.description,
+          isNew: shoes.isNew,
+          isOnSale: shoes.isOnSale,
+          href: "/products/" + shoes.id,
+        });
+        let newState = [...prev];
+        newState[0].products = men.data.map(mapData);
+        newState[1].products = women.data.map(mapData);
+        return newState;
+      });
+    }, setIsLoading(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

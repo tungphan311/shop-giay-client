@@ -5,6 +5,8 @@ import {
   cRateProduct,
   cGetProductDetail,
   cGetProducts,
+  cGetMenNewArrivals,
+  cGetWomenNewArrivals,
 } from "../../services/cProductService";
 import { toastErr, toast } from "utils";
 import history from "state/history";
@@ -16,7 +18,10 @@ import {
   ACTION_GET_PRODUCT_DETAIL_SUCCESS,
   ACTION_GET_PRODUCT_DETAIL_FAIL,
 } from "../reducers/cProductReducer";
-import { clientGetProductAction } from "state/actions/index";
+import {
+  clientGetProductAction,
+  clientGetNewArrivalsAction,
+} from "state/actions/index";
 import {
   resolvePromiseAction,
   rejectPromiseAction,
@@ -78,8 +83,27 @@ function* getProduct(action) {
   }
 }
 
+function* getNewArrivals(action) {
+  try {
+    const {
+      data: { data: menData },
+    } = yield call(cGetMenNewArrivals);
+    const {
+      data: { data: womenData },
+    } = yield call(cGetWomenNewArrivals);
+    const res = {
+      men: { data: JSON.parse(menData) },
+      women: { data: JSON.parse(womenData) },
+    };
+    yield call(resolvePromiseAction, action, res);
+  } catch (error) {
+    toastErr(error);
+  }
+}
+
 export default function* cProductSaga() {
   yield takeEvery(ACTION_RATE_PRODUCT, productRating);
   yield takeEvery(ACTION_GET_PRODUCT_DETAIL, getProductDetail);
   yield takeEvery(clientGetProductAction, getProduct);
+  yield takeEvery(clientGetNewArrivalsAction, getNewArrivals);
 }
