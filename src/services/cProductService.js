@@ -48,7 +48,7 @@ export async function cGetProductListByBrand(
   let path = `client/shoes?page-size=${pageSize}`;
   let params = { brand: id, page: pageNumber };
   if (id === "Danh sách sản phẩm") {
-    return await API.get(path);
+    params = { page: pageNumber };
   }
   if (style !== "") {
     path = path + "&style=" + style;
@@ -56,6 +56,8 @@ export async function cGetProductListByBrand(
   if (size !== 0) {
     path = path + "&size=" + size;
   }
+  console.log(path);
+  console.log(params);
 
   return await API.get(path, { params });
 }

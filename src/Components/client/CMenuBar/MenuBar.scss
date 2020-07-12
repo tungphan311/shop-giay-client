@@ -1,5 +1,5 @@
 .bg-dark {
-  min-width: 15vw;
+  min-width: 20%;
   background: url("/images/bg-noise.jpg") repeat #080808;
   position: relative;
 }
@@ -10,7 +10,7 @@
   color: #ffffff;
   font-weight: bold;
   margin-left: 15px;
-  margin-top: 20vh;
+  margin-top: 30px;
 }
 .list-group-flush > .list-group-item {
   color: white;
@@ -26,4 +26,10 @@
 .list-group-item.list-group-item-action.bg-dark.selected {
   color: orange;
   font-weight: 600;
+}
+.sidebar__content_wrapper {
+  border-radius: 3px;
+  border: 1px solid #383838;
+  padding: 10px 15px;
+  margin-top: 50px;
 }
