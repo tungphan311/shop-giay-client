@@ -47,21 +47,23 @@ const CMenuBar = ({ current_label }) => {
   // });
 
   return (
-    <div className="bg-dark" id="sidebar-wrapper">
-      <div className="sidebar-heading">BRAND</div>
-      <div className="list-group list-group-flush">
-        <a
-          key="all"
-          href="/category/"
-          className={
-            isViewingAll
-              ? "list-group-item list-group-item-action bg-dark selected"
-              : "list-group-item list-group-item-action bg-dark"
-          }
-        >
-          All brands
-        </a>
-        {renderBrandList}
+    <div className="sidebar_container" id="sidebar-wrapper">
+      <div className="sidebar__content_wrapper">
+        <div className="sidebar-heading">BRAND</div>
+        <div className="list-group list-group-flush">
+          <a
+            key="all"
+            href="/category/"
+            className={
+              isViewingAll
+                ? "list-group-item list-group-item-action bg-dark selected"
+                : "list-group-item list-group-item-action bg-dark"
+            }
+          >
+            All brands
+          </a>
+          {renderBrandList}
+        </div>
       </div>
     </div>
   );

@@ -67,9 +67,9 @@ $primary: #f3ac00;
     padding: 25px 0 0;
     .item-wrapper {
       margin: 0 auto;
-      padding-bottom: 30px;
-      max-width: 85%;
-      text-align: center;
+      // padding-bottom: 30px;
+      width: 100%;
+      // text-align: center;
       transition: max-height ease-out 1s;
     }
   }

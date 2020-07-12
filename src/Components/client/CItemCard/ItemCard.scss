@@ -6,12 +6,24 @@ $primary: #f3ac00;
     transition: all 0.3s ease-in-out !important;
     position: relative;
     vertical-align: top;
-    margin: 7px;
+    // margin: 7px;
     height: 360px;
     text-align: center;
 
     &:hover {
       box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.6);
+    }
+
+    &:after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+      box-shadow: 1px 0 #383838, 0 1px #383838;
+      z-index: 2;
+      pointer-events: none;
     }
   }
 
@@ -28,7 +40,7 @@ $primary: #f3ac00;
   }
   &__content {
     width: 240px;
-    height: 360px;
+    // height: 360px;
     display: block;
     top: 40px;
     position: absolute;
