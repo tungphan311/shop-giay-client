@@ -29,7 +29,7 @@ const CProductByCategory = ({ id, pageNumber }) => {
   }
   const [label, setLabel] = useState(id);
   const [total, setTotal] = useState(0);
-  const [per_page, setPerPage] = useState(5);
+  const [per_page, setPerPage] = useState(12);
   const [current_page, setCurrentPage] = useState(pageNumber - 1);
   const [size, setSize] = useState(0);
   const [style, setStyle] = useState("");
@@ -37,7 +37,7 @@ const CProductByCategory = ({ id, pageNumber }) => {
   const clearFilter = () => {
     setSize(0);
     setStyle("");
-    setPerPage(5);
+    setPerPage(12);
   };
 
   const updateSize = (selected_size) => {
@@ -59,14 +59,14 @@ const CProductByCategory = ({ id, pageNumber }) => {
   useEffect(() => {
     const list = cGetProductListByBrand(
       id,
-      pageNumber - 1,
+      pageNumber,
       per_page,
       style,
       size
     ).then((res) => JSON.parse(res.data.data));
     const total = cGetProductListByBrand(
       id,
-      pageNumber - 1,
+      pageNumber,
       per_page,
       style,
       size
@@ -102,8 +102,8 @@ const CProductByCategory = ({ id, pageNumber }) => {
   }, [current_page, id, pageNumber, per_page, size, style]);
 
   return (
-    <>
-      <div className="container">
+    <div className="layout">
+      <div className="body-container">
         <div className="d-flex" id="wrapper">
           <CMenuBar current_label={label} />
 
@@ -173,7 +173,7 @@ const CProductByCategory = ({ id, pageNumber }) => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -1,5 +1,7 @@
 .page-content-wrapper {
-  flex: auto;
+  flex-grow: 1;
+  flex-basis: 0;
+  flex-shrink: 0;
   box-shadow: none !important;
 }
 .homeSection .content {
@@ -27,21 +29,32 @@
   color: white;
   font-size: 30px;
 }
-.container {
-  min-width: 100%;
+
+.layout {
+  display: flex;
+  // margin-left: -15px;
+  // margin-right: -15px;
   background: black;
 }
-.d-flex {
-  padding: 0 10%;
+
+.body-container {
+  padding: 0 40px;
+  max-width: 1480px !important;
+  margin-left: auto;
+  margin-right: auto;
 }
+
 .homeSection {
   box-shadow: none;
   border-radius: 3px;
   border: 1px solid #383838;
   margin: 50px;
+  margin-right: 0;
 }
 .item-card__container {
   background: none;
+  width: 25%;
+  flex-shrink: 0;
 }
 .bg-dark {
   background-color: black !important;

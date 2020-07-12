@@ -37,7 +37,7 @@ const CFilterBar = ({
       .catch((error) => console.log(error));
   });
 
-  const pageSizeList = [5, 10, 15, 20];
+  const pageSizeList = [12, 24, 48];
 
   const clearFilter = () => {
     clear_filter();
