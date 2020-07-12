@@ -29,7 +29,7 @@
 }
 .container {
   min-width: 100%;
-  background: url("/images/bg-noise.jpg") repeat #080808;
+  background: black;
 }
 .d-flex {
   padding: 0 10%;
@@ -42,4 +42,7 @@
 }
 .item-card__container {
   background: none;
+}
+.bg-dark {
+  background-color: black !important;
 }
