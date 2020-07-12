@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import CProductSection from "Components/client/CProductSection";
 import CLoadingIndicator from "Components/client/CLoadingIndicator";
 import CItemCard from "Components/client/CItemCard";
 
@@ -104,73 +103,74 @@ const CProductByCategory = ({ id, pageNumber }) => {
 
   return (
     <>
-      <div className="d-flex" id="wrapper">
-        <CMenuBar current_label={label} />
+      <div className="container">
+        <div className="d-flex" id="wrapper">
+          <CMenuBar current_label={label} />
 
-        <div className="page-content-wrapper">
-          <section className={`homeSection`}>
-            {label ? (
-              <div
-                className={`homeSection__header ${
-                  categories.length === 1 && "homeSection__header_only"
-                }`}
-              >
-                <div className="homeSection__header_title">{label}</div>
-                {categories.length > 1 && (
-                  <div className="homeSection__header_category">
-                    <ul>
-                      {categories.map((cat, catIndex) => (
-                        <li
-                          key={cat.label}
-                          onClick={() =>
-                            setSelectedCategory && setSelectedCategory(catIndex)
-                          }
-                          className={`${
-                            selectedCategory === catIndex ? "active" : ""
-                          }`}
-                        >
-                          {cat.label}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-            ) : (
-              ""
-            )}
-            <div className="content">
-              <div className="pagination-wrapper">
-                <CPagination
-                  category={label}
-                  total={total}
-                  per_page={per_page}
-                  current_page={current_page}
-                ></CPagination>
-              </div>
-              <div className="filter-wrapper">
-                <CFilterBar
-                  set_style={updateStyle}
-                  set_size={updateSize}
-                  set_view={updatePerPage}
-                  clear_filter={clearFilter}
-                  size_title={size}
-                  style_title={style}
-                  view={per_page}
-                ></CFilterBar>
-              </div>
+          <div className="page-content-wrapper">
+            <section className={`homeSection`}>
+              {label ? (
+                <div
+                  className={`homeSection__header ${
+                    categories.length === 1 && "homeSection__header_only"
+                  }`}
+                >
+                  <div className="homeSection__header_title">{label}</div>
+                  {categories.length > 1 && (
+                    <div className="homeSection__header_category">
+                      <ul>
+                        {categories.map((cat, catIndex) => (
+                          <li
+                            key={cat.label}
+                            onClick={() =>
+                              setSelectedCategory &&
+                              setSelectedCategory(catIndex)
+                            }
+                            className={`${
+                              selectedCategory === catIndex ? "active" : ""
+                            }`}
+                          >
+                            {cat.label}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                ""
+              )}
+              <div className="content">
+                <div className="filter-wrapper">
+                  <CFilterBar
+                    set_style={updateStyle}
+                    set_size={updateSize}
+                    set_view={updatePerPage}
+                    clear_filter={clearFilter}
+                    size_title={size}
+                    style_title={style}
+                    view={per_page}
+                  ></CFilterBar>
+                </div>
 
-              <div className="item-wrapper">
-                {isLoading ? (
-                  <CLoadingIndicator />
-                ) : total !== 0 ? (
-                  <Content />
-                ) : (
-                  <NoDataComponent title="sản phẩm" />
-                )}
+                <div className="item-wrapper">
+                  {isLoading ? (
+                    <CLoadingIndicator />
+                  ) : total !== 0 ? (
+                    <Content />
+                  ) : (
+                    <NoDataComponent title="sản phẩm" />
+                  )}
+                </div>
               </div>
-            </div>
-          </section>
+              <CPagination
+                category={label}
+                total={total}
+                per_page={per_page}
+                current_page={current_page}
+              ></CPagination>
+            </section>
+          </div>
         </div>
       </div>
     </>

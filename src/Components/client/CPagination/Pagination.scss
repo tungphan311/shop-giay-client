@@ -1,6 +1,7 @@
 .pagination {
-  float: right;
-  margin: 0 15px 0 5px;
+  // float: right;
+
+  border-top: 1px solid #383838;
 }
 .pagination span {
   cursor: pointer;
@@ -13,4 +14,8 @@
 
 .pagination span.active {
   color: orange;
+}
+
+.pagination_inner {
+  margin: 0 auto;
 }

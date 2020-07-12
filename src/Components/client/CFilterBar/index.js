@@ -86,9 +86,9 @@ const CFilterBar = ({
   if (size_title !== null && size_title !== 0) {
     renderSizeTitle = renderSizeTitle + ": " + size_title;
   }
-  let renderViewTitle = "View";
+  let renderViewTitle = "Display";
   if (view !== null) {
-    renderViewTitle = renderViewTitle + ": " + view;
+    renderViewTitle = renderViewTitle + ": " + view + " per page";
   }
   let renderStyleTitle = "Style";
   if (style_title !== null) {
@@ -99,15 +99,17 @@ const CFilterBar = ({
       <Navbar expand="lg">
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-auto"></Nav>
+          <Nav className="mr-auto">
+            <NavDropdown title={renderViewTitle} id="basic-nav-dropdown">
+              {renderViewFilter}
+            </NavDropdown>
+          </Nav>
           <Form inline>
             <Nav className="mr-auto">
               <NavDropdown title={renderSizeTitle} id="basic-nav-dropdown">
                 {renderSizeFilter}
               </NavDropdown>
-              <NavDropdown title={renderViewTitle} id="basic-nav-dropdown">
-                {renderViewFilter}
-              </NavDropdown>
+
               <NavDropdown title={renderStyleTitle} id="basic-nav-dropdown">
                 {renderStyleFilter}
               </NavDropdown>
