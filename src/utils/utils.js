@@ -25,7 +25,7 @@ export const OPTIONS = {
 export const NoDataComponent = ({ title }) => (
   <div
     className="row no-gutters align-items-center justify-content-center"
-    style={{ minHeight: "300px" }}
+    style={{ minHeight: "300px", minWidth: "960px" }}
   >
     <div className="col flex-column text-center">
       <Box />
