@@ -1,8 +1,6 @@
 import { Field, reduxForm } from "redux-form";
 import React from "react";
 import CButton from "Components/client/CButton";
-import CInput from "../CInput";
-import CTextarea from "../CTextarea";
 import CStarSelector from "Components/client/CStarSelector";
 import { require } from "utils/index";
 
@@ -24,38 +22,15 @@ function RatingForm({ handleSubmit }) {
             />
           </div>
         </div>
-        <div className="product-rating">
-          <div className="title">Nội dung đánh giá</div>
-          <div className="review-input-row">
-            <div className="review-input-label required-star">Tiêu đề</div>
-            <Field
-              className="review-input"
-              component={CInput}
-              validate={[require]}
-              name="reviewTitle"
-            />
-          </div>
-
-          <div className="review-input-row">
-            <div className="review-input-label required-star">Nội dung</div>
-            <Field
-              className="review-input textarea"
-              component={CTextarea}
-              validate={[require]}
-              name="reviewContent"
-            />
-          </div>
-
-          <div className="review-input-row">
-            <div className="review-input-label"></div>
-            <div className="review-button-container">
-              <CButton
-                className="review-button"
-                type="submit"
-                label="GỬI ĐÁNH GIÁ"
-              />
-            </div>
-          </div>
+      </div>
+      <div className="review-input-row">
+        <div className="review-input-label"></div>
+        <div className="review-button-container">
+          <CButton
+            className="review-button"
+            type="submit"
+            label="GỬI ĐÁNH GIÁ"
+          />
         </div>
       </div>
     </form>

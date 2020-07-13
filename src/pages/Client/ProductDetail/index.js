@@ -1,7 +1,6 @@
 import React from "react";
-import CProductDetail from "Components/client/CProductDetail";
-import CProductRating from "Components/client/CProductRating";
-import CRelatedProductSection from "Components/client/CRelatedProductSection";
+import CNewProductDetail from "Components/client/CNewProductDetail/index";
+import CNewRelatedProductSection from "Components/client/CNewRelatedProductSection/index";
 function ProductDetail({
   match: {
     params: { id },
@@ -9,9 +8,8 @@ function ProductDetail({
 }) {
   return (
     <>
-      <CProductDetail id={id} />
-      <CRelatedProductSection id={id} />
-      <CProductRating id={id} />
+      <CNewProductDetail id={id} />
+      <CNewRelatedProductSection id={id} />
     </>
   );
 }
