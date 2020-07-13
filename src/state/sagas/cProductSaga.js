@@ -25,7 +25,6 @@ import {
 function* productRating(action) {
   try {
     const { productId } = action.payload;
-    //reviewTitle, reviewContent
     const { rating } = yield select((state) =>
       getFormValues(RATING_FORM_KEY)(state)
     );

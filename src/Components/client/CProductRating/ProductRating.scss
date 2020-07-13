@@ -7,11 +7,8 @@
     font-weight: 700;
     color: #fff;
   }
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 1) inset;
-  padding: 90px 0 10px;
   width: 100%;
-  min-width: 1024px;
-  background: url("/images/bg-noise.jpg") repeat #080808;
+  text-align: left;
 
   .required-star:before {
     color: #f3ac00;
@@ -24,10 +21,7 @@
   }
 
   .product-rating {
-    width: 90%;
-    min-width: 800px;
-    margin: 0px auto 20px;
-    border-bottom: 1px solid rgba(75, 75, 75, 1);
+    width: 100%;
     .title {
       font-family: Arial, Helvetica, sans-serif;
       font-weight: 700;
@@ -114,12 +108,6 @@
       letter-spacing: 1px;
       width: 200px;
       box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.25);
-    }
-  }
-
-  @media screen and (min-width: 1280px) {
-    .product-rating {
-      width: 950px;
     }
   }
 }
