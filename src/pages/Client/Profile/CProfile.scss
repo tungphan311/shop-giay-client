@@ -1,0 +1,42 @@
+.bg-dark {
+  background: url("/images/bg-noise.jpg") repeat #080808;
+  position: relative;
+}
+.dropdown-menu.show {
+  opacity: 100 !important;
+}
+.sidebar-heading {
+  color: #ffffff;
+  font-weight: bold;
+  margin-left: 15px;
+}
+.list-group-flush > .list-group-item {
+  color: white;
+  font-weight: 600;
+}
+.list-group .list-group-item {
+  border: none;
+}
+.list-group-item:first-child {
+  margin-top: 10px;
+}
+
+.list-group-item.list-group-item-action.bg-dark.selected {
+  color: orange;
+  font-weight: 600;
+}
+.page-content-wrapper {
+  background: url("/images/bg-noise.jpg") repeat #080808;
+}
+.form-check label,
+.form-group label {
+  color: white !important;
+}
+.form-control {
+  border: none !important;
+  background-color: #8f8f8f !important;
+}
+.sidebar__container {
+  border-radius: 3px;
+  border: 1px solid #383838;
+}
