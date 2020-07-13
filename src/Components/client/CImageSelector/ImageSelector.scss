@@ -3,9 +3,13 @@ $primary: #f3ac00;
 .image-selector-wrapper {
   .primary-img {
     width: 100% !important;
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 
   .image-container {
+    padding-top: 100%;
     width: 100%;
     //background: url("/images/bg-detail-shoe3.jpg") no-repeat 50% 50%;
     background-size: contain;
