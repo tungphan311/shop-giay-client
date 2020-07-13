@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { cGetCustomerInfo } from "services/cCustomerService";
-import "./CProfile.scss";
+import "./CUpdatePassword.scss";
 import { Button, Form, Col, Row } from "react-bootstrap/";
 import { phoneNumber } from "../../../utils/Validation";
 const initalState = [
@@ -14,7 +14,7 @@ const initalState = [
   },
 ];
 
-const CUserProfile = () => {
+const CUpdatePassword = () => {
   const [userInfo, setUserInfo] = useState(initalState);
   useEffect(() => {
     const cur_user = cGetCustomerInfo().then((res) =>
@@ -40,14 +40,14 @@ const CUserProfile = () => {
                 <a
                   key="update"
                   href="/profile/update"
-                  className="list-group-item list-group-item-action bg-dark selected"
+                  className="list-group-item list-group-item-action bg-dark "
                 >
                   Cập nhật thông tin cá nhân
                 </a>
                 <a
                   key="changepw"
                   href="/profile/password"
-                  className="list-group-item list-group-item-action bg-dark"
+                  className="list-group-item list-group-item-action bg-dark selected"
                 >
                   Đổi mật khẩu
                 </a>
@@ -60,39 +60,29 @@ const CUserProfile = () => {
                 <div className="form_container">
                   <Form.Group
                     controlId="exampleForm.ControlInput1"
-                    key="username"
+                    key="current_pw"
                   >
-                    <Form.Label>Họ và tên</Form.Label>
-                    <Form.Control type="name" placeholder={userInfo.Name} />
-                  </Form.Group>
-                  <Form.Group controlId="exampleForm.ControlInput1" key="email">
-                    <Form.Label>Địa chỉ email</Form.Label>
-                    <Form.Control type="email" placeholder={userInfo.email} />
+                    <Form.Label>Mật khẩu hiện tại</Form.Label>
+                    <Form.Control type="password" placeholder="*******" />
                   </Form.Group>
                   <Form.Group
                     controlId="exampleForm.ControlInput1"
-                    key="phoneNumber"
+                    key="new_pw"
                   >
-                    <Form.Label>Số điện thoại</Form.Label>
-                    <Form.Control
-                      type="email"
-                      placeholder={userInfo.phoneNumber}
-                    />
+                    <Form.Label>Mật khẩu mới</Form.Label>
+                    <Form.Control type="password" placeholder="*******" />
                   </Form.Group>
                   <Form.Group
-                    controlId="exampleForm.ControlSelect1"
-                    key="gender"
+                    controlId="exampleForm.ControlInput1"
+                    key="confirm_pw"
                   >
-                    <Form.Label>Giới tính</Form.Label>
-                    <Form.Control as="select">
-                      <option>Nam</option>
-                      <option>Nữ</option>
-                      <option>Không xác định</option>
-                    </Form.Control>
+                    <Form.Label>Xác nhận mật khẩu mới</Form.Label>
+                    <Form.Control type="password" placeholder="*******" />
                   </Form.Group>
+
                   <div className="col-sm-12 text-center">
                     <button type="button" className="btn btn-warning">
-                      Cập nhật thông tin
+                      Cập nhật mật khẩu
                     </button>
                   </div>
                 </div>
@@ -105,4 +95,4 @@ const CUserProfile = () => {
   );
 };
 
-export default CUserProfile;
+export default CUpdatePassword;

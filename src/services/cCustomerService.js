@@ -25,3 +25,10 @@ export async function cGetCustomerInfo() {
   const AuthStr = "Bearer " + token;
   return await API.get(path, { headers: { Authorization: AuthStr } });
 }
+
+export async function cUpdateCustomerInfo(data) {
+  const path = "client/customer/updateInfo";
+  const token = localStorage.getItem(TOKEN_KEY);
+  const AuthStr = "Bearer " + token;
+  return await API.get(path, { headers: { Authorization: AuthStr } });
+}
