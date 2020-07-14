@@ -39,7 +39,6 @@ function AProviderList({ location: { search } }) {
 
     dispatch(getProviderAction({ page, pageSize }))
       .then(({ response, total }) => {
-        console.log(response);
         const newData = mapResponseToData(response);
         setData(newData);
         setTotalRows(total);

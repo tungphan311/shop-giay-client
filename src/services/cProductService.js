@@ -56,8 +56,6 @@ export async function cGetProductListByBrand(
   if (size !== 0) {
     path = path + "&size=" + size;
   }
-  console.log(path);
-  console.log(params);
 
   return await API.get(path, { params });
 }

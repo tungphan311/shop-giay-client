@@ -24,8 +24,6 @@ export function* getReportSaga(action) {
     const responseJSON = result.data.data;
     const response = JSON.parse(responseJSON);
 
-    console.log(response);
-
     yield call(resolvePromiseAction, action, response);
   } catch (err) {
     const {
