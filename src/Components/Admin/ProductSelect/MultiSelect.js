@@ -6,7 +6,7 @@ function AMultiSelect({ input, meta, ...props }) {
 
   const showError = touched && error;
   const { errCode } = error || {};
-  console.log(props);
+
   return (
     <div>
       <AProductSelect

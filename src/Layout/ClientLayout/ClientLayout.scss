@@ -68,3 +68,16 @@
 .Toastify__toast-container {
   width: 360px;
 }
+
+.client-default-container {
+  max-width: 1480px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 20px;
+}
+
+@media screen and (min-width: 641px) {
+  .client-default-container {
+    padding: 0 40px;
+  }
+}
