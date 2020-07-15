@@ -38,6 +38,8 @@ import AProviderEdit from "pages/Admin/ProviderEdit/ProviderEdit";
 import AAccount from "pages/Admin/Account/Account";
 import AAddAccount from "pages/Admin/AddAccount/AddAccount";
 import AEditAccount from "pages/Admin/EditAccount/EditAccount";
+import CUserProfile from "pages/Client/Profile/index";
+import CUpdatePassword from "pages/Client/UpdatePassword/index";
 
 // component for admin site to determine user is logined or not
 export const AuthorizedRoute = ({ component: Component, isUser, ...rest }) => (
@@ -114,6 +116,8 @@ class Routes extends Component {
             "/checkout/payment",
             "/order",
             "/order/:id",
+            "/profile/update",
+            "/profile/password",
           ]}
         >
           <ClientLayout>
@@ -154,6 +158,18 @@ class Routes extends Component {
               exact
               path="/order/:id"
               component={ClientOrderDetail}
+              isCustomer={isCustomer}
+            />
+            <CAuthorizedRoute
+              exact
+              path="/profile/update"
+              component={CUserProfile}
+              isCustomer={isCustomer}
+            />
+            <CAuthorizedRoute
+              exact
+              path="/profile/password"
+              component={CUpdatePassword}
               isCustomer={isCustomer}
             />
           </ClientLayout>

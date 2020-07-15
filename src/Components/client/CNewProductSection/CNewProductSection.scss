@@ -33,6 +33,15 @@
     flex-shrink: 0;
     font-weight: bolder;
     color: #ffc230;
+
+    &:hover {
+      transform: translateX(0);
+
+      svg {
+        opacity: 1;
+        right: 0;
+      }
+    }
   }
 
   .link {

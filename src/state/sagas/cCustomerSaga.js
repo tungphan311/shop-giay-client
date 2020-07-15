@@ -4,15 +4,22 @@ import {
   ACTION_GET_ADDRESSES_FAIL,
   ACTION_UPDATE_ADDRESS,
   ACTION_HIDE_ADDRESS_FORM,
+  CHANGE_PASSWORD,
+  UPDATE_INFO,
 } from "state/reducers/cCustomerReducer";
-import { takeEvery, put, select } from "redux-saga/effects";
-import { cGetAddresses } from "services/cCustomerService";
+import { takeEvery, put, select, call } from "redux-saga/effects";
+import {
+  cGetAddresses,
+  changePasswordService,
+  updateService,
+} from "services/cCustomerService";
 import history from "state/history";
 import { toastErr } from "utils";
 import { getFormValues } from "redux-form";
 import { ADDRESS_FORM_KEY } from "Components/client/CAddressForm/index";
 import { cAddorUpdateAddress } from "services/cCustomerService";
 import { ACTION_FORCE_LOGOUT } from "../reducers/cAuthReducer";
+import { toast } from "utils/index";
 
 function* getAddresses() {
   try {
@@ -67,7 +74,31 @@ function* updateAddress() {
   }
 }
 
+function* changePassword({ oldPassword, newPassword }) {
+  try {
+    yield call(changePasswordService, { oldPassword, newPassword });
+
+    yield toast({ message: "Đổi mật khẩu thành công" });
+  } catch (err) {
+    yield toastErr(err);
+  }
+}
+
+function* updateInfo({ userInfo }) {
+  try {
+    const { Name, email, gender, phoneNumber } = userInfo;
+    const id = yield select((state) => state.cauth.userInfo.id);
+    yield call(updateService, { id, name: Name, email, gender, phoneNumber });
+
+    yield toast({ message: "Cập nhật thông tin thành công" });
+  } catch (err) {
+    yield toastErr(err);
+  }
+}
+
 export default function* cCustomerSaga() {
   yield takeEvery(ACTION_GET_ADDRESSES, getAddresses);
   yield takeEvery(ACTION_UPDATE_ADDRESS, updateAddress);
+  yield takeEvery(CHANGE_PASSWORD, changePassword);
+  yield takeEvery(UPDATE_INFO, updateInfo);
 }

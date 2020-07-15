@@ -31,7 +31,7 @@ export const NAVBAR_BUTTON_LIST = [
 export const USER_HOVER_CONTENT = [
   {
     label: "Thông tin cá nhân",
-    href: "#",
+    href: "/profile/update",
   },
   {
     label: "Đơn hàng của bạn",
