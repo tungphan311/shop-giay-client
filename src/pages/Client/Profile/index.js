@@ -4,6 +4,7 @@ import "./CProfile.scss";
 import { Button, Form, Col, Row } from "react-bootstrap/";
 import { phoneNumber } from "../../../utils/Validation";
 import { Link } from "react-router-dom";
+
 const initalState = [
   {
     Name: "",
@@ -25,7 +26,6 @@ const CUserProfile = () => {
     Promise.all([cur_user])
       .then(([currentUser]) => {
         setUserInfo(currentUser);
-        console.log(currentUser);
       })
       .catch((error) => console.log(error));
   }, []);

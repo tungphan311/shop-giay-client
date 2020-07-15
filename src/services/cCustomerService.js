@@ -32,3 +32,14 @@ export async function cUpdateCustomerInfo(data) {
   const AuthStr = "Bearer " + token;
   return await API.get(path, { headers: { Authorization: AuthStr } });
 }
+
+export async function changePasswordService({ oldPassword, newPassword }) {
+  const path = "client/customer/changePassword";
+  const token = localStorage.getItem(TOKEN_KEY);
+  const AuthStr = "Bearer " + token;
+  return await API.post(
+    path,
+    { oldPassword, newPassword },
+    { headers: { Authorization: AuthStr } }
+  );
+}

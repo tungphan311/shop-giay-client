@@ -12,6 +12,8 @@ export const ACTION_UPDATE_ADDRESS = "CUSTOMER/UPDATE_ADDRESS";
 export const ACTION_UPDATE_ADDRESS_SUCCESS = "CUSTOMER/UPDATE_ADDRESS_SUCCESS";
 export const ACTION_UPDATE_ADDRESS_FAIL = "CUSTOMER/UPDATE_ADDRESS_FAIL";
 
+export const CHANGE_PASSWORD = "CUSTOMER/CHANGE_PASSWORD";
+
 export const cCustomerReducer = (state = initState, action = {}) => {
   const newState = { ...state };
   switch (action.type) {
