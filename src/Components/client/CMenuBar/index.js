@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./MenuBar.scss";
 import { cGetBrandList } from "services/cProductService";
+import { Link } from "react-router-dom";
 const initState = [
   {
     brands: [],
@@ -31,9 +32,9 @@ const CMenuBar = ({ current_label }) => {
       className_String = "list-group-item list-group-item-action bg-dark";
     }
     return (
-      <a className={className_String} key={branditem.name} href={href_string}>
+      <Link className={className_String} key={branditem.name} to={href_string}>
         {branditem.name}
-      </a>
+      </Link>
     );
   });
 
@@ -51,9 +52,9 @@ const CMenuBar = ({ current_label }) => {
       <div className="sidebar__content_wrapper">
         <div className="sidebar-heading">BRAND</div>
         <div className="list-group list-group-flush">
-          <a
+          <Link
             key="all"
-            href="/category/"
+            to="/category/"
             className={
               isViewingAll
                 ? "list-group-item list-group-item-action bg-dark selected"
@@ -61,7 +62,7 @@ const CMenuBar = ({ current_label }) => {
             }
           >
             All brands
-          </a>
+          </Link>
           {renderBrandList}
         </div>
       </div>
