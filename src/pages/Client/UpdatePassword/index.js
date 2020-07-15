@@ -3,6 +3,7 @@ import { cGetCustomerInfo } from "services/cCustomerService";
 import "./CUpdatePassword.scss";
 import { Button, Form, Col, Row } from "react-bootstrap/";
 import { phoneNumber } from "../../../utils/Validation";
+import { Link } from "react-router-dom";
 const initalState = [
   {
     Name: "",
@@ -27,7 +28,7 @@ const CUpdatePassword = () => {
         console.log(currentUser);
       })
       .catch((error) => console.log(error));
-  });
+  }, []);
 
   return (
     <>
@@ -37,20 +38,20 @@ const CUpdatePassword = () => {
             <div className="sidebar__container">
               <div className="sidebar-heading">USER</div>
               <div className="list-group list-group-flush">
-                <a
+                <Link
                   key="update"
-                  href="/profile/update"
+                  to="/profile/update"
                   className="list-group-item list-group-item-action bg-dark "
                 >
                   Cập nhật thông tin cá nhân
-                </a>
-                <a
+                </Link>
+                <Link
                   key="changepw"
-                  href="/profile/password"
+                  to="/profile/password"
                   className="list-group-item list-group-item-action bg-dark selected"
                 >
                   Đổi mật khẩu
-                </a>
+                </Link>
               </div>
             </div>
           </div>

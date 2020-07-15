@@ -12,6 +12,7 @@ import history from "state/history";
 import { cGetOrder } from "services/cOrderService";
 import { useDispatch } from "react-redux";
 import { clientGetOrderAction } from "state/actions/index";
+import { formatDateTime } from "utils/helper";
 
 const DEFAULT_PAGESIZE = 10;
 
@@ -69,7 +70,7 @@ const Order = () => {
         setLoading(false);
       }
     );
-  }, []);
+  }, [dispatch, page]);
 
   return (
     <div className="order-wrapper">
@@ -100,7 +101,7 @@ const Order = () => {
                   <td className="order-code">
                     <div onClick={() => history.push("/order/" + id)}>{id}</div>
                   </td>
-                  <td className="order-date">{orderDate}</td>
+                  <td className="order-date">{formatDateTime(new Date(orderDate))}</td>
                   <td className="order-products">
                     {getProductString(
                       cartItemDTOList.map((x) => x.name + ` size ${x.sizeName}`)

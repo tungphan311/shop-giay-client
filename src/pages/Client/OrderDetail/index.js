@@ -6,6 +6,7 @@ import { cGetOrderDetail } from "services/cOrderService";
 import { getOrderStatusString, getPaymentStatusString } from "utils/index";
 import { useDispatch } from "react-redux";
 import { clientGetOrderByIdAction } from "state/actions/index";
+import { formatDateTime } from "utils/helper";
 
 const orderIntialState = {
   cartItemDTOList: [],
@@ -24,7 +25,7 @@ function OrderDetail({
       const parsed = JSON.parse(data);
       setOrder(parsed);
     });
-  }, []);
+  }, [dispatch, id]);
 
   const {
     recipientName: name,
@@ -41,7 +42,7 @@ function OrderDetail({
         <div className="orderdetail-header">
           Chi tiết đơn hàng #{id} - {getOrderStatusString(status)}
         </div>
-        <div className="created-date">Ngày đặt hàng: {orderDate}</div>
+        <div className="created-date">Ngày đặt hàng: {formatDateTime(new Date(orderDate))}</div>
         <div className="orderdetail-info">
           <div>
             <div className="title">Địa chỉ người nhận</div>
