@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { cGetCustomerInfo } from "services/cCustomerService";
 import "./CProfile.scss";
 import { Button, Form, Col, Row } from "react-bootstrap/";
-import { phoneNumber } from "../../../utils/Validation";
+import { phoneNumber, validEmail } from "../../../utils/Validation";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { UPDATE_INFO } from "state/reducers/cCustomerReducer";
 
 const initalState = [
   {
@@ -18,6 +20,12 @@ const initalState = [
 
 const CUserProfile = () => {
   const [userInfo, setUserInfo] = useState(initalState);
+  const [nameErr, setNameErr] = useState(null);
+  const [emailErr, setEmailErr] = useState(null);
+  const [phoneErr, setPhoneErr] = useState(null);
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const cur_user = cGetCustomerInfo().then((res) =>
       JSON.parse(res.data.data)
@@ -29,6 +37,56 @@ const CUserProfile = () => {
       })
       .catch((error) => console.log(error));
   }, []);
+
+  const handleInputChange = (e) => {
+    const name = e.target.name;
+    const state = { ...userInfo };
+
+    state[name] = e.target.value;
+    setUserInfo(state);
+  };
+
+  const validData = () => {
+    if (!userInfo.Name) {
+      setNameErr("Đây là trường bắt buộc, vui lòng không bỏ trống");
+    } else {
+      setNameErr(null);
+    }
+
+    if (!userInfo.email) {
+      setNameErr("Đây là trường bắt buộc, vui lòng không bỏ trống");
+    } else {
+      if (!validEmail(userInfo.email)) {
+        setEmailErr("Email không hợp lệ");
+      } else {
+        setEmailErr(null);
+      }
+    }
+
+    if (!userInfo.phoneNumber) {
+      setPhoneErr("Đây là trường bắt buộc, vui lòng không bỏ trống");
+    } else {
+      if (
+        /^(0|\+84)(\s|\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\d)(\s|\.)?(\d{3})(\s|\.)?(\d{3})$/.test(
+          userInfo.phoneNumber
+        )
+      ) {
+        setPhoneErr(null);
+      } else {
+        setPhoneErr("Số điện thoại không hợp lệ");
+      }
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    validData();
+
+    if (nameErr || emailErr || phoneErr) return;
+
+    dispatch({ type: UPDATE_INFO, userInfo });
+  };
 
   return (
     <>
@@ -57,42 +115,58 @@ const CUserProfile = () => {
           </div>
           <div className="page-content-wrapper">
             <div className="content">
-              <Form>
+              <Form onSubmit={handleSubmit}>
                 <div className="form_container">
-                  <Form.Group
-                    controlId="exampleForm.ControlInput1"
-                    key="username"
-                  >
+                  <Form.Group key="username">
                     <Form.Label>Họ và tên</Form.Label>
-                    <Form.Control type="name" placeholder={userInfo.Name} />
+                    <Form.Control
+                      type="text"
+                      name="Name"
+                      value={userInfo.Name}
+                      onChange={(e) => handleInputChange(e)}
+                    />
+                    <span className="error" style={{ position: "absolute" }}>
+                      {nameErr}
+                    </span>
                   </Form.Group>
-                  <Form.Group controlId="exampleForm.ControlInput1" key="email">
+                  <Form.Group key="email">
                     <Form.Label>Địa chỉ email</Form.Label>
-                    <Form.Control type="email" placeholder={userInfo.email} />
+                    <Form.Control
+                      type="text"
+                      name="email"
+                      value={userInfo.email}
+                      onChange={(e) => handleInputChange(e)}
+                    />
+                    <span className="error" style={{ position: "absolute" }}>
+                      {emailErr}
+                    </span>
                   </Form.Group>
-                  <Form.Group
-                    controlId="exampleForm.ControlInput1"
-                    key="phoneNumber"
-                  >
+                  <Form.Group key="phoneNumber">
                     <Form.Label>Số điện thoại</Form.Label>
                     <Form.Control
-                      type="email"
-                      placeholder={userInfo.phoneNumber}
+                      type="text"
+                      name="phoneNumber"
+                      value={userInfo.phoneNumber}
+                      onChange={(e) => handleInputChange(e)}
                     />
+                    <span className="error" style={{ position: "absolute" }}>
+                      {phoneErr}
+                    </span>
                   </Form.Group>
-                  <Form.Group
-                    controlId="exampleForm.ControlSelect1"
-                    key="gender"
-                  >
+                  <Form.Group key="gender">
                     <Form.Label>Giới tính</Form.Label>
-                    <Form.Control as="select">
-                      <option>Nam</option>
-                      <option>Nữ</option>
-                      <option>Không xác định</option>
+                    <Form.Control
+                      as="select"
+                      value={userInfo.gender}
+                      name="gender"
+                      onChange={(e) => handleInputChange(e)}
+                    >
+                      <option value={1}>Nam</option>
+                      <option value={2}>Nữ</option>
                     </Form.Control>
                   </Form.Group>
                   <div className="col-sm-12 text-center">
-                    <button type="button" className="btn btn-warning">
+                    <button type="submit" className="btn btn-warning">
                       Cập nhật thông tin
                     </button>
                   </div>

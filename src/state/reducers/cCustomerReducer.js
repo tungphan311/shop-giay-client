@@ -13,6 +13,7 @@ export const ACTION_UPDATE_ADDRESS_SUCCESS = "CUSTOMER/UPDATE_ADDRESS_SUCCESS";
 export const ACTION_UPDATE_ADDRESS_FAIL = "CUSTOMER/UPDATE_ADDRESS_FAIL";
 
 export const CHANGE_PASSWORD = "CUSTOMER/CHANGE_PASSWORD";
+export const UPDATE_INFO = "CUSTOMER/UPDATE_INFO";
 
 export const cCustomerReducer = (state = initState, action = {}) => {
   const newState = { ...state };

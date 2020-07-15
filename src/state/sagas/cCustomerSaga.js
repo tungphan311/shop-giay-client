@@ -5,11 +5,13 @@ import {
   ACTION_UPDATE_ADDRESS,
   ACTION_HIDE_ADDRESS_FORM,
   CHANGE_PASSWORD,
+  UPDATE_INFO,
 } from "state/reducers/cCustomerReducer";
 import { takeEvery, put, select, call } from "redux-saga/effects";
 import {
   cGetAddresses,
   changePasswordService,
+  updateService,
 } from "services/cCustomerService";
 import history from "state/history";
 import { toastErr } from "utils";
@@ -82,8 +84,21 @@ function* changePassword({ oldPassword, newPassword }) {
   }
 }
 
+function* updateInfo({ userInfo }) {
+  try {
+    const { Name, email, gender, phoneNumber } = userInfo;
+    const id = yield select((state) => state.cauth.userInfo.id);
+    yield call(updateService, { id, name: Name, email, gender, phoneNumber });
+
+    yield toast({ message: "Cập nhật thông tin thành công" });
+  } catch (err) {
+    yield toastErr(err);
+  }
+}
+
 export default function* cCustomerSaga() {
   yield takeEvery(ACTION_GET_ADDRESSES, getAddresses);
   yield takeEvery(ACTION_UPDATE_ADDRESS, updateAddress);
   yield takeEvery(CHANGE_PASSWORD, changePassword);
+  yield takeEvery(UPDATE_INFO, updateInfo);
 }

@@ -43,3 +43,14 @@ export async function changePasswordService({ oldPassword, newPassword }) {
     { headers: { Authorization: AuthStr } }
   );
 }
+
+export async function updateService({ id, name, email, gender, phoneNumber }) {
+  const path = `client/customer/${id}`;
+  const token = localStorage.getItem(TOKEN_KEY);
+  const AuthStr = "Bearer " + token;
+  return await API.put(
+    path,
+    { name, email, gender, phoneNumber },
+    { headers: { Authorization: AuthStr } }
+  );
+}
