@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { formatDate, formatDateTime } from "utils/helper";
+import { vietNamCurrency } from "utils/index";
 
 class ProductToPrint extends Component {
   state = {
@@ -43,7 +44,9 @@ class ProductToPrint extends Component {
         <td align="center" style={{ padding: "5px 0" }}>
           {amount}
         </td>
-        <td align="left" style={{ padding: "5px 0" }}>{`${price}₫`}</td>
+        <td align="left" style={{ padding: "5px 0" }}>{`${vietNamCurrency(
+          price
+        )}`}</td>
       </tr>
     );
 
@@ -135,7 +138,7 @@ class ProductToPrint extends Component {
                       <strong>Tổng tiền:</strong>
                     </td>
                     <td style={{ textAlign: "right", padding: "5px 0" }}>
-                      <strong>{`${total}₫`}</strong>
+                      <strong>{`${vietNamCurrency(total)}`}</strong>
                     </td>
                   </tr>
                 </tbody>

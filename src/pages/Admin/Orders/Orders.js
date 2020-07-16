@@ -12,6 +12,7 @@ import qs from "query-string";
 import { useReactToPrint } from "react-to-print";
 import swal from "sweetalert";
 import ProductToPrint from "pages/Admin/Orders/ProductToPrint";
+import { vietNamCurrency } from "utils/index";
 
 const WAITING = 1;
 const CONFIRM = 2;
@@ -471,7 +472,7 @@ const Order = ({
               <Product key={index} {...item} />
             ))}
             <div className="py-3 px-0 text-right">
-              <strong>{`Tổng: ${total} ₫`}</strong>
+              <strong>{`Tổng: ${vietNamCurrency(total)}`}</strong>
             </div>
           </div>
         </div>
@@ -631,7 +632,7 @@ const Product = ({ id, name, img, price, amount }) => (
     </div>
     <div className="border--0 text-right">
       <div>{`x ${amount}`}</div>
-      <span>{`${price} ₫`}</span>
+      <span>{`${vietNamCurrency(price)}`}</span>
     </div>
   </div>
 );

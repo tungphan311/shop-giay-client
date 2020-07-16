@@ -11,6 +11,7 @@ import ProductToPrint from "pages/Admin/Orders/ProductToPrint";
 import { Link } from "react-router-dom";
 import { Verify, Warning } from "Components/Admin/Svg/index";
 import swal from "sweetalert";
+import { vietNamCurrency, formatCurrency } from "utils/index";
 
 const WAITING = 1;
 const CONFIRM = 2;
@@ -702,10 +703,10 @@ const Product = ({ id, name, img, price, amount, total }) => (
       <div className="border-0">{amount}</div>
     </td>
     <td className="align-middle text-right">
-      <div className="border-0 text-right">{`${price} ₫`}</div>
+      <div className="border-0 text-right">{`${vietNamCurrency(price)}`}</div>
     </td>
     <td className="align-middle text-right">
-      <div className="border-0 text-right">{`${total} ₫`}</div>
+      <div className="border-0 text-right">{`${vietNamCurrency(total)}`}</div>
     </td>
   </tr>
 );
@@ -725,7 +726,9 @@ const Row = ({ label, value, post, sub }) => (
           </>
         )}
       </div>
-      <div className="col-auto text-right">{`${value} ${post}`}</div>
+      <div className="col-auto text-right">{`${
+        value ? formatCurrency(value) : value
+      } ${post}`}</div>
     </div>
   </div>
 );

@@ -23,6 +23,16 @@ export const SIDEBAR_LIST = [
     ],
   },
   {
+    id: "providers",
+    icon: "fas fa-user",
+    title: "Nhà cung cấp",
+    href: ["/admin/provider", "/admin/add-provider"],
+    sub: [
+      { href: "/admin/provider", title: "Danh sách nhà cung cấp" },
+      { href: "/admin/add-provider", title: "Thêm nhà cung cấp mới" },
+    ],
+  },
+  {
     id: "customers",
     icon: "fas fa-user",
     title: "Khách hàng",

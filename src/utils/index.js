@@ -31,6 +31,8 @@ export const vietNamCurrency = (value) => {
   return cur;
 };
 
+export const formatCurrency = (value) => value.toLocaleString("it-IT");
+
 export function toast({ type = "success", message = "" }) {
   return toaster(<Toaster type={type} message={message} />);
 }

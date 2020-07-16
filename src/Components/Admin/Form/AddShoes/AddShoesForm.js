@@ -13,6 +13,7 @@ import {
   GET_SHOESBRANDS,
 } from "state/reducers/AShoesReducer";
 import { requireForm, validFloatNumber } from "utils/index";
+import { CleaveInput } from "Components/client/CSignUp/CSignUpForm";
 
 const formatData = (data) => {
   const newData = {
@@ -85,8 +86,12 @@ class AAddShoesForm extends Component {
             <Field
               label="Giá"
               name="price"
-              validate={[requireForm, validFloatNumber]}
-              component={AInput}
+              validate={[requireForm]}
+              component={CleaveInput}
+              options={{
+                numeral: true,
+                numeralThousandsGroupStyle: "thousand",
+              }}
               formClassName="ml-2"
             />
           </div>

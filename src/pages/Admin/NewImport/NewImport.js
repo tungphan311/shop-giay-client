@@ -17,7 +17,7 @@ import swal from "sweetalert";
 import AProviderSelect from "Components/Admin/Creatable/ProviderSelect";
 import AProductSelect from "Components/Admin/ProductSelect/Select";
 import { addImportAction } from "state/actions/index";
-import { toastErr } from "utils/index";
+import { toastErr, vietNamCurrency } from "utils/index";
 import ChooseShoesModal from "Components/Admin/Modal/ChooseShoes";
 
 function ANewImport() {
@@ -127,7 +127,7 @@ function ANewImport() {
       maxWidth: "170px",
       sortable: true,
       right: true,
-      format: (row) => `${row.price} VNĐ`,
+      format: (row) => `${vietNamCurrency(row.price)} VNĐ`,
     },
     {
       name: "Số lượng",
@@ -135,16 +135,31 @@ function ANewImport() {
       maxWidth: "130px",
       sortable: true,
       right: true,
-      format: (row) => `${row.price} đôi`,
+      format: (row) => `${row.amount} đôi`,
     },
   ];
 
   const addNewItem = (newItem) => {
-    const id = data.length ? data + 1 : 0;
-    const item = { ...newItem, id };
+    const { stockId, amount, price } = newItem;
 
-    let newData = [item, ...data];
-    setData(newData);
+    let row = data.find((x) => x.stockId === stockId);
+    if (row) {
+      let newData = [...data];
+      const index = data.findIndex((x) => x.stockId === stockId);
+
+      row.amount = parseInt(row.amount) + parseInt(amount);
+      row.price = price;
+
+      newData[index] = row;
+
+      setData(newData);
+    } else {
+      const id = data.length ? data + 1 : 0;
+      const item = { ...newItem, id };
+
+      let newData = [item, ...data];
+      setData(newData);
+    }
   };
 
   const actions = (
@@ -208,7 +223,7 @@ function ANewImport() {
       } else {
         const details = data.map((d) => ({
           quantity: parseInt(d.amount),
-          originalPrice: parseFloat(d.price),
+          originalPrice: parseFloat(d.price.replace(/,/g, "")),
           stockId: d.stockId,
         }));
 
@@ -285,6 +300,7 @@ function ANewImport() {
         colors={colors}
         sizes={sizes}
         addNewItem={addNewItem}
+        data={data}
       />
     </div>
   );

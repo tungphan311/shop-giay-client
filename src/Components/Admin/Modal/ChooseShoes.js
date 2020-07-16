@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import AProductSelect from "Components/Admin/ProductSelect/Select";
+import Cleave from "cleave.js/react";
 
 function ChooseShoesModal({
   show,
@@ -16,6 +17,7 @@ function ChooseShoesModal({
   colors,
   sizes,
   addNewItem,
+  data,
 }) {
   const [shoes, setShoes] = useState(curShoes);
   const [stock, setStock] = useState(curStock);
@@ -48,6 +50,13 @@ function ChooseShoesModal({
   const selectStock = (selected) => {
     setStock(selected);
     setStockId(selected.value);
+
+    console.log(data);
+    console.log(selected);
+    const row = data.find((x) => x.stockId === selected.value);
+    if (row) {
+      setPrice(row.price);
+    }
   };
 
   const valid = () => stockId && price && amount;
@@ -100,12 +109,13 @@ function ChooseShoesModal({
           />
         </div>
         <div style={{ display: "flex" }}>
-          <InputGroup
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            name="price"
-            postfix="VNĐ"
+          <CleaveInput
             title="Nhập giá tiền"
+            value={price}
+            placeholder="Giá tiền"
+            postfix="VNĐ"
+            options={{ numeral: true, numeralThousandsGroupStyle: "thousand" }}
+            onChange={(e) => setPrice(e.target.value)}
           />
           <InputGroup
             value={amount}
@@ -157,3 +167,31 @@ const InputGroup = ({
     </div>
   </div>
 );
+
+const CleaveInput = ({
+  title,
+  placeholder = "",
+  classNames = "",
+  options = {},
+  value,
+  onChange,
+  postfix,
+}) => {
+  return (
+    <div className={`input-group ${classNames}`}>
+      <label className="input-title">{title}</label>
+      <div className="input-wrapper" style={{ position: "relative" }}>
+        <Cleave
+          placeholder={placeholder}
+          options={options}
+          onChange={onChange}
+          value={value}
+          className="amount-input"
+        />
+        <div className="input-group-append">
+          <span className="input-group-text">{postfix}</span>
+        </div>
+      </div>
+    </div>
+  );
+};

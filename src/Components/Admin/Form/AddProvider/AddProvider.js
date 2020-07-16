@@ -55,7 +55,7 @@ AAddProviderForm = reduxForm({
   enableReinitialize: true,
 })(AAddProviderForm);
 
-AAddProviderForm = connect((state, { type, provider }) => {
+AAddProviderForm = connect((state, { type = "add", provider }) => {
   if (type === "add") return null;
 
   const { Name, Email, Address, PhoneNumber, TIN } = provider;

@@ -14,7 +14,7 @@ import { connect } from "react-redux";
 
 export const SIGNUP_FORM_KEY = "FORM/SIGNUP";
 
-const CleaveInput = ({
+export const CleaveInput = ({
   label,
   labelClassName,
   className,
@@ -23,13 +23,14 @@ const CleaveInput = ({
   input,
   icon = null,
   meta = {},
+  formClassName = "",
 }) => {
   const { touched, error } = meta;
   const showError = touched && error;
   const { errCode } = error || {};
 
   return (
-    <div className="input__container">
+    <div className={`input__container ${formClassName}`}>
       <label className={`${!label ? "d-none" : labelClassName}`}>{label}</label>
       <div className="input__wrapper" style={{ position: "relative" }}>
         <div>

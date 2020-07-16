@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux";
 import { getReportAction } from "state/actions/index";
 import { OPTIONS } from "constants/chart";
 import { Link } from "react-router-dom";
+import { vietNamCurrency } from "utils/index";
 
 const START = moment().subtract(6, "days");
 const END = moment();
@@ -213,7 +214,7 @@ const Product = ({ Image, Price, Amount, Name, Id }) => (
       </p>
     </div>
     <div className="bestsale-detail--icon">
-      <p className="mb-0">{Price} ₫</p>
+      <p className="mb-0">{vietNamCurrency(Price)}</p>
     </div>
   </div>
 );
