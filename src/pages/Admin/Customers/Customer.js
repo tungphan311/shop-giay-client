@@ -162,11 +162,11 @@ function ACustomer({ location: { search } }) {
   return (
     <div>
       <ABreadcrumb title="Danh sách khách hàng" list={BREADCRUMB} />
-      <AFilterBar
+      {/* <AFilterBar
         onExport={(source, type) => handleDownload(source, type)}
         options={FILTERS}
         filters={filters}
-      />
+      /> */}
       <div className="row">
         <div className="col-md-12">
           <div className="card mt-4">

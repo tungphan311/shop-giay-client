@@ -2,17 +2,24 @@ import React, { Component } from "react";
 import "./SearchHoverContainer.scss";
 import CIcon from "Components/client/CIcon";
 import CInputWithButton from "Components/client/CInputWithButton";
+import history from "state/history";
 
 export default class SearchHoverContainer extends Component {
   state = {
     text: "",
   };
-  handleSearch = (text) => {
-    // eslint-disable-next-line no-console
-    console.log(text);
+
+  UNSAFE_componentWillReceiveProps = (nextProps) => {
+    if (nextProps.text !== this.props.text) {
+      this.setState({ text: nextProps.text });
+    }
   };
+
+  handleSearch = (text) => {
+    history.push(`/category?q=${text}`);
+  };
+
   render() {
-    // const { className } = this.props;
     const { text } = this.state;
 
     return (
@@ -40,7 +47,10 @@ export default class SearchHoverContainer extends Component {
                 className="search-bar__input"
               />
             </div>
-            <button className="search-bar__submit">
+            <button
+              className="search-bar__submit"
+              onClick={() => this.handleSearch(text)}
+            >
               <i className="fas fa-search" style={{ fontSize: "18px" }} />
             </button>
           </div>

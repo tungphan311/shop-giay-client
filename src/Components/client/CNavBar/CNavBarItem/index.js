@@ -16,7 +16,7 @@ class NavBarItem extends Component {
     this.setState({ isHover: false });
   };
   render() {
-    const { label, href = "#", children } = this.props;
+    const { label, href, children } = this.props;
     const { isHover } = this.state;
     const contentClassName = `navbaritem__content ${
       isHover ? "navbaritem__content_display" : "navbaritem__content_hidden"
@@ -36,7 +36,7 @@ class NavBarItem extends Component {
       //   {children && <div className={contentClassName}>{children}</div>}
       // </div>
       <li className="nav--bar__item nav--bar__item--static">
-        <Link to={`/category`} className="nav-bar__link link">
+        <Link to={`/category${href}`} className="nav-bar__link link">
           {label}
         </Link>
       </li>

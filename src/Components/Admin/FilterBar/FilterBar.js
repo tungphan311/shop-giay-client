@@ -57,6 +57,13 @@ function AFilterBar({
     setSelect(selected);
   };
 
+  const handleAdd = () => {
+    if (!select) return;
+    if (Object.keys(select).length === 0) return;
+
+    handleAddFilter(selected, select.value, number);
+  };
+
   return (
     <div className="row no-gutters mt-4">
       <div className="col">
@@ -142,13 +149,7 @@ function AFilterBar({
                                 <div className="group-filter-btn--add d-flex flex-grow-1 justify-content-end">
                                   <button
                                     className="btn btn-primary mt-3"
-                                    onClick={() =>
-                                      handleAddFilter(
-                                        selected,
-                                        select.value,
-                                        number
-                                      )
-                                    }
+                                    onClick={handleAdd}
                                   >
                                     Thêm điều kiện lọc
                                   </button>

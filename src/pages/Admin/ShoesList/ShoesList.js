@@ -52,8 +52,11 @@ function AShoesList({ location: { search } }) {
       { skipNull: true }
     );
     let f = "";
+    const keys = Object.keys(filter);
     for (var key in filter) {
-      f += `&${key}=${filter[key]}`;
+      f += `${key}=${filter[key]}`;
+      f += key === keys[keys.length - 1] ? "" : "&";
+      console.log(key);
     }
     history.push(`?${query}${f}`);
 

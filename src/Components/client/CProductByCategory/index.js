@@ -16,7 +16,7 @@ const intialCategories = [
   },
 ];
 
-const CProductByCategory = ({ id, pageNumber }) => {
+const CProductByCategory = ({ id, pageNumber, gender, isNew, search }) => {
   if (pageNumber === undefined) {
     pageNumber = 1;
   }
@@ -32,11 +32,11 @@ const CProductByCategory = ({ id, pageNumber }) => {
   const [per_page, setPerPage] = useState(12);
   const [current_page, setCurrentPage] = useState(pageNumber - 1);
   const [size, setSize] = useState(0);
-  const [style, setStyle] = useState("");
+  const [style, setStyle] = useState(null);
 
   const clearFilter = () => {
     setSize(0);
-    setStyle("");
+    setStyle(null);
     setPerPage(12);
   };
 
@@ -62,14 +62,20 @@ const CProductByCategory = ({ id, pageNumber }) => {
       pageNumber,
       per_page,
       style,
-      size
+      size,
+      gender,
+      isNew,
+      search
     ).then((res) => JSON.parse(res.data.data));
     const total = cGetProductListByBrand(
       id,
       pageNumber,
       per_page,
       style,
-      size
+      size,
+      gender,
+      isNew,
+      search
     ).then((res) => JSON.parse(res.data.totalRecords));
 
     Promise.all([list])
@@ -99,7 +105,7 @@ const CProductByCategory = ({ id, pageNumber }) => {
     Promise.all([total]).then(([totalRecords]) => {
       setTotal(totalRecords);
     });
-  }, [current_page, id, pageNumber, per_page, size, style]);
+  }, [gender, isNew, search]);
 
   return (
     <div className="layout">

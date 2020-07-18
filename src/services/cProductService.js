@@ -1,5 +1,6 @@
 import API from "utils/Axios";
 import { TOKEN_KEY } from "constants/index";
+import qs from "query-string";
 
 export async function cGetMenNewArrivals() {
   const path = "client/shoes?page-size=6";
@@ -43,21 +44,38 @@ export async function cGetProductListByBrand(
   pageNumber,
   pageSize,
   style,
-  size
+  size,
+  gender,
+  isNew,
+  key
 ) {
-  let path = `client/shoes?page-size=${pageSize}`;
-  let params = { brand: id, page: pageNumber };
-  if (id === "Danh sách sản phẩm") {
-    params = { page: pageNumber };
-  }
-  if (style !== "") {
-    path = path + "&style=" + style;
-  }
-  if (size !== 0) {
-    path = path + "&size=" + size;
-  }
+  console.log(key);
+  const brand = id === "Danh sách sản phẩm" ? null : id;
+  const query = qs.stringify(
+    {
+      "page-size": pageSize,
+      page: pageNumber,
+      style,
+      size: size || null,
+      gender,
+      search: key,
+      brand,
+    },
+    { skipNull: true }
+  );
+  let path = `client/shoes?${query}`;
+  // let params = { brand: id, page: pageNumber };
+  // if (id === "Danh sách sản phẩm") {
+  //   params = { page: pageNumber };
+  // }
+  // if (style !== "") {
+  //   path = path + "&style=" + style;
+  // }
+  // if (size !== 0) {
+  //   path = path + "&size=" + size;
+  // }
 
-  return await API.get(path, { params });
+  return await API.get(path);
 }
 export async function cGetBrandList() {
   const path = "client/brands";

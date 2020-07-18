@@ -4,15 +4,15 @@ import CHoverContainer from "Components/client/CNavBar/CHoverContainer";
 export const NAVBAR_ITEM_LIST = [
   {
     label: "NAM",
-    href: "#",
+    href: "?gender=male",
   },
   {
     label: "NỮ",
-    href: "#",
+    href: "?gender=female",
   },
   {
     label: "HÀNG MỚI VỀ",
-    href: "#",
+    href: "?new=1",
   },
 ];
 

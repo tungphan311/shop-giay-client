@@ -390,7 +390,7 @@ export function* editShoesSaga({ id }) {
       colorId: s.colorId.value,
       sizeId: s.sizeId.value,
     }));
-    price = price && parseFloat(price);
+    price = price && parseFloat(price.replace(/,/g, ""));
     images =
       images && images.filter((image) => Object.keys(image).length !== 0);
     images =
@@ -452,7 +452,7 @@ export function* addShoesSaga() {
       colorId: s.colorId.value,
       sizeId: s.sizeId.value,
     }));
-    price = parseFloat(price);
+    price = parseFloat(price.replace(/,/g, ""));
     images = images.filter((image) => Object.keys(image).length !== 0);
     images = images.map((i) => ({
       colorId: 2,

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./NavBar.scss";
 import { NAVBAR_BUTTON_LIST, NAVBAR_ITEM_LIST } from "constants/index.js";
 import CNavBarItem from "./CNavBarItem";
@@ -9,8 +9,11 @@ import { ACTION_LOGOUT } from "state/reducers/cAuthReducer";
 import { Link } from "react-router-dom";
 import CLogo from "Components/client/CNavBar/Logo/Logo";
 import SearchHoverContainer from "Components/client/CNavBar/CSearchHoverContainer/index";
+import qs from "query-string";
 
 const CNavBar = () => {
+  const [key, setKey] = useState(null);
+
   const dispatch = useDispatch();
   const username = useSelector((state) => state.cauth.username);
   const userInfo = useSelector((state) => state.cauth.userInfo);
@@ -25,6 +28,13 @@ const CNavBar = () => {
 
   const cartItems = useSelector((state) => state.ccart.cartItems);
 
+  useEffect(() => {
+    const search = window.location.search;
+    const { q } = qs.parse(search);
+
+    setKey(q);
+  }, []);
+
   return (
     <div id="ss--client--header">
       <header className="header header--inline" role="banner">
@@ -34,7 +44,7 @@ const CNavBar = () => {
         <div className="navbar__container">
           <div className="header__inner">
             <CLogo />
-            <SearchHoverContainer />
+            <SearchHoverContainer text={key} />
             <div className="navbar__button_container">
               {NAVBAR_BUTTON_LIST.map((button) => {
                 switch (button.icon) {
